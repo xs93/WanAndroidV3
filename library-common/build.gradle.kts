@@ -34,7 +34,7 @@ dependencies {
     api(AndroidX.appcompat)
     api(AndroidX.material)
     api(AndroidX.constraintlayout)
-    api(AndroidX.Lifecycle.viewModelKtx)
+    api(AndroidX.lifecycle_liveData_Ktx)
     api(ThirdPart.androidBase)
     api(ThirdPart.easyRetrofit)
     api(ThirdPart.mmkvKtx)

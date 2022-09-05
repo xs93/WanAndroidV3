@@ -17,129 +17,78 @@ object Versions {
 
     //kotlin版本号
     const val kotlin = "1.7.10"
+    const val kotlinCoroutines = "1.6.3"
+
+    const val lifecycle = "2.5.1"
+
+    const val room = "2.4.3"
+
+    const val arouter = "1.5.2"
+
+    const val moshi = "1.13.0"
+
+    const val okhttp = "4.10.0"
+
+    const val retrofit = "2.9.0"
+
+    const val immersionBar = "3.2.2"
 }
 
+
 object AndroidX {
-
-    object Plugins {
-        const val application = "com.android.application:${Versions.agp}"
-        const val library = "com.android.library:${Versions.agp}"
-    }
-
     const val coreKtx = "androidx.core:core-ktx:1.8.0"
-    const val appcompat = "androidx.appcompat:appcompat:1.4.2"
-    const val activityKtx = "androidx.activity:activity-ktx:1.4.0"
-    const val fragmentKtx = "androidx.fragment:fragment-ktx:1.4.1"
+    const val appcompat = "androidx.appcompat:appcompat:1.5.0"
+    const val activityKtx = "androidx.activity:activity-ktx:1.5.1"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:1.5.2"
     const val annotation = "androidx.annotation:annotation:1.4.0"
-
     const val material = "com.google.android.material:material:1.6.1"
     const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
-
     const val recyclerview = "androidx.recyclerview:recyclerview:1.2.1"
     const val viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
 
-    object Lifecycle {
-        private const val version = "2.4.1"
+    const val room_compiler = "androidx.room:room-compiler:${Versions.room}"
+    const val room_runtime = "androidx.room:room-runtime:${Versions.room}"
+    const val room_ktx = "androidx.room:room-ktx:${Versions.room}"
 
-        const val compiler = "androidx.lifecycle:lifecycle-compiler:$version"
-        const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
-        const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
-        const val livedataKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
-        const val process = "androidx.lifecycle:lifecycle-process:$version"
-    }
-
-
-    object Room {
-
-        //room数据库
-        private const val version = "2.4.2"
-
-        //roomCompiler 使用ksp依赖
-        const val compiler = "androidx.room:room-compiler:${version}"
-
-        const val runtime = "androidx.room:room-runtime:${version}"
-        const val ktx = "androidx.room:room-ktx:${version}"
-    }
+    const val lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:${Versions.lifecycle}"
+    const val lifecycle_runtime_ktx = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}"
+    const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}"
+    const val lifecycle_liveData_Ktx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}"
+    const val lifecycle_process = "androidx.lifecycle:lifecycle-process:${Versions.lifecycle}"
+    const val lifecycle_service = "androidx.lifecycle:lifecycle-service:${Versions.lifecycle}"
 }
 
 object Kotlin {
+    const val plugin_kotlin_Android = "org.jetbrains.kotlin.android:$kotlin"
+    const val plugin_kotlin_serialization = "org.jetbrains.kotlin:kotlin-serialization:$kotlin"
+    const val kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3"
 
-    object Plugins {
-        const val android = "org.jetbrains.kotlin.android:$kotlin"
-        const val serialization = "org.jetbrains.kotlin:kotlin-serialization:$kotlin"
-        const val parcelize = "org.jetbrains.kotlin:kotlin-parcelize-runtime:$kotlin"
-    }
+    const val plugin_kotlin_parcelize = "org.jetbrains.kotlin:kotlin-parcelize-runtime:$kotlin"
 
     //协程
-    object Coroutines {
-        //协程版本
-        private const val version = "1.6.3"
-        const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${version}"
-    }
-
-    object Serialization {
-        const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3"
-    }
+    const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin"
 }
 
 object ThirdPart {
+    //ARouter 路由组件
+    const val arouter_plugin = "com.alibaba:arouter-register:${Versions.arouter}"
+    const val arouter_api = "com.alibaba:arouter-api:${Versions.arouter}"
+    const val arouter_compiler = "com.alibaba:arouter-compiler:${Versions.arouter}"
 
-    object Plugins {
-        //google 使用ksp,代替kapt
-        const val ksp = "com.google.devtools.ksp:symbol-processing-gradle-plugin:$kotlin-1.0.6"
+    //moshi json解析库
+    const val moshi_kotlin_plugin = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
+    const val moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
 
-        //编译golang的插件
-        const val golang = "com.github.kr328.golang:gradle-plugin:1.0.4"
-    }
+    //网络库
+    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
+    const val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
+    const val okhttp_profiler = "com.localebro:okhttpprofiler:1.0.8"
 
-    //一个多进程的preference的库
-    const val preferenceMultiprocess = "dev.rikka.rikkax.preference:multiprocess:1.0.0"
+    const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    const val retrofit_moshi_converter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
 
-    //一个自动编译aidl的库
-    object KAidl {
-        private const val version = "1.15"
-        const val runtime = "com.github.kr328.kaidl:kaidl-runtime:$version"
-        const val compiler = "com.github.kr328.kaidl:kaidl:$version"
-    }
-
-    object Moshi {
-        private const val version = "1.13.0"
-        const val kotlinPlugin = "com.squareup.moshi:moshi-kotlin-codegen:$version"
-        const val kotlin = "com.squareup.moshi:moshi-kotlin:$version"
-    }
-
-
-    object Retrofit {
-        private const val version = "2.9.0"
-        const val converterMoshi = "com.squareup.retrofit2:converter-moshi:$version"
-        const val retrofit = "com.squareup.retrofit2:retrofit:$version"
-    }
-
-    object Okhttp {
-        private const val version = "4.10.0"
-        const val okhttp = "com.squareup.okhttp3:okhttp:$version"
-        const val interceptor = "com.squareup.okhttp3:logging-interceptor:$version"
-        const val okhttpProfiler = "com.localebro:okhttpprofiler:1.0.8"
-    }
-
+    //日志库
     const val logger = "com.orhanobut:logger:2.2.0"
-
-    const val jackson = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2"
-
-    object ImmersionBar {
-        private const val version = "3.2.2"
-        const val immersionBar = "com.geyifeng.immersionbar:immersionbar:$version"
-        const val ktx = "com.geyifeng.immersionbar:immersionbar:$version"
-    }
-
-    object ARouter {
-        private const val version = "1.5.2"
-        const val plugin = "com.alibaba:arouter-register:1.0.2"
-        const val arouter = "com.alibaba:arouter-api:$version"
-        const val compiler = "com.alibaba:arouter-compiler:$version"
-    }
-
-    const val androidAutoSize = "com.github.JessYanCoding:AndroidAutoSize:v1.2.1"
 
     //基础类
     const val androidBase = "com.github.xs93:AndroidBase:1.0.5"
@@ -147,22 +96,35 @@ object ThirdPart {
     //网络封装
     const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.0"
 
-    //可以选中的组件
-    const val checkableView = "com.github.xs93:CheckableView:1.0.0"
-
     //mmkv ktx封装扩展
     const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.1"
 
+    //可以选中的组件
+    const val checkableView = "com.github.xs93:CheckableView:1.0.0"
+
+    //沉浸式库
+    const val immersionBar = "com.geyifeng.immersionbar:immersionbar:${Versions.immersionBar}"
+    const val immersionBar_ktx = "com.geyifeng.immersionbar:immersionbar:${Versions.immersionBar}"
+
+    //界面适配库
+    const val androidAutoSize = "com.github.JessYanCoding:AndroidAutoSize:v1.2.1"
+
+    //图片加载库
+    const val coil = "io.coil-kt:coil:2.1.0"
+
+    //事件总线库
+    const val eventBus = "org.greenrobot:eventbus:3.3.1"
+
+    //一个多进程的preference的库
+    const val preferenceMultiprocess = "dev.rikka.rikkax.preference:multiprocess:1.0.0"
+
+    const val jackson = "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2"
 
     /** RecyclerView 扩展框架 */
     const val brv = "com.github.liangjingkanji:BRV:1.3.79"
 
     /** RecyclerView 扩展框架  */
     const val BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
-
-    const val coil = "io.coil-kt:coil:2.1.0"
-
-    const val eventBus = "org.greenrobot:eventbus:3.3.1"
 
     /** google pay 结算库 */
     const val billing = "com.android.billingclient:billing-ktx:5.0.0"
