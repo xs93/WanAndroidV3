@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_main_nav_menu_home"
+        android:title="@string/main_title_home" />
+    <item
+        android:id="@+id/treeFragment"
+        android:icon="@drawable/ic_main_nav_menu_tree"
+        android:title="@string/main_title_knowledge" />
+
+    <item
+        android:id="@+id/navigationFragment"
+        android:icon="@drawable/ic_main_nav_menu_navigation"
+        android:title="@string/main_title_navigation" />
+
+    <item
+        android:id="@+id/questionFragment"
+        android:icon="@drawable/ic_main_nav_menu_question"
+        android:title="@string/main_title_question" />
+
+    <item
+        android:id="@+id/mineFragment"
+        android:icon="@drawable/ic_main_nav_menu_mine"
+        android:title="@string/main_title_mine" />
+</menu>

@@ -1,6 +1,7 @@
 @file:Suppress("unused")
 
 import Versions.kotlin
+import Versions.kotlinCoroutines
 
 /**
  *
@@ -66,7 +67,8 @@ object Kotlin {
     const val plugin_kotlin_parcelize = "org.jetbrains.kotlin:kotlin-parcelize-runtime:$kotlin"
 
     //协程
-    const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin"
+    const val kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutines"
+    const val kotlinx_coroutines_android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutines"
 }
 
 object ThirdPart {
@@ -91,10 +93,10 @@ object ThirdPart {
     const val logger = "com.orhanobut:logger:2.2.0"
 
     //基础类
-    const val androidBase = "com.github.xs93:AndroidBase:1.0.5"
+    const val androidBase = "com.github.xs93:AndroidBase:1.0.8"
 
     //网络封装
-    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.0"
+    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.1"
 
     //mmkv ktx封装扩展
     const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.1"
