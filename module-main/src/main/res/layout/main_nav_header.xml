@@ -10,6 +10,10 @@
         <variable
             name="login"
             type="Boolean" />
+
+        <variable
+            name="activity"
+            type="com.github.xs93.wanandroid.main.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,6 +78,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
+            onSingleClick="@{()->activity.clickNavLogin()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="登录"

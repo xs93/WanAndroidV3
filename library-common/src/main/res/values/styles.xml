@@ -5,4 +5,19 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+
+
+    <style name="WanToolbarStyle" parent="ToolbarStyle">
+        <item name="background">@color/primaryColor</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="titleTextAppearance">@style/WanToolBarTitleTextAppearance</item>
+        <item name="titleCentered">true</item>
+        <item name="navigationIconTint">@color/white</item>
+        <item name="android:layout_height">@dimen/default_toolbar_height</item>
+    </style>
+
+    <style name="WanToolBarTitleTextAppearance">
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

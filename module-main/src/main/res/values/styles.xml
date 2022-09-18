@@ -2,7 +2,4 @@
 <resources>
 
 
-    <style name="toolBarTitleTextAppearance">
-        <item name="android:textSize">18sp</item>
-    </style>
 </resources>

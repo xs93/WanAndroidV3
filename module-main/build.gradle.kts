@@ -37,4 +37,7 @@ android {
 dependencies {
 
     implementation(project(mapOf("path" to ":library-common")))
+    testImplementation(Depend.junit)
+    androidTestImplementation(Depend.espressoCore)
+    androidTestImplementation(Depend.junitExt)
 }

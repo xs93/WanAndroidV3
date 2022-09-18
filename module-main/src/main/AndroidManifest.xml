@@ -5,6 +5,7 @@
     <application>
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

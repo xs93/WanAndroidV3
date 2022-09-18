@@ -73,7 +73,7 @@ object Kotlin {
 
 object ThirdPart {
     //ARouter 路由组件
-    const val arouter_plugin = "com.alibaba:arouter-register:${Versions.arouter}"
+    const val arouter_plugin = "com.alibaba:arouter-register:1.0.2"
     const val arouter_api = "com.alibaba:arouter-api:${Versions.arouter}"
     const val arouter_compiler = "com.alibaba:arouter-compiler:${Versions.arouter}"
 
@@ -93,13 +93,13 @@ object ThirdPart {
     const val logger = "com.orhanobut:logger:2.2.0"
 
     //基础类
-    const val androidBase = "com.github.xs93:AndroidBase:1.0.8"
+    const val androidBase = "com.github.xs93:AndroidBase:1.1.0"
 
     //网络封装
-    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.1"
+    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.2"
 
     //mmkv ktx封装扩展
-    const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.1"
+    const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.2"
 
     //可以选中的组件
     const val checkableView = "com.github.xs93:CheckableView:1.0.0"

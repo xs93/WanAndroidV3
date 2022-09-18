@@ -37,5 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(mapOf("path" to ":library-common")))
     implementation(project(mapOf("path" to ":module-main")))
+    implementation(project(mapOf("path" to ":module-login")))
 }

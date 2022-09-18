@@ -19,3 +19,4 @@ rootProject.name = "WanAndroidV3"
 include(":app")
 include(":library-common")
 include(":module-main")
+include ':module-login'

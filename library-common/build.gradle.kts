@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -43,9 +44,14 @@ dependencies {
     api(AndroidX.lifecycle_viewmodel_ktx)
     api(Kotlin.kotlinx_coroutines_core)
     api(Kotlin.kotlinx_coroutines_android)
+
+    api(ThirdPart.arouter_api)
+
     api(ThirdPart.logger)
     api(ThirdPart.androidBase)
     api(ThirdPart.easyRetrofit)
     api(ThirdPart.mmkvKtx)
     api(ThirdPart.checkableView)
+
+    kapt(ThirdPart.moshi_kotlin_plugin)
 }
