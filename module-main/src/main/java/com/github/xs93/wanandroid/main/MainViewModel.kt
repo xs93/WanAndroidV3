@@ -4,10 +4,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.github.xs93.core.base.viewmodel.BaseViewModel
 import com.github.xs93.core.ktx.launcher
 import com.github.xs93.wanandroid.common.router.RouterPath
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 
 /**
  *
@@ -22,8 +23,8 @@ class MainViewModel : BaseViewModel() {
     private val _stateFlow = MutableStateFlow(MainState(false))
     val stateFlow: StateFlow<MainState> = _stateFlow
 
-    private val _eventFlow = MutableSharedFlow<MainEvent>()
-    val eventFlow: SharedFlow<MainEvent> = _eventFlow
+    private val _eventFlow = Channel<MainEvent>()
+    val eventFlow: Flow<MainEvent> = _eventFlow.receiveAsFlow()
 
     fun input(intent: MainIntent) {
         when (intent) {
@@ -32,12 +33,12 @@ class MainViewModel : BaseViewModel() {
             }
             is MainIntent.CloseDrawerAction -> {
                 launcher {
-                    _eventFlow.emit(MainEvent.CloseDrawerEvent)
+                    _eventFlow.send(MainEvent.CloseDrawerEvent)
                 }
             }
             is MainIntent.OpenDrawerAction -> {
                 launcher {
-                    _eventFlow.emit(MainEvent.OpenDrawerEvent)
+                    _eventFlow.send(MainEvent.OpenDrawerEvent)
                 }
             }
             is MainIntent.LoginEventAction -> {

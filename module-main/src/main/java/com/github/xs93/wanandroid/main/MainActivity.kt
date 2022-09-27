@@ -77,7 +77,10 @@ class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layo
                 }
             }
         }
+    }
 
+    override fun initData(savedInstanceState: Bundle?) {
+        super.initData(savedInstanceState)
     }
 
     override fun onBackPressed() {
