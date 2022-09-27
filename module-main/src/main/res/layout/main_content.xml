@@ -7,6 +7,10 @@
         <variable
             name="surface"
             type="com.github.xs93.core.ui.Surface" />
+
+        <variable
+            name="listener"
+            type="com.github.xs93.wanandroid.main.MainActivity.Listener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +30,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             style="@style/WanToolbarStyle"
+            onNavigationIconSingleClick="@{()->listener.clickToolbarNav()}"
             android:layout_width="match_parent"
             android:background="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"

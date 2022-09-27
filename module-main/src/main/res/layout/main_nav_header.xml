@@ -8,12 +8,12 @@
         <import type="android.view.View" />
 
         <variable
-            name="login"
-            type="Boolean" />
+            name="state"
+            type="com.github.xs93.wanandroid.main.MainState" />
 
         <variable
-            name="activity"
-            type="com.github.xs93.wanandroid.main.MainActivity" />
+            name="listener"
+            type="com.github.xs93.wanandroid.main.MainActivity.Listener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +36,7 @@
             android:id="@+id/iv_avatars"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@{login?@drawable/avatar_login:@drawable/avatar_no_login,default = @drawable/avatar_no_login}"
+            android:src="@{state.login?@drawable/avatar_login:@drawable/avatar_no_login,default = @drawable/avatar_no_login}"
             app:layout_constraintBottom_toBottomOf="@id/iv_bg"
             app:layout_constraintEnd_toEndOf="@id/iv_bg"
             app:layout_constraintStart_toStartOf="@id/iv_bg"
@@ -55,7 +55,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:visibility="@{login?View.VISIBLE:View.INVISIBLE}"
+            android:visibility="@{state.login?View.VISIBLE:View.INVISIBLE}"
             app:layout_constraintEnd_toEndOf="@id/iv_avatars"
             app:layout_constraintStart_toStartOf="@id/iv_avatars"
             app:layout_constraintTop_toBottomOf="@id/iv_avatars"
@@ -69,7 +69,7 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="@{login?View.VISIBLE:View.INVISIBLE}"
+            android:visibility="@{state.login?View.VISIBLE:View.INVISIBLE}"
             app:layout_constraintEnd_toEndOf="@id/iv_avatars"
             app:layout_constraintStart_toStartOf="@id/iv_avatars"
             app:layout_constraintTop_toBottomOf="@id/tv_nickname"
@@ -78,11 +78,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
-            onSingleClick="@{()->activity.clickNavLogin()}"
+            onSingleClick="@{()->listener.clickNavLogin()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="登录"
-            android:visibility="@{login?View.INVISIBLE:View.VISIBLE}"
+            android:text="@string/main_login"
+            android:visibility="@{state.login?View.INVISIBLE:View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/iv_bg"
             app:layout_constraintEnd_toEndOf="@id/iv_avatars"
             app:layout_constraintStart_toStartOf="@id/iv_avatars"

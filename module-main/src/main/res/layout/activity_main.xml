@@ -10,8 +10,8 @@
             type="com.github.xs93.core.ui.Surface" />
 
         <variable
-            name="activity"
-            type="com.github.xs93.wanandroid.main.MainActivity" />
+            name="listener"
+            type="com.github.xs93.wanandroid.main.MainActivity.Listener" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -25,8 +25,8 @@
             layout="@layout/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:listener="@{listener}"
             app:surface="@{surface}" />
-
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"

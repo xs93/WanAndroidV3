@@ -93,7 +93,7 @@ object ThirdPart {
     const val logger = "com.orhanobut:logger:2.2.0"
 
     //基础类
-    const val androidBase = "com.github.xs93:AndroidBase:1.1.0"
+    const val androidBase = "com.github.xs93:AndroidBase:1.1.2"
 
     //网络封装
     const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.2"

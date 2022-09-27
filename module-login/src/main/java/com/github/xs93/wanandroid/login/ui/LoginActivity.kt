@@ -28,20 +28,20 @@ class LoginActivity : BaseVbVmActivity<ActivityLoginBinding, LoginViewModel>(R.l
 
     override fun initView(savedInstanceState: Bundle?) {
         registerLoadingDialog(supportFragmentManager, this)
-        mBinding.activity = this
-        mBinding.etAccount.doOnTextChanged { text, _, _, _ ->
+        binding.activity = this
+        binding.etAccount.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrBlank()) {
-                mBinding.tilAccount.isErrorEnabled = false
+                binding.tilAccount.isErrorEnabled = false
             }
         }
-        mBinding.etPassword.doOnTextChanged { text, _, _, _ ->
+        binding.etPassword.doOnTextChanged { text, _, _, _ ->
             if (!text.isNullOrBlank()) {
-                mBinding.tilPassword.isErrorEnabled = false
+                binding.tilPassword.isErrorEnabled = false
             }
         }
 
         repeatOnLifecycle(Lifecycle.State.STARTED) {
-            mViewModel.loadDialogFlow.collect {
+            viewModel.loadDialogFlow.collect {
                 if (it) {
                     showLoading()
                 } else {
@@ -61,14 +61,14 @@ class LoginActivity : BaseVbVmActivity<ActivityLoginBinding, LoginViewModel>(R.l
 
     fun clickLogin(username: String?, password: String?) {
         if (username.isNullOrBlank()) {
-            mBinding.tilAccount.error = getString(R.string.login_error_input_account)
+            binding.tilAccount.error = getString(R.string.login_error_input_account)
             return
         }
         if (password.isNullOrBlank()) {
-            mBinding.tilPassword.error = getString(R.string.login_error_inout_password)
+            binding.tilPassword.error = getString(R.string.login_error_inout_password)
             return
         }
-        mViewModel.login(username, password)
+        viewModel.login(username, password)
     }
 
     fun clickRegisterAccount() {

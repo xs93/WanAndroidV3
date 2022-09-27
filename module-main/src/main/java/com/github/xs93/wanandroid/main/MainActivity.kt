@@ -4,19 +4,16 @@ import android.os.Bundle
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.alibaba.android.arouter.launcher.ARouter
-import com.github.xs93.core.base.ui.viewbinding.BaseVbActivity
+import com.github.xs93.core.base.ui.vbvm.BaseVbVmActivity
 import com.github.xs93.core.bus.FlowBus
 import com.github.xs93.core.ktx.isStatusBarTranslucentCompat
+import com.github.xs93.core.ktx.repeatOnLifecycle
+import com.github.xs93.core.utils.toast.ToastUtils
 import com.github.xs93.wanandroid.common.bus.FlowBusKey
-import com.github.xs93.wanandroid.common.router.RouterPath
 import com.github.xs93.wanandroid.common.viewmodel.MainShareViewModel
 import com.github.xs93.wanandroid.main.databinding.ActivityMainBinding
 import com.github.xs93.wanandroid.main.databinding.MainContentBinding
 import com.github.xs93.wanandroid.main.databinding.MainNavHeaderBinding
-import kotlinx.coroutines.launch
 
 /**
  * 首页界面
@@ -26,7 +23,7 @@ import kotlinx.coroutines.launch
  * @date   2022/9/3-11:19
  * @email  466911254@qq.com
  */
-class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
 
     private lateinit var mainShareViewModel: MainShareViewModel
     private lateinit var mContentBinding: MainContentBinding
@@ -37,48 +34,67 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
         window.apply {
             isStatusBarTranslucentCompat = true
         }
-        mBinding.surface = surface
-
-        mContentBinding = mBinding.layoutContent
-        mNavHeaderBinding = MainNavHeaderBinding.bind(mBinding.navView.getHeaderView(0))
-
-        mNavHeaderBinding.activity = this
 
         mainShareViewModel = ViewModelProvider(this)[MainShareViewModel::class.java]
 
-        mContentBinding.toolbar.setNavigationOnClickListener {
-            mainShareViewModel.openDrawerLayout()
+        val clickListener = Listener()
+
+        binding.apply {
+            surface = this@MainActivity.surface
+            listener = clickListener
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mainShareViewModel.drawerLayoutState.collect {
-                    if (it) {
-                        mBinding.drawerLayout.openDrawer(GravityCompat.START)
-                    } else {
-                        mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+        mContentBinding = binding.layoutContent
+        mNavHeaderBinding = MainNavHeaderBinding.bind(binding.navView.getHeaderView(0)).apply {
+            listener = clickListener
+        }
+    }
+
+    override fun initObserver(savedInstanceState: Bundle?) {
+        super.initObserver(savedInstanceState)
+        FlowBus.subscribe<Boolean>(FlowBusKey.LOGIN_STATUS, this) {
+            viewModel.input(MainIntent.LoginEventAction(it))
+        }
+
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.stateFlow.collect {
+                mNavHeaderBinding.state = it
+            }
+        }
+
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel.eventFlow.collect {
+                when (it) {
+                    is MainEvent.ToastEvent -> {
+                        ToastUtils.show(it.msg)
+                    }
+                    is MainEvent.OpenDrawerEvent -> {
+                        binding.drawerLayout.openDrawer(GravityCompat.START)
+                    }
+                    is MainEvent.CloseDrawerEvent -> {
+                        binding.drawerLayout.closeDrawer(GravityCompat.START)
                     }
                 }
             }
         }
-    }
 
-
-    override fun initData(savedInstanceState: Bundle?) {
-        FlowBus.subscribe<Boolean>(FlowBusKey.LOGIN_STATUS, this) {
-            mNavHeaderBinding.login = it
-        }
     }
 
     override fun onBackPressed() {
-        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            viewModel.input(MainIntent.CloseDrawerAction)
         } else {
             super.onBackPressed()
         }
     }
 
-    fun clickNavLogin() {
-        ARouter.getInstance().build(RouterPath.Login.LoginActivity).navigation()
+    inner class Listener {
+        fun clickNavLogin() {
+            viewModel.input(MainIntent.ClickLoginAction)
+        }
+
+        fun clickToolbarNav() {
+            viewModel.input(MainIntent.OpenDrawerAction)
+        }
     }
 }

@@ -1,8 +1,6 @@
 package com.github.xs93.wanandroid.common.viewmodel
 
 import com.github.xs93.core.base.viewmodel.BaseViewModel
-import com.github.xs93.wanandroid.common.ktx.launcher
-import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  *
@@ -14,17 +12,4 @@ import kotlinx.coroutines.flow.MutableSharedFlow
  */
 class MainShareViewModel : BaseViewModel() {
 
-    val drawerLayoutState: MutableSharedFlow<Boolean> = MutableSharedFlow()
-
-    fun openDrawerLayout() {
-        launcher {
-            drawerLayoutState.emit(true)
-        }
-    }
-
-    fun closeDrawerLayout() {
-        launcher {
-            drawerLayoutState.emit(false)
-        }
-    }
 }
