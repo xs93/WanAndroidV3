@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 
 /**
- *
+ * 用户账号信息
  *
  *
  * @author xushuai
@@ -18,7 +18,7 @@ import kotlinx.parcelize.Parcelize
 @Keep
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class AccountModel(
+data class AccountInfo(
     @Json(name = "admin")
     val admin: Boolean = false,
     @Json(name = "chapterTops")

@@ -6,6 +6,7 @@ import com.github.xs93.retrofit.EasyRetrofit
 import com.github.xs93.wanandroid.common.BuildConfig
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
+import com.tencent.mmkv.MMKV
 
 /**
  * Application
@@ -28,6 +29,7 @@ class WanApp : BaseApplication() {
             }
         })
         initARouter()
+        MMKV.initialize(this)
         EasyRetrofit.init(this, "https://www.wanandroid.com/", null, BuildConfig.DEBUG)
     }
 

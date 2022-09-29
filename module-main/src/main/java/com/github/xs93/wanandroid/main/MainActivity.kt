@@ -59,6 +59,7 @@ class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layo
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             viewModel.stateFlow.collect {
                 mNavHeaderBinding.state = it
+                binding.state = it
             }
         }
 
@@ -79,10 +80,6 @@ class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layo
         }
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-        super.initData(savedInstanceState)
-    }
-
     override fun onBackPressed() {
         if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             viewModel.input(MainIntent.CloseDrawerAction)
@@ -98,6 +95,10 @@ class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layo
 
         fun clickToolbarNav() {
             viewModel.input(MainIntent.OpenDrawerAction)
+        }
+
+        fun clickLogout() {
+
         }
     }
 }

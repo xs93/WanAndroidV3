@@ -14,20 +14,24 @@
             type="String" />
 
         <variable
-            name="activity"
-            type="com.github.xs93.wanandroid.login.ui.LoginActivity" />
+            name="loginState"
+            type="com.github.xs93.wanandroid.login.login.LoginViewState" />
+
+        <variable
+            name="listener"
+            type="com.github.xs93.wanandroid.login.login.LoginActivity.Listener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.ui.login.LoginActivity">
+        tools:context=".login.LoginActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolBar"
             style="@style/WanToolbarStyle"
-            onNavigationIconSingleClick="@{()->activity.clickBack()}"
+            onNavigationIconSingleClick="@{()->listener.clickBack()}"
             android:layout_width="0dp"
             android:background="@color/primaryColor"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +58,8 @@
             android:layout_marginHorizontal="36dp"
             android:layout_marginTop="24dp"
             android:hint="@string/login_account"
+            app:error="@{loginState.accountErrorMsg}"
+            app:errorEnabled="@{loginState.accountErrorEnable}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo"
@@ -80,6 +86,8 @@
             app:endIconCheckable="true"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/primaryColor"
+            app:error="@{loginState.pwdErrorMsg}"
+            app:errorEnabled="@{loginState.pwdErrorEnable}"
             app:hintAnimationEnabled="true"
             app:hintEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +107,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
-            onSingleClick="@{()->activity.clickLogin(username,password)}"
+            onSingleClick="@{()->listener.clickLogin(username,password)}"
             android:layout_width="240dp"
             android:layout_height="48dp"
             android:layout_marginTop="24dp"
@@ -110,7 +118,7 @@
             app:layout_constraintTop_toBottomOf="@id/til_password" />
 
         <com.google.android.material.textview.MaterialTextView
-            onSingleClick="@{()->activity.clickRegisterAccount()}"
+            onSingleClick="@{()->listener.clickRegisterAccount()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

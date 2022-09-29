@@ -96,7 +96,7 @@ object ThirdPart {
     const val androidBase = "com.github.xs93:AndroidBase:1.1.2"
 
     //网络封装
-    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.2"
+    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.3"
 
     //mmkv ktx封装扩展
     const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.2"

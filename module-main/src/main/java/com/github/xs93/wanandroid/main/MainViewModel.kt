@@ -4,6 +4,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.github.xs93.core.base.viewmodel.BaseViewModel
 import com.github.xs93.core.ktx.launcher
 import com.github.xs93.wanandroid.common.router.RouterPath
+import com.github.xs93.wanandroid.common.store.UserStore
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
  */
 class MainViewModel : BaseViewModel() {
 
-    private val _stateFlow = MutableStateFlow(MainState(false))
+    private val _stateFlow = MutableStateFlow(MainState(UserStore.login))
     val stateFlow: StateFlow<MainState> = _stateFlow
 
     private val _eventFlow = Channel<MainEvent>()

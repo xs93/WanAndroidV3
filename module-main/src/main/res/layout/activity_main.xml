@@ -5,9 +5,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="surface"
             type="com.github.xs93.core.ui.Surface" />
+
+        <variable
+            name="state"
+            type="com.github.xs93.wanandroid.main.MainState" />
 
         <variable
             name="listener"
@@ -34,6 +40,18 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/white"
-            app:headerLayout="@layout/main_nav_header" />
+            app:headerLayout="@layout/main_nav_header"
+            app:menu="@menu/main_nav_menu">
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/WanCommonButtonStyle"
+                onSingleClick="@{()->listener.clickLogout()}"
+                android:layout_width="200dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginBottom="30dp"
+                android:text="@string/main_logout"
+                android:visibility="@{state.login?View.VISIBLE:View.GONE}" />
+        </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
