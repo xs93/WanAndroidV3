@@ -1,8 +1,6 @@
 package com.github.xs93.wanandroid.common.store
 
-import com.github.xs93.mmkv.MMKVOwner
-import com.github.xs93.mmkv.boolean
-import com.github.xs93.mmkv.parcelable
+import com.github.xs93.mmkv.*
 import com.github.xs93.wanandroid.common.model.UserInfo
 import com.tencent.mmkv.MMKV
 
@@ -19,8 +17,8 @@ object UserStore : MMKVOwner {
         get() = MMKV.mmkvWithID("UserStoreMMKV")
 
     /* 用户是否登录 */
-    var login: Boolean by mmkv.boolean("logged", false)
+    var login: Boolean by mmkvBoolean("logged", false)
 
     /* 账号信息 */
-    var userInfo: UserInfo? by mmkv.parcelable("userInfo", null)
+    var userInfo: UserInfo? by mmkvParcelableWithNull("userInfo", null)
 }

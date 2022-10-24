@@ -2,14 +2,17 @@ package com.github.xs93.wanandroid.main
 
 import android.os.Bundle
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.launcher.ARouter
 import com.github.xs93.core.base.ui.vbvm.BaseVbVmActivity
 import com.github.xs93.core.bus.FlowBus
 import com.github.xs93.core.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.core.ktx.repeatOnLifecycle
 import com.github.xs93.core.utils.toast.ToastUtils
 import com.github.xs93.wanandroid.common.bus.FlowBusKey
+import com.github.xs93.wanandroid.common.router.RouterPath
 import com.github.xs93.wanandroid.common.viewmodel.MainShareViewModel
 import com.github.xs93.wanandroid.main.databinding.ActivityMainBinding
 import com.github.xs93.wanandroid.main.databinding.MainContentBinding
@@ -29,6 +32,7 @@ class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layo
     private lateinit var mContentBinding: MainContentBinding
     private lateinit var mNavHeaderBinding: MainNavHeaderBinding
 
+    private lateinit var mContentAdapter: ContentAdapter
 
     override fun initView(savedInstanceState: Bundle?) {
         window.apply {
@@ -44,9 +48,20 @@ class MainActivity : BaseVbVmActivity<ActivityMainBinding, MainViewModel>(R.layo
             listener = clickListener
         }
 
-        mContentBinding = binding.layoutContent
         mNavHeaderBinding = MainNavHeaderBinding.bind(binding.navView.getHeaderView(0)).apply {
             listener = clickListener
+        }
+
+        mContentBinding = binding.layoutContent
+        val fragments = arrayListOf<Fragment>().apply {
+            add(ARouter.getInstance().build(RouterPath.Home.HomeFragment).navigation() as Fragment)
+        }
+        mContentAdapter = ContentAdapter(fragments, supportFragmentManager, lifecycle)
+
+        mContentBinding.vpContent.apply {
+            isUserInputEnabled = false
+            offscreenPageLimit = fragments.size
+            adapter = mContentAdapter
         }
     }
 

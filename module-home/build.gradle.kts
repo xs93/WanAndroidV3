@@ -1,6 +1,7 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     kotlin("android")
+    id("kotlin-parcelize")
     id("kotlin-kapt")
 }
 
@@ -8,13 +9,17 @@ android {
     compileSdk = BuildConfig.targetSdk
 
     defaultConfig {
-        applicationId = BuildConfig.applicationId
         minSdk = BuildConfig.minSdk
         targetSdk = BuildConfig.targetSdk
-        versionCode = BuildConfig.versionCode
-        versionName = BuildConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.name)
+            }
+        }
     }
 
     buildTypes {
@@ -23,6 +28,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
+    resourcePrefix("home_")
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,8 +45,15 @@ android {
 }
 
 dependencies {
+
     implementation(project(mapOf("path" to ":library-common")))
-    implementation(project(mapOf("path" to ":module-main")))
-    implementation(project(mapOf("path" to ":module-home")))
-    implementation(project(mapOf("path" to ":module-login")))
+
+    implementation(ThirdPart.bannerViewPager)
+
+    kapt(ThirdPart.moshi_kotlin_codegen)
+    kapt(ThirdPart.arouter_compiler)
+
+    testImplementation(Depend.junit)
+    androidTestImplementation(Depend.espressoCore)
+    androidTestImplementation(Depend.junitExt)
 }

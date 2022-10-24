@@ -12,9 +12,17 @@ class RouterPath {
 
     class Login {
         companion object {
-            private const val LoginGroup = "login"
+            private const val LoginGroup = "/login"
 
-            const val LoginActivity = "/$LoginGroup/LoginActivity"
+            const val LoginActivity = "$LoginGroup/LoginActivity"
+        }
+    }
+
+    class Home {
+        companion object {
+            private const val HomeGroup = "/home"
+
+            const val HomeFragment = "${HomeGroup}/HomeFragment"
         }
     }
 

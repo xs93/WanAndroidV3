@@ -13,7 +13,13 @@ android {
         targetSdk = BuildConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.name)
+            }
+        }
     }
 
     buildTypes {
@@ -53,5 +59,7 @@ dependencies {
     api(ThirdPart.mmkvKtx)
     api(ThirdPart.checkableView)
 
-    kapt(ThirdPart.moshi_kotlin_plugin)
+    api(ThirdPart.coil)
+
+    kapt(ThirdPart.moshi_kotlin_codegen)
 }

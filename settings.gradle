@@ -11,7 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = "https://jitpack.io" }
+        maven { url = "https://www.jitpack.io" }
     }
 }
 
@@ -20,3 +20,4 @@ include(":app")
 include(":library-common")
 include(":module-main")
 include ':module-login'
+include ':module-home'

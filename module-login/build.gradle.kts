@@ -47,7 +47,7 @@ dependencies {
     implementation(project(mapOf("path" to ":library-common")))
 
     kapt(ThirdPart.arouter_compiler)
-    kapt(ThirdPart.moshi_kotlin_plugin)
+    kapt(ThirdPart.moshi_kotlin_codegen)
 
     testImplementation(Depend.junit)
     androidTestImplementation(Depend.espressoCore)

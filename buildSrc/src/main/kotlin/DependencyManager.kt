@@ -78,7 +78,7 @@ object ThirdPart {
     const val arouter_compiler = "com.alibaba:arouter-compiler:${Versions.arouter}"
 
     //moshi json解析库
-    const val moshi_kotlin_plugin = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
+    const val moshi_kotlin_codegen = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
     const val moshi_kotlin = "com.squareup.moshi:moshi-kotlin:${Versions.moshi}"
 
     //网络库
@@ -99,7 +99,7 @@ object ThirdPart {
     const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.3"
 
     //mmkv ktx封装扩展
-    const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.2"
+    const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.3"
 
     //可以选中的组件
     const val checkableView = "com.github.xs93:CheckableView:1.0.0"
@@ -116,6 +116,10 @@ object ThirdPart {
 
     //事件总线库
     const val eventBus = "org.greenrobot:eventbus:3.3.1"
+
+    //Banner滑动控件
+    const val bannerViewPager = "com.github.zhpanvip:bannerviewpager:3.5.7"
+
 
     //一个多进程的preference的库
     const val preferenceMultiprocess = "dev.rikka.rikkax.preference:multiprocess:1.0.0"
