@@ -37,12 +37,16 @@ class HomeViewModel : BaseViewModel() {
                 getBanner()
                 mCurPage = 0
                 getArticle(mCurPage) {
-                    mCurPage++
+                    if (it) {
+                        mCurPage++
+                    }
                 }
             }
             else -> {
                 getArticle(mCurPage) {
-                    mCurPage++
+                    if (it) {
+                        mCurPage++
+                    }
                 }
             }
         }
@@ -76,6 +80,15 @@ class HomeViewModel : BaseViewModel() {
         launcher {
             homeRepository.getCurArticle(curPage).collectLatest {
                 when (it) {
+                    RequestState.Loading -> {
+                        Logger.d("Start Load Article,curPage = $curPage")
+                        if (curPage == 0) {
+                            _homeEvent.send(HomeEvent.StartRefreshEvent)
+                        } else {
+                            _homeEvent.send(HomeEvent.StartLoadMoreEvent)
+                        }
+                    }
+
                     is RequestState.Error -> {
                         Logger.e(it.exception, "Load Article failed,curPage = $curPage")
                         result.invoke(false)
@@ -85,14 +98,7 @@ class HomeViewModel : BaseViewModel() {
                             _homeEvent.send(HomeEvent.FinishLoadMoreEvent(false))
                         }
                     }
-                    RequestState.Loading -> {
-                        Logger.d("Start Load Article,curPage = $curPage")
-                        if (curPage == 0) {
-                            _homeEvent.send(HomeEvent.StartRefreshEvent)
-                        } else {
-                            _homeEvent.send(HomeEvent.StartLoadMoreEvent)
-                        }
-                    }
+
                     is RequestState.Success -> {
                         it.data?.let { pageDataInfo ->
                             val oldData = _homeState.value.articles
