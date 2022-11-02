@@ -18,6 +18,6 @@ dependencyResolutionManagement {
 rootProject.name = "WanAndroidV3"
 include(":app")
 include(":library-common")
-include(":module-main")
-include ':module-login'
-include ':module-home'
+include(':business-main')
+include ':business-login'
+include ':business-home'

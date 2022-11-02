@@ -38,7 +38,7 @@ android {
 
 dependencies {
     implementation(project(mapOf("path" to ":library-common")))
-    implementation(project(mapOf("path" to ":module-main")))
-    implementation(project(mapOf("path" to ":module-home")))
-    implementation(project(mapOf("path" to ":module-login")))
+    implementation(project(mapOf("path" to ":business-main")))
+    implementation(project(mapOf("path" to ":business-home")))
+    implementation(project(mapOf("path" to ":business-login")))
 }

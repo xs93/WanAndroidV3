@@ -2,6 +2,7 @@
 
 import Versions.kotlin
 import Versions.kotlinCoroutines
+import Versions.smartRefreshLayout
 
 /**
  *
@@ -33,6 +34,8 @@ object Versions {
     const val retrofit = "2.9.0"
 
     const val immersionBar = "3.2.2"
+
+    const val smartRefreshLayout = "2.0.5"
 }
 
 
@@ -72,6 +75,19 @@ object Kotlin {
 }
 
 object ThirdPart {
+
+    //基础类
+    const val androidBase = "com.github.xs93:AndroidBase:1.1.3"
+
+    //网络封装
+    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.3"
+
+    //mmkv ktx封装扩展
+    const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.3"
+
+    //可以选中的组件
+    const val checkableView = "com.github.xs93:CheckableView:1.0.0"
+
     //ARouter 路由组件
     const val arouter_plugin = "com.alibaba:arouter-register:1.0.2"
     const val arouter_api = "com.alibaba:arouter-api:${Versions.arouter}"
@@ -92,18 +108,6 @@ object ThirdPart {
     //日志库
     const val logger = "com.orhanobut:logger:2.2.0"
 
-    //基础类
-    const val androidBase = "com.github.xs93:AndroidBase:1.1.2"
-
-    //网络封装
-    const val easyRetrofit = "com.github.xs93:EasyRetrofit:1.0.3"
-
-    //mmkv ktx封装扩展
-    const val mmkvKtx = "com.github.xs93:mmkv-ktx:1.0.3"
-
-    //可以选中的组件
-    const val checkableView = "com.github.xs93:CheckableView:1.0.0"
-
     //沉浸式库
     const val immersionBar = "com.geyifeng.immersionbar:immersionbar:${Versions.immersionBar}"
     const val immersionBar_ktx = "com.geyifeng.immersionbar:immersionbar:${Versions.immersionBar}"
@@ -114,12 +118,25 @@ object ThirdPart {
     //图片加载库
     const val coil = "io.coil-kt:coil:2.1.0"
 
+    //刷新库
+    const val smart_refresh_layout_kernel = "io.github.scwang90:refresh-layout-kernel:$smartRefreshLayout"//核心必须依赖
+    const val smart_refresh_header_classics = "io.github.scwang90:refresh-header-classics:$smartRefreshLayout"//经典刷新头
+    const val smart_refresh_header_radar = "io.github.scwang90:refresh-header-radar:$smartRefreshLayout"//雷达刷新头
+    const val smart_refresh_header_falsify = "io.github.scwang90:refresh-header-falsify:$smartRefreshLayout" //虚拟刷新头
+    const val smart_refresh_header_material = "io.github.scwang90:refresh-header-material:$smartRefreshLayout"//谷歌刷新头
+    const val smart_refresh_header_two_level = "io.github.scwang90:refresh-header-two-level:$smartRefreshLayout" //二级刷新头
+    const val smart_refresh_footer_ball = "io.github.scwang90:refresh-footer-ball:$smartRefreshLayout"//球脉冲加载
+    const val smart_refresh_footer_classics = "io.github.scwang90:refresh-footer-classics:$smartRefreshLayout"//经典加载
+
+    /** RecyclerView 扩展框架  */
+    const val BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.11"
+    const val BRVAH_V4 = "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.0-beta04"
+
     //事件总线库
     const val eventBus = "org.greenrobot:eventbus:3.3.1"
 
     //Banner滑动控件
     const val bannerViewPager = "com.github.zhpanvip:bannerviewpager:3.5.7"
-
 
     //一个多进程的preference的库
     const val preferenceMultiprocess = "dev.rikka.rikkax.preference:multiprocess:1.0.0"
@@ -129,8 +146,6 @@ object ThirdPart {
     /** RecyclerView 扩展框架 */
     const val brv = "com.github.liangjingkanji:BRV:1.3.79"
 
-    /** RecyclerView 扩展框架  */
-    const val BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.7"
 
     /** google pay 结算库 */
     const val billing = "com.android.billingclient:billing-ktx:5.0.0"

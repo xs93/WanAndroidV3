@@ -20,7 +20,7 @@ import coil.load
  * @param url String?
  * @param default Drawable?
  */
-@BindingAdapter(*["app:url", "app:default"], requireAll = false)
+@BindingAdapter(*["url", "default"], requireAll = false)
 fun loadCircleCropImage(view: ImageView, url: String? = null, default: Drawable? = null) {
     view.load(url) {
         placeholder(default)

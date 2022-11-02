@@ -46,8 +46,11 @@ dependencies {
     api(AndroidX.appcompat)
     api(AndroidX.material)
     api(AndroidX.constraintlayout)
+
+    api(AndroidX.lifecycle_runtime_ktx)
     api(AndroidX.lifecycle_liveData_Ktx)
     api(AndroidX.lifecycle_viewmodel_ktx)
+
     api(Kotlin.kotlinx_coroutines_core)
     api(Kotlin.kotlinx_coroutines_android)
 
@@ -59,7 +62,12 @@ dependencies {
     api(ThirdPart.mmkvKtx)
     api(ThirdPart.checkableView)
 
-    api(ThirdPart.coil)
-
     kapt(ThirdPart.moshi_kotlin_codegen)
+
+    api(ThirdPart.coil)
+    api(ThirdPart.BRVAH)
+
+    api(ThirdPart.smart_refresh_layout_kernel)
+    api(ThirdPart.smart_refresh_header_material)
+    api(ThirdPart.smart_refresh_footer_ball)
 }

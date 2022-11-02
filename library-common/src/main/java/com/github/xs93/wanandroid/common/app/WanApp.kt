@@ -29,7 +29,6 @@ class WanApp : BaseApplication() {
             }
         })
         initARouter()
-        MMKV.initialize(this)
         EasyRetrofit.init(this, "https://www.wanandroid.com/", null, BuildConfig.DEBUG)
     }
 
