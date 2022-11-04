@@ -8,4 +8,14 @@
     <color name="secondaryDarkColor">#870000</color>
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color>
+
+    <color name="windowBackground">#E1E1E1</color>
+
+    <color name="article_tag_red">#bf360c</color>
+    <color name="article_tag_green">#4caf50</color>
+    <color name="article_title">#FF19191B</color>
+    <color name="article_favorite_checked">#bf360c</color>
+    <color name="article_favorite_normal">#757575</color>
+    <color name="article_author">#616161</color>
+
 </resources>

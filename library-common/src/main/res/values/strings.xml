@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WanAndroid</string>
+
+    <string name="article_author">作者：%s</string>
+    <string name="article_share_user">分享人：%S</string>
 </resources>

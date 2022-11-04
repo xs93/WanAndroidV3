@@ -1,10 +1,13 @@
 package com.github.xs93.wanandroid.home.home
 
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.github.xs93.core.base.ui.vbvm.BaseVbVmFragment
 import com.github.xs93.core.ktx.dp
@@ -77,6 +80,19 @@ class HomeFragment : BaseVbVmFragment<HomeFragHomeBinding, HomeViewModel>(R.layo
         binding.rvArticle.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = articleAdapter
+            addItemDecoration(object : ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    val position = parent.getChildAdapterPosition(view)
+                    if (position > 0) {
+                        outRect.set(0, 4.dp(context), 0, 0)
+                    }
+                }
+            })
         }
 
         binding.srl.apply {
