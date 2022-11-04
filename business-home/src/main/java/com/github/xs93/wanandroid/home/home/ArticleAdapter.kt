@@ -22,6 +22,7 @@ import com.github.xs93.wanandroid.home.databinding.HomeItemArticleBinding
  */
 class ArticleAdapter :
     BaseQuickAdapter<Article, BaseDataBindingHolder<HomeItemArticleBinding>>(R.layout.home_item_article) {
+
     override fun convert(holder: BaseDataBindingHolder<HomeItemArticleBinding>, item: Article) {
         val dataBinding = holder.dataBinding
         dataBinding?.let {

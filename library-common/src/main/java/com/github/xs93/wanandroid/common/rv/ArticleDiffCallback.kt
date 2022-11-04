@@ -26,10 +26,11 @@ class ArticleDiffCallback : DiffUtil.ItemCallback<Article>() {
     }
 
     override fun getChangePayload(oldItem: Article, newItem: Article): Any? {
-        return if (oldItem.collect != newItem.collect) {
-            PAYLOAD_COLLECT
-        } else {
-            super.getChangePayload(oldItem, newItem)
-        }
+       return super.getChangePayload(oldItem, newItem)
+//        return if (oldItem.collect != newItem.collect) {
+//            PAYLOAD_COLLECT
+//        } else {
+//            super.getChangePayload(oldItem, newItem)
+//        }
     }
 }
