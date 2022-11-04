@@ -5,6 +5,9 @@ plugins {
 }
 
 android {
+
+    namespace = "com.github.xs93.wanandroid"
+
     compileSdk = BuildConfig.targetSdk
 
     defaultConfig {
@@ -41,4 +44,5 @@ dependencies {
     implementation(project(mapOf("path" to ":business-main")))
     implementation(project(mapOf("path" to ":business-home")))
     implementation(project(mapOf("path" to ":business-login")))
+    implementation(project(mapOf("path" to ":business-web")))
 }

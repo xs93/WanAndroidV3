@@ -1,12 +1,17 @@
 plugins {
     id("com.android.library")
-    kotlin("android")
+    id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
 }
 
-android {
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.name)
+    }
+}
 
-    namespace = "com.github.xs93.wanandroid.main"
+android {
+    namespace = "com.github.xs93.wanandroid.web"
 
     compileSdk = BuildConfig.targetSdk
 
@@ -15,7 +20,7 @@ android {
         targetSdk = BuildConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
+        consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
     }
 
     buildTypes {
@@ -38,9 +43,18 @@ android {
 }
 
 dependencies {
+    implementation(AndroidX.coreKtx)
+    implementation(AndroidX.appcompat)
+    implementation(AndroidX.material)
+    implementation(ThirdPart.agentWeb_core)
+    implementation(ThirdPart.agentWeb_file_chooser)
+    implementation(ThirdPart.agentWeb_downloader)
+
+    kapt(ThirdPart.arouter_compiler)
 
     implementation(project(mapOf("path" to ":library-common")))
+
     testImplementation(Depend.junit)
-    androidTestImplementation(Depend.espressoCore)
     androidTestImplementation(Depend.junitExt)
+    androidTestImplementation(Depend.espressoCore)
 }

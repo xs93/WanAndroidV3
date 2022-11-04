@@ -6,6 +6,9 @@ plugins {
 }
 
 android {
+
+    namespace = "com.github.xs93.wanandroid.home"
+
     compileSdk = BuildConfig.targetSdk
 
     defaultConfig {

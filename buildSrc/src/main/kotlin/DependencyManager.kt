@@ -15,10 +15,10 @@ import Versions.smartRefreshLayout
 
 object Versions {
     //apg版本号
-    const val agp = "7.2.2"
+    const val agp = "7.3.1"
 
     //kotlin版本号
-    const val kotlin = "1.7.10"
+    const val kotlin = "1.7.20"
     const val kotlinCoroutines = "1.6.3"
 
     const val lifecycle = "2.5.1"
@@ -40,12 +40,12 @@ object Versions {
 
 
 object AndroidX {
-    const val coreKtx = "androidx.core:core-ktx:1.8.0"
-    const val appcompat = "androidx.appcompat:appcompat:1.5.0"
+    const val coreKtx = "androidx.core:core-ktx:1.9.0"
+    const val appcompat = "androidx.appcompat:appcompat:1.5.1"
     const val activityKtx = "androidx.activity:activity-ktx:1.5.1"
     const val fragmentKtx = "androidx.fragment:fragment-ktx:1.5.2"
     const val annotation = "androidx.annotation:annotation:1.4.0"
-    const val material = "com.google.android.material:material:1.6.1"
+    const val material = "com.google.android.material:material:1.7.0"
     const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
     const val recyclerview = "androidx.recyclerview:recyclerview:1.2.1"
     const val viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
@@ -131,6 +131,11 @@ object ThirdPart {
     /** RecyclerView 扩展框架  */
     const val BRVAH = "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.11"
     const val BRVAH_V4 = "io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.0-beta04"
+
+    const val agentWeb_core = "com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx"
+    const val agentWeb_file_chooser = "com.github.Justson.AgentWeb:agentweb-filechooser:v5.0.6-androidx"
+    const val agentWeb_downloader = "com.github.Justson:Downloader:v5.0.4-androidx"
+
 
     //事件总线库
     const val eventBus = "org.greenrobot:eventbus:3.3.1"

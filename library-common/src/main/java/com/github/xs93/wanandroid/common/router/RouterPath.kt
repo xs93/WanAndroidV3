@@ -26,4 +26,12 @@ class RouterPath {
         }
     }
 
+    class Web {
+        companion object {
+            private const val WebGroup = "/web"
+
+            const val WebActivity = "$WebGroup/WebActivity"
+        }
+    }
+
 }

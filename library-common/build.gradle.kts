@@ -6,6 +6,9 @@ plugins {
 }
 
 android {
+
+    namespace = "com.github.xs93.wanandroid.common"
+
     compileSdk = BuildConfig.targetSdk
 
     defaultConfig {
@@ -14,12 +17,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
-
-        kapt {
-            arguments {
-                arg("AROUTER_MODULE_NAME", project.name)
-            }
-        }
     }
 
     buildTypes {

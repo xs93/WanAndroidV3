@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.github.xs93.core.base.ui.vbvm.BaseVbVmFragment
 import com.github.xs93.core.ktx.dp
 import com.github.xs93.core.ktx.getColorCompat
@@ -63,8 +64,12 @@ class HomeFragment : BaseVbVmFragment<HomeFragHomeBinding, HomeViewModel>(R.layo
                 setScrollDuration(500)
                 setInterval(3000)
                 adapter = bannerAdapter
-                setOnPageClickListener { clickedView, position ->
-
+                setOnPageClickListener { _, position ->
+                    val banner = data[position]
+                    ARouter.getInstance().build(RouterPath.Web.WebActivity)
+                        .withString("title", banner.title)
+                        .withString("url", banner.url)
+                        .navigation()
                 }
             }.create()
         }
@@ -72,8 +77,12 @@ class HomeFragment : BaseVbVmFragment<HomeFragHomeBinding, HomeViewModel>(R.layo
         articleAdapter.apply {
             addHeaderView(mHomeHeaderBannerBinding.root)
             setDiffCallback(ArticleDiffCallback())
-            setOnItemClickListener { adapter, view, position ->
-                //
+            setOnItemClickListener { _, _, position ->
+                val article = articleAdapter.data[position]
+                ARouter.getInstance().build(RouterPath.Web.WebActivity)
+                    .withString("title", article.title)
+                    .withString("url", article.link)
+                    .navigation()
             }
         }
 
