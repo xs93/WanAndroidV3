@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.text.parseAsHtml
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.github.xs93.core.ktx.dp
@@ -64,6 +65,7 @@ class ArticleAdapter :
                 else -> ""
             }
             it.tvArticleChapterName.text = chapterName
+            it.tvTitle.text = item.title.parseAsHtml()
         }
     }
 

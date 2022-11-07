@@ -9,6 +9,8 @@
 
         <import type="android.text.TextUtils" />
 
+        <import type="androidx.core.text.HtmlKt" />
+        <import type="androidx.core.text.HtmlCompat"/>
         <variable
             name="article"
             type="com.github.xs93.wanandroid.common.model.Article" />
@@ -101,7 +103,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{TextUtils.htmlEncode(article.title)}"
                 android:textColor="@color/article_title"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
