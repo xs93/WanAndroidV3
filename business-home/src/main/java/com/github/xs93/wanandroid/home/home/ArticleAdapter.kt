@@ -40,10 +40,16 @@ class ArticleAdapter :
                     for (index in 0 until addCount) {
                         addTagView(context, it.llArticleOtherTag)
                     }
+                } else {
+                    for (index in item.tags.size until tagChildSize) {
+                        val childView = it.llArticleOtherTag.getChildAt(index)
+                        childView.visibility = View.GONE
+                    }
                 }
                 for (index in item.tags.indices) {
                     val childView = it.llArticleOtherTag.getChildAt(index)
                     if (childView is TextView) {
+                        childView.visibility = View.VISIBLE
                         childView.text = item.tags[index].name
                     }
                 }
@@ -62,8 +68,7 @@ class ArticleAdapter :
 
 
             val chapterName = when {
-                item.superChapterName.isNotBlank() and item.chapterName.isNotBlank() ->
-                    "${item.superChapterName} / ${item.chapterName}"
+                item.superChapterName.isNotBlank() and item.chapterName.isNotBlank() -> "${item.superChapterName} / ${item.chapterName}"
                 item.superChapterName.isNotBlank() -> item.superChapterName
                 item.chapterName.isNotBlank() -> item.chapterName
                 else -> ""
@@ -80,6 +85,6 @@ class ArticleAdapter :
             inflater.inflate(com.github.xs93.wanandroid.common.R.layout.common_article_list_tag, parent, false)
         val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(-2, -2)
         layoutParams.marginStart = 4.dp(context)
-        parent.addView(rootView)
+        parent.addView(rootView, layoutParams)
     }
 }
