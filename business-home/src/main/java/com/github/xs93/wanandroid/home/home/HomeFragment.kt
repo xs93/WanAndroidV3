@@ -14,6 +14,7 @@ import com.github.xs93.core.base.ui.vbvm.BaseVbVmFragment
 import com.github.xs93.core.ktx.dp
 import com.github.xs93.core.ktx.getColorCompat
 import com.github.xs93.core.ktx.repeatOnLifecycle
+import com.github.xs93.core.utils.toast.ToastUtils
 import com.github.xs93.wanandroid.common.router.RouterPath
 import com.github.xs93.wanandroid.common.rv.ArticleDiffCallback
 import com.github.xs93.wanandroid.home.R
@@ -83,6 +84,10 @@ class HomeFragment : BaseVbVmFragment<HomeFragHomeBinding, HomeViewModel>(R.layo
                     .withString("title", article.title)
                     .withString("url", article.link)
                     .navigation()
+            }
+            setOnItemChildClickListener { _, _, position ->
+                val article = articleAdapter.data[position]
+                ToastUtils.show("收藏")
             }
         }
 

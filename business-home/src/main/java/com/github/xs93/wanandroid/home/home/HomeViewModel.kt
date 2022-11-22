@@ -109,7 +109,6 @@ class HomeViewModel : BaseViewModel() {
                                     addAll(pageDataInfo.datas)
                                 }
                             }
-                            Logger.d(newData)
                             _homeState.emit(_homeState.value.copy(articles = newData))
                         }
 

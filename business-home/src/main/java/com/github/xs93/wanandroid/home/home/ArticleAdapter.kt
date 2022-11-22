@@ -24,6 +24,10 @@ import com.github.xs93.wanandroid.home.databinding.HomeItemArticleBinding
 class ArticleAdapter :
     BaseQuickAdapter<Article, BaseDataBindingHolder<HomeItemArticleBinding>>(R.layout.home_item_article) {
 
+    init {
+        addChildClickViewIds(R.id.civ_favorite)
+    }
+
     override fun convert(holder: BaseDataBindingHolder<HomeItemArticleBinding>, item: Article) {
         val dataBinding = holder.dataBinding
         dataBinding?.let {
@@ -72,7 +76,8 @@ class ArticleAdapter :
 
     private fun addTagView(context: Context, parent: LinearLayout) {
         val inflater = LayoutInflater.from(context)
-        val rootView = inflater.inflate(com.github.xs93.wanandroid.common.R.layout.common_article_list_tag, null)
+        val rootView =
+            inflater.inflate(com.github.xs93.wanandroid.common.R.layout.common_article_list_tag, parent, false)
         val layoutParams: LinearLayout.LayoutParams = LinearLayout.LayoutParams(-2, -2)
         layoutParams.marginStart = 4.dp(context)
         parent.addView(rootView)
