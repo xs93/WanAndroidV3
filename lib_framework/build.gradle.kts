@@ -1,36 +1,33 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id(libs.plugins.kotlin.kapt.get().pluginId)
 }
 
 android {
-    namespace = "com.github.xs93.wanandroid.app"
+    namespace = "com.github.xs93.framework"
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.github.xs93.wanandroid"
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-
+        minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
@@ -41,8 +38,17 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to ":lib_framework")))
-    implementation(project(mapOf("path" to ":lib_common")))
+    api(libs.androidx.core.kts)
+    api(libs.androidx.appcompat)
+    api(libs.material)
+    api(libs.androidx.constraintlayout)
+    api(libs.androidx.activity.ktx)
+    api(libs.androidx.fragment.ktx)
+    api(libs.androidx.lifecycle.runtime.ktx)
+    api(libs.androidx.lifecycle.liveData.ktx)
+    api(libs.androidx.lifecycle.viewmodel.ktx)
+    api(libs.bundles.kotlinx.coroutines)
 
-    implementation(libs.androidx.core.splashscreen)
+    api(libs.mmkv)
+    api(libs.bundles.retrofit2)
 }

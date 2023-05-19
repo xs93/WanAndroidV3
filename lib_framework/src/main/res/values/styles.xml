@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ToolbarStyle" parent="@style/Widget.Material3.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+    </style>
+
+    <style name="BaseDialogStyle" parent="Theme.Material3.DayNight.Dialog.Alert">
+        <item name="android:windowNoTitle">true</item>
+        <!-- 全屏显示-->
+        <item name="android:windowFullscreen">false</item>
+        <!-- 设置弹窗是否浮在Activity上，如果为true，则默认window 宽高为wrap_content,左右会有边距-->
+        <item name="android:windowIsFloating">true</item>
+        <!--阴影  -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--透明背景-->
+        <item name="android:background">@android:color/transparent</item>
+        <!--窗口背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--弹窗背景是否变暗-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--去除window的padding，当windowIsFloating 为true时,会有padding-->
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="BaseFullScreenDialogStyle" parent="BaseDialogStyle">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--去除window的padding，当windowIsFloating 为true时,会有padding-->
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="BaseCommonButtonStyle" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingEnd">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="elevation">0dp</item>
+        <item name="rippleColor">@color/black</item>
+        <item name="iconTintMode">src_atop</item>
+        <item name="iconTint">@color/white</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconSize">20dp</item>
+    </style>
+
+
+    <style name="CircleImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
