@@ -7,7 +7,7 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/color_212121</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:statusBarColor">@color/primaryColor</item>
         <item name="android:navigationBarColor">@color/black</item>

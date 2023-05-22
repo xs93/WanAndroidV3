@@ -10,9 +10,12 @@
     <color name="secondaryTextColor">@color/white</color>
 
     <color name="colorOnSurface">#212121</color>
-    <color name="windowBackground">#E1E1E1</color>
+    <color name="windowBackground">@color/white</color>
 
     <color name="base_color_loading_progress">@color/primaryColor</color>
+
+    <color name="mainBottomNavViewSelected">@color/primaryColor</color>
+    <color name="mainBottomNavViewNormal">@color/color_666666</color>
 
     <color name="article_tag_red">@color/secondaryColor</color>
     <color name="article_tag_green">#4caf50</color>

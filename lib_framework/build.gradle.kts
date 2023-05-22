@@ -49,6 +49,8 @@ dependencies {
     api(libs.androidx.lifecycle.viewmodel.ktx)
     api(libs.bundles.kotlinx.coroutines)
 
+    api(libs.androidx.viewpager2)
+
     api(libs.mmkv)
     api(libs.bundles.retrofit2)
 }
