@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id(libs.plugins.kotlin.kapt.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -53,4 +54,7 @@ dependencies {
 
     api(libs.mmkv)
     api(libs.bundles.retrofit2)
+    ksp(libs.moshi.kotlin.codegen)
+
+    api(libs.coil)
 }

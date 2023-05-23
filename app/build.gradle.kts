@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id(libs.plugins.kotlin.kapt.get().pluginId)
+    id(libs.plugins.kotlin.parcelize.get().pluginId)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -44,5 +46,10 @@ dependencies {
     implementation(project(mapOf("path" to ":lib_framework")))
     implementation(project(mapOf("path" to ":lib_common")))
 
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
+
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.banner)
+    implementation(libs.viewPagerIndicator)
 }

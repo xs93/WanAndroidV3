@@ -31,8 +31,6 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-lifecycle-liveData-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 
 
-
-
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoom" }
@@ -42,6 +40,7 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+
 #网络库
 okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
 okhttp3-interceptor-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp" }
@@ -54,11 +53,22 @@ retrofit2-converter-scalars = { group = "com.squareup.retrofit2", name = "conver
 permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version = "1.7.1" }
 #界面适配库
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
+#key-value 持久化库
+mmkv = { module = "com.tencent:mmkv", version = "1.2.16" }
+
+#图片加载库
+#https://github.com/coil-kt/coil
+coil = { group = "io.coil-kt", name = "coil", version = "2.4.0" }
+
 #UI库
 checkableView = { group = "com.github.xs93", name = "CheckableView", version = "1.0.2" }
 cropImageView = { group = "com.github.xs93", name = "CropImageView", version = "1.0.3" }
 photoview = { group = "com.github.chrisbanes", name = "PhotoView", version = "2.0.0" }
-mmkv = { module = "com.tencent:mmkv", version = "1.2.16" }
+#https://github.com/zhpanvip/BannerViewPager
+banner = { group = "com.github.zhpanvip", name = "bannerviewpager", version = "3.5.11" }
+#https://github.com/zhpanvip/viewpagerindicator
+viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator", version = "1.2.2" }
+
 
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
@@ -71,3 +81,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }

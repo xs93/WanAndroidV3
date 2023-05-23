@@ -1,6 +1,8 @@
-package com.github.xs93.wanandroid.app
+package com.github.xs93.wanandroid
 
 import com.github.xs93.framework.core.base.application.BaseApplication
+import com.github.xs93.framework.core.ktx.isDebug
+import com.github.xs93.framework.network.EasyRetrofit
 
 /**
  * Application
@@ -13,5 +15,10 @@ import com.github.xs93.framework.core.base.application.BaseApplication
 class WanAndroidApp : BaseApplication() {
     override fun addComponentApplication(classNames: MutableList<String>) {
 
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        EasyRetrofit.init(this, "https://www.wanandroid.com/", null, isDebug)
     }
 }

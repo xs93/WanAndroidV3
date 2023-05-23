@@ -1,10 +1,8 @@
 package com.github.xs93.wanandroid.app.ui.main
 
 import android.os.Bundle
-import android.util.SparseArray
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.github.xs93.framework.core.adapter.ViewPager2FragmentAdapter
 import com.github.xs93.framework.core.base.ui.viewbinding.BaseVbActivity
@@ -77,10 +75,10 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
         }
         binding.bottomNavView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.menu_home -> binding.vpContent.currentItem = 0
-                R.id.menu_classify -> binding.vpContent.currentItem = 1
-                R.id.menu_system -> binding.vpContent.currentItem = 2
-                R.id.menu_mine -> binding.vpContent.currentItem = 3
+                R.id.menu_home -> binding.vpContent.setCurrentItem(0, false)
+                R.id.menu_classify -> binding.vpContent.setCurrentItem(1, false)
+                R.id.menu_system -> binding.vpContent.setCurrentItem(2, false)
+                R.id.menu_mine -> binding.vpContent.setCurrentItem(3, false)
             }
             true
         }
