@@ -45,9 +45,12 @@ dependencies {
     api(libs.androidx.constraintlayout)
     api(libs.androidx.activity.ktx)
     api(libs.androidx.fragment.ktx)
+
+
     api(libs.androidx.lifecycle.runtime.ktx)
-    api(libs.androidx.lifecycle.liveData.ktx)
     api(libs.androidx.lifecycle.viewmodel.ktx)
+    ksp(libs.androidx.lifecycle.compiler)
+
     api(libs.bundles.kotlinx.coroutines)
 
     api(libs.androidx.viewpager2)

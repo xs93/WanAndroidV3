@@ -1,13 +1,13 @@
 package com.github.xs93.framework.core.base.ui.base
 
-import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
-import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -18,16 +18,21 @@ import com.github.xs93.framework.core.loading.IUiLoadingDialogProxy
 import com.github.xs93.framework.core.toast.IToast
 import com.github.xs93.framework.core.toast.UiToastProxy
 import com.github.xs93.framework.core.ui.Surface
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.lang.reflect.Field
 
 /**
- * 基础dialogFragment 封装
+ * 底部弹出弹窗dialog
  *
  * @author XuShuai
  * @version v1.0
- * @date 2021/11/4 13:40
+ * @date 2023/6/16 14:17
+ * @email 466911254@qq.com
  */
-abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToastProxy(), IUiLoadingDialog {
+abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IToast by UiToastProxy(),IUiLoadingDialog {
+
 
     protected val surface = Surface()
 
@@ -42,9 +47,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
         setStyle(STYLE_NORMAL, getStyle())
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return DialogInterfaceProxyDialog(requireContext(), theme)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (getContentLayoutId() != 0) {
@@ -62,13 +64,31 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
                 surface.insets = it
             }
         }
+
+        if (showFixedHeight()) {
+            view.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    if (view.measuredHeight == 0) {
+                        return
+                    }
+                    view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    val dialog = dialog
+                    if (dialog is BottomSheetDialog) {
+                        val bottomSheet: FrameLayout =
+                            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return
+                        val behavior: BottomSheetBehavior<FrameLayout> = BottomSheetBehavior.from(bottomSheet)
+                        behavior.peekHeight = view.measuredHeight
+                    }
+                }
+            })
+        }
+
         beforeInitView(view, savedInstanceState)
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         beforeInitData(savedInstanceState)
         initData(savedInstanceState)
     }
-
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
@@ -77,6 +97,14 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
 
     protected open fun getStyle(): Int {
         return R.style.BaseDialogStyle
+    }
+
+    /**
+     * 直接显示完整的高度,不需要上滑
+     * @return Boolean
+     */
+    open fun showFixedHeight(): Boolean {
+        return true
     }
 
     /**返回布局Layout*/

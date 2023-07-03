@@ -14,13 +14,31 @@ import coil.load
  * @email 466911254@qq.com
  */
 
-@BindingAdapter(*["coilUrl", "coilPlaceholder", "coilError"], requireAll = false)
-fun loadImage(view: ImageView, url: String? = null, placeholder: Drawable? = null, error: Drawable? = null) {
-    val loadUrl = url ?: ""
-    view.load(loadUrl) {
+@BindingAdapter(*["coilUrl", "coilFallback", "coilPlaceholder", "coilError"], requireAll = false)
+fun loadImage(
+    view: ImageView,
+    url: String? = null,
+    fallback: Drawable? = null,
+    placeholder: Drawable? = null,
+    error: Drawable? = null
+) {
+    view.load(url) {
+        if (fallback != null) {
+            fallback(fallback)
+        } else {
+            if (error != null) {
+                fallback(error)
+            } else {
+                if (placeholder != null) {
+                    fallback(placeholder)
+                }
+            }
+        }
+
         if (placeholder != null) {
             this.placeholder(placeholder)
         }
+
         if (error != null) {
             error(error)
         }

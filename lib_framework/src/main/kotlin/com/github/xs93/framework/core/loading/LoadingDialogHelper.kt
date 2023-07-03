@@ -3,7 +3,7 @@ package com.github.xs93.framework.core.loading
 import androidx.fragment.app.DialogFragment
 
 /**
- *
+ * LoadingDialog 辅助类
  *
  * @author XuShuai
  * @version v1.0
