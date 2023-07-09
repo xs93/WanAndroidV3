@@ -1,6 +1,5 @@
 package com.github.xs93.wanandroid.common.network
 
-import com.github.xs93.framework.network.exception.ServiceException
 import com.github.xs93.framework.network.model.ApiResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -25,13 +24,5 @@ class WanResponse<out T>(
 ) : ApiResponse<T>(errorCode, errorMessage, data) {
     companion object {
         const val ERROR_NOT_LOGIN = -1001
-    }
-
-    override fun coverData(): T? {
-        if (isSuccess()) return data
-        if (errorCode == ERROR_NOT_LOGIN) {
-            throw ServiceException(errorCode, errorMessage)
-        }
-        throw ServiceException(errorCode, errorMessage)
     }
 }

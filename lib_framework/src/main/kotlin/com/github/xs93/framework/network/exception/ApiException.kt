@@ -8,16 +8,35 @@ package com.github.xs93.framework.network.exception
  * @date   2022/9/2-14:33
  * @email  466911254@qq.com
  */
-open class ApiException(
-    val errorCode: Int,
-    val errorMessage: String? = "",
-    throwable: Throwable? = null,
-) : Exception(errorMessage, throwable) {
-    companion object {
-        private const val serialVersionUID = -4966800L
+open class ApiException : Exception {
+
+    var errorCode: Int
+    var errorMsg: String
+
+    @JvmOverloads
+    constructor(error: ERROR, throwable: Throwable? = null) : super(throwable) {
+        errorCode = error.code
+        errorMsg = error.errMsg
+    }
+
+    @JvmOverloads
+    constructor(code: Int, msg: String, throwable: Throwable? = null) : super(throwable) {
+        errorCode = code
+        errorMsg = msg
     }
 
     override fun toString(): String {
-        return "errorCode = $errorCode,errorMessage = $errorMessage,$cause"
+        return "errorCode = $errorCode,errorMsg = $errorMsg,$cause"
+    }
+}
+
+
+class NoNetworkException(error: ERROR, throwable: Throwable? = null) : Exception(throwable) {
+    var errorCode: Int
+    var errorMsg: String
+
+    init {
+        errorCode = error.code
+        errorMsg = error.errMsg
     }
 }
