@@ -4,12 +4,17 @@ import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
@@ -61,6 +66,25 @@ fun ComponentActivity.repeatOnStarted(
     return repeatOnLifecycle(Lifecycle.State.STARTED, context, start, block)
 }
 
+fun <R> ComponentActivity.observer(flow: Flow<R>, action: suspend (R) -> Unit) {
+    flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+        .distinctUntilChanged()
+        .onEach {
+            action.invoke(it)
+        }
+        .launchIn(lifecycleScope)
+}
+
+fun <R> Fragment.observer(flow: Flow<R>, action: suspend (R) -> Unit) {
+    flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+        .distinctUntilChanged()
+        .onEach {
+            action.invoke(it)
+        }
+        .launchIn(lifecycleScope)
+}
+
+
 fun Fragment.launcher(
     context: CoroutineContext = EmptyCoroutineContext,
     start: CoroutineStart = CoroutineStart.DEFAULT,
@@ -87,3 +111,4 @@ fun Fragment.repeatOnStarted(
 ): Job {
     return repeatOnLifecycle(Lifecycle.State.STARTED, context, start, block)
 }
+

@@ -1,12 +1,12 @@
 package com.github.xs93.wanandroid.app.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.github.xs93.framework.core.base.ui.vbvm.BaseVbVmFragment
-import com.github.xs93.framework.core.base.ui.viewbinding.BaseVbFragment
 import com.github.xs93.framework.core.ktx.dp
 import com.github.xs93.framework.core.ktx.getColorCompat
-import com.github.xs93.framework.core.ktx.repeatOnStarted
+import com.github.xs93.framework.core.ktx.observer
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentHomeBinding
 import com.github.xs93.wanandroid.app.entity.Banner
@@ -15,8 +15,6 @@ import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.bannerview.constants.PageStyle
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 /**
@@ -50,12 +48,11 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
             setIndicatorStyle(IndicatorStyle.ROUND_RECT)
             setIndicatorMargin(0, 0, 12.dp(context), 16.dp(context))
             setIndicatorGravity(IndicatorGravity.CENTER)
-            registerLifecycleObserver(viewLifecycleOwner.lifecycle)
+            registerLifecycleObserver(lifecycle)
             setScrollDuration(500)
             setOffScreenPageLimit(2)
             disallowParentInterceptDownEvent(true)
-            setPageStyle(PageStyle.MULTI_PAGE_OVERLAP, 0.85f)
-            setRevealWidth(16.dp(requireContext()))
+            setPageStyle(PageStyle.NORMAL, 1.0f)
             setInterval(3000)
             adapter = bannerAdapter
             setOnPageClickListener { _, position ->
@@ -66,10 +63,9 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
 
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
-        repeatOnStarted {
-            viewModel.uiStateFlow.map { it.bannerUiState }.distinctUntilChanged().collectLatest {
-                bannerViewPager.create(it.banners)
-            }
+        observer(viewModel.uiStateFlow.map { it.bannerUiState }) {
+            Log.d("HomeFragment", "$it")
+            bannerViewPager.refreshData(it.banners)
         }
     }
 

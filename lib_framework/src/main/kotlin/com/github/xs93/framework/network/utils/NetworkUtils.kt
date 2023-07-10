@@ -1,4 +1,4 @@
-package com.github.xs93.framework.core.utils
+package com.github.xs93.framework.network.utils
 
 import android.annotation.SuppressLint
 import android.content.Context

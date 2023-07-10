@@ -65,6 +65,7 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
         }
         mContentAdapter = ViewPager2FragmentAdapter(this, fragments)
         binding.vpContent.apply {
+            offscreenPageLimit = fragments.size
             adapter = mContentAdapter
             registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {

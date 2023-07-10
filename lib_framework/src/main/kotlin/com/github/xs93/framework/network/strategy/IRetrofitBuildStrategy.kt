@@ -5,6 +5,7 @@ import com.github.xs93.framework.network.EasyRetrofit
 import com.github.xs93.framework.network.cookie.CookieJarManager
 import com.github.xs93.framework.network.cookie.SharedPreferencesCookieStore
 import com.github.xs93.framework.network.interceptor.DomainInterceptor
+import com.github.xs93.framework.network.interceptor.NetworkInterceptor
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.Cache
 import okhttp3.CookieJar
@@ -33,6 +34,7 @@ interface IRetrofitBuildStrategy {
             retryOnConnectionFailure(true)
             cache(getCache())
             cookieJar(getCookieJar())
+            addInterceptor(NetworkInterceptor())
             addInterceptor(DomainInterceptor())
             getInterceptors().let {
                 for (interceptor in it) {
