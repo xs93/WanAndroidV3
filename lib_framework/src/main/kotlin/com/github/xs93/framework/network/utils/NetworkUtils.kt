@@ -1,11 +1,12 @@
 package com.github.xs93.framework.network.utils
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.telephony.TelephonyManager
+import androidx.annotation.RequiresPermission
 
 /**
  *
@@ -15,12 +16,13 @@ import android.telephony.TelephonyManager
  * @date 2023/5/18 9:08
  * @email 466911254@qq.com
  */
-@SuppressLint("MissingPermission")
 object NetworkUtils {
 
     /**
      * 网络可访问
+     *
      */
+    @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     fun isConnected(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -28,7 +30,6 @@ object NetworkUtils {
             networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
         } else {
             // 只是判断有网络连接
-            @Suppress("DEPRECATION")
             cm.activeNetworkInfo?.isConnected == true
         }
     }
@@ -36,6 +37,7 @@ object NetworkUtils {
     /**
      * 网络类型
      */
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     fun getNetworkType(context: Context): NetworkType {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -51,7 +53,6 @@ object NetworkUtils {
         }
 
         val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        @Suppress("DEPRECATION")
         return when (tm.networkType) {
             TelephonyManager.NETWORK_TYPE_GPRS,
             TelephonyManager.NETWORK_TYPE_GSM,
@@ -91,6 +92,7 @@ object NetworkUtils {
     /**
      * <4G网络
      */
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
     fun isWeakNetwork(ctx: Context): Boolean {
         if (!isConnected(ctx)) {
             return true

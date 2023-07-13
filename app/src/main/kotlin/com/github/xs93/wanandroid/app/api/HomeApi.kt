@@ -1,6 +1,7 @@
 package com.github.xs93.wanandroid.app.api
 
 import com.github.xs93.wanandroid.app.entity.Banner
+import com.github.xs93.wanandroid.app.entity.ProjectTree
 import com.github.xs93.wanandroid.common.network.WanResponse
 import retrofit2.http.GET
 
@@ -20,4 +21,12 @@ interface HomeApi {
      */
     @GET("banner/json")
     suspend fun getHomeBanner(): WanResponse<List<Banner>>
+
+
+    /**
+     * 项目分类接口
+     * @return WanResponse<List<ProjectTree>>
+     */
+    @GET("project/tree/json")
+    suspend fun getProjectTree(): WanResponse<List<ProjectTree>>
 }

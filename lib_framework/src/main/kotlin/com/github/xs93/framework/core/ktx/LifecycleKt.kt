@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
@@ -66,24 +67,6 @@ fun ComponentActivity.repeatOnStarted(
     return repeatOnLifecycle(Lifecycle.State.STARTED, context, start, block)
 }
 
-fun <R> ComponentActivity.observer(flow: Flow<R>, action: suspend (R) -> Unit) {
-    flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-        .distinctUntilChanged()
-        .onEach {
-            action.invoke(it)
-        }
-        .launchIn(lifecycleScope)
-}
-
-fun <R> Fragment.observer(flow: Flow<R>, action: suspend (R) -> Unit) {
-    flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-        .distinctUntilChanged()
-        .onEach {
-            action.invoke(it)
-        }
-        .launchIn(lifecycleScope)
-}
-
 
 fun Fragment.launcher(
     context: CoroutineContext = EmptyCoroutineContext,
@@ -112,3 +95,40 @@ fun Fragment.repeatOnStarted(
     return repeatOnLifecycle(Lifecycle.State.STARTED, context, start, block)
 }
 
+fun <R> ComponentActivity.observer(
+    flow: Flow<R>,
+    areEquivalent: ((old: R, new: R) -> Boolean)? = null,
+    action: suspend (R) -> Unit
+) {
+    val tempFlow = flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+    if (areEquivalent != null) {
+        tempFlow.distinctUntilChanged(areEquivalent)
+            .onEach { action.invoke(it) }
+            .launchIn(lifecycleScope)
+    } else {
+        tempFlow.distinctUntilChanged()
+            .onEach {
+                action.invoke(it)
+            }
+            .launchIn(lifecycleScope)
+    }
+}
+
+fun <R> Fragment.observer(
+    flow: Flow<R>,
+    areEquivalent: ((old: R, new: R) -> Boolean)? = null,
+    action: suspend (R) -> Unit
+) {
+    val tempFlow = flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+    if (areEquivalent != null) {
+        tempFlow.distinctUntilChanged(areEquivalent)
+            .onEach { action.invoke(it) }
+            .launchIn(lifecycleScope)
+    } else {
+        tempFlow.distinctUntilChanged()
+            .onEach {
+                action.invoke(it)
+            }
+            .launchIn(lifecycleScope)
+    }
+}

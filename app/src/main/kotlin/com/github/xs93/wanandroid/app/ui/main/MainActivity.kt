@@ -55,6 +55,7 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
         launcher {
             delay(1500L)
             keepOnScreenCondition = false
+            initView(savedInstanceState)
         }
     }
 
@@ -63,7 +64,12 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
             isStatusBarTranslucentCompat = true
             isLightStatusBarsCompat = true
         }
-        mContentAdapter = ViewPager2FragmentAdapter(this, fragments)
+
+        if (keepOnScreenCondition) {
+            return
+        }
+
+        mContentAdapter = ViewPager2FragmentAdapter(supportFragmentManager, lifecycle, fragments)
         binding.vpContent.apply {
             offscreenPageLimit = fragments.size
             adapter = mContentAdapter

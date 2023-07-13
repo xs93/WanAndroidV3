@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.app.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.github.xs93.framework.core.base.ui.vbvm.BaseVbVmFragment
 import com.github.xs93.framework.core.ktx.dp
@@ -41,7 +40,7 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
     override fun initView(view: View, savedInstanceState: Bundle?) {
         bannerViewPager = view.findViewById(R.id.banner)
         bannerViewPager.apply {
-            val normalColor = context.getColorCompat(com.github.xs93.framework.R.color.white)
+            val normalColor = context.getColorCompat(com.github.xs93.framework.R.color.color_666666)
             val selectedColor = context.getColorCompat(com.github.xs93.common.R.color.primaryColor)
             setIndicatorSliderColor(normalColor, selectedColor)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)
@@ -63,14 +62,12 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
 
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
-        observer(viewModel.uiStateFlow.map { it.bannerUiState }) {
-            Log.d("HomeFragment", "$it")
-            bannerViewPager.refreshData(it.banners)
+        observer(viewModel.uiStateFlow.map { it.banners }) {
+            bannerViewPager.refreshData(it)
         }
     }
 
-    override fun initData(savedInstanceState: Bundle?) {
-        super.initData(savedInstanceState)
+    override fun onFirstVisible() {
         viewModel.sendUiIntent(HomeUiIntent.InitBannerData)
     }
 }

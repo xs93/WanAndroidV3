@@ -9,8 +9,6 @@ import com.github.xs93.framework.core.activity.ActivityStackManager
 import com.github.xs93.framework.core.crash.CrashHandler
 import com.github.xs93.framework.core.loading.LoadingDialogHelper
 import com.github.xs93.framework.core.loading.impl.DefaultLoadingDialog
-import com.github.xs93.framework.core.toast.ToastHelper
-import com.github.xs93.framework.core.toast.impl.SystemToast
 import com.github.xs93.framework.core.utils.AppInject
 
 /**
@@ -44,7 +42,6 @@ abstract class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         AppInject.init(this)
-        ToastHelper.initToast(SystemToast(this))
         LoadingDialogHelper.initLoadingDialog(DefaultLoadingDialog())
         CrashHandler.init(this)
         ActivityStackManager.init(this)

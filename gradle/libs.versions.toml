@@ -3,11 +3,11 @@ minSdk = "24"
 targetSdk = "33"
 androidGradlePlugin = "8.0.2"
 kotlin = "1.8.20"
-kotlinCoroutines = "1.7.1"
+kotlinCoroutines = "1.7.2"
 ksp = "1.8.20-1.0.11"
 androidxLifecycle = "2.6.1"
 androidxRoom = "2.5.2"
-moshi = "1.14.0"
+moshi = "1.15.0"
 okHttp = "4.11.0"
 retrofit = "2.9.0"
 
@@ -54,7 +54,7 @@ permissionx = { group = "com.guolindev.permissionx", name = "permissionx", versi
 #界面适配库
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
 #key-value 持久化库
-mmkv = { module = "com.tencent:mmkv", version = "1.2.16" }
+mmkv = { module = "com.tencent:mmkv", version = "1.3.0" }
 
 #图片加载库
 #https://github.com/coil-kt/coil
@@ -68,6 +68,9 @@ photoview = { group = "com.github.chrisbanes", name = "PhotoView", version = "2.
 banner = { group = "com.github.zhpanvip", name = "bannerviewpager", version = "3.5.11" }
 #https://github.com/zhpanvip/viewpagerindicator
 viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator", version = "1.2.3" }
+
+#日志库
+logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
 
 
 [bundles]

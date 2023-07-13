@@ -3,6 +3,8 @@ package com.github.xs93.framework.core.base.viewmodel
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import com.github.xs93.framework.core.utils.AppInject
+import com.github.xs93.framework.network.exception.ExceptionHandler
+import com.orhanobut.logger.Logger
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -98,6 +100,20 @@ abstract class BaseViewModel<UiIntent : IUiIntent, UiState : IUIState, UiEvent :
     protected fun hideLoadingDialog() {
         viewModelScope.launch {
             _commonEventFlow.send(CommonUiEvent.HideLoadingDialog)
+        }
+    }
+
+    protected suspend fun <T> safeRequestApi(
+        errorBlock: ((Throwable) -> Unit)? = ExceptionHandler.safeRequestApiErrorHandler,
+        block: suspend () -> T?
+    ): T? {
+        return try {
+            block()
+        } catch (e: Throwable) {
+            val ex = ExceptionHandler.handleException(e)
+            errorBlock?.invoke(ex)
+            Logger.e(ex, "safeRequestApi")
+            null
         }
     }
 

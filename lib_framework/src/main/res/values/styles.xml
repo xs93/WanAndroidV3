@@ -14,24 +14,17 @@
         <item name="android:windowIsFloating">true</item>
         <!--阴影  -->
         <item name="android:windowIsTranslucent">true</item>
-        <!--透明背景-->
-        <item name="android:background">@android:color/transparent</item>
         <!--窗口背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!--弹窗背景是否变暗-->
         <item name="android:backgroundDimEnabled">true</item>
-        <!--去除window的padding，当windowIsFloating 为true时,会有padding-->
-        <item name="android:padding">0dp</item>
     </style>
 
     <style name="BaseFullScreenDialogStyle" parent="BaseDialogStyle">
-        <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowFullscreen">true</item>
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!--去除window的padding，当windowIsFloating 为true时,会有padding-->
-        <item name="android:padding">0dp</item>
     </style>
 
     <style name="BaseCommonButtonStyle" parent="Widget.Material3.Button">
@@ -48,14 +41,13 @@
         <item name="android:paddingBottom">0dp</item>
         <item name="android:gravity">center</item>
         <item name="elevation">0dp</item>
-        <item name="rippleColor">@color/black</item>
+        <item name="rippleColor">@color/transparent</item>
         <item name="iconTintMode">src_atop</item>
         <item name="iconTint">@color/white</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">0dp</item>
         <item name="iconSize">20dp</item>
     </style>
-
 
     <style name="CircleImageStyle">
         <item name="cornerFamily">rounded</item>

@@ -14,11 +14,7 @@ import com.github.xs93.wanandroid.app.entity.Banner
  * @email 466911254@qq.com
  */
 
-data class HomeUiState(val bannerUiState: BannerUiState) : IUIState
-
-data class BannerUiState(
-    val banners: List<Banner>
-)
+data class HomeUiState(val banners: List<Banner>) : IUIState
 
 sealed class HomeUiEvent : IUiEvent
 

@@ -79,7 +79,7 @@ enum class ERROR(val code: Int, val errMsg: String) {
     /**
      * 未登录
      */
-    UNLOGIN(-1001, "未登录"),
+    NOT_LOGIN(-1001, "未登录"),
 
     /**
      * 未知Host

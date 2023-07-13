@@ -19,13 +19,15 @@ import javax.net.ssl.SSLException
  */
 object ExceptionHandler {
 
+    var safeRequestApiErrorHandler: ((Throwable) -> Unit)? = null
+
     @JvmStatic
     fun handleException(e: Throwable): ApiException {
         val ex: ApiException
         //HTTP错误
         when (e) {
             is ApiException -> {
-                ex = ApiException(e.errorCode, e.errorMsg)
+                ex = e
             }
 
             is NoNetworkException -> {

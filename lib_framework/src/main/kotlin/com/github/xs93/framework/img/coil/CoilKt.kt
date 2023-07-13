@@ -14,7 +14,7 @@ import coil.load
  * @email 466911254@qq.com
  */
 
-@BindingAdapter(*["coilUrl", "coilFallback", "coilPlaceholder", "coilError"], requireAll = false)
+@BindingAdapter("coilUrl", "coilFallback", "coilPlaceholder", "coilError", requireAll = false)
 fun loadImage(
     view: ImageView,
     url: String? = null,

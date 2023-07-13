@@ -1,5 +1,7 @@
 package com.github.xs93.framework.network.exception
 
+import java.io.IOException
+
 /**
  *
  * 接口请求错误
@@ -30,8 +32,12 @@ open class ApiException : Exception {
     }
 }
 
+class ServiceApiException : ApiException {
+    constructor(error: ERROR, throwable: Throwable?) : super(error, throwable)
+    constructor(code: Int, msg: String, throwable: Throwable?) : super(code, msg, throwable)
+}
 
-class NoNetworkException(error: ERROR, throwable: Throwable? = null) : Exception(throwable) {
+class NoNetworkException(error: ERROR, throwable: Throwable? = null) : IOException(throwable) {
     var errorCode: Int
     var errorMsg: String
 

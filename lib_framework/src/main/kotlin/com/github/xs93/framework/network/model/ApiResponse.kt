@@ -20,4 +20,12 @@ open class ApiResponse<out T>(
     open fun isSuccess(): Boolean {
         return errorCode == SUCCESS_CODE
     }
+
+    open fun isFailed(): Boolean {
+        return errorCode != SUCCESS_CODE
+    }
+
+    open fun isNotLogin(): Boolean {
+        return false
+    }
 }

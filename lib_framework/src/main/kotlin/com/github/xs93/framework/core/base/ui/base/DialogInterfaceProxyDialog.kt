@@ -39,11 +39,11 @@ open class DialogInterfaceProxyDialog : AppCompatDialog, IToast {
         super.setOnShowListener(DialogInterfaceProxy.proxy(listener))
     }
 
-    override fun showToast(charSequence: CharSequence, duration: Int, vararg objects: Any) {
-        mIToast.showToast(charSequence, duration, objects)
+    override fun showToast(charSequence: CharSequence, duration: Int) {
+        mIToast.showToast(charSequence, duration)
     }
 
-    override fun showToast(resId: Int, duration: Int, vararg objects: Any) {
-        mIToast.showToast(resId, duration, objects)
+    override fun showToast(resId: Int, duration: Int) {
+        mIToast.showToast(resId, duration)
     }
 }

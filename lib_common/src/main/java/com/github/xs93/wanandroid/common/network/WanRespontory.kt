@@ -25,4 +25,8 @@ class WanResponse<out T>(
     companion object {
         const val ERROR_NOT_LOGIN = -1001
     }
+
+    override fun isNotLogin(): Boolean {
+        return errorCode == ERROR_NOT_LOGIN
+    }
 }

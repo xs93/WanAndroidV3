@@ -37,24 +37,19 @@ class SystemToast(context: Context) : IToast {
     }
 
 
-    override fun showToast(charSequence: CharSequence, duration: Int, vararg objects: Any) {
+    override fun showToast(charSequence: CharSequence, duration: Int) {
         mMainHandler.post {
             val toast = Toast.makeText(mContext, charSequence, duration)
             toast.setText(charSequence)
             mCommonTransform?.onTransform(toast)
-            objects.forEach {
-                if (it is OnToastTransform) {
-                    it.onTransform(toast)
-                }
-            }
             hook(toast)
             toast.show()
         }
     }
 
-    override fun showToast(resId: Int, duration: Int, vararg objects: Any) {
+    override fun showToast(resId: Int, duration: Int) {
         val content = mContext.getString(resId)
-        showToast(content, duration, objects)
+        showToast(content, duration)
     }
 
 

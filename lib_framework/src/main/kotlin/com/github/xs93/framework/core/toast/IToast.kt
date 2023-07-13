@@ -13,7 +13,7 @@ import androidx.annotation.StringRes
  */
 interface IToast {
 
-    fun showToast(charSequence: CharSequence, duration: Int = Toast.LENGTH_SHORT, vararg objects: Any)
+    fun showToast(charSequence: CharSequence, duration: Int = Toast.LENGTH_SHORT)
 
-    fun showToast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT, vararg objects: Any)
+    fun showToast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT)
 }

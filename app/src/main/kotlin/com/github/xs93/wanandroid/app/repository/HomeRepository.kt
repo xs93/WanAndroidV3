@@ -21,7 +21,7 @@ object HomeRepository : BaseRepository() {
     }
 
     suspend fun getHomeBanner(): WanResponse<List<Banner>>? {
-        return request {
+        return requestApi {
             homeApi.getHomeBanner()
         }
     }

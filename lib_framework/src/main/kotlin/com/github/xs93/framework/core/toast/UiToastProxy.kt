@@ -10,11 +10,12 @@ package com.github.xs93.framework.core.toast
  */
 class UiToastProxy : IToast {
 
-    override fun showToast(charSequence: CharSequence, duration: Int, vararg objects: Any) {
-        ToastHelper.showToast(charSequence, duration, objects)
+
+    override fun showToast(charSequence: CharSequence, duration: Int) {
+        ToastManager.showToast(charSequence, duration)
     }
 
-    override fun showToast(resId: Int, duration: Int, vararg objects: Any) {
-        ToastHelper.showToast(resId, duration, objects)
+    override fun showToast(resId: Int, duration: Int) {
+        ToastManager.showToast(resId, duration)
     }
 }

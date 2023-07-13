@@ -1,5 +1,6 @@
 package com.github.xs93.framework.core.utils
 
+import java.math.BigInteger
 import java.security.MessageDigest
 
 /**
@@ -14,12 +15,11 @@ import java.security.MessageDigest
 
 fun String.md5(): String {
     val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
-    return bytes.md5()
+    return bytes.toHex()
 }
 
 
-fun ByteArray.md5(): String {
-    return joinToString("") {
-        "%02X".format(it)
-    }
+fun ByteArray.toHex(): String {
+    return BigInteger(1, this).toString(16)
 }
+

@@ -60,4 +60,6 @@ dependencies {
     ksp(libs.moshi.kotlin.codegen)
 
     api(libs.coil)
+
+    api(libs.logger)
 }

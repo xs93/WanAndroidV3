@@ -15,8 +15,7 @@ import com.github.xs93.wanandroid.app.repository.HomeRepository
 class HomeViewModel : BaseViewModel<HomeUiIntent, HomeUiState, HomeUiEvent>() {
 
     override fun initUiState(): HomeUiState {
-        val bannerUiState = BannerUiState(emptyList())
-        return HomeUiState(bannerUiState)
+        return HomeUiState(emptyList())
     }
 
     override fun handleIntent(intent: HomeUiIntent) {
@@ -27,11 +26,12 @@ class HomeViewModel : BaseViewModel<HomeUiIntent, HomeUiState, HomeUiEvent>() {
 
     private fun getBanner() {
         launcher {
-            val bannerResponse = HomeRepository.getHomeBanner() ?: return@launcher
-            val banners = bannerResponse.data ?: return@launcher
-            val bannerUiState = uiStateFlow.value.bannerUiState.copy(banners = banners)
+            val bannerResponse = safeRequestApi {
+                HomeRepository.getHomeBanner()
+            }
+            val banners = bannerResponse?.data ?: return@launcher
             setUiState {
-                copy(bannerUiState = bannerUiState)
+                copy(banners = banners)
             }
         }
     }
