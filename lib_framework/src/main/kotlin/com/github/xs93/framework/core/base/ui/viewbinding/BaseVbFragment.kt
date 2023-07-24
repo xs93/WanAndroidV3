@@ -30,7 +30,7 @@ abstract class BaseVbFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int
     }
 
     override fun onDestroyView() {
-        _mBinding = null
         super.onDestroyView()
+        _mBinding = null
     }
 }

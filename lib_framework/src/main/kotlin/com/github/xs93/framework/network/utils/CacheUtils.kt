@@ -13,7 +13,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 /**
- *
+ * 网络请求缓存工具类
  *
  * @author XuShuai
  * @version v1.0
@@ -76,7 +76,7 @@ object CacheUtils {
     }
 
     /**
-     * 加密
+     * MD5 加密数据内容
      *
      * @param content 内容
      * @param flag    标志
@@ -95,7 +95,7 @@ object CacheUtils {
 
 
     /**
-     * 解密
+     * 数据解密
      *
      * @param content 内容
      * @param flag    标志

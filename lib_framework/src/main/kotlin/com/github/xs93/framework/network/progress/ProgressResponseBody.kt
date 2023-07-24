@@ -11,7 +11,7 @@ import okio.buffer
 
 
 /**
- *
+ * 下载数据进度
  *
  * @author XuShuai
  * @version v1.0

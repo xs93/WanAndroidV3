@@ -21,4 +21,8 @@ class EasyRetrofitBuildStrategy : IRetrofitBuildStrategy {
     override fun callAdapterFactory(): CallAdapter.Factory? {
         return null
     }
+
+    override fun getCacheKey(): String {
+        return "adjkasjasfhjkaskfa"
+    }
 }

@@ -6,11 +6,14 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.github.xs93.framework.core.base.ui.viewbinding.BaseVbFragment
 import com.github.xs93.framework.core.base.viewmodel.BaseViewModel
 import com.github.xs93.framework.core.base.viewmodel.CommonUiEvent
-import com.github.xs93.framework.core.ktx.repeatOnStarted
 import com.github.xs93.framework.core.utils.ClassUtils
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import java.lang.reflect.Modifier
 
 /**
@@ -44,7 +47,6 @@ abstract class BaseVbVmFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *
             }
             ViewModelProvider(this)[clazz]
         }
-        lifecycle.addObserver(viewModel)
     }
 
     /**
@@ -57,8 +59,9 @@ abstract class BaseVbVmFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *
 
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
-        repeatOnStarted {
-            viewModel.commonEventFlow.collect {
+        viewModel.commonEventFlow
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle)
+            .onEach {
                 when (it) {
                     is CommonUiEvent.ShowLoadingDialog -> {
                         showLoadingDialog(it.message)
@@ -76,7 +79,6 @@ abstract class BaseVbVmFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *
                         showToast(it.charSequence, it.duration)
                     }
                 }
-            }
-        }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 }

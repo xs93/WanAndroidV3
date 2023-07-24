@@ -23,7 +23,8 @@ import com.github.xs93.framework.core.ui.Surface
  */
 abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUiLoadingDialog {
 
-    private var mResume: Boolean = false
+    var resumed: Boolean = false
+        private set
 
     protected val surface = Surface()
 
@@ -62,12 +63,12 @@ abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUi
 
     override fun onResume() {
         super.onResume()
-        mResume = true
+        resumed = true
     }
 
     override fun onPause() {
         super.onPause()
-        mResume = false
+        resumed = false
     }
 
     /**执行在super.onCreate(savedInstanceState)之前*/
@@ -101,14 +102,6 @@ abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUi
     /** 初始化数据 */
     open fun initData(savedInstanceState: Bundle?) {}
 
-    /**
-     * 是否在Resume显示期间
-     *
-     * @return true 在Resume期间
-     */
-    fun isResume(): Boolean {
-        return mResume
-    }
 
     override fun createLoadingDialog(): DialogFragment {
         return mIUiLoadingDialog.createLoadingDialog()

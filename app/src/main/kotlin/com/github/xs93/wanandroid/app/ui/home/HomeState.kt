@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app.ui.home
 
 import com.github.xs93.framework.core.base.viewmodel.IUIState
 import com.github.xs93.framework.core.base.viewmodel.IUiEvent
-import com.github.xs93.framework.core.base.viewmodel.IUiIntent
+import com.github.xs93.framework.core.base.viewmodel.IUiAction
 import com.github.xs93.wanandroid.app.entity.Banner
 
 /**
@@ -18,6 +18,6 @@ data class HomeUiState(val banners: List<Banner>) : IUIState
 
 sealed class HomeUiEvent : IUiEvent
 
-sealed class HomeUiIntent : IUiIntent {
-    object InitBannerData : HomeUiIntent()
+sealed class HomeUiAction : IUiAction {
+    object InitBannerData : HomeUiAction()
 }

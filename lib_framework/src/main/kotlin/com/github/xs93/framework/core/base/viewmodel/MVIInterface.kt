@@ -25,7 +25,7 @@ sealed class CommonUiEvent : IUiEvent {
 }
 
 @Keep
-interface IUiIntent
+interface IUiAction
 
 @Keep
 interface IUIState

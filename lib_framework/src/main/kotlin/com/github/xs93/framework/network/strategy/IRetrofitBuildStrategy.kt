@@ -1,9 +1,11 @@
 package com.github.xs93.framework.network.strategy
 
 import android.content.Context
+import com.github.xs93.framework.core.utils.AppInject
 import com.github.xs93.framework.network.EasyRetrofit
 import com.github.xs93.framework.network.cookie.CookieJarManager
 import com.github.xs93.framework.network.cookie.SharedPreferencesCookieStore
+import com.github.xs93.framework.network.interceptor.CacheInterceptor
 import com.github.xs93.framework.network.interceptor.DomainInterceptor
 import com.github.xs93.framework.network.interceptor.NetworkInterceptor
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
@@ -36,6 +38,7 @@ interface IRetrofitBuildStrategy {
             cookieJar(getCookieJar())
             addInterceptor(NetworkInterceptor())
             addInterceptor(DomainInterceptor())
+            addInterceptor(CacheInterceptor(AppInject.getApp(), getCacheKey()))
             getInterceptors().let {
                 for (interceptor in it) {
                     addInterceptor(interceptor)
@@ -59,6 +62,8 @@ interface IRetrofitBuildStrategy {
 
     /** 构建Retrofit 的CallAdapter.Factory */
     fun callAdapterFactory(): CallAdapter.Factory?
+
+    fun getCacheKey(): String
 
     fun getTimeout(): Long {
         return 30

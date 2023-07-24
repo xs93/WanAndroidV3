@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 
 /**
  *
- *WanAndroid 返回数据结构Response
+ * WanAndroid 返回数据结构Response
  *
  * @author xushuai
  * @date   2022/9/7-14:42
@@ -14,13 +14,13 @@ import com.squareup.moshi.JsonClass
  */
 
 @JsonClass(generateAdapter = true)
-class WanResponse<out T>(
+data class WanResponse<out T>(
     @Json(name = "errorCode")
-    errorCode: Int,
+    override val errorCode: Int,
     @Json(name = "errorMsg")
-    errorMessage: String,
+    override val errorMessage: String,
     @Json(name = "data")
-    data: T? = null,
+    override val data: T? = null,
 ) : ApiResponse<T>(errorCode, errorMessage, data) {
     companion object {
         const val ERROR_NOT_LOGIN = -1001

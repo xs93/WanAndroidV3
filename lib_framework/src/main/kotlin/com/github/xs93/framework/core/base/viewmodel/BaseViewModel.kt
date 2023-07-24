@@ -17,18 +17,13 @@ import kotlinx.coroutines.launch
  * @date   2022/5/5-21:21
  * @email  466911254@qq.com
  */
-abstract class BaseViewModel<UiIntent : IUiIntent, UiState : IUIState, UiEvent : IUiEvent> : ViewModel(),
-    LifecycleEventObserver {
+abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent : IUiEvent> : ViewModel() {
 
     companion object {
         @JvmStatic
         fun createViewModelFactory(viewModel: ViewModel): ViewModelFactory {
             return ViewModelFactory(viewModel)
         }
-    }
-
-    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-
     }
 
     //state 保存UI状态

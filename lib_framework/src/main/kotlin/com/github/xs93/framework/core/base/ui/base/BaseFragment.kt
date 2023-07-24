@@ -33,7 +33,6 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
 
     protected val surface = Surface()
 
-
     private var mLazyLoad = false
 
     /**
@@ -62,7 +61,8 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
     /**
      * 当前是否在OnResume生命周期范围
      */
-    private var mResume: Boolean = false
+    var resumed: Boolean = false
+        private set
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -101,7 +101,7 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
 
     override fun onResume() {
         super.onResume()
-        mResume = true
+        resumed = true
         mIsCallResume = true
         if (!mIsCallUserVisibleHint) {
             mIsVisibleToUser = !isHidden
@@ -111,7 +111,7 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
 
     override fun onPause() {
         super.onPause()
-        mResume = false
+        resumed = false
     }
 
     override fun onDestroyView() {
@@ -149,15 +149,6 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
 
     /** 该fragment 第一次被显示时调用,可用作懒加载 */
     open fun onFirstVisible() {}
-
-    /**
-     * 是否在Resume显示期间
-     *
-     * @return true 在Resume期间
-     */
-    fun isResume(): Boolean {
-        return mResume
-    }
 
     /** 隐藏键盘 */
     protected fun hideKeyboardFrom(context: Context, view: View) {

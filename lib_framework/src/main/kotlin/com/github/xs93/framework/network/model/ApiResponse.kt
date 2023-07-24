@@ -9,9 +9,9 @@ package com.github.xs93.framework.network.model
  * @email  466911254@qq.com
  */
 open class ApiResponse<out T>(
-    val errorCode: Int = -1,
-    val errorMessage: String = "default error code",
-    val data: T? = null,
+    open val errorCode: Int = -1,
+    open val errorMessage: String = "default error code",
+    open val data: T? = null,
 ) {
     companion object {
         const val SUCCESS_CODE = 0

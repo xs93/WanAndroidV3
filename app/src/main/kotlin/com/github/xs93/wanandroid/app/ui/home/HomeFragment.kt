@@ -68,6 +68,6 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
     }
 
     override fun onFirstVisible() {
-        viewModel.sendUiIntent(HomeUiIntent.InitBannerData)
+        viewModel.sendUiIntent(HomeUiAction.InitBannerData)
     }
 }
