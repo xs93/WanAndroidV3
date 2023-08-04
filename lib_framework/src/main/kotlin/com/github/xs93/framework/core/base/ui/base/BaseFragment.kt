@@ -65,7 +65,11 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
         private set
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -149,12 +153,6 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
 
     /** 该fragment 第一次被显示时调用,可用作懒加载 */
     open fun onFirstVisible() {}
-
-    /** 隐藏键盘 */
-    protected fun hideKeyboardFrom(context: Context, view: View) {
-        val inputMethodManager = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-    }
 
     override fun createLoadingDialog(): DialogFragment {
         return mIUiLoadingDialog.createLoadingDialog()

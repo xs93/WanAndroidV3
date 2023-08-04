@@ -15,7 +15,8 @@ import com.github.xs93.framework.core.base.ui.function.BaseFunctionFragment
  * @date   2022/3/26-17:04
  * @email  466911254@qq.com
  */
-abstract class BaseVbFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) : BaseFunctionFragment() {
+abstract class BaseVbFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
+    BaseFunctionFragment() {
 
     private var _mBinding: VB? = null
     protected val binding get() = _mBinding!!
@@ -27,6 +28,7 @@ abstract class BaseVbFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int
     override fun beforeInitView(view: View, savedInstanceState: Bundle?) {
         super.beforeInitView(view, savedInstanceState)
         _mBinding = DataBindingUtil.bind(view)
+        _mBinding?.lifecycleOwner = viewLifecycleOwner
     }
 
     override fun onDestroyView() {

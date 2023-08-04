@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.createViewModelLazy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
@@ -15,6 +16,7 @@ import com.github.xs93.framework.core.utils.ClassUtils
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import java.lang.reflect.Modifier
+import kotlin.reflect.KClass
 
 /**
  *  使用ViewBinding和ViewModel的 Fragment
@@ -29,6 +31,12 @@ abstract class BaseVbVmFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *
 
     /** 泛型中的默认ViewModel对象 */
     protected lateinit var viewModel: VM
+
+    protected val mViewModel by lazy {
+        createViewModelLazy(requireNotNull(getViewModelClass()) {
+            "getViewModelClass is null"
+        }, { viewModelStore }).value
+    }
 
     override fun beforeInitView(view: View, savedInstanceState: Bundle?) {
         super.beforeInitView(view, savedInstanceState)
@@ -47,6 +55,19 @@ abstract class BaseVbVmFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *
             }
             ViewModelProvider(this)[clazz]
         }
+    }
+
+    protected fun getViewModelClass(): KClass<VM>? {
+        val clazz: Class<VM>? = ClassUtils.getGenericClassByClass(this, ViewModel::class.java)
+        if (clazz == null || clazz == ViewModel::class.java) {
+            return null
+        }
+        //判断此VM是否有abstract标记,有则无法初始化
+        val isAbstract = Modifier.isAbstract(clazz.modifiers)
+        if (isAbstract) {
+            return null
+        }
+        return clazz.kotlin
     }
 
     /**

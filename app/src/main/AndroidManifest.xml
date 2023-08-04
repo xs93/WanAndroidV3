@@ -6,7 +6,6 @@
         android:name="com.github.xs93.wanandroid.WanAndroidApp"
         android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:extractNativeLibs="true"
         android:fullBackupContent="@xml/data_extraction_rules"
         android:fullBackupOnly="false"
         android:icon="@mipmap/ic_launcher"
