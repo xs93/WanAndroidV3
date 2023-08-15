@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.R
 import com.github.xs93.framework.core.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.core.loading.IUiLoadingDialog
@@ -18,7 +16,6 @@ import com.github.xs93.framework.core.loading.IUiLoadingDialogProxy
 import com.github.xs93.framework.core.toast.IToast
 import com.github.xs93.framework.core.toast.UiToastProxy
 import com.github.xs93.framework.core.ui.Surface
-import java.lang.reflect.Field
 
 /**
  * 基础dialogFragment 封装
@@ -27,7 +24,8 @@ import java.lang.reflect.Field
  * @version v1.0
  * @date 2021/11/4 13:40
  */
-abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToastProxy(), IUiLoadingDialog {
+abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToastProxy(),
+    IUiLoadingDialog {
 
     protected val surface = Surface()
 
@@ -46,7 +44,11 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
         return DialogInterfaceProxyDialog(requireContext(), theme)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -96,27 +98,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
 
     /** 初始化数据 */
     open fun initData(savedInstanceState: Bundle?) {}
-
-    /**
-     * 使用此方法显示弹出框，可以避免生命周期状态错误导致的异常(Can not perform this action after onSaveInstanceState)
-     * @param manager FragmentManager
-     * @param tag String?
-     */
-    fun showAllowingStateLoss(manager: FragmentManager, tag: String? = this::class.java.simpleName) {
-        try {
-            val dismissed: Field = DialogFragment::class.java.getDeclaredField("mDismissed")
-            dismissed.isAccessible = true
-            dismissed.set(this, false)
-            val shown: Field = DialogFragment::class.java.getDeclaredField("mShownByMe")
-            shown.isAccessible = true
-            shown.set(this, true)
-            val ft: FragmentTransaction = manager.beginTransaction()
-            ft.add(this, tag)
-            ft.commitAllowingStateLoss()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     override fun createLoadingDialog(): DialogFragment {
         return mIUiLoadingDialog.createLoadingDialog()

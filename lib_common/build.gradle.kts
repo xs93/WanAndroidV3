@@ -21,7 +21,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -39,8 +42,11 @@ android {
     }
 }
 dependencies {
-    implementation(project(mapOf("path" to ":lib_framework")))
 
-    implementation(libs.moshi.kotlin)
+    api(project(mapOf("path" to ":lib_utils")))
+    api(project(mapOf("path" to ":lib_network")))
+    api(project(mapOf("path" to ":lib_framework")))
+
+    api(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
 }

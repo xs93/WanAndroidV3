@@ -2,12 +2,10 @@ package com.github.xs93.wanandroid.app.ui.home
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.lifecycleScope
 import com.github.xs93.framework.core.base.ui.vbvm.BaseVbVmFragment
-import com.github.xs93.framework.core.ktx.dp
-import com.github.xs93.framework.core.ktx.getColorCompat
 import com.github.xs93.framework.core.ktx.observer
-import com.github.xs93.framework.core.ktx.repeatOnStarted
+import com.github.xs93.utils.ktx.color
+import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentHomeBinding
 import com.github.xs93.wanandroid.app.entity.Banner
@@ -17,7 +15,6 @@ import com.zhpan.bannerview.constants.PageStyle
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 /**
  * 首页Fragment
@@ -43,8 +40,8 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
     override fun initView(view: View, savedInstanceState: Bundle?) {
         bannerViewPager = view.findViewById(R.id.banner)
         bannerViewPager.apply {
-            val normalColor = context.getColorCompat(com.github.xs93.framework.R.color.color_666666)
-            val selectedColor = context.getColorCompat(com.github.xs93.common.R.color.primaryColor)
+            val normalColor = requireContext().color(com.github.xs93.framework.R.color.color_666666)
+            val selectedColor = requireContext().color(com.github.xs93.common.R.color.primaryColor)
             setIndicatorSliderColor(normalColor, selectedColor)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)
             setIndicatorStyle(IndicatorStyle.ROUND_RECT)
@@ -72,11 +69,5 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
 
     override fun onFirstVisible() {
         viewModel.sendUiIntent(HomeUiAction.InitBannerData)
-    }
-
-    fun test() {
-        lifecycleScope.launch {
-            mViewModel.sendUiIntent(HomeUiAction.InitBannerData)
-        }
     }
 }

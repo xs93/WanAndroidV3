@@ -1,6 +1,6 @@
 package com.github.xs93.wanandroid.app.api
 
-import com.github.xs93.framework.network.annotation.Cache
+import com.github.xs93.network.annotation.Cache
 import com.github.xs93.wanandroid.app.entity.Banner
 import com.github.xs93.wanandroid.app.entity.ProjectTree
 import com.github.xs93.wanandroid.common.network.WanResponse

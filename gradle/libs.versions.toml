@@ -10,6 +10,9 @@ androidxRoom = "2.5.2"
 moshi = "1.15.0"
 okHttp = "4.11.0"
 retrofit = "2.9.0"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.1.5"
+espresso-core = "3.5.1"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version = "1.9.0" }
@@ -18,7 +21,7 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version = "1.7.2" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.6.0" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.6.1" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0-beta02" }
@@ -54,7 +57,7 @@ permissionx = { group = "com.guolindev.permissionx", name = "permissionx", versi
 #界面适配库
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
 #key-value 持久化库
-mmkv = { module = "com.tencent:mmkv", version = "1.3.0" }
+mmkv = { module = "com.tencent:mmkv", version = "1.3.1" }
 
 #图片加载库
 #https://github.com/coil-kt/coil
@@ -71,6 +74,9 @@ viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator
 
 #日志库
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 
 [bundles]

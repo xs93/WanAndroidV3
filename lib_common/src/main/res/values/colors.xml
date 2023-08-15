@@ -10,7 +10,7 @@
     <color name="secondaryTextColor">@color/white</color>
 
     <color name="colorOnSurface">#212121</color>
-    <color name="windowBackground">@color/white</color>
+    <color name="colorBackground">#FFFBFF</color>
 
     <color name="base_color_loading_progress">@color/primaryColor</color>
 

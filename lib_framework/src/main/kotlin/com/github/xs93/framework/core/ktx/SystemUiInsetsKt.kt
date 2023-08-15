@@ -6,6 +6,8 @@ import android.view.View.OnAttachStateChangeListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.github.xs93.framework.core.ui.Insets
+import com.github.xs93.utils.ktx.dp
+import com.github.xs93.utils.ktx.getAppMateData
 
 /**
  *

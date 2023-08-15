@@ -2,9 +2,6 @@ package com.github.xs93.framework.core.base.viewmodel
 
 import androidx.annotation.StringRes
 import androidx.lifecycle.*
-import com.github.xs93.framework.core.utils.AppInject
-import com.github.xs93.framework.network.exception.ExceptionHandler
-import com.orhanobut.logger.Logger
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -17,7 +14,8 @@ import kotlinx.coroutines.launch
  * @date   2022/5/5-21:21
  * @email  466911254@qq.com
  */
-abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent : IUiEvent> : ViewModel() {
+abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent : IUiEvent> :
+    ViewModel() {
 
     companion object {
         @JvmStatic
@@ -65,7 +63,7 @@ abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent :
     }
 
     protected fun getString(@StringRes resId: Int, vararg any: Any?): String {
-        return AppInject.getApp().getString(resId, any)
+        return com.github.xs93.utils.AppInject.getApp().getString(resId, any)
     }
 
     protected fun showToast(charSequence: CharSequence) {
@@ -76,7 +74,11 @@ abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent :
 
     protected fun showToast(@StringRes resId: Int, vararg any: Any?) {
         viewModelScope.launch {
-            _commonEventFlow.send(CommonUiEvent.ShowToast(AppInject.getApp().getString(resId, any)))
+            _commonEventFlow.send(
+                CommonUiEvent.ShowToast(
+                    com.github.xs93.utils.AppInject.getApp().getString(resId, any)
+                )
+            )
         }
     }
 
@@ -97,21 +99,6 @@ abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent :
             _commonEventFlow.send(CommonUiEvent.HideLoadingDialog)
         }
     }
-
-    protected suspend fun <T> safeRequestApi(
-        errorBlock: ((Throwable) -> Unit)? = ExceptionHandler.safeRequestApiErrorHandler,
-        block: suspend () -> T?
-    ): T? {
-        return try {
-            block()
-        } catch (e: Throwable) {
-            val ex = ExceptionHandler.handleException(e)
-            errorBlock?.invoke(ex)
-            Logger.e(ex, "safeRequestApi")
-            null
-        }
-    }
-
 
     init {
         viewModelScope.launch {

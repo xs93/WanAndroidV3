@@ -16,7 +16,7 @@
             android:layout_height="56dp"
             android:background="?android:attr/windowBackground"
             app:itemActiveIndicatorStyle="@null"
-            app:itemBackground="@color/windowBackground"
+            app:itemBackground="@color/colorBackground"
             app:itemIconSize="24dp"
             app:itemIconTint="@color/sel_main_tab"
             app:itemPaddingBottom="10dp"

@@ -7,8 +7,8 @@ import android.os.Build
 import android.os.Environment
 import android.os.Process
 import com.github.xs93.framework.core.activity.ActivityStackManager
-import com.github.xs93.framework.core.ktx.appVersionCode
-import com.github.xs93.framework.core.ktx.appVersionName
+import com.github.xs93.utils.ktx.appVersionCode
+import com.github.xs93.utils.ktx.appVersionName
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException

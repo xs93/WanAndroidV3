@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(mapOf("path" to ":lib_utils")))
+
     api(libs.androidx.core.kts)
     api(libs.androidx.appcompat)
     api(libs.material)
@@ -56,7 +59,6 @@ dependencies {
     api(libs.androidx.viewpager2)
 
     api(libs.mmkv)
-    api(libs.bundles.retrofit2)
     ksp(libs.moshi.kotlin.codegen)
 
     api(libs.coil)
