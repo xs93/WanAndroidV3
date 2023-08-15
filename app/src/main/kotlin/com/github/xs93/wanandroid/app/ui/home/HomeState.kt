@@ -1,8 +1,8 @@
 package com.github.xs93.wanandroid.app.ui.home
 
-import com.github.xs93.framework.core.base.viewmodel.IUIState
-import com.github.xs93.framework.core.base.viewmodel.IUiEvent
-import com.github.xs93.framework.core.base.viewmodel.IUiAction
+import com.github.xs93.framework.base.viewmodel.IUIState
+import com.github.xs93.framework.base.viewmodel.IUiAction
+import com.github.xs93.framework.base.viewmodel.IUiEvent
 import com.github.xs93.wanandroid.app.entity.Banner
 
 /**

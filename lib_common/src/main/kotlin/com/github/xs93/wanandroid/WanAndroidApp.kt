@@ -1,8 +1,8 @@
 package com.github.xs93.wanandroid
 
-import com.github.xs93.framework.core.base.application.BaseApplication
-import com.github.xs93.framework.core.toast.ToastManager
-import com.github.xs93.framework.core.toast.impl.SystemToast
+import com.github.xs93.framework.base.application.BaseApplication
+import com.github.xs93.framework.toast.ToastManager
+import com.github.xs93.framework.toast.impl.SystemToast
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.ExceptionHandler
 import com.github.xs93.network.exception.ServiceApiException

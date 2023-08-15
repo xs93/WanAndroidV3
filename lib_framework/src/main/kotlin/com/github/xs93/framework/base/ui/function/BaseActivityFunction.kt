@@ -1,0 +1,67 @@
+package com.github.xs93.framework.base.ui.function
+
+import android.app.Activity
+import android.content.Intent
+import android.os.Bundle
+
+/**
+ * activity生命周期功能
+ *
+ * @author XuShuai
+ * @version v1.0
+ * @date 2021/11/5 10:03
+ */
+open class BaseActivityFunction {
+
+    open fun onNewIntent(activity: Activity, intent: Intent?) {
+
+    }
+
+    open fun onCreated(activity: Activity, savedInstanceState: Bundle?) {
+
+    }
+
+    open fun onRestarted(activity: Activity) {
+
+    }
+
+    open fun onStarted(activity: Activity) {
+
+    }
+
+    open fun onResumed(activity: Activity) {
+
+    }
+
+    open fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
+
+    }
+
+    open fun onPaused(activity: Activity) {
+
+    }
+
+    open fun onStopped(activity: Activity) {
+
+    }
+
+    open fun onSaveInstanceState(activity: Activity, outState: Bundle) {
+
+    }
+
+    open fun onRestoreInstanceState(activity: Activity, savedInstanceState: Bundle) {
+
+    }
+
+    open fun onDestroyed(activity: Activity) {
+
+    }
+
+    open fun onFinish(activity: Activity) {
+
+    }
+
+    open fun onWindowFocusChanged(activity: Activity, hasFocus: Boolean) {
+
+    }
+}

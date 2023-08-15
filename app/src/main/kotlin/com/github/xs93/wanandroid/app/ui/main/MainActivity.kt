@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.github.xs93.framework.core.adapter.ViewPager2FragmentAdapter
-import com.github.xs93.framework.core.base.ui.viewbinding.BaseVbActivity
-import com.github.xs93.framework.core.ktx.isLightStatusBarsCompat
-import com.github.xs93.framework.core.ktx.isStatusBarTranslucentCompat
-import com.github.xs93.framework.core.ktx.launcher
+import com.github.xs93.framework.adapter.ViewPager2FragmentAdapter
+import com.github.xs93.framework.base.ui.viewbinding.BaseVbActivity
+import com.github.xs93.framework.ktx.isLightStatusBarsCompat
+import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
+import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ActivityMainBinding
 import com.github.xs93.wanandroid.app.ui.classify.ClassifyFragment

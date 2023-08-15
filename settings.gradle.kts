@@ -1,11 +1,4 @@
 @file:Suppress("UnstableApiUsage")
-
-include(":lib_utils")
-
-
-include(":lib_network")
-
-
 pluginManagement {
     repositories {
         google()
@@ -24,5 +17,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "WanAndroidV3"
 include(":app")
-include(":lib_framework")
 include(":lib_common")
+include(":lib_framework")
+include(":lib_network")
+include(":lib_utils")

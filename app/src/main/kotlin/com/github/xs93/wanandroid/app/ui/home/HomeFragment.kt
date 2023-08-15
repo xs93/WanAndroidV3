@@ -2,8 +2,8 @@ package com.github.xs93.wanandroid.app.ui.home
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.core.base.ui.vbvm.BaseVbVmFragment
-import com.github.xs93.framework.core.ktx.observer
+import com.github.xs93.framework.base.ui.vbvm.BaseVbVmFragment
+import com.github.xs93.framework.ktx.observer
 import com.github.xs93.utils.ktx.color
 import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.app.R

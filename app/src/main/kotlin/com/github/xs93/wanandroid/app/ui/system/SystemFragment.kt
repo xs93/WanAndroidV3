@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app.ui.system
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.core.base.ui.viewbinding.BaseVbFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVbFragment
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentSystemBinding
 

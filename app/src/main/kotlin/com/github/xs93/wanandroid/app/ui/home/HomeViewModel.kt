@@ -1,7 +1,7 @@
 package com.github.xs93.wanandroid.app.ui.home
 
-import com.github.xs93.framework.core.base.viewmodel.BaseViewModel
-import com.github.xs93.framework.core.ktx.launcher
+import com.github.xs93.framework.base.viewmodel.BaseViewModel
+import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.network.base.viewmodel.safeRequestApi
 import com.github.xs93.wanandroid.app.repository.HomeRepository
 import com.orhanobut.logger.Logger
