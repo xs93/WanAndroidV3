@@ -11,11 +11,12 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
 import com.github.xs93.framework.R
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
-import com.github.xs93.framework.loading.IUiLoadingDialog
-import com.github.xs93.framework.loading.IUiLoadingDialogProxy
+import com.github.xs93.framework.loading.ICreateLoadingDialog
+import com.github.xs93.framework.loading.ILoadingDialogControl
+import com.github.xs93.framework.loading.ILoadingDialogControlProxy
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
-import com.github.xs93.framework.ui.Surface
+import com.github.xs93.framework.ui.WindowSurface
 
 /**
  * 基础dialogFragment 封装
@@ -25,12 +26,13 @@ import com.github.xs93.framework.ui.Surface
  * @date 2021/11/4 13:40
  */
 abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToastProxy(),
-    IUiLoadingDialog {
+    ICreateLoadingDialog,
+    ILoadingDialogControl {
 
-    protected val surface = Surface()
+    protected val windowSurface = WindowSurface()
 
     private val mIUiLoadingDialog by lazy {
-        IUiLoadingDialogProxy(childFragmentManager, viewLifecycleOwner)
+        ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
     var onDismissListener: (() -> Unit)? = null
@@ -61,7 +63,7 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
         dialog?.window?.apply {
             val contentView: View = decorView.findViewById(android.R.id.content)
             contentView.setOnInsertsChangedListener {
-                surface.insets = it
+                windowSurface.contentPadding = it
             }
         }
         beforeInitView(view, savedInstanceState)
@@ -103,12 +105,8 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
         return mIUiLoadingDialog.createLoadingDialog()
     }
 
-    override fun showLoadingDialog(message: CharSequence?) {
-        mIUiLoadingDialog.showLoadingDialog(message)
-    }
-
-    override fun updateLoadingDialog(message: CharSequence) {
-        mIUiLoadingDialog.updateLoadingDialog(message)
+    override fun showLoadingDialog() {
+        mIUiLoadingDialog.showLoadingDialog()
     }
 
     override fun hideLoadingDialog() {

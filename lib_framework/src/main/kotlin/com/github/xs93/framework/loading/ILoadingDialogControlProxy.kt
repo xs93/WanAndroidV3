@@ -19,10 +19,11 @@ import kotlinx.coroutines.launch
  * @date 2023/5/15 17:11
  * @email 466911254@qq.com
  */
-class IUiLoadingDialogProxy(
+class ILoadingDialogControlProxy(
     private val fragmentManager: FragmentManager,
-    private val lifecycleOwner: LifecycleOwner
-) : IUiLoadingDialog {
+    private val lifecycleOwner: LifecycleOwner,
+    private val createLoadingDialog: ICreateLoadingDialog
+) : ILoadingDialogControl, ICreateLoadingDialog {
 
     private val mChannel = Channel<LoadingDialogUiIntent>(Channel.UNLIMITED)
     private val mFlow = mChannel.receiveAsFlow()
@@ -41,15 +42,6 @@ class IUiLoadingDialogProxy(
                             createLoadingDialog()
                                 .also { dialog -> mLoadingDialog = dialog }
                                 .show(fragmentManager, "mLoadingDialog")
-                            it.message?.let { message ->
-                                updateLoadingDialog(message)
-                            }
-                        }
-
-                        is LoadingDialogUiIntent.UpdateLoadingDialogUiIntent -> {
-                            mLoadingDialog?.let { dialog ->
-                                LoadingDialogHelper.updateLoadingDialog(dialog, it.message)
-                            }
                         }
 
                         LoadingDialogUiIntent.HideLoadingDialogUiIntent -> {
@@ -62,18 +54,12 @@ class IUiLoadingDialogProxy(
     }
 
     override fun createLoadingDialog(): DialogFragment {
-        return LoadingDialogHelper.createLoadingDialog()
+        return createLoadingDialog.createLoadingDialog()
     }
 
-    override fun showLoadingDialog(message: CharSequence?) {
+    override fun showLoadingDialog() {
         lifecycleOwner.lifecycleScope.launch {
-            mChannel.send(LoadingDialogUiIntent.ShowLoadingDialogUiIntent(message))
-        }
-    }
-
-    override fun updateLoadingDialog(message: CharSequence) {
-        lifecycleOwner.lifecycleScope.launch {
-            mChannel.send(LoadingDialogUiIntent.UpdateLoadingDialogUiIntent(message))
+            mChannel.send(LoadingDialogUiIntent.ShowLoadingDialogUiIntent)
         }
     }
 
@@ -84,8 +70,8 @@ class IUiLoadingDialogProxy(
     }
 
     private sealed class LoadingDialogUiIntent {
-        data class ShowLoadingDialogUiIntent(val message: CharSequence?) : LoadingDialogUiIntent()
-        data class UpdateLoadingDialogUiIntent(val message: CharSequence?) : LoadingDialogUiIntent()
+        object ShowLoadingDialogUiIntent : LoadingDialogUiIntent()
+
         object HideLoadingDialogUiIntent : LoadingDialogUiIntent()
     }
 }

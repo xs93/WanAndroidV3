@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.github.xs93.framework.base.ui.function.BaseFunctionDialogFragment
+import com.github.xs93.framework.base.ui.function.BaseFunctionBottomSheetDialogFragmentControl
 
 /**
  *
- * 可以使用ViewBinding和dataBinding的DialogFragment
  *
- * @author xushuai
- * @date   2022/5/15-15:38
- * @email  466911254@qq.com
+ * @author XuShuai
+ * @version v1.0
+ * @date 2023/7/3 9:42
+ * @email 466911254@qq.com
  */
-abstract class BaseVbDialogFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
-    BaseFunctionDialogFragment() {
+abstract class BaseVbBottomSheetDialogFragmentControl<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
+    BaseFunctionBottomSheetDialogFragmentControl() {
 
     protected lateinit var binding: VB
 

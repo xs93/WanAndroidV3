@@ -82,15 +82,9 @@ abstract class BaseViewModel<UiIntent : IUiAction, UiState : IUIState, UiEvent :
         }
     }
 
-    protected fun showLoadingDialog(message: CharSequence? = null) {
+    protected fun showLoadingDialog() {
         viewModelScope.launch {
-            _commonEventFlow.send(CommonUiEvent.ShowLoadingDialog(message))
-        }
-    }
-
-    protected fun updateLoadingDialog(message: CharSequence) {
-        viewModelScope.launch {
-            _commonEventFlow.send(CommonUiEvent.ShowLoadingDialog(message))
+            _commonEventFlow.send(CommonUiEvent.ShowLoadingDialog)
         }
     }
 

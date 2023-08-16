@@ -8,11 +8,13 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
-import com.github.xs93.framework.loading.IUiLoadingDialog
-import com.github.xs93.framework.loading.IUiLoadingDialogProxy
+import com.github.xs93.framework.loading.ICreateLoadingDialog
+import com.github.xs93.framework.loading.ILoadingDialogControl
+import com.github.xs93.framework.loading.ILoadingDialogControlProxy
+import com.github.xs93.framework.loading.LoadingDialogHelper
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
-import com.github.xs93.framework.ui.Surface
+import com.github.xs93.framework.ui.WindowSurface
 
 /**
  * 基础Fragment
@@ -21,14 +23,17 @@ import com.github.xs93.framework.ui.Surface
  * @version v1.0
  * @date 2021/11/4 11:25
  */
-abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDialog {
+abstract class BaseFragment : Fragment(),
+    IToast by UiToastProxy(),
+    ICreateLoadingDialog,
+    ILoadingDialogControl {
 
 
     private val mIUiLoadingDialog by lazy {
-        IUiLoadingDialogProxy(childFragmentManager, viewLifecycleOwner)
+        ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
-    protected val surface = Surface()
+    protected val windowSurface = WindowSurface()
 
     private var mLazyLoad = false
 
@@ -76,7 +81,7 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setOnInsertsChangedListener {
-            surface.insets = it
+            windowSurface.contentPadding = it
         }
         beforeInitView(view, savedInstanceState)
         initView(view, savedInstanceState)
@@ -152,15 +157,11 @@ abstract class BaseFragment : Fragment(), IToast by UiToastProxy(), IUiLoadingDi
     open fun onFirstVisible() {}
 
     override fun createLoadingDialog(): DialogFragment {
-        return mIUiLoadingDialog.createLoadingDialog()
+        return LoadingDialogHelper.createLoadingDialog()
     }
 
-    override fun showLoadingDialog(message: CharSequence?) {
-        mIUiLoadingDialog.showLoadingDialog(message)
-    }
-
-    override fun updateLoadingDialog(message: CharSequence) {
-        mIUiLoadingDialog.updateLoadingDialog(message)
+    override fun showLoadingDialog() {
+        mIUiLoadingDialog.showLoadingDialog()
     }
 
     override fun hideLoadingDialog() {

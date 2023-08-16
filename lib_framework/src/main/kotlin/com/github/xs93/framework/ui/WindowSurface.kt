@@ -12,12 +12,12 @@ import com.github.xs93.framework.BR
  * @date 2022/8/19 15:57
  * @email 466911254@qq.com
  */
-class Surface : BaseObservable() {
+class WindowSurface : BaseObservable() {
 
-    var insets: Insets = Insets.EMPTY
+    var contentPadding: ContentPadding = ContentPadding.EMPTY
         @Bindable get
         set(value) {
             field = value
-            notifyPropertyChanged(BR.insets)
+            notifyPropertyChanged(BR.contentPadding)
         }
 }

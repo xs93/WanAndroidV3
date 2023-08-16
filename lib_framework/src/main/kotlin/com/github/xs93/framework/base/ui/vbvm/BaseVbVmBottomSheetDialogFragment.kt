@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.github.xs93.framework.base.ui.viewbinding.BaseVbBottomSheetDialogFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVbBottomSheetDialogFragmentControl
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
 import com.github.xs93.framework.base.viewmodel.CommonUiEvent
 import com.github.xs93.framework.utils.ClassUtils
@@ -24,8 +24,10 @@ import java.lang.reflect.Modifier
  * @date 2023/7/3 9:43
  * @email 466911254@qq.com
  */
-abstract class BaseVbVmBottomSheetDialogFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *>>(@LayoutRes layoutId: Int) :
-    BaseVbBottomSheetDialogFragment<VB>(layoutId) {
+abstract class BaseVbVmBottomSheetDialogFragment<VB : ViewDataBinding, VM : BaseViewModel<*, *, *>>(
+    @LayoutRes layoutId: Int
+) :
+    BaseVbBottomSheetDialogFragmentControl<VB>(layoutId) {
 
     /** 泛型中的默认ViewModel对象 */
     protected lateinit var viewModel: VM
@@ -63,12 +65,8 @@ abstract class BaseVbVmBottomSheetDialogFragment<VB : ViewDataBinding, VM : Base
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach {
                 when (it) {
-                    is CommonUiEvent.ShowLoadingDialog -> {
-                        showLoadingDialog(it.message)
-                    }
-
-                    is CommonUiEvent.UpdateLoadingDialog -> {
-                        updateLoadingDialog(it.message)
+                    CommonUiEvent.ShowLoadingDialog -> {
+                        showLoadingDialog()
                     }
 
                     CommonUiEvent.HideLoadingDialog -> {

@@ -7,11 +7,13 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
-import com.github.xs93.framework.loading.IUiLoadingDialog
-import com.github.xs93.framework.loading.IUiLoadingDialogProxy
+import com.github.xs93.framework.loading.ICreateLoadingDialog
+import com.github.xs93.framework.loading.ILoadingDialogControl
+import com.github.xs93.framework.loading.ILoadingDialogControlProxy
+import com.github.xs93.framework.loading.LoadingDialogHelper
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
-import com.github.xs93.framework.ui.Surface
+import com.github.xs93.framework.ui.WindowSurface
 
 
 /**
@@ -21,15 +23,16 @@ import com.github.xs93.framework.ui.Surface
  * @version v1.0
  * @date 2021/11/4 11:01
  */
-abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUiLoadingDialog {
+abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), ILoadingDialogControl,
+    ICreateLoadingDialog {
 
     var resumed: Boolean = false
         private set
 
-    protected val surface = Surface()
+    protected val mWindowSurface = WindowSurface()
 
     private val mIUiLoadingDialog by lazy {
-        IUiLoadingDialogProxy(supportFragmentManager, this)
+        ILoadingDialogControlProxy(supportFragmentManager, this, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +49,7 @@ abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUi
 
         val contentView: View? = findViewById(android.R.id.content)
         contentView?.setOnInsertsChangedListener {
-            surface.insets = it
+            mWindowSurface.contentPadding = it
         }
 
         beforeInitView(savedInstanceState)
@@ -55,6 +58,7 @@ abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUi
         beforeInitData(savedInstanceState)
         initData(savedInstanceState)
     }
+
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -102,17 +106,12 @@ abstract class BaseActivity : AppCompatActivity(), IToast by UiToastProxy(), IUi
     /** 初始化数据 */
     open fun initData(savedInstanceState: Bundle?) {}
 
-
     override fun createLoadingDialog(): DialogFragment {
-        return mIUiLoadingDialog.createLoadingDialog()
+        return LoadingDialogHelper.createLoadingDialog()
     }
 
-    override fun showLoadingDialog(message: CharSequence?) {
-        mIUiLoadingDialog.showLoadingDialog(message)
-    }
-
-    override fun updateLoadingDialog(message: CharSequence) {
-        mIUiLoadingDialog.updateLoadingDialog(message)
+    override fun showLoadingDialog() {
+        mIUiLoadingDialog.showLoadingDialog()
     }
 
     override fun hideLoadingDialog() {

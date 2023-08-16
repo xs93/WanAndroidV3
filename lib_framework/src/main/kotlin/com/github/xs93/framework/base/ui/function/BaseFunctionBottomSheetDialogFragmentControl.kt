@@ -3,7 +3,7 @@ package com.github.xs93.framework.base.ui.function
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.base.ui.base.BaseBottomSheetDialogFragment
+import com.github.xs93.framework.base.ui.base.BaseBottomSheetDialogControlFragment
 
 /**
  * 添加方法基类
@@ -13,10 +13,12 @@ import com.github.xs93.framework.base.ui.base.BaseBottomSheetDialogFragment
  * @date 2023/7/3 9:40
  * @email 466911254@qq.com
  */
-abstract class BaseFunctionBottomSheetDialogFragment : BaseBottomSheetDialogFragment() {
+abstract class BaseFunctionBottomSheetDialogFragmentControl :
+    BaseBottomSheetDialogControlFragment() {
 
 
-    private val functions: MutableList<BaseFragmentFunction> = FunctionsManager.createFragmentFunctions()
+    private val functions: MutableList<BaseFragmentFunction> =
+        FunctionsManager.createFragmentFunctions()
 
     override fun onAttach(context: Context) {
         addFunctions()

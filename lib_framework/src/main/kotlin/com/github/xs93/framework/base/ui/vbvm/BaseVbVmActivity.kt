@@ -63,12 +63,8 @@ abstract class BaseVbVmActivity<VB : ViewDataBinding, VM : BaseViewModel<*, *, *
             .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach {
                 when (it) {
-                    is CommonUiEvent.ShowLoadingDialog -> {
-                        showLoadingDialog(it.message)
-                    }
-
-                    is CommonUiEvent.UpdateLoadingDialog -> {
-                        updateLoadingDialog(it.message)
+                    CommonUiEvent.ShowLoadingDialog -> {
+                        showLoadingDialog()
                     }
 
                     CommonUiEvent.HideLoadingDialog -> {

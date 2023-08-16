@@ -1,7 +1,9 @@
 package com.github.xs93.framework.base.ui.viewbinding
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -18,21 +20,23 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionFragment
 abstract class BaseVbFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
     BaseFunctionFragment() {
 
-    private var _mBinding: VB? = null
-    protected val binding get() = _mBinding!!
+    protected lateinit var binding: VB
 
     override fun getContentLayoutId(): Int {
         return layoutId
     }
 
-    override fun beforeInitView(view: View, savedInstanceState: Bundle?) {
-        super.beforeInitView(view, savedInstanceState)
-        _mBinding = DataBindingUtil.bind(view)
-        _mBinding?.lifecycleOwner = viewLifecycleOwner
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = DataBindingUtil.inflate(inflater, getContentLayoutId(), container, false)
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _mBinding = null
+        binding.unbind()
     }
 }

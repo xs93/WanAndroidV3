@@ -5,7 +5,7 @@ import android.view.View
 import android.view.View.OnAttachStateChangeListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.github.xs93.framework.ui.Insets
+import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.ktx.dp
 import com.github.xs93.utils.ktx.getAppMateData
 
@@ -18,7 +18,7 @@ import com.github.xs93.utils.ktx.getAppMateData
  * @email 466911254@qq.com
  */
 
-fun Insets.landscape(context: Context): Insets {
+fun ContentPadding.landscape(context: Context): ContentPadding {
     val displayMetrics = context.resources.displayMetrics
 
     val landscapeMinWidthDp = context.getAppMateData().getInt("surface_landscape_min_width_dp")
@@ -51,17 +51,20 @@ fun View.requestApplyInsetsWhenAttached() {
     }
 }
 
-fun View.setOnInsertsChangedListener(adaptLandscape: Boolean = true, listener: (Insets) -> Unit) {
+fun View.setOnInsertsChangedListener(
+    adaptLandscape: Boolean = true,
+    listener: (ContentPadding) -> Unit
+) {
     setOnApplyWindowInsetsListener { v, ins ->
         val compat = WindowInsetsCompat.toWindowInsetsCompat(ins)
         val insets = compat.getInsets(WindowInsetsCompat.Type.systemBars())
-
-        val rInsets = if (ViewCompat.getLayoutDirection(v) == ViewCompat.LAYOUT_DIRECTION_LTR) {
-            Insets(insets.left, insets.top, insets.right, insets.bottom)
-        } else {
-            Insets(insets.right, insets.top, insets.left, insets.bottom)
-        }
-        listener(if (adaptLandscape) rInsets.landscape(v.context) else rInsets)
+        val rContentPadding =
+            if (ViewCompat.getLayoutDirection(v) == ViewCompat.LAYOUT_DIRECTION_LTR) {
+                ContentPadding(insets.left, insets.top, insets.right, insets.bottom)
+            } else {
+                ContentPadding(insets.right, insets.top, insets.left, insets.bottom)
+            }
+        listener(if (adaptLandscape) rContentPadding.landscape(v.context) else rContentPadding)
         v.onApplyWindowInsets(compat.toWindowInsets())
     }
     requestApplyInsetsWhenAttached()

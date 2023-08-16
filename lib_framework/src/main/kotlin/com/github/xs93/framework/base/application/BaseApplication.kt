@@ -8,7 +8,7 @@ import android.os.Bundle
 import com.github.xs93.framework.activity.ActivityStackManager
 import com.github.xs93.framework.crash.CrashHandler
 import com.github.xs93.framework.loading.LoadingDialogHelper
-import com.github.xs93.framework.loading.impl.DefaultLoadingDialog
+import com.github.xs93.framework.loading.impl.DefaultCreateLoadingDialog
 
 /**
  * 基础Application
@@ -41,7 +41,7 @@ abstract class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         com.github.xs93.utils.AppInject.init(this)
-        LoadingDialogHelper.initLoadingDialog(DefaultLoadingDialog())
+        LoadingDialogHelper.initLoadingDialog(DefaultCreateLoadingDialog())
         CrashHandler.init(this)
         ActivityStackManager.init(this)
         registerAppLifecycleListener()

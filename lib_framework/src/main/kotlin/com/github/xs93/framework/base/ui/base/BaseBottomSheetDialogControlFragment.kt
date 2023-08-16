@@ -13,11 +13,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.R
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
-import com.github.xs93.framework.loading.IUiLoadingDialog
-import com.github.xs93.framework.loading.IUiLoadingDialogProxy
+import com.github.xs93.framework.loading.ICreateLoadingDialog
+import com.github.xs93.framework.loading.ILoadingDialogControl
+import com.github.xs93.framework.loading.ILoadingDialogControlProxy
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
-import com.github.xs93.framework.ui.Surface
+import com.github.xs93.framework.ui.WindowSurface
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -31,15 +32,16 @@ import java.lang.reflect.Field
  * @date 2023/6/16 14:17
  * @email 466911254@qq.com
  */
-abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
+abstract class BaseBottomSheetDialogControlFragment : BottomSheetDialogFragment(),
     IToast by UiToastProxy(),
-    IUiLoadingDialog {
+    ICreateLoadingDialog,
+    ILoadingDialogControl {
 
 
-    protected val surface = Surface()
+    protected val windowSurface = WindowSurface()
 
     private val mIUiLoadingDialog by lazy {
-        IUiLoadingDialogProxy(childFragmentManager, viewLifecycleOwner)
+        ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
     var onDismissListener: (() -> Unit)? = null
@@ -50,7 +52,11 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -63,12 +69,13 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
         dialog?.window?.apply {
             val contentView: View = decorView.findViewById(android.R.id.content)
             contentView.setOnInsertsChangedListener {
-                surface.insets = it
+                windowSurface.contentPadding = it
             }
         }
 
         if (showFixedHeight()) {
-            view.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            view.viewTreeObserver.addOnGlobalLayoutListener(object :
+                ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
                     if (view.measuredHeight == 0) {
                         return
@@ -77,8 +84,10 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
                     val dialog = dialog
                     if (dialog is BottomSheetDialog) {
                         val bottomSheet: FrameLayout =
-                            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return
-                        val behavior: BottomSheetBehavior<FrameLayout> = BottomSheetBehavior.from(bottomSheet)
+                            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)
+                                ?: return
+                        val behavior: BottomSheetBehavior<FrameLayout> =
+                            BottomSheetBehavior.from(bottomSheet)
                         behavior.peekHeight = view.measuredHeight
                     }
                 }
@@ -132,7 +141,10 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
      * @param manager FragmentManager
      * @param tag String?
      */
-    fun showAllowingStateLoss(manager: FragmentManager, tag: String? = this::class.java.simpleName) {
+    fun showAllowingStateLoss(
+        manager: FragmentManager,
+        tag: String? = this::class.java.simpleName
+    ) {
         try {
             val dismissed: Field = DialogFragment::class.java.getDeclaredField("mDismissed")
             dismissed.isAccessible = true
@@ -152,12 +164,8 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
         return mIUiLoadingDialog.createLoadingDialog()
     }
 
-    override fun showLoadingDialog(message: CharSequence?) {
-        mIUiLoadingDialog.showLoadingDialog(message)
-    }
-
-    override fun updateLoadingDialog(message: CharSequence) {
-        mIUiLoadingDialog.updateLoadingDialog(message)
+    override fun showLoadingDialog() {
+        mIUiLoadingDialog.showLoadingDialog()
     }
 
     override fun hideLoadingDialog() {

@@ -12,18 +12,14 @@ import androidx.fragment.app.DialogFragment
  */
 object LoadingDialogHelper {
 
-    private var mILoadingDialog: ILoadingDialog? = null
+    private var mICreateLoadingDialog: ICreateLoadingDialog? = null
 
-    fun initLoadingDialog(loadingDialog: ILoadingDialog) {
-        mILoadingDialog = loadingDialog
+    fun initLoadingDialog(loadingDialog: ICreateLoadingDialog) {
+        mICreateLoadingDialog = loadingDialog
     }
 
     fun createLoadingDialog(): DialogFragment {
-        return mILoadingDialog?.createLoadingDialog()
+        return mICreateLoadingDialog?.createLoadingDialog()
             ?: throw IllegalArgumentException("please call LoadingDialogHelper.initLoadingDialog")
-    }
-
-    fun updateLoadingDialog(dialogFragment: DialogFragment, message: CharSequence?) {
-        mILoadingDialog?.updateLoadingDialog(dialogFragment, message)
     }
 }
