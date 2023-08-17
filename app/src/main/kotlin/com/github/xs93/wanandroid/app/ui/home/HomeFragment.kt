@@ -2,7 +2,9 @@ package com.github.xs93.wanandroid.app.ui.home
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.base.ui.vbvm.BaseVbVmFragment
+import androidx.fragment.app.viewModels
+import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
+import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observer
 import com.github.xs93.utils.ktx.color
 import com.github.xs93.utils.ktx.dp
@@ -14,6 +16,7 @@ import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.bannerview.constants.PageStyle
 import com.zhpan.indicator.enums.IndicatorSlideMode
 import com.zhpan.indicator.enums.IndicatorStyle
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
 
 /**
@@ -24,7 +27,8 @@ import kotlinx.coroutines.flow.map
  * @date 2023/5/22 14:23
  * @email 466911254@qq.com
  */
-class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layout.fragment_home) {
+@AndroidEntryPoint
+class HomeFragment : BaseDataBindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     companion object {
         fun newInstance(): HomeFragment {
             val args = Bundle()
@@ -33,6 +37,8 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
             return fragment
         }
     }
+
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var bannerViewPager: BannerViewPager<Banner>
     private val bannerAdapter: BannerAdapter = BannerAdapter()
@@ -62,6 +68,9 @@ class HomeFragment : BaseVbVmFragment<FragmentHomeBinding, HomeViewModel>(R.layo
 
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
+
+        viewModel.registerCommonEvent(this)
+
         observer(viewModel.uiStateFlow.map { it.banners }) {
             bannerViewPager.refreshData(it)
         }

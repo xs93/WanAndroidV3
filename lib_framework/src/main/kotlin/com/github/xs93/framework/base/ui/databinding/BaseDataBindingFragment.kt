@@ -1,4 +1,4 @@
-package com.github.xs93.framework.base.ui.viewbinding
+package com.github.xs93.framework.base.ui.databinding
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionFragment
  * @date   2022/3/26-17:04
  * @email  466911254@qq.com
  */
-abstract class BaseVbFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
+abstract class BaseDataBindingFragment<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
     BaseFunctionFragment() {
 
     protected lateinit var binding: VB

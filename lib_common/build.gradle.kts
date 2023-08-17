@@ -6,8 +6,8 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.kotlin.parcelize.get().pluginId)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
-
 android {
     namespace = "com.github.xs93.common"
     compileSdk = libs.versions.targetSdk.get().toInt()
@@ -41,6 +41,16 @@ android {
         dataBinding = true
     }
 }
+
+kapt {
+    correctErrorTypes = true
+}
+
+hilt {
+    enableAggregatingTask = true
+    enableExperimentalClasspathAggregation = true
+}
+
 dependencies {
 
     api(project(mapOf("path" to ":lib_utils")))
@@ -49,4 +59,7 @@ dependencies {
 
     api(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
+
+    implementation(libs.androidx.hilt)
+    kapt(libs.androidx.hilt.compiler)
 }

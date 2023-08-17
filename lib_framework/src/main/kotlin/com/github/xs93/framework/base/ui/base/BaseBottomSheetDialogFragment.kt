@@ -32,7 +32,7 @@ import java.lang.reflect.Field
  * @date 2023/6/16 14:17
  * @email 466911254@qq.com
  */
-abstract class BaseBottomSheetDialogControlFragment : BottomSheetDialogFragment(),
+abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
     IToast by UiToastProxy(),
     ICreateLoadingDialog,
     ILoadingDialogControl {

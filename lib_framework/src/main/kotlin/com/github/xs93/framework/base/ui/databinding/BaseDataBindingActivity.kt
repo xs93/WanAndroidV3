@@ -1,4 +1,4 @@
-package com.github.xs93.framework.base.ui.viewbinding
+package com.github.xs93.framework.base.ui.databinding
 
 import android.view.View
 import androidx.annotation.LayoutRes
@@ -14,7 +14,8 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionActivity
  * @date   2022/3/26-16:47
  * @email  466911254@qq.com
  */
-abstract class BaseVbActivity<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) : BaseFunctionActivity() {
+abstract class BaseDataBindingActivity<VB : ViewDataBinding>(@LayoutRes val layoutId: Int) :
+    BaseFunctionActivity() {
 
     protected lateinit var binding: VB
 

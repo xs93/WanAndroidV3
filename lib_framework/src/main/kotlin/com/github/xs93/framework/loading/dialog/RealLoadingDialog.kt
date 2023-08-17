@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import com.github.xs93.framework.R
-import com.github.xs93.framework.base.ui.viewbinding.BaseVbDialogFragment
+import com.github.xs93.framework.base.ui.databinding.BaseDataBindingDialogFragment
 import com.github.xs93.framework.databinding.BaseLayoutLoadingBinding
 
 /**
@@ -15,7 +15,8 @@ import com.github.xs93.framework.databinding.BaseLayoutLoadingBinding
  * @date 2022/7/26 17:27
  * @email 466911254@qq.com
  */
-class RealLoadingDialog : BaseVbDialogFragment<BaseLayoutLoadingBinding>(R.layout.base_layout_loading) {
+class RealLoadingDialog :
+    BaseDataBindingDialogFragment<BaseLayoutLoadingBinding>(R.layout.base_layout_loading) {
 
     companion object {
         fun newInstance(): RealLoadingDialog {

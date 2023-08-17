@@ -21,7 +21,7 @@ import kotlin.coroutines.EmptyCoroutineContext
 
 /**
  *
- *
+ * Activity Fragment 协程与生命周期扩展方法
  *
  * @author xushuai
  * @date   2022/9/8-23:01

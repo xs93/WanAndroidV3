@@ -19,7 +19,7 @@ import com.orhanobut.logger.PrettyFormatStrategy
  * @date 2023/5/19 17:06
  * @email 466911254@qq.com
  */
-class WanAndroidApp : BaseApplication() {
+open class WanAndroidBaseApp : BaseApplication() {
     override fun addComponentApplication(classNames: MutableList<String>) {
 
     }

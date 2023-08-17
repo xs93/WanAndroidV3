@@ -6,6 +6,7 @@ plugins {
     id(libs.plugins.kotlin.kapt.get().pluginId)
     id(libs.plugins.kotlin.parcelize.get().pluginId)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -41,6 +42,7 @@ android {
 
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 
     packaging {
@@ -49,6 +51,15 @@ android {
         }
     }
 }
+
+kapt {
+    correctErrorTypes = true
+}
+
+hilt {
+    enableAggregatingTask = true
+}
+
 
 dependencies {
     implementation(project(mapOf("path" to ":lib_framework")))
@@ -62,4 +73,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.banner)
     implementation(libs.viewPagerIndicator)
+
+    implementation(libs.androidx.hilt)
+    kapt(libs.androidx.hilt.compiler)
 }

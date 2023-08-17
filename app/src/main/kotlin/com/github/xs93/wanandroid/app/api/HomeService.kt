@@ -14,7 +14,7 @@ import retrofit2.http.GET
  * @date 2023/5/23 10:05
  * @email 466911254@qq.com
  */
-interface HomeApi {
+interface HomeService {
 
     /**
      * 首页Banner

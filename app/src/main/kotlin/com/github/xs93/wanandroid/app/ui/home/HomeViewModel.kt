@@ -5,6 +5,8 @@ import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.network.base.viewmodel.safeRequestApi
 import com.github.xs93.wanandroid.app.repository.HomeRepository
 import com.orhanobut.logger.Logger
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 /**
  * 首页ViewModel
@@ -14,14 +16,19 @@ import com.orhanobut.logger.Logger
  * @date 2023/5/23 10:16
  * @email 466911254@qq.com
  */
-class HomeViewModel : BaseViewModel<HomeUiAction, HomeUiState, HomeUiEvent>() {
+@HiltViewModel
+class HomeViewModel @Inject constructor() :
+    BaseViewModel<HomeUiAction, HomeUiState, HomeUiEvent>() {
+
+    @Inject
+    lateinit var homeRepository: HomeRepository
 
     override fun initUiState(): HomeUiState {
         return HomeUiState(emptyList())
     }
 
-    override fun handleIntent(intent: HomeUiAction) {
-        when (intent) {
+    override fun handleAction(action: HomeUiAction) {
+        when (action) {
             HomeUiAction.InitBannerData -> getBanner()
         }
     }
@@ -29,13 +36,14 @@ class HomeViewModel : BaseViewModel<HomeUiAction, HomeUiState, HomeUiEvent>() {
     private fun getBanner() {
         launcher {
             val bannerResponse = safeRequestApi {
-                HomeRepository.getHomeBanner()
+                homeRepository.getHomeBanner()
             }
             Logger.d(bannerResponse)
             val banners = bannerResponse?.data ?: return@launcher
             setUiState {
                 copy(banners = banners)
             }
+            showToast("加载Banner成功")
         }
     }
 }

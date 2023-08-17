@@ -1,11 +1,13 @@
 package com.github.xs93.wanandroid.app.ui.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import com.github.xs93.framework.adapter.ViewPager2FragmentAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseVbActivity
+import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
+import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
@@ -15,6 +17,7 @@ import com.github.xs93.wanandroid.app.ui.classify.ClassifyFragment
 import com.github.xs93.wanandroid.app.ui.home.HomeFragment
 import com.github.xs93.wanandroid.app.ui.mine.MineFragment
 import com.github.xs93.wanandroid.app.ui.system.SystemFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
 /**
@@ -25,22 +28,16 @@ import kotlinx.coroutines.delay
  * @date 2023/5/19 17:29
  * @email 466911254@qq.com
  */
-class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main) {
+@AndroidEntryPoint
+class MainActivity : BaseViewBindingActivity<ActivityMainBinding>() {
 
     private lateinit var splashScreen: SplashScreen
     private var keepOnScreenCondition = true
 
-    private lateinit var mContentAdapter: ViewPager2FragmentAdapter
-
-    private val homeFragment = HomeFragment.newInstance()
-    private val classifyFragment = ClassifyFragment.newInstance()
-    private val systemFragment = SystemFragment.newInstance()
-    private val mineFragment = MineFragment.newInstance()
-
-    private val fragments by lazy {
-        listOf(homeFragment, classifyFragment, systemFragment, mineFragment)
+    private lateinit var mContentAdapter: SimpleViewPagerAdapter
+    override fun onCreateViewBinding(inflater: LayoutInflater): ActivityMainBinding {
+        return ActivityMainBinding.inflate(inflater)
     }
-
 
     override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
         super.beforeSuperOnCreate(savedInstanceState)
@@ -69,9 +66,15 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
             return
         }
 
-        mContentAdapter = ViewPager2FragmentAdapter(supportFragmentManager, lifecycle, fragments)
+        mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
+            add { HomeFragment.newInstance() }
+            add { ClassifyFragment.newInstance() }
+            add { SystemFragment.newInstance() }
+            add { MineFragment.newInstance() }
+        }
+
         binding.vpContent.apply {
-            offscreenPageLimit = fragments.size
+            offscreenPageLimit = mContentAdapter.itemCount
             adapter = mContentAdapter
             registerOnPageChangeCallback(object : OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -88,6 +91,10 @@ class MainActivity : BaseVbActivity<ActivityMainBinding>(R.layout.activity_main)
                 R.id.menu_mine -> binding.vpContent.setCurrentItem(3, false)
             }
             true
+        }
+
+        addOnBackPressedCallback(true) {
+
         }
     }
 }
