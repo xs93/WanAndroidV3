@@ -47,7 +47,8 @@ class HomeFragment : BaseDataBindingFragment<FragmentHomeBinding>(R.layout.fragm
         bannerViewPager = view.findViewById(R.id.banner)
         bannerViewPager.apply {
             val normalColor = requireContext().color(com.github.xs93.framework.R.color.color_666666)
-            val selectedColor = requireContext().color(com.github.xs93.common.R.color.primaryColor)
+            val selectedColor =
+                requireContext().color(com.github.xs93.common.R.color.md_theme_light_primary)
             setIndicatorSliderColor(normalColor, selectedColor)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)
             setIndicatorStyle(IndicatorStyle.ROUND_RECT)

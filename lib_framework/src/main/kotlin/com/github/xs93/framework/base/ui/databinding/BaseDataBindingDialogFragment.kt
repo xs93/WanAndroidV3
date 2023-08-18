@@ -30,10 +30,12 @@ abstract class BaseDataBindingDialogFragment<VB : ViewDataBinding>(@LayoutRes va
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(layoutInflater, getContentLayoutId(), container, false)
-        return binding.root
-    }
+    ): View? = DataBindingUtil.inflate<VB>(inflater, getContentLayoutId(), container, false)
+        .also {
+            it.lifecycleOwner = viewLifecycleOwner
+            binding = it
+        }
+        .root
 
     override fun onDestroyView() {
         super.onDestroyView()

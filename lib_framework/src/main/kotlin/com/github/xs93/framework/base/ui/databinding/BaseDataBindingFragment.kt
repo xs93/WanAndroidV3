@@ -30,10 +30,13 @@ abstract class BaseDataBindingFragment<VB : ViewDataBinding>(@LayoutRes val layo
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, getContentLayoutId(), container, false)
-        return binding.root
-    }
+    ): View? = DataBindingUtil.inflate<VB>(inflater, getContentLayoutId(), container, false)
+        .also {
+            it.lifecycleOwner = viewLifecycleOwner
+            binding = it
+        }
+        .root
+
 
     override fun onDestroyView() {
         super.onDestroyView()
