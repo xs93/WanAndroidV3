@@ -27,7 +27,7 @@ androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", ve
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0-beta02" }
-androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.0" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.1" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.6.0" }
 
 androidx-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
@@ -35,6 +35,7 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-liveData-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 
+androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.2.0" }
 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
@@ -72,10 +73,14 @@ coil = { group = "io.coil-kt", name = "coil", version = "2.4.0" }
 checkableView = { group = "com.github.xs93", name = "CheckableView", version = "1.0.2" }
 cropImageView = { group = "com.github.xs93", name = "CropImageView", version = "1.0.4" }
 photoview = { group = "com.github.chrisbanes", name = "PhotoView", version = "2.3.0" }
+
 #https://github.com/zhpanvip/BannerViewPager
 banner = { group = "com.github.zhpanvip", name = "bannerviewpager", version = "3.5.11" }
 #https://github.com/zhpanvip/viewpagerindicator
 viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator", version = "1.2.3" }
+
+#RecyclerView Adapter封装库(https://github.com/CymChad/BaseRecyclerViewAdapterHelpe)
+brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper", version = "4.0.1" }
 
 #日志库
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }

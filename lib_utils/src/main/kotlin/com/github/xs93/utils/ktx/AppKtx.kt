@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
 import androidx.annotation.*
 import java.io.File
@@ -91,4 +92,9 @@ inline val Context.appVersionCode: Long
             e.printStackTrace()
         }
         return versionCode
+    }
+
+inline val Context.isNightMode: Boolean
+    get() {
+        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES) != 0
     }

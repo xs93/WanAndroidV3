@@ -5,11 +5,4 @@
 
     <color name="mainBottomNavViewSelected">?colorPrimary</color>
     <color name="mainBottomNavViewNormal">@color/color_666666</color>
-
-    <color name="article_tag_red">?colorPrimary</color>
-    <color name="article_tag_green">#4caf50</color>
-    <color name="article_title">#FF19191B</color>
-    <color name="article_favorite_checked">?colorPrimary</color>
-    <color name="article_favorite_normal">#757575</color>
-    <color name="article_author">#616161</color>
 </resources>

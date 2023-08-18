@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="article_tag_red">@color/md_theme_light_primary</color>
+    <color name="article_tag_green">#4caf50</color>
+
+</resources>

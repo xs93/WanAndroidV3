@@ -60,6 +60,9 @@ dependencies {
     api(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
 
+    api(libs.brvah4)
+    api(libs.androidx.paging3)
+
     implementation(libs.androidx.hilt)
     kapt(libs.androidx.hilt.compiler)
 }

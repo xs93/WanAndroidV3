@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home
+package com.github.xs93.wanandroid.app.ui.home.child.explore
 
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
 import com.github.xs93.framework.ktx.launcher
@@ -17,19 +17,22 @@ import javax.inject.Inject
  * @email 466911254@qq.com
  */
 @HiltViewModel
-class HomeViewModel @Inject constructor() :
-    BaseViewModel<HomeUiAction, HomeUiState, HomeUiEvent>() {
+class ExploreViewModel @Inject constructor() :
+    BaseViewModel<ExploreUiAction, ExploreUiState, ExploreUiEvent>() {
 
     @Inject
     lateinit var homeRepository: HomeRepository
 
-    override fun initUiState(): HomeUiState {
-        return HomeUiState(emptyList())
+    override fun initUiState(): ExploreUiState {
+        return ExploreUiState.Init
     }
 
-    override fun handleAction(action: HomeUiAction) {
+    override fun handleAction(action: ExploreUiAction) {
         when (action) {
-            HomeUiAction.InitBannerData -> getBanner()
+            ExploreUiAction.InitBannerData -> {
+                getBanner()
+                getArticle()
+            }
         }
     }
 
@@ -44,6 +47,19 @@ class HomeViewModel @Inject constructor() :
                 copy(banners = banners)
             }
             showToast("加载Banner成功")
+        }
+    }
+
+    private fun getArticle() {
+        launcher {
+            val bannerResponse = safeRequestApi {
+                homeRepository.getHomeArticle(0)
+            }
+            Logger.d(bannerResponse)
+            val articles = bannerResponse?.data?.datas ?: return@launcher
+            setUiState {
+                copy(articles = articles)
+            }
         }
     }
 }

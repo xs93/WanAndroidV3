@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.github.xs93.framework.base.ui.function.BaseFunctionBottomSheetDialogFragment
 
@@ -15,13 +16,15 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionBottomSheetDialogF
  * @date 2023/8/17 15:33
  * @email 466911254@qq.com
  */
-abstract class BaseViewBindingBottomSheetDialogFragment<VB : ViewBinding> :
-    BaseFunctionBottomSheetDialogFragment() {
+abstract class BaseViewBindingBottomSheetDialogFragment<VB : ViewBinding>(
+    @LayoutRes val layoutId: Int,
+    val bind: (View) -> VB
+) : BaseFunctionBottomSheetDialogFragment() {
 
     protected lateinit var binding: VB
 
     override fun getContentLayoutId(): Int {
-        return 0
+        return layoutId
     }
 
     override fun onCreateView(
@@ -29,9 +32,10 @@ abstract class BaseViewBindingBottomSheetDialogFragment<VB : ViewBinding> :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = onCreateViewBinding(inflater, container)
-        return binding.root
+        val view = super.onCreateView(inflater, container, savedInstanceState)?.also {
+            binding = bind(it)
+        }
+        return view
     }
 
-    abstract fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 }

@@ -7,6 +7,7 @@
     <string name="main_bottom_menu_system">体系</string>
     <string name="main_bottom_menu_mine">我的</string>
 
+
     <string name="main_title_official_accounts">公众号</string>
     <string name="main_title_project">项目</string>
 
@@ -14,4 +15,11 @@
     <string name="main_logout">退出登录</string>
 
     <string name="main_menu_collect">收藏</string>
+
+
+    <string name="home_tab_explore">首页</string>
+    <string name="home_tab_square">广场</string>
+    <string name="home_tab_answer">问答</string>
+    <string name="article_tag_top">置顶</string>
+    <string name="article_tag_new">新</string>
 </resources>

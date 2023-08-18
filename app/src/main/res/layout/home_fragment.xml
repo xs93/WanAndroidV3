@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="windowSurface"
+            type="com.github.xs93.framework.ui.WindowSurface" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.HomeFragment">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@{windowSurface.contentPadding.top}"
+            app:layout_constraintBottom_toTopOf="@id/vp_content_host"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabGravity="center"
+            app:tabTextAppearance="@style/TabLayout.TextAppearance"
+            app:tabTextColor="?colorPrimary"
+            app:tabUnboundedRipple="true" />
+
+        <com.github.xs93.framework.widget.NestedScrollableHost
+            android:id="@+id/vp_content_host"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.github.xs93.framework.widget.NestedScrollableHost>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

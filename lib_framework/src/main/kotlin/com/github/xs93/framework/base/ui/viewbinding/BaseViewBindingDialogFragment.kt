@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.github.xs93.framework.base.ui.function.BaseFunctionDialogFragment
 
@@ -16,12 +17,15 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionDialogFragment
  * @date 2023/8/17 15:31
  * @email 466911254@qq.com
  */
-abstract class BaseViewBindingDialogFragment<VB : ViewBinding> : BaseFunctionDialogFragment() {
+abstract class BaseViewBindingDialogFragment<VB : ViewBinding>(
+    @LayoutRes val layoutId: Int,
+    val bind: (View) -> VB
+) : BaseFunctionDialogFragment() {
 
     protected lateinit var binding: VB
 
     override fun getContentLayoutId(): Int {
-        return 0
+        return layoutId
     }
 
     override fun onCreateView(
@@ -29,9 +33,9 @@ abstract class BaseViewBindingDialogFragment<VB : ViewBinding> : BaseFunctionDia
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = onCreateViewBinding(inflater, container)
-        return binding.root
+        val view = super.onCreateView(inflater, container, savedInstanceState)?.also {
+            binding = bind(it)
+        }
+        return view
     }
-
-    abstract fun onCreateViewBinding(inflater: LayoutInflater, container: ViewGroup?): VB
 }

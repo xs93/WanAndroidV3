@@ -1,34 +1,33 @@
 package com.github.xs93.wanandroid.app.ui.home
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.annotation.StringRes
+import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
-import com.github.xs93.framework.base.viewmodel.registerCommonEvent
-import com.github.xs93.framework.ktx.observer
-import com.github.xs93.utils.ktx.color
-import com.github.xs93.utils.ktx.dp
+import com.github.xs93.utils.ktx.string
+import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.app.databinding.FragmentHomeBinding
-import com.github.xs93.wanandroid.app.entity.Banner
-import com.zhpan.bannerview.BannerViewPager
-import com.zhpan.bannerview.constants.IndicatorGravity
-import com.zhpan.bannerview.constants.PageStyle
-import com.zhpan.indicator.enums.IndicatorSlideMode
-import com.zhpan.indicator.enums.IndicatorStyle
-import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.map
+import com.github.xs93.wanandroid.app.databinding.HomeFragmentBinding
+import com.github.xs93.wanandroid.app.ui.home.child.answer.AnswerFragment
+import com.github.xs93.wanandroid.app.ui.home.child.explore.ExploreFragment
+import com.github.xs93.wanandroid.app.ui.home.child.square.SquareFragment
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.parcelize.Parcelize
 
 /**
- * 首页Fragment
+ * 首页 fragment
  *
  * @author XuShuai
  * @version v1.0
- * @date 2023/5/22 14:23
+ * @date 2023/8/18 13:47
  * @email 466911254@qq.com
  */
-@AndroidEntryPoint
-class HomeFragment : BaseDataBindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
+class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
+    R.layout.home_fragment,
+) {
+
     companion object {
         fun newInstance(): HomeFragment {
             val args = Bundle()
@@ -38,46 +37,45 @@ class HomeFragment : BaseDataBindingFragment<FragmentHomeBinding>(R.layout.fragm
         }
     }
 
-    private val viewModel: HomeViewModel by viewModels()
-
-    private lateinit var bannerViewPager: BannerViewPager<Banner>
-    private val bannerAdapter: BannerAdapter = BannerAdapter()
+    private lateinit var childFragmentAdapter: SimpleViewPagerAdapter
+    private val homeTabs = generateHomeTabs()
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        bannerViewPager = view.findViewById(R.id.banner)
-        bannerViewPager.apply {
-            val normalColor = requireContext().color(com.github.xs93.framework.R.color.color_666666)
-            val selectedColor =
-                requireContext().color(com.github.xs93.common.R.color.md_theme_light_primary)
-            setIndicatorSliderColor(normalColor, selectedColor)
-            setIndicatorSlideMode(IndicatorSlideMode.WORM)
-            setIndicatorStyle(IndicatorStyle.ROUND_RECT)
-            setIndicatorMargin(0, 0, 12.dp(context), 16.dp(context))
-            setIndicatorGravity(IndicatorGravity.CENTER)
-            registerLifecycleObserver(lifecycle)
-            setScrollDuration(500)
-            setOffScreenPageLimit(2)
-            disallowParentInterceptDownEvent(true)
-            setPageStyle(PageStyle.NORMAL, 1.0f)
-            setInterval(3000)
-            adapter = bannerAdapter
-            setOnPageClickListener { _, position ->
-                showToast("$position")
+
+        childFragmentAdapter = SimpleViewPagerAdapter(childFragmentManager, viewLifecycle).apply {
+            homeTabs.forEach {
+                when (it.titleResId) {
+                    R.string.home_tab_explore -> add { ExploreFragment.newInstance() }
+                    R.string.home_tab_square -> add { SquareFragment.newInstance() }
+                    R.string.home_tab_answer -> add { AnswerFragment.newInstance() }
+                }
             }
-        }.create()
-    }
-
-    override fun initObserver(savedInstanceState: Bundle?) {
-        super.initObserver(savedInstanceState)
-
-        viewModel.registerCommonEvent(this)
-
-        observer(viewModel.uiStateFlow.map { it.banners }) {
-            bannerViewPager.refreshData(it)
         }
+
+        binding.apply {
+            with(vpContent) {
+                offscreenPageLimit = homeTabs.size
+                adapter = childFragmentAdapter
+            }
+
+            TabLayoutMediator(tabLayout, vpContent) { tab, position ->
+                tab.text = string(homeTabs[position].titleResId)
+            }.attach()
+
+
+            windowSurface = this@HomeFragment.windowSurface
+        }
+
     }
 
-    override fun onFirstVisible() {
-        viewModel.sendUiIntent(HomeUiAction.InitBannerData)
-    }
+
+    private fun generateHomeTabs() = listOf(
+        HomeTabBean(R.string.home_tab_explore),
+        HomeTabBean(R.string.home_tab_square),
+        HomeTabBean(R.string.home_tab_answer)
+    )
 }
+
+
+@Parcelize
+data class HomeTabBean(@StringRes val titleResId: Int) : Parcelable

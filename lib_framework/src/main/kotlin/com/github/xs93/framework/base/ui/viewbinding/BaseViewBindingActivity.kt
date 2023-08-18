@@ -1,7 +1,7 @@
 package com.github.xs93.framework.base.ui.viewbinding
 
-import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.LayoutRes
 import androidx.viewbinding.ViewBinding
 import com.github.xs93.framework.base.ui.function.BaseFunctionActivity
 
@@ -13,7 +13,10 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionActivity
  * @date 2023/8/17 15:26
  * @email 466911254@qq.com
  */
-abstract class BaseViewBindingActivity<VB : ViewBinding> : BaseFunctionActivity() {
+abstract class BaseViewBindingActivity<VB : ViewBinding>(
+    @LayoutRes val layoutId: Int,
+    val bind: (View) -> VB
+) : BaseFunctionActivity() {
 
     protected lateinit var binding: VB
 
@@ -22,9 +25,8 @@ abstract class BaseViewBindingActivity<VB : ViewBinding> : BaseFunctionActivity(
     }
 
     override fun getContentView(): View? {
-        binding = onCreateViewBinding(layoutInflater)
-        return binding.root
+        val view = layoutInflater.inflate(layoutId, null)
+        binding = bind(view)
+        return view
     }
-
-    abstract fun onCreateViewBinding(inflater: LayoutInflater): VB
 }
