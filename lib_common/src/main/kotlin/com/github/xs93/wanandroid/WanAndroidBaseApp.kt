@@ -1,5 +1,6 @@
 package com.github.xs93.wanandroid
 
+import com.github.xs93.common.R
 import com.github.xs93.framework.base.application.BaseApplication
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.framework.toast.impl.SystemToast
@@ -47,7 +48,7 @@ open class WanAndroidBaseApp : BaseApplication() {
             if (it is ServiceApiException) {
                 ToastManager.showToast(it.errorMsg)
             } else {
-                ToastManager.showToast("网络异常")
+                ToastManager.showToast(R.string.network_error)
             }
         }
         EasyRetrofit.init(this, "https://www.wanandroid.com/", null, isDebug)

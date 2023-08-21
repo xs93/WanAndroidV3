@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.QuickAdapterHelper
+import com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observer
@@ -38,19 +39,37 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
 
     private lateinit var bannerHeaderAdapter: ExploreBannerHeaderAdapter
     private lateinit var articleAdapter: HomeArticleAdapter
-
+    private lateinit var adapterHelper: QuickAdapterHelper
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+
         bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
         articleAdapter = HomeArticleAdapter()
+        adapterHelper = QuickAdapterHelper.Builder(articleAdapter)
+            .setTrailingLoadStateAdapter(object : TrailingLoadStateAdapter.OnTrailingListener {
+                override fun onLoad() {
+                    viewModel.sendUiIntent(ExploreUiAction.LoadMoreArticleData)
+                }
 
-        val helper = QuickAdapterHelper.Builder(articleAdapter).build()
-        helper.addBeforeAdapter(bannerHeaderAdapter)
+                override fun onFailRetry() {
+                    viewModel.sendUiIntent(ExploreUiAction.LoadMoreArticleData)
+                }
+            })
+            .build()
+            .apply {
+                addBeforeAdapter(bannerHeaderAdapter)
+                trailingLoadStateAdapter?.let {
+                    with(it) {
+                        isAutoLoadMore = true
+                        preloadSize = 3
+                    }
+                }
+            }
 
         binding.apply {
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = helper.adapter
+                adapter = adapterHelper.adapter
             }
         }
     }
@@ -64,12 +83,16 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
             bannerHeaderAdapter.item = it
         }
 
-        observer(viewModel.uiStateFlow.map { it.articles }) {
-            articleAdapter.submitList(it)
+        observer(viewModel.uiStateFlow.map { it.articleState }) {
+            articleAdapter.submitList(it.articles) {
+                adapterHelper.trailingLoadStateAdapter?.checkDisableLoadMoreIfNotFullPage()
+            }
+            adapterHelper.trailingLoadState = it.loadState
+            adapterHelper.trailingLoadStateAdapter?.checkDisableLoadMoreIfNotFullPage()
         }
     }
 
     override fun onFirstVisible() {
-        viewModel.sendUiIntent(ExploreUiAction.InitBannerData)
+        viewModel.sendUiIntent(ExploreUiAction.InitPageData)
     }
 }

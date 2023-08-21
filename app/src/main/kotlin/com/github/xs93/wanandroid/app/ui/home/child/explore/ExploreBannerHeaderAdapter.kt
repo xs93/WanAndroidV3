@@ -12,7 +12,6 @@ import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerLayoutBinding
 import com.github.xs93.wanandroid.app.entity.Banner
-import com.orhanobut.logger.Logger
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.bannerview.constants.PageStyle
@@ -34,7 +33,6 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
         RecyclerView.ViewHolder(bind.root)
 
     override fun onBindViewHolder(holder: BannerHeaderViewHolder, item: List<Banner>?) {
-        Logger.d("$item")
         holder.bind.banner.refreshData(item)
     }
 
