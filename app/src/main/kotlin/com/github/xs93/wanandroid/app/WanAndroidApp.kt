@@ -1,6 +1,9 @@
 package com.github.xs93.wanandroid.app
 
 import com.github.xs93.wanandroid.WanAndroidBaseApp
+import com.scwang.smart.refresh.footer.BallPulseFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import dagger.hilt.android.HiltAndroidApp
 
 /**
@@ -13,4 +16,15 @@ import dagger.hilt.android.HiltAndroidApp
  */
 @HiltAndroidApp
 class WanAndroidApp : WanAndroidBaseApp() {
+
+    override fun onCreate() {
+        super.onCreate()
+
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
+            MaterialHeader(context)
+        }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
+            BallPulseFooter(context)
+        }
+    }
 }

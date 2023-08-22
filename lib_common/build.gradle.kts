@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
+
 android {
     namespace = "com.github.xs93.common"
     compileSdk = libs.versions.targetSdk.get().toInt()
@@ -22,8 +23,7 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
     }
@@ -38,6 +38,7 @@ android {
     }
 
     buildFeatures {
+        viewBinding = true
         dataBinding = true
     }
 }
@@ -61,7 +62,9 @@ dependencies {
     ksp(libs.moshi.kotlin.codegen)
 
     api(libs.brvah4)
-    api(libs.androidx.paging3)
+    api(libs.smartRefreshLayout.core)
+    api(libs.smartRefreshLayout.header.material)
+    api(libs.smartRefreshLayout.footer.ball)
 
     implementation(libs.androidx.hilt)
     kapt(libs.androidx.hilt.compiler)

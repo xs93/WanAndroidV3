@@ -13,8 +13,8 @@ retrofit = "2.9.0"
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
-
 androixHint = "2.47"
+smartRefreshLayout = "2.0.6"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version = "1.9.0" }
@@ -58,15 +58,17 @@ retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref =
 retrofit2-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 #primitives, boxed, and String
 retrofit2-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+
 #权限库
 permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version = "1.7.1" }
+
 #界面适配库
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
+
 #key-value 持久化库
 mmkv = { module = "com.tencent:mmkv", version = "1.3.1" }
 
-#图片加载库
-#https://github.com/coil-kt/coil
+#图片加载库(https://github.com/coil-kt/coil)
 coil = { group = "io.coil-kt", name = "coil", version = "2.4.0" }
 
 #UI库
@@ -74,27 +76,41 @@ checkableView = { group = "com.github.xs93", name = "CheckableView", version = "
 cropImageView = { group = "com.github.xs93", name = "CropImageView", version = "1.0.4" }
 multiStateLayout = { group = "com.github.xs93", name = "MultiStateLayout", version = "1.0.0" }
 
+#图片放大缩小预览控件(https://github.com/Baseflow/PhotoView)
 photoview = { group = "com.github.chrisbanes", name = "PhotoView", version = "2.3.0" }
 
 #https://github.com/zhpanvip/BannerViewPager
 banner = { group = "com.github.zhpanvip", name = "bannerviewpager", version = "3.5.11" }
+
 #https://github.com/zhpanvip/viewpagerindicator
 viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator", version = "1.2.3" }
 
 #RecyclerView Adapter封装库(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
 brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper", version = "4.0.1" }
 
+#RecyclerView Adapter封装库(https://github.com/liangjingkanji/BRV)
+brv = { module = "com.github.liangjingkanji:BRV", version = "1.5.0" }
+
+#RecyclerView 下拉刷新，上拉加载库(https://github.com/scwang90/SmartRefreshLayout)
+smartRefreshLayout-core = { group = "io.github.scwang90", name = "refresh-layout-kernel", version.ref = "smartRefreshLayout" } #核心必须依赖
+smartRefreshLayout-header-classics = { group = "io.github.scwang90", name = "refresh-header-classics", version.ref = "smartRefreshLayout" } #经典刷新头
+smartRefreshLayout-header-radar = { group = "io.github.scwang90", name = "refresh-header-radar", version.ref = "smartRefreshLayout" }  #雷达刷新头
+smartRefreshLayout-header-falsify = { group = "io.github.scwang90", name = "refresh-header-falsify", version.ref = "smartRefreshLayout" } #虚拟刷新头
+smartRefreshLayout-header-material = { group = "io.github.scwang90", name = "refresh-header-material", version.ref = "smartRefreshLayout" } #谷歌刷新头
+smartRefreshLayout-header-twoLevel = { group = "io.github.scwang90", name = "refresh-header-two-level", version.ref = "smartRefreshLayout" } #二级刷新头
+smartRefreshLayout-footer-ball = { group = "io.github.scwang90", name = "refresh-footer-ball", version.ref = "smartRefreshLayout" } #球脉冲加载
+smartRefreshLayout-footer-classics = { group = "io.github.scwang90", name = "refresh-footer-classics", version.ref = "smartRefreshLayout" } #经典加载
+
 #日志库
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
-
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
 retrofit2 = ["okhttp3", "okhttp3-profiler", "retrofit2", "retrofit2-converter-moshi"]
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

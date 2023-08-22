@@ -1,6 +1,5 @@
 package com.github.xs93.wanandroid.app.ui.home.child.explore
 
-import com.chad.library.adapter.base.loadState.LoadState
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.network.base.viewmodel.safeRequestApi
@@ -11,6 +10,7 @@ import com.github.xs93.wanandroid.common.model.PageLoadStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 /**
@@ -37,10 +37,10 @@ class ExploreViewModel @Inject constructor() :
     override fun handleAction(action: ExploreUiAction) {
         when (action) {
             ExploreUiAction.InitPageData -> loadPageData()
-            ExploreUiAction.RefreshArticleData -> refreshArticle()
-            ExploreUiAction.LoadMoreArticleData -> loadMoreArticle()
+            is ExploreUiAction.RequestArticleData -> requestArticleData(action.refreshData)
         }
     }
+
 
     private fun loadPageData() {
         launcher(Dispatchers.IO) {
@@ -72,23 +72,7 @@ class ExploreViewModel @Inject constructor() :
             }
 
             val articleDeferred = async {
-                val articlesResponse = safeRequestApi(errorBlock = null) {
-                    val page = 0
-                    homeRepository.getHomeArticle(page)
-                }
-                val pageResp = articlesResponse?.data
-                if (articlesResponse == null || pageResp == null) {
-                    return@async false
-                }
-
-                val loadMoreEnd = pageResp.curPage == pageResp.pageCount
-                val articleState = ArticleState(pageResp.datas, LoadState.NotLoading(loadMoreEnd))
-                setUiState {
-                    copy(articleState = articleState)
-                }
-                mCurPage = 0
-
-                return@async true
+                return@async realRequestArticleData(true)
             }
 
             val bannerSuccess = bannerDeferred.await()
@@ -105,56 +89,53 @@ class ExploreViewModel @Inject constructor() :
         }
     }
 
+    private fun requestArticleData(refreshData: Boolean) {
+        launcher {
+            realRequestArticleData(refreshData)
+        }
+    }
 
-    private fun refreshArticle() {
-        launcher(Dispatchers.IO) {
-            val nextPage = 0
+    private suspend fun realRequestArticleData(refresh: Boolean): Boolean {
+        return withContext(Dispatchers.IO) {
+            val oldData = uiStateFlow.value.articles
+            val nextPage = if (refresh) 0 else {
+                mCurPage + 1
+            }
             val articlesResponse = safeRequestApi {
                 homeRepository.getHomeArticle(nextPage)
             }
             val pageResp = articlesResponse?.data
             if (articlesResponse == null || pageResp == null) {
-                return@launcher
+                val event = ExploreUiEvent.RequestArticleDataComplete(
+                    finishRefresh = refresh,
+                    finishLoadMore = !refresh,
+                    requestSuccess = false,
+                    noMoreData = true
+                )
+                sendUiEvent(event)
+                return@withContext false
             }
 
-            val loadMoreEnd = pageResp.curPage == pageResp.pageCount
-            val articleState = ArticleState(pageResp.datas, LoadState.NotLoading(loadMoreEnd))
-            setUiState {
-                copy(articleState = articleState)
-            }
-            mCurPage = nextPage
-        }
-    }
-
-
-    private fun loadMoreArticle() {
-        launcher(Dispatchers.IO) {
-            val oldArticleState = uiStateFlow.value.articleState
-
-            val nextPage = mCurPage + 1
-            val articlesResponse = safeRequestApi({
-                val articleState = oldArticleState.copy(loadState = LoadState.Error(it))
-                setUiState {
-                    copy(articleState = articleState)
+            val newData = pageResp.datas.toMutableList().apply {
+                if (!refresh) {
+                    addAll(0, oldData)
                 }
-            }) {
-                homeRepository.getHomeArticle(nextPage)
-            }
-            val pageResp = articlesResponse?.data
-            if (articlesResponse == null || pageResp == null) {
-                return@launcher
             }
 
-            val oldData = uiStateFlow.value.articleState.articles
-            val newData = oldData.toMutableList().apply {
-                addAll(pageResp.datas)
-            }
-            val loadMoreEnd = pageResp.curPage == pageResp.pageCount
-            val articleState = ArticleState(newData, LoadState.NotLoading(loadMoreEnd))
             setUiState {
-                copy(articleState = articleState)
+                copy(articles = newData)
             }
+
+            val loadMoreEnd = pageResp.curPage == pageResp.pageCount
+            val event = ExploreUiEvent.RequestArticleDataComplete(
+                finishRefresh = refresh,
+                finishLoadMore = !refresh,
+                requestSuccess = true,
+                noMoreData = loadMoreEnd
+            )
+            sendUiEvent(event)
             mCurPage = nextPage
+            return@withContext true
         }
     }
 }

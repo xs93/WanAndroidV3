@@ -5,10 +5,10 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.QuickAdapterHelper
-import com.chad.library.adapter.base.loadState.trailing.TrailingLoadStateAdapter
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observer
+import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreFragmentBinding
@@ -45,31 +45,25 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
 
         bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
         articleAdapter = HomeArticleAdapter()
-        adapterHelper = QuickAdapterHelper.Builder(articleAdapter)
-            .setTrailingLoadStateAdapter(object : TrailingLoadStateAdapter.OnTrailingListener {
-                override fun onLoad() {
-                    viewModel.sendUiIntent(ExploreUiAction.LoadMoreArticleData)
-                }
 
-                override fun onFailRetry() {
-                    viewModel.sendUiIntent(ExploreUiAction.LoadMoreArticleData)
-                }
-            })
+        adapterHelper = QuickAdapterHelper.Builder(articleAdapter)
             .build()
-            .apply {
-                addBeforeAdapter(bannerHeaderAdapter)
-                trailingLoadStateAdapter?.let {
-                    with(it) {
-                        isAutoLoadMore = true
-                        preloadSize = 3
-                    }
-                }
-            }
+            .addBeforeAdapter(bannerHeaderAdapter)
 
         binding.apply {
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 adapter = adapterHelper.adapter
+            }
+
+            with(pageLayout) {
+                setOnRefreshListener {
+                    viewModel.sendUiIntent(ExploreUiAction.RequestArticleData(true))
+                }
+
+                setOnLoadMoreListener {
+                    viewModel.sendUiIntent(ExploreUiAction.RequestArticleData(false))
+                }
             }
         }
     }
@@ -83,16 +77,37 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
             bannerHeaderAdapter.item = it
         }
 
-        observer(viewModel.uiStateFlow.map { it.articleState }) {
-            articleAdapter.submitList(it.articles) {
-                adapterHelper.trailingLoadStateAdapter?.checkDisableLoadMoreIfNotFullPage()
+        observer(viewModel.uiStateFlow.map { it.articles }) {
+            articleAdapter.submitList(it)
+        }
+
+
+        observerEvent(viewModel.uiEventFlow) {
+            when (it) {
+                is ExploreUiEvent.RequestArticleDataComplete -> {
+                    with(binding.pageLayout) {
+                        if (it.finishRefresh) {
+                            if (it.noMoreData) {
+                                finishRefreshWithNoMoreData()
+                            } else {
+                                finishRefresh(it.requestSuccess)
+                            }
+                        }
+                        if (it.finishLoadMore) {
+                            if (it.noMoreData) {
+                                finishLoadMoreWithNoMoreData()
+                            } else {
+                                finishLoadMore(it.requestSuccess)
+                            }
+                        }
+                    }
+                }
             }
-            adapterHelper.trailingLoadState = it.loadState
-            adapterHelper.trailingLoadStateAdapter?.checkDisableLoadMoreIfNotFullPage()
         }
     }
 
     override fun onFirstVisible() {
+        binding.pageLayout.autoRefreshAnimationOnly()
         viewModel.sendUiIntent(ExploreUiAction.InitPageData)
     }
 }

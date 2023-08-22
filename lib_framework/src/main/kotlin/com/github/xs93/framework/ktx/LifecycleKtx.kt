@@ -113,6 +113,14 @@ fun <R> ComponentActivity.observer(
     }
 }
 
+fun <R> ComponentActivity.observerEvent(flow: Flow<R>, action: suspend (R) -> Unit) {
+    flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+        .onEach {
+            action.invoke(it)
+        }
+        .launchIn(lifecycleScope)
+}
+
 fun <R> Fragment.observer(
     flow: Flow<R>,
     areEquivalent: ((old: R, new: R) -> Boolean)? = null,
@@ -120,14 +128,21 @@ fun <R> Fragment.observer(
 ) {
     val tempFlow = flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
     if (areEquivalent != null) {
-        tempFlow.distinctUntilChanged(areEquivalent)
+        tempFlow
+            .distinctUntilChanged(areEquivalent)
             .onEach { action.invoke(it) }
             .launchIn(lifecycleScope)
     } else {
         tempFlow.distinctUntilChanged()
-            .onEach {
-                action.invoke(it)
-            }
+            .onEach { action.invoke(it) }
             .launchIn(lifecycleScope)
     }
+}
+
+fun <R> Fragment.observerEvent(flow: Flow<R>, action: suspend (R) -> Unit) {
+    flow.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+        .onEach {
+            action.invoke(it)
+        }
+        .launchIn(viewLifecycleOwner.lifecycleScope)
 }
