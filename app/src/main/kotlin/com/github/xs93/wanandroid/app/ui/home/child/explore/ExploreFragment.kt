@@ -107,7 +107,9 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
     }
 
     override fun onFirstVisible() {
-        binding.pageLayout.autoRefreshAnimationOnly()
+        binding.pageLayout.post {
+            binding.pageLayout.autoRefreshAnimationOnly()
+        }
         viewModel.sendUiIntent(ExploreUiAction.InitPageData)
     }
 }

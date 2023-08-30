@@ -62,12 +62,9 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
                 tab.text = string(homeTabs[position].titleResId)
             }.attach()
 
-
             windowSurface = this@HomeFragment.windowSurface
         }
-
     }
-
 
     private fun generateHomeTabs() = listOf(
         HomeTabBean(R.string.home_tab_explore),
