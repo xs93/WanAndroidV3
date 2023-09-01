@@ -66,6 +66,9 @@ dependencies {
     api(libs.smartRefreshLayout.header.material)
     api(libs.smartRefreshLayout.footer.ball)
 
+    api(libs.multiStateLayout)
+    api(libs.avLoadingIndicatorView)
+
     implementation(libs.androidx.hilt)
     kapt(libs.androidx.hilt.compiler)
 }

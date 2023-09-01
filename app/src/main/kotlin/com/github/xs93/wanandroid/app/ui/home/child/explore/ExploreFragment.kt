@@ -51,12 +51,13 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
             .addBeforeAdapter(bannerHeaderAdapter)
 
         binding.apply {
-            with(rvArticleList) {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                adapter = adapterHelper.adapter
+            with(pageLayout) {
+                setRetryClickListener {
+                    viewModel.sendUiIntent(ExploreUiAction.InitPageData)
+                }
             }
 
-            with(pageLayout) {
+            with(refreshLayout) {
                 setOnRefreshListener {
                     viewModel.sendUiIntent(ExploreUiAction.RequestArticleData(true))
                 }
@@ -64,6 +65,11 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
                 setOnLoadMoreListener {
                     viewModel.sendUiIntent(ExploreUiAction.RequestArticleData(false))
                 }
+            }
+
+            with(rvArticleList) {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                adapter = adapterHelper.adapter
             }
         }
     }
@@ -81,11 +87,14 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
             articleAdapter.submitList(it)
         }
 
+        observer(viewModel.uiStateFlow.map { it.pageLoadStatus }) {
+            binding.pageLayout.showViewByStatus(it.status)
+        }
 
         observerEvent(viewModel.uiEventFlow) {
             when (it) {
                 is ExploreUiEvent.RequestArticleDataComplete -> {
-                    with(binding.pageLayout) {
+                    with(binding.refreshLayout) {
                         if (it.finishRefresh) {
                             if (it.noMoreData) {
                                 finishRefreshWithNoMoreData()
@@ -107,9 +116,6 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
     }
 
     override fun onFirstVisible() {
-        binding.pageLayout.post {
-            binding.pageLayout.autoRefreshAnimationOnly()
-        }
         viewModel.sendUiIntent(ExploreUiAction.InitPageData)
     }
 }

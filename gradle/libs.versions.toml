@@ -74,7 +74,8 @@ coil = { group = "io.coil-kt", name = "coil", version = "2.4.0" }
 #UI库
 checkableView = { group = "com.github.xs93", name = "CheckableView", version = "1.0.2" }
 cropImageView = { group = "com.github.xs93", name = "CropImageView", version = "1.0.4" }
-multiStateLayout = { group = "com.github.xs93", name = "MultiStateLayout", version = "1.0.0" }
+multiStateLayout = { group = "com.github.xs93", name = "MultiStateLayout", version = "1.0.1" }
+avLoadingIndicatorView = { group = "com.github.xs93", name = "AVLoadingIndicatorView", version = "1.0.1" }
 
 #图片放大缩小预览控件(https://github.com/Baseflow/PhotoView)
 photoview = { group = "com.github.chrisbanes", name = "PhotoView", version = "2.3.0" }
@@ -107,6 +108,8 @@ logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+
+leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.12" }
 
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
