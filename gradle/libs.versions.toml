@@ -15,6 +15,7 @@ androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
 androixHint = "2.47"
 smartRefreshLayout = "2.0.6"
+agentweb = "v5.0.6-androidx"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version = "1.9.0" }
@@ -101,6 +102,11 @@ smartRefreshLayout-header-material = { group = "io.github.scwang90", name = "ref
 smartRefreshLayout-header-twoLevel = { group = "io.github.scwang90", name = "refresh-header-two-level", version.ref = "smartRefreshLayout" } #二级刷新头
 smartRefreshLayout-footer-ball = { group = "io.github.scwang90", name = "refresh-footer-ball", version.ref = "smartRefreshLayout" } #球脉冲加载
 smartRefreshLayout-footer-classics = { group = "io.github.scwang90", name = "refresh-footer-classics", version.ref = "smartRefreshLayout" } #经典加载
+
+#agentWeb webView框架(https://github.com/Justson/AgentWeb)
+agentWeb-core = { group = "com.github.Justson.AgentWeb", name = "agentweb-core", version.ref = "agentweb" }
+agentWeb-filechooser = { group = "com.github.Justson.AgentWeb", name = "agentweb-filechooser", version.ref = "agentweb" }
+agentWeb-download = { group = "com.github.Justson.AgentWeb", name = "Downloader", version = "v5.0.4-androidx" }
 
 #日志库
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }

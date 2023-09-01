@@ -62,7 +62,6 @@ hilt {
 
 
 dependencies {
-    implementation(project(mapOf("path" to ":lib_framework")))
     implementation(project(mapOf("path" to ":lib_common")))
 
     ksp(libs.androidx.lifecycle.compiler)
