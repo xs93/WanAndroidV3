@@ -10,6 +10,7 @@ import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
+import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.isNightMode
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
@@ -77,6 +78,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
             with(vpContent) {
                 offscreenPageLimit = mContentAdapter.itemCount
                 adapter = mContentAdapter
+                setTouchSlopMultiple(2f)
                 registerOnPageChangeCallback(object : OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)

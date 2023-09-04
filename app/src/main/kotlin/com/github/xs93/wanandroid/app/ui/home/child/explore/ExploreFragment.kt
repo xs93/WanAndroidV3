@@ -13,6 +13,7 @@ import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreFragmentBinding
 import com.github.xs93.wanandroid.app.ui.home.child.HomeArticleAdapter
+import com.github.xs93.wanandroid.web.WebActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
 
@@ -44,7 +45,12 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
     override fun initView(view: View, savedInstanceState: Bundle?) {
 
         bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
-        articleAdapter = HomeArticleAdapter()
+        articleAdapter = HomeArticleAdapter().apply {
+            setOnItemClickListener { _, _, position ->
+                val article = items[position]
+                WebActivity.start(requireContext(), article.link, article.title)
+            }
+        }
 
         adapterHelper = QuickAdapterHelper.Builder(articleAdapter)
             .build()

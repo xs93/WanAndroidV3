@@ -14,9 +14,9 @@ object WebClientFactory {
     const val JIAN_SHU = "https://www.jianshu.com"
 
     @JvmStatic
-    fun create(url: String): WebViewClient {
+    fun create(url: String?): WebViewClient {
         return when {
-            url.startsWith(JIAN_SHU) -> JianShuWebClient()
+            url?.startsWith(JIAN_SHU) == true -> JianShuWebClient()
             else -> BaseWebClient()
         }
     }

@@ -1,5 +1,7 @@
 package com.github.xs93.wanandroid.web
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -8,11 +10,13 @@ import android.widget.FrameLayout
 import androidx.core.text.htmlEncode
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
+import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.web.databinding.WebActivityAgentWebBinding
 import com.github.xs93.wanandroid.web.webclient.WebClientFactory
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.DefaultWebClient
+import com.just.agentweb.NestedScrollAgentWebView
 import com.just.agentweb.WebChromeClient
 
 /**
@@ -26,22 +30,37 @@ import com.just.agentweb.WebChromeClient
 class WebActivity :
     BaseDataBindingActivity<WebActivityAgentWebBinding>(R.layout.web_activity_agent_web) {
 
-    @JvmField
-    var title: String = ""
+    companion object {
 
-    @JvmField
-    var url: String = ""
+        private const val PARAMS_URL = "params_url"
+        private const val PARAMS_TITLE = "params_title"
 
+        @JvmStatic
+        fun start(context: Context, url: String, title: String? = null) {
+            val starter = Intent(context, WebActivity::class.java)
+                .putExtra(PARAMS_URL, url)
+                .putExtra(PARAMS_TITLE, title)
+            context.startActivity(starter)
+        }
+    }
+
+
+    private var mTitle: String? = ""
+    private var mUrl: String? = ""
 
     private lateinit var mAgentWeb: AgentWeb
 
     private val mClickHandler = ClickHandler()
 
     override fun initView(savedInstanceState: Bundle?) {
-        binding.apply {
-            clickHandler = mClickHandler
-            toolbar.title = title
+
+        window.apply {
+            isStatusBarTranslucentCompat = true
         }
+
+        mUrl = intent.getStringExtra(PARAMS_URL)
+        mTitle = intent.getStringExtra(PARAMS_TITLE)
+
 
         val webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView, title: String) {
@@ -49,6 +68,7 @@ class WebActivity :
                 binding.toolbar.title = title.htmlEncode()
             }
         }
+
 
         val typeValue = TypedValue()
         theme.resolveAttribute(androidx.appcompat.R.attr.colorPrimary, typeValue, true)
@@ -60,14 +80,20 @@ class WebActivity :
             .setAgentWebParent(binding.flWebContainer, layoutParams)
             .useDefaultIndicator(colorPrimary, 1.dp(this))
             .setWebChromeClient(webChromeClient)
-            .setWebViewClient(WebClientFactory.create(url))
+            .setWebViewClient(WebClientFactory.create(mUrl))
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
+            .setWebView(NestedScrollAgentWebView(this))
             .setMainFrameErrorView(com.just.agentweb.R.layout.agentweb_error_page, -1)
             .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)//打开其他应用时，弹窗咨询用户是否前往其他应用
             .interceptUnkownUrl()
             .createAgentWeb()
             .ready()
-            .go(url)
+            .go(mUrl)
+
+        binding.apply {
+            clickHandler = mClickHandler
+            toolbar.title = title
+        }
 
         addOnBackPressedCallback(true) {
             mClickHandler.clickBack()

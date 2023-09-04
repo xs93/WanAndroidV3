@@ -2,7 +2,7 @@
 <resources>
 
     <style name="WanToolbarStyle" parent="ToolbarStyle">
-        <item name="background">@color/md_theme_light_primary</item>
+        <item name="android:background">?colorPrimary</item>
         <item name="titleTextColor">@color/white</item>
         <item name="titleTextAppearance">@style/WanToolBarTitleTextAppearance</item>
         <item name="titleCentered">true</item>

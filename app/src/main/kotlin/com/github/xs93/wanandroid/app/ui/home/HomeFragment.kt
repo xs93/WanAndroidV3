@@ -6,6 +6,7 @@ import android.view.View
 import androidx.annotation.StringRes
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
+import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
@@ -56,6 +57,7 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
             with(vpContent) {
                 offscreenPageLimit = homeTabs.size
                 adapter = childFragmentAdapter
+                setTouchSlopMultiple(2.5f)
             }
 
             TabLayoutMediator(tabLayout, vpContent) { tab, position ->

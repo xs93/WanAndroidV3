@@ -63,6 +63,7 @@ hilt {
 
 dependencies {
     implementation(project(mapOf("path" to ":lib_common")))
+    implementation(project(mapOf("path" to ":mod_web")))
 
     ksp(libs.androidx.lifecycle.compiler)
 

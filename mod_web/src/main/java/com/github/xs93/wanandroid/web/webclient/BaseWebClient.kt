@@ -1,6 +1,7 @@
 package com.github.xs93.wanandroid.web.webclient
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.net.Uri
 import android.net.http.SslError
 import android.util.Log
@@ -107,5 +108,9 @@ open class BaseWebClient : WebViewClient() {
     override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
 //        super.onReceivedSslError(view, handler, error)
         handler?.proceed()
+    }
+
+    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+        super.onPageStarted(view, url, favicon)
     }
 }

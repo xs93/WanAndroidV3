@@ -106,7 +106,7 @@ smartRefreshLayout-footer-classics = { group = "io.github.scwang90", name = "ref
 #agentWeb webView框架(https://github.com/Justson/AgentWeb)
 agentWeb-core = { group = "com.github.Justson.AgentWeb", name = "agentweb-core", version.ref = "agentweb" }
 agentWeb-filechooser = { group = "com.github.Justson.AgentWeb", name = "agentweb-filechooser", version.ref = "agentweb" }
-agentWeb-download = { group = "com.github.Justson.AgentWeb", name = "Downloader", version = "v5.0.4-androidx" }
+agentWeb-download = { group = "com.github.Justson", name = "Downloader", version = "v5.0.4-androidx" }
 
 #日志库
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
