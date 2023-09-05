@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.agentWeb.core)
     implementation(libs.agentWeb.filechooser)
     implementation(libs.agentWeb.download)
+    implementation(libs.androidx.palette)
+    implementation(libs.androidx.webkit)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

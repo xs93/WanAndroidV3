@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseSingleItemAdapter
-import com.github.xs93.framework.toast.ToastManager.showToast
 import com.github.xs93.utils.ktx.color
 import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerLayoutBinding
 import com.github.xs93.wanandroid.app.entity.Banner
+import com.github.xs93.wanandroid.web.WebActivity
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.bannerview.constants.PageStyle
@@ -60,7 +60,8 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
             setInterval(3000)
             adapter = BannerAdapter()
             setOnPageClickListener { _, position ->
-                showToast("$position")
+                val banner = data[position]
+                WebActivity.start(context, banner.url, banner.title)
             }
         }.create()
         return BannerHeaderViewHolder(binding)
