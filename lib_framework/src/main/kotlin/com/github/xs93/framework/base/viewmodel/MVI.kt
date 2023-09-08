@@ -12,6 +12,11 @@ import androidx.annotation.Keep
  * @email 466911254@qq.com
  */
 
+@Keep
+interface IUIState
+
+@Keep
+interface IUiAction
 
 @Keep
 interface IUiEvent
@@ -25,8 +30,6 @@ sealed class CommonUiEvent : IUiEvent {
     object HideLoadingDialog : CommonUiEvent()
 }
 
-@Keep
-interface IUiAction
 
-@Keep
-interface IUIState
+
+

@@ -59,17 +59,17 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
         binding.apply {
             with(pageLayout) {
                 setRetryClickListener {
-                    viewModel.sendUiIntent(ExploreUiAction.InitPageData)
+                    viewModel.exploreActions.sendAction(ExploreUiAction.InitPageData)
                 }
             }
 
             with(refreshLayout) {
                 setOnRefreshListener {
-                    viewModel.sendUiIntent(ExploreUiAction.RequestArticleData(true))
+                    viewModel.exploreActions.sendAction(ExploreUiAction.RequestArticleData(true))
                 }
 
                 setOnLoadMoreListener {
-                    viewModel.sendUiIntent(ExploreUiAction.RequestArticleData(false))
+                    viewModel.exploreActions.sendAction(ExploreUiAction.RequestArticleData(false))
                 }
             }
 
@@ -85,19 +85,19 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
 
         viewModel.registerCommonEvent(this)
 
-        observer(viewModel.uiStateFlow.map { it.banners }) {
+        observer(viewModel.exploreStateFlow.map { it.banners }) {
             bannerHeaderAdapter.item = it
         }
 
-        observer(viewModel.uiStateFlow.map { it.articles }) {
+        observer(viewModel.exploreStateFlow.map { it.articles }) {
             articleAdapter.submitList(it)
         }
 
-        observer(viewModel.uiStateFlow.map { it.pageLoadStatus }) {
+        observer(viewModel.exploreStateFlow.map { it.pageLoadStatus }) {
             binding.pageLayout.showViewByStatus(it.status)
         }
 
-        observerEvent(viewModel.uiEventFlow) {
+        observerEvent(viewModel.exploreEventFlow) {
             when (it) {
                 is ExploreUiEvent.RequestArticleDataComplete -> {
                     with(binding.refreshLayout) {
@@ -122,6 +122,6 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
     }
 
     override fun onFirstVisible() {
-        viewModel.sendUiIntent(ExploreUiAction.InitPageData)
+        viewModel.exploreActions.sendAction(ExploreUiAction.InitPageData)
     }
 }

@@ -20,29 +20,8 @@ data class ExploreUiState(
     val pageLoadStatus: PageLoadStatus,
     val banners: List<Banner>,
     val articles: List<Article>
-) : IUIState {
-    companion object {
-        val Init = ExploreUiState(PageLoadStatus.Loading, emptyList(), emptyList())
-    }
-}
+) : IUIState
 
-data class ArticleState(
-    val articles: List<Article>,
-    val finishRefresh: Boolean,
-    val finishLoadMore: Boolean,
-    val requestSuccess: Boolean,
-    val noMoreData: Boolean
-) {
-    companion object {
-        val Init = ArticleState(
-            emptyList(),
-            finishRefresh = false,
-            finishLoadMore = false,
-            requestSuccess = true,
-            noMoreData = false,
-        )
-    }
-}
 
 sealed class ExploreUiEvent : IUiEvent {
     data class RequestArticleDataComplete(

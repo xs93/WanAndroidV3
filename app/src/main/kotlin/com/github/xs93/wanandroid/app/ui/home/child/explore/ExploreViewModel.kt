@@ -1,6 +1,9 @@
 package com.github.xs93.wanandroid.app.ui.home.child.explore
 
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
+import com.github.xs93.framework.base.viewmodel.mviActions
+import com.github.xs93.framework.base.viewmodel.mviEvents
+import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.network.base.viewmodel.safeRequestApi
 import com.github.xs93.utils.AppInject
@@ -22,36 +25,40 @@ import javax.inject.Inject
  * @email 466911254@qq.com
  */
 @HiltViewModel
-class ExploreViewModel @Inject constructor() :
-    BaseViewModel<ExploreUiAction, ExploreUiState, ExploreUiEvent>() {
+class ExploreViewModel @Inject constructor() : BaseViewModel() {
 
     @Inject
     lateinit var homeRepository: HomeRepository
 
     private var mCurPage = 0
 
-    override fun initUiState(): ExploreUiState {
-        return ExploreUiState.Init
-    }
 
-    override fun handleAction(action: ExploreUiAction) {
-        when (action) {
+    private val exploreStates by mviStates(
+        ExploreUiState(
+            PageLoadStatus.Loading,
+            emptyList(),
+            emptyList()
+        )
+    )
+    val exploreStateFlow by lazy { exploreStates.uiStateFlow }
+
+    private val exploreEvents by mviEvents<ExploreUiEvent>()
+    val exploreEventFlow by lazy { exploreEvents.uiEventFlow }
+
+    val exploreActions by mviActions<ExploreUiAction> {
+        when (it) {
             ExploreUiAction.InitPageData -> loadPageData()
-            is ExploreUiAction.RequestArticleData -> requestArticleData(action.refreshData)
+            is ExploreUiAction.RequestArticleData -> requestArticleData(it.refreshData)
         }
     }
 
 
     private fun loadPageData() {
         launcher(Dispatchers.IO) {
-            setUiState {
-                copy(pageLoadStatus = PageLoadStatus.Loading)
-            }
+            exploreStates.updateState { copy(pageLoadStatus = PageLoadStatus.Loading) }
 
             if (!AppInject.getApp().isNetworkConnected()) {
-                setUiState {
-                    copy(pageLoadStatus = PageLoadStatus.NoNetwork)
-                }
+                exploreStates.updateState { copy(pageLoadStatus = PageLoadStatus.NoNetwork) }
                 return@launcher
             }
 
@@ -65,9 +72,7 @@ class ExploreViewModel @Inject constructor() :
                     return@async false
                 }
 
-                setUiState {
-                    copy(banners = banners)
-                }
+                exploreStates.updateState { copy(banners = banners) }
                 return@async true
             }
 
@@ -78,13 +83,9 @@ class ExploreViewModel @Inject constructor() :
             val bannerSuccess = bannerDeferred.await()
             val articlesSuccess = articleDeferred.await()
             if (bannerSuccess && articlesSuccess) {
-                setUiState {
-                    copy(pageLoadStatus = PageLoadStatus.Success)
-                }
+                exploreStates.updateState { copy(pageLoadStatus = PageLoadStatus.Success) }
             } else {
-                setUiState {
-                    copy(pageLoadStatus = PageLoadStatus.Failed)
-                }
+                exploreStates.updateState { copy(pageLoadStatus = PageLoadStatus.Failed) }
             }
         }
     }
@@ -97,7 +98,7 @@ class ExploreViewModel @Inject constructor() :
 
     private suspend fun realRequestArticleData(refresh: Boolean): Boolean {
         return withContext(Dispatchers.IO) {
-            val oldData = uiStateFlow.value.articles
+            val oldData = exploreStates.uiStateFlow.value.articles
             val nextPage = if (refresh) 0 else {
                 mCurPage + 1
             }
@@ -112,7 +113,7 @@ class ExploreViewModel @Inject constructor() :
                     requestSuccess = false,
                     noMoreData = true
                 )
-                sendUiEvent(event)
+                exploreEvents.sendEvent(event)
                 return@withContext false
             }
 
@@ -122,9 +123,7 @@ class ExploreViewModel @Inject constructor() :
                 }
             }
 
-            setUiState {
-                copy(articles = newData)
-            }
+            exploreStates.updateState { copy(articles = newData) }
 
             val loadMoreEnd = pageResp.curPage == pageResp.pageCount
             val event = ExploreUiEvent.RequestArticleDataComplete(
@@ -133,7 +132,7 @@ class ExploreViewModel @Inject constructor() :
                 requestSuccess = true,
                 noMoreData = loadMoreEnd
             )
-            sendUiEvent(event)
+            exploreEvents.sendEvent(event)
             mCurPage = nextPage
             return@withContext true
         }

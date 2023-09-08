@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.onEach
  */
 
 
-fun BaseViewModel<*, *, *>.registerCommonEvent(activity: AppCompatActivity) {
+fun BaseViewModel.registerCommonEvent(activity: AppCompatActivity) {
     commonEventFlow.flowWithLifecycle(activity.lifecycle, Lifecycle.State.STARTED)
         .onEach {
             when (it) {
@@ -46,7 +46,7 @@ fun BaseViewModel<*, *, *>.registerCommonEvent(activity: AppCompatActivity) {
         .launchIn(activity.lifecycleScope)
 }
 
-fun BaseViewModel<*, *, *>.registerCommonEvent(fragment: Fragment) {
+fun BaseViewModel.registerCommonEvent(fragment: Fragment) {
     commonEventFlow.flowWithLifecycle(
         fragment.viewLifecycleOwner.lifecycle,
         Lifecycle.State.STARTED
