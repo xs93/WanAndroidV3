@@ -3,8 +3,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
-    id(libs.plugins.kotlin.parcelize.get().pluginId)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
