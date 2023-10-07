@@ -1,15 +1,19 @@
 package com.github.xs93.wanandroid.app.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.GravityCompat
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
+import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.isNightMode
 import com.github.xs93.wanandroid.app.R
@@ -39,6 +43,8 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
     private var keepOnScreenCondition = true
 
     private lateinit var mContentAdapter: SimpleViewPagerAdapter
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
         super.beforeSuperOnCreate(savedInstanceState)
@@ -102,6 +108,18 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
 
         addOnBackPressedCallback(true) {
 
+        }
+    }
+
+    override fun initObserver(savedInstanceState: Bundle?) {
+        super.initObserver(savedInstanceState)
+        mainViewModel.registerCommonEvent(this)
+        observerEvent(mainViewModel.mainEventFlow) {
+            when (it) {
+                MainEvent.OpenDrawer -> {
+                    binding.drawerRoot.openDrawer(GravityCompat.START)
+                }
+            }
         }
     }
 }

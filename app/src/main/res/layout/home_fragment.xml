@@ -8,6 +8,10 @@
         <variable
             name="windowSurface"
             type="com.github.xs93.framework.ui.WindowSurface" />
+
+        <variable
+            name="clickHandler"
+            type="com.github.xs93.wanandroid.app.ui.home.HomeFragment.ClickHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +32,24 @@
             app:tabTextAppearance="@style/TabLayout.TextAppearance"
             app:tabTextColor="?colorPrimary"
             app:tabUnboundedRipple="true" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/iv_open_drawer"
+            style="@style/BaseCommonButtonStyle"
+            onSingleClick="@{()->clickHandler.clickOpenDrawer()}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@{windowSurface.contentPadding.top}"
+            android:backgroundTint="@color/transparent"
+            android:foreground="?selectableItemBackgroundBorderless"
+            app:icon="@drawable/main_ic_menu_24dp"
+            app:iconSize="24dp"
+            app:iconTint="?colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/tabLayout"
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintStart_toStartOf="@id/tabLayout"
+            app:layout_constraintTop_toTopOf="@id/tabLayout" />
 
         <com.github.xs93.framework.widget.NestedScrollableHost
             android:id="@+id/vp_content_host"

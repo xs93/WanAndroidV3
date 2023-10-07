@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="main_drawer_width" type="dimen">300dp</item>
+    <item name="main_drawer_width" type="dimen">320dp</item>
 </resources>

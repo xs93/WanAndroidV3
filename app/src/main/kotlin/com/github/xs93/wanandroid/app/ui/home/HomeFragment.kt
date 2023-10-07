@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.fragment.app.activityViewModels
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
@@ -14,6 +15,8 @@ import com.github.xs93.wanandroid.app.databinding.HomeFragmentBinding
 import com.github.xs93.wanandroid.app.ui.home.child.answer.AnswerFragment
 import com.github.xs93.wanandroid.app.ui.home.child.explore.ExploreFragment
 import com.github.xs93.wanandroid.app.ui.home.child.square.SquareFragment
+import com.github.xs93.wanandroid.app.ui.main.MainAction
+import com.github.xs93.wanandroid.app.ui.main.MainViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.parcelize.Parcelize
 
@@ -25,9 +28,7 @@ import kotlinx.parcelize.Parcelize
  * @date 2023/8/18 13:47
  * @email 466911254@qq.com
  */
-class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
-    R.layout.home_fragment,
-) {
+class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_fragment) {
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -40,6 +41,9 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
 
     private lateinit var childFragmentAdapter: SimpleViewPagerAdapter
     private val homeTabs = generateHomeTabs()
+
+    private val mainViewModel: MainViewModel by activityViewModels()
+    private val clickHandler = ClickHandler()
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 
@@ -65,6 +69,7 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
             }.attach()
 
             windowSurface = this@HomeFragment.windowSurface
+            clickHandler = this@HomeFragment.clickHandler
         }
     }
 
@@ -73,6 +78,13 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(
         HomeTabBean(R.string.home_tab_square),
         HomeTabBean(R.string.home_tab_answer)
     )
+
+
+    inner class ClickHandler {
+        fun clickOpenDrawer() {
+            mainViewModel.mainActions.sendAction(MainAction.OpenDrawer)
+        }
+    }
 }
 
 
