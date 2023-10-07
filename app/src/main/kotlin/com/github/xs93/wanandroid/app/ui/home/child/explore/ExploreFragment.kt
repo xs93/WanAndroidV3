@@ -9,7 +9,9 @@ import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observer
 import com.github.xs93.framework.ktx.observerEvent
+import com.github.xs93.statuslayout.MultiStatusLayout
 import com.github.xs93.utils.ktx.viewLifecycle
+import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreFragmentBinding
 import com.github.xs93.wanandroid.app.ui.home.child.HomeArticleAdapter
@@ -76,6 +78,12 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 adapter = adapterHelper.adapter
+            }
+        }
+
+        NetworkMonitor.observer(viewLifecycleOwner.lifecycle) { isConnected, _ ->
+            if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
+                viewModel.exploreActions.sendAction(ExploreUiAction.InitPageData)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.github.xs93.wanandroid.app
 
+import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.WanAndroidBaseApp
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
@@ -19,6 +20,8 @@ class WanAndroidApp : WanAndroidBaseApp() {
 
     override fun onCreate() {
         super.onCreate()
+
+        NetworkMonitor.init(this)
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
             MaterialHeader(context)

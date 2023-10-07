@@ -1,0 +1,3 @@
+-keep class * implements com.github.xs93.framework.base.application.IAppComponent
+-keep class * extends com.github.xs93.framework.base.ui.function.BaseActivityFunction
+-keep class * extends com.github.xs93.framework.base.ui.function.BaseFragmentFunction
