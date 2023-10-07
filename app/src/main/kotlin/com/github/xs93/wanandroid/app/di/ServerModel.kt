@@ -2,6 +2,7 @@ package com.github.xs93.wanandroid.app.di
 
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.wanandroid.app.api.HomeService
+import com.github.xs93.wanandroid.app.api.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +25,9 @@ object ServerModel {
     @Singleton
     @Provides
     fun provideHomeService(): HomeService = EasyRetrofit.create(service = HomeService::class.java)
+
+
+    @Singleton
+    @Provides
+    fun provideUserService(): UserService = EasyRetrofit.create(service = UserService::class.java)
 }

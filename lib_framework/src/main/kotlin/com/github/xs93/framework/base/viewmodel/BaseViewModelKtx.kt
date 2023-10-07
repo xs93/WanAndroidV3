@@ -24,15 +24,16 @@ fun BaseViewModel.registerCommonEvent(activity: AppCompatActivity) {
     commonEventFlow.flowWithLifecycle(activity.lifecycle, Lifecycle.State.STARTED)
         .onEach {
             when (it) {
-                CommonUiEvent.HideLoadingDialog -> {
+                CommonUiEvent.ShowLoadingDialog -> {
                     if (activity is ILoadingDialogControl) {
                         activity.showLoadingDialog()
                     }
                 }
 
-                CommonUiEvent.ShowLoadingDialog -> {
+                CommonUiEvent.HideLoadingDialog -> {
                     if (activity is ILoadingDialogControl) {
                         activity.hideLoadingDialog()
+
                     }
                 }
 

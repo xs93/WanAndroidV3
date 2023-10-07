@@ -7,7 +7,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
@@ -15,11 +15,13 @@ import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
+import com.github.xs93.framework.ktx.startActivity
 import com.github.xs93.utils.ktx.isNightMode
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
 import com.github.xs93.wanandroid.app.ui.classify.ClassifyFragment
 import com.github.xs93.wanandroid.app.ui.home.HomeFragment
+import com.github.xs93.wanandroid.app.ui.login.LoginActivity
 import com.github.xs93.wanandroid.app.ui.mine.MineFragment
 import com.github.xs93.wanandroid.app.ui.system.SystemFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,10 +36,7 @@ import kotlinx.coroutines.delay
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
-    R.layout.main_activity,
-    MainActivityBinding::bind
-) {
+class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_activity) {
 
     private lateinit var splashScreen: SplashScreen
     private var keepOnScreenCondition = true
@@ -45,6 +44,8 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
     private lateinit var mContentAdapter: SimpleViewPagerAdapter
 
     private val mainViewModel: MainViewModel by viewModels()
+
+    private val clickHandler = ClickHandler()
 
     override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
         super.beforeSuperOnCreate(savedInstanceState)
@@ -106,6 +107,11 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
             }
         }
 
+
+        binding.apply {
+            clickHandler = this@MainActivity.clickHandler
+        }
+
         addOnBackPressedCallback(true) {
 
         }
@@ -120,6 +126,13 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
                     binding.drawerRoot.openDrawer(GravityCompat.START)
                 }
             }
+        }
+    }
+
+
+    inner class ClickHandler {
+        fun clickLogin() {
+            startActivity<LoginActivity>()
         }
     }
 }

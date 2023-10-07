@@ -107,7 +107,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
     }
 
     protected open fun getStyle(): Int {
-        return R.style.BaseDialogStyle
+        return R.style.BaseDialogTheme
     }
 
     /**

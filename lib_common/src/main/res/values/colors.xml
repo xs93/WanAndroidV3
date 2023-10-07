@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="base_color_loading_progress">?colorPrimary</color>
-
-    <color name="mainBottomNavViewSelected">?colorPrimary</color>
-    <color name="mainBottomNavViewNormal">@color/color_666666</color>
+    <color name="base_color_loading_progress">@color/md_theme_light_primary</color>
 </resources>

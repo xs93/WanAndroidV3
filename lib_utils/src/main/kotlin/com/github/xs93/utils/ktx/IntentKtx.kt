@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.github.xs93.utils.ktx
 
 import android.content.Intent
@@ -20,6 +22,7 @@ fun <T : Parcelable> Bundle.getParcelableCompat(key: String, clazz: Class<T>): T
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelable(key, clazz)
     } else {
+        @Suppress("DEPRECATION")
         getParcelable(key)
     }
 }
@@ -28,6 +31,7 @@ fun <T : Serializable> Bundle.getSerializableCompat(key: String, clazz: Class<T>
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getSerializable(key, clazz)
     } else {
+        @Suppress("UNCHECKED_CAST", "DEPRECATION")
         getSerializable(key) as T?
     }
 }
@@ -36,6 +40,7 @@ fun <T : Parcelable> Bundle.getParcelableArrayCompat(key: String, clazz: Class<T
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableArray(key, clazz)
     } else {
+        @Suppress("UNCHECKED_CAST", "DEPRECATION")
         getParcelableArray(key) as Array<T>?
     }
 }
@@ -47,6 +52,7 @@ fun <T : Parcelable> Bundle.getParcelableArrayListCompat(
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableArrayList(key, clazz)
     } else {
+        @Suppress("DEPRECATION")
         getParcelableArrayList(key)
     }
 }
@@ -56,6 +62,7 @@ fun <T : Parcelable> Intent.getParcelableCompat(key: String, clazz: Class<T>): T
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableExtra(key, clazz)
     } else {
+        @Suppress("DEPRECATION")
         getParcelableExtra(key)
     }
 }
@@ -64,6 +71,7 @@ fun <T : Serializable> Intent.getSerializableCompat(key: String, clazz: Class<T>
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getSerializableExtra(key, clazz)
     } else {
+        @Suppress("UNCHECKED_CAST", "DEPRECATION")
         getSerializableExtra(key) as T?
     }
 }
@@ -72,6 +80,7 @@ fun <T : Parcelable> Intent.getParcelableArrayCompat(key: String, clazz: Class<T
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableArrayExtra(key, clazz)
     } else {
+        @Suppress("UNCHECKED_CAST", "DEPRECATION")
         getParcelableArrayExtra(key) as Array<T>?
     }
 }
@@ -83,6 +92,7 @@ fun <T : Parcelable> Intent.getParcelableArrayListCompat(
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getParcelableArrayListExtra(key, clazz)
     } else {
+        @Suppress("DEPRECATION")
         getParcelableArrayListExtra(key)
     }
 }

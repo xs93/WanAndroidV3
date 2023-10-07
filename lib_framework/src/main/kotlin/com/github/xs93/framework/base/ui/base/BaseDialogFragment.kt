@@ -80,7 +80,7 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
     }
 
     protected open fun getStyle(): Int {
-        return R.style.BaseDialogStyle
+        return R.style.BaseDialogTheme
     }
 
     /**返回布局Layout*/

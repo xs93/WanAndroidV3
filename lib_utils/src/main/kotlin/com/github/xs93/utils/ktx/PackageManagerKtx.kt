@@ -22,6 +22,7 @@ fun PackageManager.getApplicationInfoCompat(packageName: String, flags: Int): Ap
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getApplicationInfo(packageName, PackageManager.ApplicationInfoFlags.of(flags.toLong()))
     } else {
+        @Suppress("DEPRECATION")
         getApplicationInfo(packageName, flags)
     }
 }
@@ -30,6 +31,7 @@ fun PackageManager.getPackageInfoCompat(packageName: String, flags: Int): Packag
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(flags.toLong()))
     } else {
+        @Suppress("DEPRECATION")
         getPackageInfo(packageName, flags)
     }
 }
@@ -38,6 +40,7 @@ fun PackageManager.getActivityInfoCompat(component: ComponentName, flags: Int): 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getActivityInfo(component, PackageManager.ComponentInfoFlags.of(flags.toLong()))
     } else {
+        @Suppress("DEPRECATION")
         getActivityInfo(component, flags)
     }
 }
@@ -46,6 +49,7 @@ fun PackageManager.getServiceInfoCompat(component: ComponentName, flags: Int): S
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getServiceInfo(component, PackageManager.ComponentInfoFlags.of(flags.toLong()))
     } else {
+        @Suppress("DEPRECATION")
         getServiceInfo(component, flags)
     }
 }
@@ -54,6 +58,7 @@ fun PackageManager.getReceiverInfoCompat(component: ComponentName, flags: Int): 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getReceiverInfo(component, PackageManager.ComponentInfoFlags.of(flags.toLong()))
     } else {
+        @Suppress("DEPRECATION")
         getReceiverInfo(component, flags)
     }
 }
@@ -62,6 +67,7 @@ fun PackageManager.getProviderInfoCompat(component: ComponentName, flags: Int): 
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         getProviderInfo(component, PackageManager.ComponentInfoFlags.of(flags.toLong()))
     } else {
+        @Suppress("DEPRECATION")
         getProviderInfo(component, flags)
     }
 }

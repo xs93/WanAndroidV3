@@ -6,6 +6,7 @@ import android.view.View
 import com.github.xs93.framework.R
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingDialogFragment
 import com.github.xs93.framework.databinding.BaseLayoutLoadingBinding
+import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 
 /**
  * 加载弹出框
@@ -27,9 +28,13 @@ class RealLoadingDialog :
         }
     }
 
+
     @SuppressLint("DiscouragedApi")
     override fun initView(view: View, savedInstanceState: Bundle?) {
         dialog?.apply {
+            window?.apply {
+                isStatusBarTranslucentCompat = true
+            }
             setCanceledOnTouchOutside(false)
             setCancelable(false)
         }

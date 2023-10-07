@@ -6,27 +6,6 @@
         <item name="contentInsetStartWithNavigation">0dp</item>
     </style>
 
-    <style name="BaseDialogStyle" parent="Theme.Material3.DayNight.Dialog.Alert">
-        <item name="android:windowNoTitle">true</item>
-        <!-- 全屏显示-->
-        <item name="android:windowFullscreen">false</item>
-        <!-- 设置弹窗是否浮在Activity上，如果为true，则默认window 宽高为wrap_content,左右会有边距-->
-        <item name="android:windowIsFloating">true</item>
-        <!--阴影  -->
-        <item name="android:windowIsTranslucent">true</item>
-        <!--窗口背景透明-->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!--弹窗背景是否变暗-->
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
-    <style name="BaseFullScreenDialogStyle" parent="BaseDialogStyle">
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowFrame">@null</item>
-    </style>
-
     <style name="BaseCommonButtonStyle" parent="Widget.Material3.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
