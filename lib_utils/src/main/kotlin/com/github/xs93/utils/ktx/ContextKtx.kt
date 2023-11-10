@@ -8,7 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 
 /**
- *
+ * Context 扩展
  *
  * @author XuShuai
  * @version v1.0

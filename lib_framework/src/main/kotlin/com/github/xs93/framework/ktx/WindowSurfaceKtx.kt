@@ -22,7 +22,7 @@ fun ContentPadding.landscape(context: Context): ContentPadding {
     val displayMetrics = context.resources.displayMetrics
 
     val landscapeMinWidthDp = context.getAppMateData().getInt("surface_landscape_min_width_dp")
-    val minWidth = context.dp(landscapeMinWidthDp)
+    val minWidth = context.dp(landscapeMinWidthDp.toFloat())
 
     val width = displayMetrics.widthPixels
     val height = displayMetrics.heightPixels

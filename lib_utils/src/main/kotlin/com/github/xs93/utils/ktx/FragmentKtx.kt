@@ -3,10 +3,10 @@ package com.github.xs93.utils.ktx
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.text.Spanned
-import android.util.TypedValue
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.PluralsRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -27,46 +27,6 @@ import androidx.fragment.app.Fragment
 val Fragment.viewLifecycle
     get() = viewLifecycleOwner.lifecycle
 
-fun Fragment.dp(value: Float): Int {
-    val scale = resources.displayMetrics.density
-    return (value * scale + 0.5f).toInt()
-}
-
-fun Fragment.dp(value: Int): Int {
-    val scale = resources.displayMetrics.density
-    return (value * scale + 0.5f).toInt()
-}
-
-fun Fragment.toDp(value: Float): Float {
-    val scale = resources.displayMetrics.density
-    return value / scale
-}
-
-fun Fragment.toDp(value: Int): Float {
-    val scale = resources.displayMetrics.density
-    return value / scale
-}
-
-fun Fragment.sp(value: Float): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
-}
-
-fun Fragment.sp(value: Int): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value.toFloat(), resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
-}
-
-fun Fragment.toSp(value: Float): Float {
-    val scaledDensity = resources.displayMetrics.scaledDensity
-    return value / scaledDensity
-}
-
-fun Fragment.toSp(value: Int): Float {
-    val scaledDensity = resources.displayMetrics.scaledDensity
-    return value / scaledDensity
-}
-
 @ColorInt
 fun Fragment.color(@ColorRes id: Int): Int {
     return ContextCompat.getColor(requireContext(), id)
@@ -86,4 +46,8 @@ fun Fragment.string(@StringRes id: Int, vararg formatArgs: Any?): String {
 
 fun Fragment.htmlString(@StringRes resId: Int): Spanned {
     return getString(resId).toHtml()
+}
+
+fun Fragment.quantityString(@PluralsRes id: Int, quantity: Int, vararg formatArgs: Any?): String {
+    return resources.getQuantityString(id, quantity, *formatArgs)
 }

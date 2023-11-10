@@ -50,7 +50,7 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
             setIndicatorSliderColor(normalColor, selectedColor)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)
             setIndicatorStyle(IndicatorStyle.ROUND_RECT)
-            setIndicatorMargin(0, 0, context.dp(12), context.dp(16))
+            setIndicatorMargin(0, 0, context.dp(12f), context.dp(16f))
             setIndicatorGravity(IndicatorGravity.CENTER)
             setScrollDuration(500)
             registerLifecycleObserver(lifecycle)

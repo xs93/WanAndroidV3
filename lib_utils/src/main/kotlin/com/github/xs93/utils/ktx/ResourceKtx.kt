@@ -6,7 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.text.Spanned
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
@@ -34,46 +33,6 @@ import kotlin.contracts.contract
 val Context.layoutInflater: LayoutInflater
     get() = LayoutInflater.from(this)
 
-
-fun Context.dp(value: Float): Int {
-    val scale = resources.displayMetrics.density
-    return (value * scale + 0.5f).toInt()
-}
-
-fun Context.dp(value: Int): Int {
-    val scale = resources.displayMetrics.density
-    return (value * scale + 0.5f).toInt()
-}
-
-fun Context.toDp(value: Float): Float {
-    val scale = resources.displayMetrics.density
-    return value / scale
-}
-
-fun Context.toDp(value: Int): Float {
-    val scale = resources.displayMetrics.density
-    return value / scale
-}
-
-fun Context.sp(value: Float): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
-}
-
-fun Context.sp(value: Int): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value.toFloat(), resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
-}
-
-fun Context.toSp(value: Float): Float {
-    val scaledDensity = resources.displayMetrics.scaledDensity
-    return value / scaledDensity
-}
-
-fun Context.toSp(value: Int): Float {
-    val scaledDensity = resources.displayMetrics.scaledDensity
-    return value / scaledDensity
-}
 
 @ColorInt
 fun Context.color(@ColorRes id: Int): Int {

@@ -86,7 +86,7 @@ class WebActivity :
         val layoutParams = FrameLayout.LayoutParams(-1, -1)
         mAgentWeb = AgentWeb.with(this)
             .setAgentWebParent(binding.flWebContainer, layoutParams)
-            .useDefaultIndicator(colorPrimary, dp(1))
+            .useDefaultIndicator(colorPrimary, dp(1f))
             .setWebChromeClient(webChromeClient)
             .setWebViewClient(WebClientFactory.create(mUrl))
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
