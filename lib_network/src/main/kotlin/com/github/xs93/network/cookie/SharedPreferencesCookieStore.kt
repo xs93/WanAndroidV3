@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap
 class SharedPreferencesCookieStore(context: Context) : CookieStore {
 
     companion object {
+
         private const val SP_NAME = "sp_save_cookie"
         private const val COOKIE_NAME_PREFIX = "cookie_"
     }

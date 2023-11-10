@@ -13,7 +13,9 @@ open class ApiResponse<out T>(
     open val errorMessage: String = "default error code",
     open val data: T? = null,
 ) {
+
     companion object {
+
         const val SUCCESS_CODE = 0
     }
 

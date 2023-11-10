@@ -46,10 +46,14 @@ class ProgressResponseBody(
             var totalBytesRead = 0L
             override fun read(sink: Buffer, byteCount: Long): Long {
                 val bytesRead = super.read(sink, byteCount)
-                //增加当前读取的字节数，如果读取完成了bytesRead会返回-1
+                // 增加当前读取的字节数，如果读取完成了bytesRead会返回-1
                 totalBytesRead += if (bytesRead != -1L) bytesRead else 0
-                //回调，如果contentLength()不知道长度，会返回-1
-                listener?.onResponseProgress(totalBytesRead, oldResponseBody.contentLength(), bytesRead == -1L)
+                // 回调，如果contentLength()不知道长度，会返回-1
+                listener?.onResponseProgress(
+                    totalBytesRead,
+                    oldResponseBody.contentLength(),
+                    bytesRead == -1L
+                )
                 return bytesRead
             }
         }

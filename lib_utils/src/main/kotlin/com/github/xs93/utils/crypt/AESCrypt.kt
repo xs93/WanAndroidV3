@@ -1,7 +1,13 @@
+@file:Suppress("unused")
+
 package com.github.xs93.utils.crypt
 
 import android.util.Base64
 import com.github.xs93.utils.toHexString
+import java.io.UnsupportedEncodingException
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.IvParameterSpec
@@ -17,74 +23,134 @@ import javax.crypto.spec.SecretKeySpec
  */
 object AESCrypt {
 
-    private const val transformation = "AES/CBC/PKCS5Padding"
+    private const val TRANSFORMATION = "AES/CBC/PKCS7PADDING"
+    private const val CHARSET = "UTF-8"
+    private const val CIPHER = "AES"
+    private const val HASH_ALGORITHM = "SHA-256"
+    private val IV_BYTES =
+        byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
 
+    // region 秘钥相关处理
     /**
      * 生成一个 AEC 秘钥
      * @param keySize Int  秘钥大小,取值只能是128位(16字节)，192位(24字节)，256位(32位字节)
      * @return ByteArray
      */
     fun generateKey(keySize: Int): String {
-        val keyGenerate = KeyGenerator.getInstance("AES")
+        val keyGenerate = KeyGenerator.getInstance(CIPHER)
         keyGenerate.init(keySize)
         val secretKey = keyGenerate.generateKey()
         val keyBytes = secretKey.encoded
         return keyBytes.toHexString()
     }
 
-
     /**
-     *  加密数据,加密后通过Base64编码返回
-     * @param data String  需要加密的数据
-     * @param password String 加密密码
-     * @return String? 加密后的数据,加密失败则返回null
+     * 随机生成一个IV偏移量,加密解密需要同一个偏移量
+     * @param transformation String 加密解密模式
+     * @return String
      */
-    fun encrypt(data: String, password: String): String {
-        val resultByte = encrypt(data.toByteArray(), password.toByteArray())
-        return Base64.encodeToString(resultByte, Base64.DEFAULT)
+    fun generateIv(transformation: String = TRANSFORMATION): String {
+        val cipher = Cipher.getInstance(transformation)
+        val secureRandom = SecureRandom()
+        val ivByte = ByteArray(cipher.blockSize)
+        secureRandom.nextBytes(ivByte)
+        return ivByte.toHexString()
     }
 
+    /**
+     * Generates SHA256 hash of the password which is used as key
+     *
+     * @param password used to generated key
+     * @return SHA256 of the password
+     */
+    @Throws(NoSuchAlgorithmException::class, UnsupportedEncodingException::class)
+    private fun generateKey(password: String): SecretKeySpec {
+        val digest = MessageDigest.getInstance(HASH_ALGORITHM)
+        val bytes = password.toByteArray(charset(CHARSET))
+        digest.update(bytes, 0, bytes.size)
+        val key = digest.digest()
+        return SecretKeySpec(key, CIPHER)
+    }
+    // endregion
 
     /**
-     *  加密数据,加密后通过Base64编码返回
-     * @param data ByteArray  需要加密的数据byte数组
-     * @param password ByteArray 加密密码 byte数组
+     * 加密数据,加密后通过Base64编码返回
+     * @param key ByteArray  密码 byte数组
+     * @param iv ByteArray 偏移量数组
+     * @param transformation String -the name of the transformation, e.g., DES/CBC/PKCS5Padding. See the Cipher
+     * section in the Java Cryptography Architecture Standard Algorithm Name Documentation for information about standard transformation names.
+     * @param message ByteArray  需要加密的数据byte数组
+     *
      * @return ByteArray? 加密后的数据
      */
-    fun encrypt(data: ByteArray, password: ByteArray): ByteArray {
-        val keySpec = SecretKeySpec(password, "AES")
-        val ivParameterSpec = IvParameterSpec(password)
-
+    fun encrypt(
+        key: ByteArray,
+        iv: ByteArray,
+        transformation: String = TRANSFORMATION,
+        message: ByteArray,
+    ): ByteArray {
+        val keySpec = SecretKeySpec(key, "AES")
+        val ivParameterSpec = IvParameterSpec(iv)
         val cipher = Cipher.getInstance(transformation)
         cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivParameterSpec)
-        return cipher.doFinal(data)
-    }
-
-    /**
-     *  AES 解密数据
-     * @param data String 加密数据
-     * @param password String 解密秘钥
-     * @return String 原数据
-     */
-
-    fun decrypt(data: String, password: String): String {
-        val resultByte = decrypt(data.toByteArray(), password.toByteArray())
-        return String(resultByte)
+        return cipher.doFinal(message)
     }
 
 
     /**
-     *  AES 解密数据
-     * @param data String 加密数据
-     * @param password String 解密秘钥
-     * @return String 原数据
+     * 加密数据,加密后通过Base64编码返回
+     * @param key 加密密码
+     * @param iv 偏移量字符串
+     * @param transformation String -the name of the transformation, e.g., DES/CBC/PKCS5Padding. See the Cipher
+     * section in the Java Cryptography Architecture Standard Algorithm Name Documentation for information about standard transformation names.
+     * @param message String  需要加密的数据
+     * @return String? 加密后的数据,加密失败则返回null
      */
+    fun encrypt(key: String, iv: String, transformation: String = TRANSFORMATION, message: String): String {
+        val resultByte = encrypt(
+            key.toByteArray(charset(CHARSET)),
+            iv.toByteArray(charset(CHARSET)),
+            transformation,
+            message.toByteArray(charset(CHARSET)),
+        )
+        return Base64.encodeToString(resultByte, Base64.NO_WRAP)
+    }
 
-    fun decrypt(data: ByteArray, password: ByteArray): ByteArray {
-        val keySpec = SecretKeySpec(password, "AES")
-        val ivParameterSpec = IvParameterSpec(password)
+    /**
+     * AES 解密
+     * @param key ByteArray 解密密码bytes
+     * @param iv ByteArray 偏移量bytes
+     * @param transformation String String -the name of the transformation, e.g., DES/CBC/PKCS5Padding. See the Cipher
+     *  section in the Java Cryptography Architecture Standard Algorithm Name Documentation for information about standard transformation names.
+     * @param message ByteArray 需要解密的数据bytes
+     * @return ByteArray 解密后的数据bytes
+     */
+    fun decrypt(key: ByteArray, iv: ByteArray, transformation: String = TRANSFORMATION, message: ByteArray): ByteArray {
+        val keySpec = SecretKeySpec(key, CHARSET)
+        val ivParameterSpec = IvParameterSpec(iv)
         val cipher = Cipher.getInstance(transformation)
         cipher.init(Cipher.DECRYPT_MODE, keySpec, ivParameterSpec)
-        return cipher.doFinal(data)
+        return cipher.doFinal(message)
+    }
+
+
+    /**
+     * 解密数据,加密后通过Base64编码返回
+     * @param key 解密密码
+     * @param iv 偏移量字符串
+     * @param transformation String -the name of the transformation, e.g., DES/CBC/PKCS5Padding. See the Cipher
+     * section in the Java Cryptography Architecture Standard Algorithm Name Documentation for information about standard transformation names.
+     * @param base64EncodeMessage String  经过Base64 Encode后的加密数据
+     * @return String? 加密后的数据,加密失败则返回null
+     */
+    fun decrypt(key: String, iv: String, transformation: String = TRANSFORMATION, base64EncodeMessage: String): String {
+        val decodeString = Base64.decode(base64EncodeMessage, Base64.NO_WRAP)
+        val resultByte = decrypt(
+            key.toByteArray(charset(CHARSET)),
+            iv.toByteArray(charset(CHARSET)),
+            transformation,
+            decodeString
+        )
+        return String(resultByte)
     }
 }

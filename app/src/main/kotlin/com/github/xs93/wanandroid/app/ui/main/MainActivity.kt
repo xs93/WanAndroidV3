@@ -15,8 +15,8 @@ import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
-import com.github.xs93.framework.ktx.startActivity
 import com.github.xs93.utils.ktx.isNightMode
+import com.github.xs93.utils.ktx.startActivitySafe
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
 import com.github.xs93.wanandroid.app.ui.classify.ClassifyFragment
@@ -131,8 +131,9 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
 
 
     inner class ClickHandler {
+
         fun clickLogin() {
-            startActivity<LoginActivity>()
+            startActivitySafe<LoginActivity>()
         }
     }
 }

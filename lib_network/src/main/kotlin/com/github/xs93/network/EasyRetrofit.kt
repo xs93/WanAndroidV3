@@ -2,6 +2,7 @@ package com.github.xs93.network
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.github.xs93.network.exception.ExceptionHandler
 import com.github.xs93.network.retorfit.EasyRetrofitClient
 import com.github.xs93.network.retorfit.IRetrofitClient
 import com.github.xs93.network.strategy.EasyRetrofitBuildStrategy
@@ -19,41 +20,32 @@ import com.github.xs93.network.strategy.IRetrofitBuildStrategy
 object EasyRetrofit {
 
     private var mApp: Context? = null
-    private var mBaseUrl: String? = null
-    private var mStrategy: IRetrofitBuildStrategy? = null
-    private var mOpenOkHttpProfiler: Boolean = false
+    private val strategyMap = HashMap<String, IRetrofitClient>()
 
-    fun init(
-        context: Context,
-        baseUrl: String,
-        strategy: IRetrofitBuildStrategy? = EasyRetrofitBuildStrategy(),
-        openOkHttpProfiler: Boolean = false,
-    ) {
+    fun init(context: Context, safeRequestApiErrorHandler: ((Throwable) -> Unit)? = null) {
         mApp = context.applicationContext
-        mBaseUrl = baseUrl
-        mStrategy = strategy
-        mOpenOkHttpProfiler = openOkHttpProfiler
+        ExceptionHandler.safeRequestApiErrorHandler = safeRequestApiErrorHandler
     }
 
     fun getApp(): Context {
-        return mApp ?: throw IllegalStateException("please call HttpManager.init() method")
+        return mApp ?: throw IllegalStateException("please call EasyRetrofit.init() method")
     }
 
-    fun getBaseUrl(): String {
-        return mBaseUrl ?: throw IllegalStateException("please call HttpManager.init() method")
+    fun addRetrofitClient(baseUrl: String, retrofitClient: IRetrofitClient) {
+        strategyMap[baseUrl] = retrofitClient
     }
 
-    fun getStrategy(): IRetrofitBuildStrategy {
-        return mStrategy ?: EasyRetrofitBuildStrategy().also {
-            mStrategy = it
-        }
+    fun addRetrofitClient(baseUrl: String, retrofitBuildStrategy: IRetrofitBuildStrategy) {
+        strategyMap[baseUrl] = EasyRetrofitClient(baseUrl, retrofitBuildStrategy)
     }
 
-    fun isOpenOkHttpProfiler(): Boolean {
-        return mOpenOkHttpProfiler
+    fun addRetrofitClient(baseUrl: String) {
+        strategyMap[baseUrl] = EasyRetrofitClient(baseUrl, EasyRetrofitBuildStrategy())
     }
 
-    fun <T> create(retrofitClient: IRetrofitClient = EasyRetrofitClient, service: Class<T>): T {
+    fun <T> create(baseUrl: String, service: Class<T>): T {
+        val retrofitClient =
+            strategyMap[baseUrl] ?: throw IllegalStateException("please call EasyRetrofit.addRetrofitClient() method")
         return retrofitClient.create(service)
     }
 }

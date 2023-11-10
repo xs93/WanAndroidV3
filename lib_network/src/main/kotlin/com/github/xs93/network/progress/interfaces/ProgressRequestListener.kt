@@ -10,5 +10,6 @@ package com.github.xs93.network.progress.interfaces
  * @email 466911254@qq.com
  */
 interface ProgressRequestListener {
+
     fun onRequestProgress(bytesWritten: Long, contentLength: Long, done: Boolean)
 }

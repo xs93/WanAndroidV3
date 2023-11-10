@@ -14,15 +14,15 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  */
 class EasyRetrofitBuildStrategy : IRetrofitBuildStrategy {
 
-    override fun converterFactory(): Converter.Factory? {
-        return MoshiConverterFactory.create()
+    override fun converterFactory(): List<Converter.Factory> {
+        return arrayListOf(MoshiConverterFactory.create())
     }
 
     override fun callAdapterFactory(): CallAdapter.Factory? {
         return null
     }
 
-    override fun getCacheKey(): String {
-        return "3b82acbd4cb9a82c36cc3f874bad3e5e80f9a138bb178a9c4cab48e211d0db79"
+    override fun openOkHttpProfiler(): Boolean {
+        return true
     }
 }

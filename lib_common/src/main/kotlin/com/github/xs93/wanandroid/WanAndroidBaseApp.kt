@@ -5,7 +5,6 @@ import com.github.xs93.framework.base.application.BaseApplication
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.framework.toast.impl.SystemToast
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.network.exception.ExceptionHandler
 import com.github.xs93.network.exception.ServiceApiException
 import com.github.xs93.utils.ktx.isDebug
 import com.orhanobut.logger.AndroidLogAdapter
@@ -21,6 +20,7 @@ import com.orhanobut.logger.PrettyFormatStrategy
  * @email 466911254@qq.com
  */
 open class WanAndroidBaseApp : BaseApplication() {
+
     override fun addComponentApplication(classNames: MutableList<String>) {
 
     }
@@ -44,13 +44,13 @@ open class WanAndroidBaseApp : BaseApplication() {
         val toast = SystemToast(this)
         ToastManager.init(toast)
 
-        ExceptionHandler.safeRequestApiErrorHandler = {
+        EasyRetrofit.init(this) {
             if (it is ServiceApiException) {
                 ToastManager.showToast(it.errorMsg)
             } else {
                 ToastManager.showToast(R.string.network_error)
             }
         }
-        EasyRetrofit.init(this, "https://www.wanandroid.com/", null, isDebug)
+        EasyRetrofit.addRetrofitClient(AppConstant.BaseUrl)
     }
 }

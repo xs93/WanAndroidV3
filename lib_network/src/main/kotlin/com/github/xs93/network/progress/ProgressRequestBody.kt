@@ -38,7 +38,7 @@ class ProgressRequestBody(
         if (bufferedSink == null) {
             bufferedSink = sink(sink).buffer()
         }
-        //必须调用flush，否则最后一部分数据可能不会被写入
+        // 必须调用flush，否则最后一部分数据可能不会被写入
         bufferedSink?.let {
             oldRequestBody.writeTo(it)
             it.flush()
@@ -56,7 +56,11 @@ class ProgressRequestBody(
                     contentLength = contentLength()
                 }
                 bytesWritten += byteCount
-                listener?.onRequestProgress(bytesWritten, contentLength, bytesWritten == contentLength)
+                listener?.onRequestProgress(
+                    bytesWritten,
+                    contentLength,
+                    bytesWritten == contentLength
+                )
             }
         }
     }

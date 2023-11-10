@@ -22,7 +22,7 @@ fun ContentPadding.landscape(context: Context): ContentPadding {
     val displayMetrics = context.resources.displayMetrics
 
     val landscapeMinWidthDp = context.getAppMateData().getInt("surface_landscape_min_width_dp")
-    val minWidth = landscapeMinWidthDp.dp(context)
+    val minWidth = context.dp(landscapeMinWidthDp)
 
     val width = displayMetrics.widthPixels
     val height = displayMetrics.heightPixels
@@ -51,10 +51,7 @@ fun View.requestApplyInsetsWhenAttached() {
     }
 }
 
-fun View.setOnInsertsChangedListener(
-    adaptLandscape: Boolean = true,
-    listener: (ContentPadding) -> Unit
-) {
+fun View.setOnInsertsChangedListener(adaptLandscape: Boolean = true, listener: (ContentPadding) -> Unit) {
     setOnApplyWindowInsetsListener { v, ins ->
         val compat = WindowInsetsCompat.toWindowInsetsCompat(ins)
         val insets = compat.getInsets(WindowInsetsCompat.Type.systemBars())

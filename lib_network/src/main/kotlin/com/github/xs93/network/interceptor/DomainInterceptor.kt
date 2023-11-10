@@ -9,7 +9,7 @@ import retrofit2.Invocation
 
 /**
  *
- * 替换BaseUrl,see [com.github.xs93.network.annotation.NewDomain]
+ * 替换BaseUrl,see [com.berry.pinkberry.network.annotation.NewDomain]
  *
  *
  * @author xushuai
@@ -17,6 +17,7 @@ import retrofit2.Invocation
  * @email  466911254@qq.com
  */
 class DomainInterceptor : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         return chain.proceed(processRequest(chain.request()))
     }

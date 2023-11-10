@@ -86,13 +86,13 @@ class WebActivity :
         val layoutParams = FrameLayout.LayoutParams(-1, -1)
         mAgentWeb = AgentWeb.with(this)
             .setAgentWebParent(binding.flWebContainer, layoutParams)
-            .useDefaultIndicator(colorPrimary, 1.dp(this))
+            .useDefaultIndicator(colorPrimary, dp(1))
             .setWebChromeClient(webChromeClient)
             .setWebViewClient(WebClientFactory.create(mUrl))
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
             .setWebView(mWebView)
             .setMainFrameErrorView(com.just.agentweb.R.layout.agentweb_error_page, -1)
-            .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)//打开其他应用时，弹窗咨询用户是否前往其他应用
+            .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK) // 打开其他应用时，弹窗咨询用户是否前往其他应用
             .interceptUnkownUrl()
             .createAgentWeb()
             .ready()
@@ -147,6 +147,7 @@ class WebActivity :
     }
 
     inner class ClickHandler {
+
         fun clickBack() {
             if (!mAgentWeb.back()) {
                 finish()

@@ -1,9 +1,10 @@
 package com.github.xs93.network.retorfit
 
+import com.github.xs93.network.strategy.IRetrofitBuildStrategy
 import okhttp3.OkHttpClient
 
 /**
- *
+ * Retrofit对象构建接口
  *
  *
  * @author xushuai
@@ -11,6 +12,11 @@ import okhttp3.OkHttpClient
  * @email  466911254@qq.com
  */
 interface IRetrofitClient {
+
+    val baseUrl: String
+
+    val retrofitBuildStrategy: IRetrofitBuildStrategy
+    fun getOkHttpClient(): OkHttpClient
 
     /**
      * 生成server对象
@@ -20,5 +26,4 @@ interface IRetrofitClient {
      */
     fun <T> create(service: Class<T>): T
 
-    fun getOkHttpClient(): OkHttpClient
 }

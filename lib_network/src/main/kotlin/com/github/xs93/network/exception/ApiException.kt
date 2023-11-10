@@ -38,6 +38,7 @@ class ServiceApiException : ApiException {
 }
 
 class NoNetworkException(error: ERROR, throwable: Throwable? = null) : IOException(throwable) {
+
     var errorCode: Int
     var errorMsg: String
 

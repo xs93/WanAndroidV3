@@ -14,12 +14,13 @@ import java.io.Serializable
  * @date   2022/9/2-17:18
  * @email  466911254@qq.com
  */
-class SerializableCookie constructor(
+class SerializableCookie(
     @field:Transient
     private val cookie: Cookie,
 ) : Serializable {
 
     companion object {
+
         private const val serialVersionUID = -86L
 
         private const val NOT_VALUE_EXPIRES_AT = -1L

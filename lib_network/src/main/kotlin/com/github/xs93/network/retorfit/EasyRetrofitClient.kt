@@ -1,6 +1,6 @@
 package com.github.xs93.network.retorfit
 
-import com.github.xs93.network.EasyRetrofit
+import com.github.xs93.network.strategy.IRetrofitBuildStrategy
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -12,16 +12,17 @@ import retrofit2.Retrofit
  * @date   2022/9/2-14:24
  * @email  466911254@qq.com
  */
-object EasyRetrofitClient : IRetrofitClient {
+class EasyRetrofitClient(override val baseUrl: String, override val retrofitBuildStrategy: IRetrofitBuildStrategy) :
+    IRetrofitClient {
+
     private val retrofit by lazy {
-        val strategy = EasyRetrofit.getStrategy()
         val builder = Retrofit.Builder().apply {
-            baseUrl(EasyRetrofit.getBaseUrl())
+            baseUrl(baseUrl)
             client(mOkHttpClient)
-            strategy.converterFactory()?.apply {
-                addConverterFactory(this)
+            retrofitBuildStrategy.converterFactory()?.onEach {
+                addConverterFactory(it)
             }
-            strategy.callAdapterFactory()?.apply {
+            retrofitBuildStrategy.callAdapterFactory()?.apply {
                 addCallAdapterFactory(this)
             }
         }
@@ -29,7 +30,7 @@ object EasyRetrofitClient : IRetrofitClient {
     }
 
     private val mOkHttpClient by lazy {
-        EasyRetrofit.getStrategy().okHttpClient()
+        retrofitBuildStrategy.okHttpClient()
     }
 
     override fun <T> create(service: Class<T>): T {

@@ -21,11 +21,13 @@ import java.io.File
  * @date 2023/7/3 10:07
  * @email 466911254@qq.com
  */
-class CacheInterceptor(private val context: Context, private val key: String) : Interceptor {
+class CacheInterceptor(private val context: Context, private val key: String, private val iv: String) : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val invocation = request.tag(Invocation::class.java) ?: return chain.proceed(request)
-        val cacheConfig = invocation.method().getAnnotation(Cache::class.java) ?: return chain.proceed(request)
+        val cacheConfig =
+            invocation.method().getAnnotation(Cache::class.java) ?: return chain.proceed(request)
 
         val cacheKey = CacheUtils.getCacheKey(request)
         val cacheFile = File(CacheUtils.getCacheDir(context), cacheKey)
@@ -33,7 +35,7 @@ class CacheInterceptor(private val context: Context, private val key: String) : 
         val expiredTime = cacheConfig.expiredTime
         val cacheEnable = (System.currentTimeMillis() - cacheFile.lastModified()) < expiredTime
         if (cacheEnable && cacheFile.exists() && cacheFile.length() > 0) {
-            val cache = CacheUtils.decryptContent(cacheFile.readText(), key)
+            val cache = CacheUtils.decryptContent(key, iv, cacheFile.readText())
             if (cache.isNotEmpty() && cache.startsWith("{") && cache.endsWith("}")) {
                 return Response.Builder()
                     .code(200)
@@ -52,7 +54,7 @@ class CacheInterceptor(private val context: Context, private val key: String) : 
         // 写入缓存
         if (response.code == 200) {
             // Json数据写入缓存
-            cacheFile.writeText(CacheUtils.encryptContent(dataString, key))
+            cacheFile.writeText(CacheUtils.encryptContent(key, iv, dataString))
         } else {
             cacheFile.writeText("")
         }

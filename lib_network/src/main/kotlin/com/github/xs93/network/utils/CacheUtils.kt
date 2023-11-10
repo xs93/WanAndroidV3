@@ -1,7 +1,6 @@
 package com.github.xs93.network.utils
 
 import android.content.Context
-import android.util.Base64
 import com.github.xs93.utils.crypt.AESCrypt.decrypt
 import com.github.xs93.utils.crypt.AESCrypt.encrypt
 import com.github.xs93.utils.md5
@@ -9,7 +8,6 @@ import okhttp3.Request
 import okio.Buffer
 import java.io.File
 import java.nio.charset.Charset
-import java.security.MessageDigest
 
 /**
  * 网络请求缓存工具类
@@ -81,11 +79,9 @@ object CacheUtils {
      * @param flag    标志
      * @return 加密后内容
      */
-    fun encryptContent(content: String, flag: String): String {
+    fun encryptContent(key: String, iv: String, content: String): String {
         try {
-            val key = MessageDigest.getInstance("MD5").digest(flag.toByteArray(charset("UTF-8")))
-            val encryptData = encrypt(content.toByteArray(), key)
-            return Base64.encodeToString(encryptData, Base64.DEFAULT)
+            return encrypt(key, iv, message = content)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -100,12 +96,9 @@ object CacheUtils {
      * @param flag    标志
      * @return 解密后内容
      */
-    fun decryptContent(content: String, flag: String): String {
+    fun decryptContent(key: String, iv: String, content: String): String {
         try {
-            val key = MessageDigest.getInstance("MD5").digest(flag.toByteArray(charset("UTF-8")))
-            val decodeContent = Base64.decode(content, Base64.DEFAULT)
-            val decodeData = decrypt(decodeContent, key)
-            return String(decodeData)
+            return decrypt(key, iv, base64EncodeMessage = content)
         } catch (e: Exception) {
             e.printStackTrace()
         }

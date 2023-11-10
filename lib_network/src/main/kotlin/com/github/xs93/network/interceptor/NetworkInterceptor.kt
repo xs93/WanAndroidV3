@@ -16,6 +16,7 @@ import okhttp3.Response
  * @email 466911254@qq.com
  */
 class NetworkInterceptor : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
         val app = AppInject.getApp()
         if (app.isNetworkConnected()) {

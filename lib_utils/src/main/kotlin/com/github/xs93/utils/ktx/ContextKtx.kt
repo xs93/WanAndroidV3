@@ -1,22 +1,22 @@
-package com.github.xs93.framework.ktx
+package com.github.xs93.utils.ktx
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 
 /**
- * Context相关扩展
+ *
  *
  * @author XuShuai
  * @version v1.0
- * @date 2023/10/7 15:19
+ * @date 2023/9/15 9:42
  * @email 466911254@qq.com
  */
 
-
-inline fun <reified T : Activity> Context.startActivity(
+inline fun <reified T : Activity> Context.startActivitySafe(
     noinline block: ((Intent) -> Unit)? = null,
     options: Bundle? = null
 ) {
@@ -25,7 +25,11 @@ inline fun <reified T : Activity> Context.startActivity(
     if (this !is Activity) {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
-    startActivity(intent, options)
+    try {
+        startActivity(intent, options)
+    } catch (e: ActivityNotFoundException) {
+        e.printStackTrace()
+    }
 }
 
 

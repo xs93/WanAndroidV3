@@ -1,12 +1,14 @@
 package com.github.xs93.network.strategy
 
 import android.content.Context
+import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.cookie.CookieJarManager
 import com.github.xs93.network.cookie.SharedPreferencesCookieStore
 import com.github.xs93.network.interceptor.CacheInterceptor
 import com.github.xs93.network.interceptor.DomainInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
 import com.github.xs93.utils.AppInject
+import com.github.xs93.utils.crypt.AESCrypt
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.Cache
 import okhttp3.CookieJar
@@ -26,6 +28,7 @@ import java.util.concurrent.TimeUnit
  * @email  466911254@qq.com
  */
 interface IRetrofitBuildStrategy {
+
     /** 构建Retrofit 的OkHttpClient */
     fun okHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder().apply {
@@ -37,7 +40,7 @@ interface IRetrofitBuildStrategy {
             cookieJar(getCookieJar())
             addInterceptor(NetworkInterceptor())
             addInterceptor(DomainInterceptor())
-            addInterceptor(CacheInterceptor(AppInject.getApp(), getCacheKey()))
+            addInterceptor(CacheInterceptor(AppInject.getApp(), getCacheEncryptKey(), getCacheEncryptIv()))
             getInterceptors().let {
                 for (interceptor in it) {
                     addInterceptor(interceptor)
@@ -49,7 +52,7 @@ interface IRetrofitBuildStrategy {
                 }
             }
 
-            if (com.github.xs93.network.EasyRetrofit.isOpenOkHttpProfiler()) {
+            if (openOkHttpProfiler()) {
                 addInterceptor(OkHttpProfilerInterceptor())
             }
         }
@@ -57,19 +60,19 @@ interface IRetrofitBuildStrategy {
     }
 
     /** 构建Retrofit 的Converter.Factory */
-    fun converterFactory(): Converter.Factory?
+    fun converterFactory(): List<Converter.Factory>?
 
     /** 构建Retrofit 的CallAdapter.Factory */
     fun callAdapterFactory(): CallAdapter.Factory?
 
-    fun getCacheKey(): String
+    fun openOkHttpProfiler(): Boolean
 
     fun getTimeout(): Long {
         return 30
     }
 
     fun getCache(): Cache {
-        val context: Context = com.github.xs93.network.EasyRetrofit.getApp()
+        val context: Context = EasyRetrofit.getApp()
         val cacheFile = File(context.cacheDir, "OkHttpCache")
         if (!cacheFile.exists()) {
             cacheFile.mkdirs()
@@ -78,7 +81,7 @@ interface IRetrofitBuildStrategy {
     }
 
     fun getCookieJar(): CookieJar {
-        val context: Context = com.github.xs93.network.EasyRetrofit.getApp()
+        val context: Context = EasyRetrofit.getApp()
         return CookieJarManager(SharedPreferencesCookieStore(context))
     }
 
@@ -88,5 +91,28 @@ interface IRetrofitBuildStrategy {
 
     fun getNetworkInterceptors(): List<Interceptor> {
         return emptyList()
+    }
+
+
+    fun getCacheEncryptKey(): String {
+        val context: Context = EasyRetrofit.getApp()
+        val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
+        var encryptKey = sp.getString("key", "")
+        if (encryptKey.isNullOrBlank()) {
+            encryptKey = AESCrypt.generateKey(128)
+            sp.edit().putString("key", encryptKey).apply()
+        }
+        return encryptKey
+    }
+
+    fun getCacheEncryptIv(): String {
+        val context: Context = EasyRetrofit.getApp()
+        val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
+        var iv = sp.getString("iv", "")
+        if (iv.isNullOrBlank()) {
+            iv = AESCrypt.generateIv()
+            sp.edit().putString("iv", iv).apply()
+        }
+        return iv
     }
 }
