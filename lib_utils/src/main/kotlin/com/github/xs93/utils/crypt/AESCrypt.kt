@@ -3,6 +3,7 @@
 package com.github.xs93.utils.crypt
 
 import android.util.Base64
+import com.github.xs93.utils.hexStringToByteArray
 import com.github.xs93.utils.toHexString
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
@@ -41,7 +42,7 @@ object AESCrypt {
         keyGenerate.init(keySize)
         val secretKey = keyGenerate.generateKey()
         val keyBytes = secretKey.encoded
-        return keyBytes.toHexString()
+        return bytesToString(keyBytes)
     }
 
     /**
@@ -54,7 +55,7 @@ object AESCrypt {
         val secureRandom = SecureRandom()
         val ivByte = ByteArray(cipher.blockSize)
         secureRandom.nextBytes(ivByte)
-        return ivByte.toHexString()
+        return bytesToString(ivByte)
     }
 
     /**
@@ -108,8 +109,8 @@ object AESCrypt {
      */
     fun encrypt(key: String, iv: String, transformation: String = TRANSFORMATION, message: String): String {
         val resultByte = encrypt(
-            key.toByteArray(charset(CHARSET)),
-            iv.toByteArray(charset(CHARSET)),
+            stringToBytes(key),
+            stringToBytes(iv),
             transformation,
             message.toByteArray(charset(CHARSET)),
         )
@@ -146,11 +147,20 @@ object AESCrypt {
     fun decrypt(key: String, iv: String, transformation: String = TRANSFORMATION, base64EncodeMessage: String): String {
         val decodeString = Base64.decode(base64EncodeMessage, Base64.NO_WRAP)
         val resultByte = decrypt(
-            key.toByteArray(charset(CHARSET)),
-            iv.toByteArray(charset(CHARSET)),
+            stringToBytes(key),
+            stringToBytes(iv),
             transformation,
             decodeString
         )
         return String(resultByte)
+    }
+
+
+    private fun bytesToString(byteArray: ByteArray): String {
+        return byteArray.toHexString()
+    }
+
+    private fun stringToBytes(string: String): ByteArray {
+        return string.hexStringToByteArray()
     }
 }
