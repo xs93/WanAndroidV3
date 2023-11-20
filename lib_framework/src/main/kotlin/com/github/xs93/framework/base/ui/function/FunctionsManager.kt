@@ -30,7 +30,7 @@ object FunctionsManager {
         for (clazz in activityFunctionClassList) {
             var function: BaseActivityFunction? = null
             try {
-                function = clazz.newInstance()
+                function = clazz.getDeclaredConstructor().newInstance()
             } catch (e: InstantiationException) {
                 e.printStackTrace()
             } catch (e: IllegalAccessException) {
@@ -48,7 +48,7 @@ object FunctionsManager {
         for (functionClass in fragmentFunctionClassList) {
             var function: BaseFragmentFunction? = null
             try {
-                function = functionClass.newInstance()
+                function = functionClass.getDeclaredConstructor().newInstance()
             } catch (e: InstantiationException) {
                 e.printStackTrace()
             } catch (e: IllegalAccessException) {

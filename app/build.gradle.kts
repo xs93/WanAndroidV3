@@ -40,15 +40,20 @@ android {
         jvmTarget = "17"
     }
 
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
-
     packaging {
         jniLibs {
             useLegacyPackaging = true
         }
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
 }
 
@@ -76,6 +81,16 @@ dependencies {
 
     implementation(libs.androidx.hilt)
     kapt(libs.androidx.hilt.compiler)
+
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    implementation(libs.androidx.compose.ui.core)
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.ui.toolingPreview)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.lifecycleViewModel)
 
     debugImplementation(libs.leakcanary)
 }

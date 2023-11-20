@@ -1,37 +1,42 @@
 [versions]
-minSdk = "24"
-targetSdk = "33"
-androidGradlePlugin = "8.1.0"
-kotlin = "1.8.20"
+minSdk = "26"
+targetSdk = "34"
+androidGradlePlugin = "8.2.0-rc03"
+kotlin = "1.9.20"
 kotlinCoroutines = "1.7.3"
-ksp = "1.8.20-1.0.11"
-androidxLifecycle = "2.6.1"
-androidxRoom = "2.5.2"
-moshi = "1.15.0"
-okHttp = "4.11.0"
+ksp = "1.9.20-1.0.14"
+androidxLifecycle = "2.6.2"
+androidxRoom = "2.6.0"
+androixHint = "2.47"
+androidxComposeBom = "2023.10.01"
+androidxComposeCompiler = "1.5.4"
+
+okHttp = "4.12.0"
 retrofit = "2.9.0"
+moshi = "1.15.0"
+
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
-androixHint = "2.47"
+
 smartRefreshLayout = "2.0.6"
 agentweb = "v5.0.6-androidx"
 
 [libraries]
-material = { group = "com.google.android.material", name = "material", version = "1.9.0" }
-androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.10.1" }
+material = { group = "com.google.android.material", name = "material", version = "1.10.0" }
+androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
-androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version = "1.7.2" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.6.1" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version = "1.8.0" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.6.2" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0-beta02" }
-androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.1" }
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.6.0" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.7.0" }
 
-androidx-webkit = { module = "androidx.webkit:webkit", version = "1.7.0" }
+androidx-webkit = { module = "androidx.webkit:webkit", version = "1.8.0" }
 androidx-palette = { module = "androidx.palette:palette", version = "1.0.0" }
 
 androidx-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
@@ -40,18 +45,32 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-lifecycle-liveData-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
 
-androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.2.0" }
+androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.2.1" }
 
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoom" }
 
+#Compose 组件
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }
+androidx-compose-ui-core = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-toolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+#debugImplementation依赖
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-lifecycleViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose" }
+
+
 androidx-hilt = { module = "com.google.dagger:hilt-android", version.ref = "androixHint" }
 androidx-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androixHint" }
 
+#kotlin 协程库(https://github.com/Kotlin/kotlinx.coroutines)
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinCoroutines" }
 
+#json 解析库(https://github.com/square/moshi)
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 
@@ -74,12 +93,12 @@ androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize"
 mmkv = { module = "com.tencent:mmkv", version = "1.3.1" }
 
 #图片加载库(https://github.com/coil-kt/coil)
-coil = { group = "io.coil-kt", name = "coil", version = "2.4.0" }
+coil = { group = "io.coil-kt", name = "coil", version = "2.5.0" }
 
 #UI库
 checkableView = { group = "com.github.xs93", name = "CheckableView", version = "1.0.2" }
 cropImageView = { group = "com.github.xs93", name = "CropImageView", version = "1.0.4" }
-multiStateLayout = { group = "com.github.xs93", name = "MultiStateLayout", version = "1.0.1" }
+multiStateLayout = { group = "com.github.xs93", name = "MultiStateLayout", version = "1.0.3" }
 avLoadingIndicatorView = { group = "com.github.xs93", name = "AVLoadingIndicatorView", version = "1.0.1" }
 
 #图片放大缩小预览控件(https://github.com/Baseflow/PhotoView)
@@ -128,8 +147,9 @@ retrofit2 = ["okhttp3", "okhttp3-profiler", "retrofit2", "retrofit2-converter-mo
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androixHint" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "androixHint" }
+#google ksp 代替kapt(https://github.com/google/ksp)
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -45,6 +45,7 @@ class JianShuWebClient : BaseWebClient() {
     }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION")
     override fun shouldInterceptRequest(view: WebView?, url: String?): WebResourceResponse? {
         val urlStr = url ?: ""
         if (urlStr.startsWith(WebClientFactory.JIAN_SHU)) {

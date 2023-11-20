@@ -1,6 +1,7 @@
 package com.github.xs93.utils.ktx
 
 import android.content.Context
+import android.os.Build
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
 
@@ -30,8 +31,14 @@ fun Context.sp(value: Float): Int {
 }
 
 fun Context.toSp(value: Float): Float {
-    val scaledDensity = resources.displayMetrics.scaledDensity
-    return value / scaledDensity
+    val convertValue = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics)
+    } else {
+        @Suppress("DEPRECATION")
+        val scaledDensity = resources.displayMetrics.scaledDensity
+        value / scaledDensity
+    }
+    return convertValue
 }
 
 fun Fragment.dp(value: Float): Int {

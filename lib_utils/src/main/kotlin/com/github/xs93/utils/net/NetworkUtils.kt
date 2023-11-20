@@ -128,12 +128,14 @@ fun Context.getMobileNetworkType(): MobileNetworkType {
         return MobileNetworkType.MOBILE_UNKNOWN
     }
 
+
     return when (type) {
         TelephonyManager.NETWORK_TYPE_GPRS,
         TelephonyManager.NETWORK_TYPE_GSM,
         TelephonyManager.NETWORK_TYPE_EDGE,
         TelephonyManager.NETWORK_TYPE_CDMA,
         TelephonyManager.NETWORK_TYPE_1xRTT,
+        @Suppress("DEPRECATION")
         TelephonyManager.NETWORK_TYPE_IDEN -> MobileNetworkType.MOBILE_2G
 
         TelephonyManager.NETWORK_TYPE_UMTS,

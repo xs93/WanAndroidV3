@@ -41,6 +41,7 @@ object WebUtils {
         // 设置文本缩放 默认 100
         webView.settings.textZoom = 100
         // 是否保存密码
+        @Suppress("DEPRECATION")
         webView.settings.savePassword = false
         // 是否可以访问文件
         webView.settings.allowFileAccess = true

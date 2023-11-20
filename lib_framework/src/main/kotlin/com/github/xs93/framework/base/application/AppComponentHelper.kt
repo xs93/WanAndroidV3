@@ -21,7 +21,7 @@ internal class AppComponentHelper : IAppComponent {
         for (className in classNames) {
             try {
                 val clazz = Class.forName(className)
-                val obj = clazz.newInstance()
+                val obj = clazz.getDeclaredConstructor().newInstance()
                 if (obj is IAppComponent) {
                     mAppComponentObjects.add(obj)
                 }
