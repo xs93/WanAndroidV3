@@ -11,7 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.github.xs93.framework.R
+import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -48,7 +48,14 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, getStyle())
+        val styleId = if (getCustomStyle() != 0) {
+            getCustomStyle()
+        } else {
+            BaseDialogFragmentConfig.commonBottomSheetDialogTheme
+        }
+        if (styleId != 0) {
+            setStyle(DialogFragment.STYLE_NORMAL, styleId)
+        }
     }
 
 
@@ -106,8 +113,8 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
         onDismissListener?.invoke()
     }
 
-    protected open fun getStyle(): Int {
-        return R.style.BaseDialogTheme
+    protected open fun getCustomStyle(): Int {
+        return 0
     }
 
     /**

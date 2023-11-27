@@ -9,18 +9,21 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="BaseDialogTheme">
+    <style name="BaseDialogTheme" parent="@style/ThemeOverlay.Material3.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <!-- 默认Material3 按钮会设置为白底，颜色为主题色,一般不适应自定义界面,改为普通按钮样式-->
+        <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
         <!-- 设置弹窗是否浮在Activity上，如果为true，则默认window 宽高为wrap_content,左右会有边距-->
         <item name="android:windowIsFloating">true</item>
         <!--窗口背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
     </style>
 
     <style name="BaseDialogTheme.FullScreen">
@@ -31,5 +34,7 @@
 
     <style name="BaseDialogTheme.FullScreen.Immersive">
         <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
     </style>
 </resources>

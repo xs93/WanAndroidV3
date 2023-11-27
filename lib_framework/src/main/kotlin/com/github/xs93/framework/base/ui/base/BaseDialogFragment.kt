@@ -3,14 +3,14 @@ package com.github.xs93.framework.base.ui.base
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
-import com.github.xs93.framework.R
+import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
+import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -40,13 +40,18 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, getStyle())
+        val styleId = if (getCustomStyle() != 0) {
+            getCustomStyle()
+        } else {
+            BaseDialogFragmentConfig.commonDialogTheme
+        }
+        if (styleId != 0) {
+            setStyle(DialogFragment.STYLE_NORMAL, styleId)
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val context = requireContext()
-        val themeContext = ContextThemeWrapper(context, theme)
-        return DialogInterfaceProxyDialog(themeContext)
+        return DialogInterfaceProxyDialog(requireContext(), theme)
     }
 
     override fun onCreateView(
@@ -64,6 +69,7 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
         super.onViewCreated(view, savedInstanceState)
 
         dialog?.window?.apply {
+            isStatusBarTranslucentCompat = true
             val contentView: View = decorView.findViewById(android.R.id.content)
             contentView.setOnInsertsChangedListener {
                 windowSurface.contentPadding = it
@@ -82,8 +88,8 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
         onDismissListener?.invoke()
     }
 
-    protected open fun getStyle(): Int {
-        return R.style.BaseDialogTheme
+    protected open fun getCustomStyle(): Int {
+        return 0
     }
 
     /**返回布局Layout*/
