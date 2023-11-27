@@ -3,6 +3,7 @@ package com.github.xs93.framework.base.ui.base
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,9 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return DialogInterfaceProxyDialog(requireContext(), theme)
+        val context = requireContext()
+        val themeContext = ContextThemeWrapper(context, theme)
+        return DialogInterfaceProxyDialog(themeContext)
     }
 
     override fun onCreateView(

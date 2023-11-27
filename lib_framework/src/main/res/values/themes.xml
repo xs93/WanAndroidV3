@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.Material3.DayNight" />
 
@@ -9,25 +9,27 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="BaseDialogTheme" parent="Theme.Material3.DayNight.Dialog">
+    <style name="BaseDialogTheme">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <!-- 全屏显示-->
-        <item name="android:windowFullscreen">false</item>
         <!-- 设置弹窗是否浮在Activity上，如果为true，则默认window 宽高为wrap_content,左右会有边距-->
         <item name="android:windowIsFloating">true</item>
-        <!--阴影  -->
-        <item name="android:windowIsTranslucent">true</item>
         <!--窗口背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
-        <!--弹窗背景是否变暗-->
-        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="BaseFullScreenDialogTheme" parent="BaseDialogTheme">
+    <style name="BaseDialogTheme.FullScreen">
         <item name="android:windowIsFloating">false</item>
-        <item name="android:windowIsTranslucent">false</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowFrame">@null</item>
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
+    </style>
+
+    <style name="BaseDialogTheme.FullScreen.Immersive">
+        <item name="android:windowFullscreen">false</item>
     </style>
 </resources>

@@ -10,6 +10,7 @@ androidxRoom = "2.6.0"
 androixHint = "2.47"
 androidxComposeBom = "2023.10.01"
 androidxComposeCompiler = "1.5.4"
+androidxCamera = "1.3.0"
 
 okHttp = "4.12.0"
 retrofit = "2.9.0"
@@ -28,28 +29,35 @@ androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.1
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
-androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version = "1.8.0" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version = "1.8.1" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.6.2" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0-beta02" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.7.0" }
-
 androidx-webkit = { module = "androidx.webkit:webkit", version = "1.8.0" }
 androidx-palette = { module = "androidx.palette:palette", version = "1.0.0" }
-
+#Lifecycle
 androidx-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-liveData-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
-
+#Paging3
 androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.2.1" }
-
+#Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "androidxRoom" }
+#CameraX
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "androidxCamera" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "androidxCamera" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "androidxCamera" }
+androidx-camera-video = { group = "androidx.camera", name = "camera-video", version.ref = "androidxCamera" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "androidxCamera" }
+androidx-camera-mlkitVision = { group = "androidx.camera", name = "camera-mlkit-vision", version.ref = "androidxCamera" }
+androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "androidxCamera" }
 
 #Compose 组件
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -74,10 +82,11 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 
-#网络库
+#网络库(https://github.com/square/okhttp)
 okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
 okhttp3-interceptor-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp" }
 okhttp3-profiler = { group = "com.localebro", name = "okhttpprofiler", version = "1.0.8" }
+#retrofit(https://github.com/square/retrofit)
 retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit2-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 #primitives, boxed, and String
@@ -86,10 +95,10 @@ retrofit2-converter-scalars = { group = "com.squareup.retrofit2", name = "conver
 #权限库
 permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version = "1.7.1" }
 
-#界面适配库
+#界面适配库(https://github.com/JessYanCoding/AndroidAutoSize)
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
 
-#key-value 持久化库
+#key-value 持久化库(https://github.com/Tencent/MMKV)
 mmkv = { module = "com.tencent:mmkv", version = "1.3.1" }
 
 #图片加载库(https://github.com/coil-kt/coil)
@@ -138,6 +147,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
+#内存泄漏监听库(https://github.com/square/leakcanary)
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.12" }
 
 [bundles]
