@@ -82,7 +82,7 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
 
     inner class ClickHandler {
         fun clickOpenDrawer() {
-            mainViewModel.mainActions.sendAction(MainAction.OpenDrawer)
+            mainViewModel.mainActions.sendAction(MainAction.OpenDrawerAction)
         }
     }
 }

@@ -13,9 +13,9 @@ import com.github.xs93.framework.base.viewmodel.IUiEvent
  */
 
 sealed class MainEvent : IUiEvent {
-    object OpenDrawer : MainEvent()
+    data object OpenDrawerEvent : MainEvent()
 }
 
 sealed class MainAction : IUiAction {
-    object OpenDrawer : MainAction()
+    data object OpenDrawerAction : MainAction()
 }

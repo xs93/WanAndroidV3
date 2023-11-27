@@ -32,4 +32,6 @@
     <string name="login_error_input_account">请输入账号</string>
     <string name="login_error_input_password">请输入密码</string>
     <string name="login_btn_login">登录</string>
+    <string name="login_success">Login Success</string>
+    <string name="login_failed">Login Failed</string>
 </resources>

@@ -113,7 +113,7 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
         }
 
         addOnBackPressedCallback(true) {
-
+            moveTaskToBack(false)
         }
     }
 
@@ -122,7 +122,7 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
         mainViewModel.registerCommonEvent(this)
         observerEvent(mainViewModel.mainEventFlow) {
             when (it) {
-                MainEvent.OpenDrawer -> {
+                MainEvent.OpenDrawerEvent -> {
                     binding.drawerRoot.openDrawer(GravityCompat.START)
                 }
             }

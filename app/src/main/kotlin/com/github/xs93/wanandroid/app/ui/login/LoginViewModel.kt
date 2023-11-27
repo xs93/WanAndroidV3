@@ -57,8 +57,10 @@ class LoginViewModel @Inject constructor() : BaseViewModel() {
                 loginRepository.login(username, password)
             }
             hideLoadingDialog()
-            if (repo == null) {
-                return@launcher
+            if (repo?.isSuccess() == true) {
+                loginEvent.sendEvent(LoginEvent.LoginResultEvent(true, null))
+            } else {
+                loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, repo?.errorMessage))
             }
         }
     }

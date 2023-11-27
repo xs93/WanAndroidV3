@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 /**
- *用户账号信息
+ * 用户账号信息
  *
  * @author XuShuai
  * @version v1.0

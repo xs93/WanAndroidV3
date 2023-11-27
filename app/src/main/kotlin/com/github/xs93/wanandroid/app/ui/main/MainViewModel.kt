@@ -23,12 +23,12 @@ class MainViewModel @Inject constructor() : BaseViewModel() {
 
     val mainActions by mviActions<MainAction> {
         when (it) {
-            MainAction.OpenDrawer -> openDrawer()
+            MainAction.OpenDrawerAction -> openDrawer()
         }
     }
 
 
     private fun openDrawer() {
-        mainEvents.sendEvent(MainEvent.OpenDrawer)
+        mainEvents.sendEvent(MainEvent.OpenDrawerEvent)
     }
 }

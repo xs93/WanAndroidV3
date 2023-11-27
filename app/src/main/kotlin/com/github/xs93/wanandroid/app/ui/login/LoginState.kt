@@ -21,7 +21,9 @@ data class LoginState(
     val pwdErrorMsg: String? = null
 ) : IUIState
 
-sealed class LoginEvent : IUiEvent
+sealed class LoginEvent : IUiEvent {
+    data class LoginResultEvent(val success: Boolean, val errorMsg: String?) : LoginEvent()
+}
 
 sealed class LoginAction : IUiAction {
     data class ClickLoginAction(val account: String?, val password: String?) : LoginAction()

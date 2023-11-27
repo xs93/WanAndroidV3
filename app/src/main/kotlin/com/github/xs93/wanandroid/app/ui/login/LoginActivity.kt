@@ -6,6 +6,8 @@ import androidx.core.widget.doOnTextChanged
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observer
+import com.github.xs93.framework.ktx.observerEvent
+import com.github.xs93.utils.ktx.string
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.LoginActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,9 +63,23 @@ class LoginActivity : BaseDataBindingActivity<LoginActivityBinding>(R.layout.log
         observer(loginViewModel.loginStateFlow) {
             binding.loginState = it
         }
+
+        observerEvent(loginViewModel.loginEventFlow) {
+            when (it) {
+                is LoginEvent.LoginResultEvent -> {
+                    if (it.success) {
+                        showToast(string(R.string.login_success))
+                        finish()
+                    } else {
+                        showToast(it.errorMsg ?: string(R.string.login_failed))
+                    }
+                }
+            }
+        }
     }
 
     inner class ClickHandler {
+
         fun clickBack() {
             finish()
         }
