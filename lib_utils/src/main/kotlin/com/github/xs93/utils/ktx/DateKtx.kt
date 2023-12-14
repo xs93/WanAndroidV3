@@ -23,7 +23,7 @@ import java.util.TimeZone
  * @param timeZone TimeZone? 时区
  * @return String 时间字符串，当转换失败,返回空字符串
  */
-fun Long.formatTime(
+fun Long.formatDateTime(
     pattern: String = "yyyy-MM-dd HH:mm:ss",
     locale: Locale = Locale.getDefault(),
     timeZone: TimeZone? = null
@@ -79,7 +79,7 @@ fun Long.isToday(): Boolean {
  * @param timeZone TimeZone? 时区
  * @return Long 时间字符串,转换失败，则返回0
  */
-fun String.parseTime(
+fun String.parseDateTime(
     pattern: String = "yyyy-MM-dd HH:mm:ss",
     locale: Locale = Locale.getDefault(),
     timeZone: TimeZone? = null

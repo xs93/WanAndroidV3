@@ -12,7 +12,6 @@ import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.utils.ktx.color
-import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.web.databinding.WebActivityAgentWebBinding
 import com.github.xs93.wanandroid.web.webclient.WebClientFactory
 import com.google.android.material.color.MaterialColors
@@ -86,7 +85,7 @@ class WebActivity :
         val layoutParams = FrameLayout.LayoutParams(-1, -1)
         mAgentWeb = AgentWeb.with(this)
             .setAgentWebParent(binding.flWebContainer, layoutParams)
-            .useDefaultIndicator(colorPrimary, dp(1f))
+            .useDefaultIndicator(colorPrimary, 1)
             .setWebChromeClient(webChromeClient)
             .setWebViewClient(WebClientFactory.create(mUrl))
             .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)

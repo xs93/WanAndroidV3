@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.util.TypedValue
 import androidx.fragment.app.Fragment
+import com.github.xs93.utils.AppInject
 
 /**
  * 尺寸单位换算
@@ -15,33 +16,101 @@ import androidx.fragment.app.Fragment
  */
 
 // region dp 和 sp 与px单位换算
-fun Context.dp(value: Float): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
+
+fun Float.dp(context: Context? = null): Float {
+    val resources = context?.resources ?: AppInject.getApp().resources
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
 }
 
-fun Context.toDp(value: Float): Float {
-    val scale = resources.displayMetrics.density
-    return value / scale
-}
-
-fun Context.sp(value: Float): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
-}
-
-fun Context.toSp(value: Float): Float {
+fun Float.toDp(context: Context? = null): Float {
+    val resources = context?.resources ?: AppInject.getApp().resources
     val convertValue = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics)
+        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
     } else {
-        @Suppress("DEPRECATION")
-        val scaledDensity = resources.displayMetrics.scaledDensity
-        value / scaledDensity
+        val density = resources.displayMetrics.density
+        this / density
     }
     return convertValue
 }
 
-fun Fragment.dp(value: Float): Int {
+fun Float.sp(context: Context? = null): Float {
+    val resources = context?.resources ?: AppInject.getApp().resources
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
+}
+
+fun Float.toSp(context: Context? = null): Float {
+    val resources = context?.resources ?: AppInject.getApp().resources
+    val convertValue = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
+    } else {
+        @Suppress("DEPRECATION")
+        val scaledDensity = resources.displayMetrics.scaledDensity
+        this / scaledDensity
+    }
+    return convertValue
+}
+
+fun Float.mm(context: Context? = null): Float {
+    val resources = context?.resources ?: AppInject.getApp().resources
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, this, resources.displayMetrics)
+}
+
+fun Float.toMM(context: Context? = null): Float {
+    val resources = context?.resources ?: AppInject.getApp().resources
+    val convertValue = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+        TypedValue.deriveDimension(TypedValue.COMPLEX_UNIT_MM, this, resources.displayMetrics)
+    } else {
+        val xdpi = resources.displayMetrics.xdpi
+        if (xdpi == 0f) {
+            0f
+        } else {
+            this * 25.4f / xdpi
+        }
+    }
+    return convertValue
+}
+
+fun Int.dp(context: Context? = null): Float {
+    return this.toFloat().dp(context)
+}
+
+fun Int.toDp(context: Context? = null): Float {
+    return this.toFloat().toDp(context)
+}
+
+fun Int.sp(context: Context? = null): Float {
+    return this.toFloat().sp(context)
+}
+
+fun Int.toSp(context: Context? = null): Float {
+    return this.toFloat().toSp(context)
+}
+
+fun Int.mm(context: Context? = null): Float {
+    return this.toFloat().mm(context)
+}
+
+fun Int.toMM(context: Context? = null): Float {
+    return this.toFloat().toMM(context)
+}
+
+fun Context.dp(value: Float): Float {
+    return value.dp(this)
+}
+
+fun Context.toDp(value: Float): Float {
+    return value.toDp(this)
+}
+
+fun Context.sp(value: Float): Float {
+    return value.sp(this)
+}
+
+fun Context.toSp(value: Float): Float {
+    return value.toSp(this)
+}
+
+fun Fragment.dp(value: Float): Float {
     return requireContext().dp(value)
 }
 
@@ -49,7 +118,7 @@ fun Fragment.toDp(value: Float): Float {
     return requireContext().toDp(value)
 }
 
-fun Fragment.sp(value: Float): Int {
+fun Fragment.sp(value: Float): Float {
     return requireContext().sp(value)
 }
 
@@ -59,17 +128,15 @@ fun Fragment.toSp(value: Float): Float {
 // endregion
 
 // region mm和px转换
-fun Context.mm(value: Float): Int {
-    val convertValue = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, value, resources.displayMetrics)
-    return (convertValue + 0.5f).toInt()
+fun Context.mm(value: Float): Float {
+    return value.mm(this)
 }
 
 fun Context.toMm(value: Float): Float {
-    val xdpi = resources.displayMetrics.xdpi
-    return value * 25.4f / xdpi
+    return value.toMM(this)
 }
 
-fun Fragment.mm(value: Float): Int {
+fun Fragment.mm(value: Float): Float {
     return requireContext().mm(value)
 }
 
