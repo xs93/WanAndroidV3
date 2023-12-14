@@ -16,6 +16,7 @@ import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
 import com.github.xs93.framework.loading.ILoadingDialogControlProxy
+import com.github.xs93.framework.loading.LoadingDialogHelper
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
 import com.github.xs93.framework.ui.WindowSurface
@@ -91,8 +92,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
                     val dialog = dialog
                     if (dialog is BottomSheetDialog) {
                         val bottomSheet: FrameLayout =
-                            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)
-                                ?: return
+                            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return
                         val behavior: BottomSheetBehavior<FrameLayout> =
                             BottomSheetBehavior.from(bottomSheet)
                         behavior.peekHeight = view.measuredHeight
@@ -168,7 +168,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
     }
 
     override fun createLoadingDialog(): DialogFragment {
-        return mIUiLoadingDialog.createLoadingDialog()
+        return LoadingDialogHelper.createLoadingDialog()
     }
 
     override fun showLoadingDialog() {

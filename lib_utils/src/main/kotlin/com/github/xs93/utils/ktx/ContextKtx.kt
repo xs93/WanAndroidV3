@@ -2,10 +2,14 @@ package com.github.xs93.utils.ktx
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 
 /**
  * Context 扩展
@@ -53,45 +57,40 @@ fun Context.jumpToGoogleRating(id: String) {
     }
 }
 
-
-fun Context.sendEmail(
-    email: String,
-    emailCC: Array<String>?,
-    subject: String,
-    content: String,
-    tipsTitle: String
-) {
-    try {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "plain/text"
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, content)
-            if (!emailCC.isNullOrEmpty()) {
-                putExtra(Intent.EXTRA_CC, emailCC)
-            }
-        }
-        startActivity(Intent.createChooser(intent, tipsTitle))
-    } catch (e: Exception) {
-        e.printStackTrace()
-    }
-}
-
 fun Context.sendEmailBySendTo(
-    email: String,
+    email: Array<String>,
     emailCC: Array<String>?,
+    emailBCC: Array<String>?,
     subject: String,
     content: String,
     tipsTitle: String
 ) {
     try {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$email")
-            putExtra(Intent.EXTRA_TEXT, content)
-            putExtra(Intent.EXTRA_SUBJECT, subject)
+            val dataString = StringBuilder("mailto:${TextUtils.join(",", email)}")
+            val ccString = if (emailCC.isNullOrEmpty()) {
+                ""
+            } else {
+                TextUtils.join(",", emailCC)
+            }
+            val bccString = if (emailBCC.isNullOrEmpty()) {
+                ""
+            } else {
+                TextUtils.join(",", emailBCC)
+            }
+            dataString.append("?cc=$ccString")
+            dataString.append("&bcc=$bccString")
+            dataString.append("&subject=$subject")
+            dataString.append("&body=${content}")
+            data = Uri.parse(dataString.toString())
             if (!emailCC.isNullOrEmpty()) {
                 putExtra(Intent.EXTRA_CC, emailCC)
             }
+            if (!emailBCC.isNullOrEmpty()) {
+                putExtra(Intent.EXTRA_BCC, emailBCC)
+            }
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, content)
         }
         startActivity(Intent.createChooser(intent, tipsTitle))
     } catch (e: Exception) {
@@ -99,13 +98,34 @@ fun Context.sendEmailBySendTo(
     }
 }
 
-
 fun Context.openBrowser(url: String) {
     try {
         val uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
-    } catch (e: Exception) {
+    } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
+    }
+}
+
+fun Context.isInstall(packageName: String): Boolean {
+    val pm = packageManager
+    val applicationInfo: ApplicationInfo
+    return try {
+        applicationInfo = pm.getApplicationInfo(packageName, 0)
+        applicationInfo.enabled
+    } catch (e: Exception) {
+        false
+    }
+}
+
+fun Context.copy(content: String, label: String = "label"): Boolean {
+    return try {
+        val cm: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText(label, content)
+        cm.setPrimaryClip(clipData)
+        true
+    } catch (e: Exception) {
+        false
     }
 }

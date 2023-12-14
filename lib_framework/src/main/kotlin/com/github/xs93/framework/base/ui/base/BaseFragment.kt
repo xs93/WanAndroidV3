@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -23,7 +22,7 @@ import com.github.xs93.framework.ui.WindowSurface
  * @version v1.0
  * @date 2021/11/4 11:25
  */
-abstract class BaseFragment : Fragment(),
+abstract class BaseFragment : androidx.fragment.app.Fragment(),
     IToast by UiToastProxy(),
     ICreateLoadingDialog,
     ILoadingDialogControl {
