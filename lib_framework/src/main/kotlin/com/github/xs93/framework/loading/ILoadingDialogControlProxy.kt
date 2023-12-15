@@ -70,8 +70,8 @@ class ILoadingDialogControlProxy(
     }
 
     private sealed class LoadingDialogUiIntent {
-        object ShowLoadingDialogUiIntent : LoadingDialogUiIntent()
+        data object ShowLoadingDialogUiIntent : LoadingDialogUiIntent()
 
-        object HideLoadingDialogUiIntent : LoadingDialogUiIntent()
+        data object HideLoadingDialogUiIntent : LoadingDialogUiIntent()
     }
 }

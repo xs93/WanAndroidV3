@@ -1,5 +1,6 @@
 package com.github.xs93.framework.base.viewmodel
 
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.github.xs93.utils.AppInject
@@ -22,12 +23,12 @@ abstract class BaseViewModel : ViewModel() {
         return AppInject.getApp().string(resId, any)
     }
 
-    protected fun showToast(charSequence: CharSequence) {
-        _commonEventFlow.sendEvent(CommonUiEvent.ShowToast(charSequence))
+    protected fun showToast(charSequence: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+        _commonEventFlow.sendEvent(CommonUiEvent.ShowToast(charSequence, duration))
     }
 
-    protected fun showToast(@StringRes resId: Int, vararg any: Any?) {
-        showToast(getString(resId, any))
+    protected fun showToast(@StringRes resId: Int, vararg any: Any?, duration: Int = Toast.LENGTH_SHORT) {
+        showToast(getString(resId, any), duration)
     }
 
     protected fun showLoadingDialog() {

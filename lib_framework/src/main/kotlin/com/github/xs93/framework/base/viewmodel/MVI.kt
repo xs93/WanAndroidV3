@@ -23,11 +23,10 @@ interface IUiEvent
 
 @Keep
 sealed class CommonUiEvent : IUiEvent {
-    data class ShowToast(val charSequence: CharSequence, val duration: Int = Toast.LENGTH_SHORT) :
-        CommonUiEvent()
 
-    object ShowLoadingDialog : CommonUiEvent()
-    object HideLoadingDialog : CommonUiEvent()
+    data class ShowToast(val charSequence: CharSequence, val duration: Int = Toast.LENGTH_SHORT) : CommonUiEvent()
+    data object ShowLoadingDialog : CommonUiEvent()
+    data object HideLoadingDialog : CommonUiEvent()
 }
 
 

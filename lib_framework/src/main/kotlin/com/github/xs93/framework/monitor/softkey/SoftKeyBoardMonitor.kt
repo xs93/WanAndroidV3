@@ -1,4 +1,4 @@
-package com.github.xs93.framework.monitor
+package com.github.xs93.framework.monitor.softkey
 
 import android.app.Activity
 import android.graphics.Rect
@@ -12,9 +12,7 @@ import android.view.View
  * @date 2023/2/15 20:40
  * @email 466911254@qq.com
  */
-@Suppress("unused")
 class SoftKeyBoardMonitor(activity: Activity) {
-
 
     private val rootView: View = activity.window.decorView
 
@@ -63,6 +61,7 @@ class SoftKeyBoardMonitor(activity: Activity) {
 
 
     interface OnSoftKeyBoardChangeListener {
+
         fun keyBoardShow(height: Int)
         fun keyBoardHide(height: Int)
     }
