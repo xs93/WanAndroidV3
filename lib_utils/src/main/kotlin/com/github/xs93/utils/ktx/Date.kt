@@ -16,6 +16,17 @@ import java.util.TimeZone
  */
 
 /**
+ * 时间戳转换为倒计时时间
+ * @receiver Long 毫秒时间戳
+ * @return String 倒计时时间字符串
+ */
+fun Long.toCountDownTime(): String {
+    val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    formatter.timeZone = TimeZone.getTimeZone("GMT+00:00")
+    return formatter.format(this)
+}
+
+/**
  * 时间戳转为时间字符串
  * @receiver Long 时间戳,毫秒
  * @param pattern String 时间字符串格式

@@ -5,7 +5,6 @@ import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
-import com.github.xs93.network.base.viewmodel.safeRequestApi
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
 import com.github.xs93.wanandroid.app.repository.HomeRepository
@@ -63,9 +62,7 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
             }
 
             val bannerDeferred = async {
-                val bannerResponse = safeRequestApi(errorBlock = null) {
-                    homeRepository.getHomeBanner()
-                }
+                val bannerResponse = homeRepository.getHomeBanner()
                 val banners = bannerResponse?.data
 
                 if (bannerResponse == null || bannerResponse.isFailed() || banners == null) {
@@ -102,9 +99,7 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
             val nextPage = if (refresh) 0 else {
                 mCurPage + 1
             }
-            val articlesResponse = safeRequestApi {
-                homeRepository.getHomeArticle(nextPage)
-            }
+            val articlesResponse = homeRepository.getHomeArticle(nextPage)
             val pageResp = articlesResponse?.data
             if (articlesResponse == null || pageResp == null) {
                 val event = ExploreUiEvent.RequestArticleDataComplete(

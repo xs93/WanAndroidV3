@@ -7,7 +7,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 
@@ -19,6 +22,60 @@ import android.text.TextUtils
  * @date 2023/9/15 9:42
  * @email 466911254@qq.com
  */
+
+inline val Context.isDebug: Boolean
+    get() = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+
+
+inline val Context.appName: String
+    get() {
+        var appName = ""
+        try {
+            val packageManager = packageManager
+            val packageInfo = packageManager.getPackageInfoCompat(packageName, 0)
+            val labelRes = packageInfo.applicationInfo.labelRes
+            appName = resources.getString(labelRes)
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return appName
+    }
+
+inline val Context.appVersionName: String
+    get() {
+        var versionName = ""
+        try {
+            val packageManager = packageManager
+            val packageInfo = packageManager.getPackageInfoCompat(packageName, 0)
+            versionName = packageInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return versionName
+    }
+
+inline val Context.appVersionCode: Long
+    get() {
+        var versionCode: Long = -1L
+        try {
+            val packageManager = packageManager
+            val packageInfo = packageManager.getPackageInfoCompat(packageName, 0)
+            versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.versionCode.toLong()
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return versionCode
+    }
+
+inline val Context.isNightMode: Boolean
+    get() {
+        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES) != 0
+    }
 
 inline fun <reified T : Activity> Context.startActivitySafe(
     noinline block: ((Intent) -> Unit)? = null,

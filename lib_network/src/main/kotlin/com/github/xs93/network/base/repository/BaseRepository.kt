@@ -1,12 +1,9 @@
 package com.github.xs93.network.base.repository
 
 
-import com.github.xs93.network.exception.ERROR
-import com.github.xs93.network.exception.ServiceApiException
-import com.github.xs93.network.model.ApiResponse
+import com.github.xs93.network.exception.ExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
 
 /**
  * 基础数据仓库类
@@ -17,20 +14,22 @@ import kotlinx.coroutines.withTimeout
  */
 open class BaseRepository {
 
-    protected suspend fun <T> requestApi(timeOut: Long = 10 * 1000L, block: suspend () -> T?): T? {
+    protected suspend fun <T> safeRequestApi(
+        errorHandler: ((throwable: Throwable) -> Unit)? = null,
+        block: suspend () -> T?
+    ): T? {
         val resp = withContext(Dispatchers.IO) {
-            withTimeout(timeOut) {
+            runCatching {
                 block()
-            }
-        }
-
-        if (resp is ApiResponse<*>) {
-            if (resp.isNotLogin()) {
-                throw ServiceApiException(ERROR.NOT_LOGIN, null)
-            }
-            if (resp.isFailed()) {
-                throw ServiceApiException(resp.errorCode, resp.errorMessage, null)
-            }
+            }.onFailure {
+                it.printStackTrace()
+                val apiException = ExceptionHandler.handleException(it)
+                if (errorHandler != null) {
+                    errorHandler.invoke(apiException)
+                } else {
+                    ExceptionHandler.safeRequestApiErrorHandler?.invoke(apiException)
+                }
+            }.getOrNull()
         }
         return resp
     }

@@ -21,7 +21,7 @@ import javax.inject.Inject
 class HomeRepository @Inject constructor(private val homeService: HomeService) : BaseRepository() {
 
     suspend fun getHomeBanner(): WanResponse<List<Banner>>? {
-        return requestApi {
+        return safeRequestApi {
             homeService.getHomeBanner()
         }
     }
@@ -32,7 +32,7 @@ class HomeRepository @Inject constructor(private val homeService: HomeService) :
      * @return WanResponse<PageResp<Article>>? 获取数据信息
      */
     suspend fun getHomeArticle(page: Int): WanResponse<PageResp<Article>>? {
-        return requestApi {
+        return safeRequestApi {
             homeService.getHomeArticle(page)
         }
     }

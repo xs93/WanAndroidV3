@@ -17,27 +17,9 @@ import androidx.databinding.BindingAdapter
  * @email 466911254@qq.com
  */
 
-@BindingAdapter("singleClickInterval", "onSingleClick", requireAll = false)
-fun View.setSingleClickListener(
-    singleClickInterval: Long? = 800,
-    onSingleClick: View.OnClickListener? = null,
-) {
-    val interval = singleClickInterval ?: 800
-    setOnClickListener(SingleClickListener(interval, onSingleClick))
-}
-
-@BindingAdapter("singleClickInterval", "onNavigationIconSingleClick", requireAll = false)
-fun Toolbar.setNavigationIconSingleClickListener(
-    singleClickInterval: Long? = 800,
-    onSingleClick: View.OnClickListener? = null,
-) {
-    val interval = singleClickInterval ?: 800
-    setNavigationOnClickListener(SingleClickListener(interval, onSingleClick))
-}
-
-
 class SingleClickListener(private val interval: Long = 1000, private val singleClick: View.OnClickListener? = null) :
     View.OnClickListener {
+
     private var mLastClickTime = 0L
     override fun onClick(v: View) {
         if (System.currentTimeMillis() - mLastClickTime > interval) {
@@ -47,24 +29,22 @@ class SingleClickListener(private val interval: Long = 1000, private val singleC
     }
 }
 
-
-@BindingAdapter("android:layout_width")
-fun setLayoutWidth(view: View, width: Int) {
-    view.layoutParams.apply {
-        this.width = width
-    }
-    //调用此方法,防止有些手机界面初始化requestLayout()可能失效问题
-    view.safeRequestLayout()
+fun View.setSingleClickListener(
+    singleClickInterval: Long? = 800,
+    onSingleClick: View.OnClickListener? = null,
+) {
+    val interval = singleClickInterval ?: 800
+    setOnClickListener(SingleClickListener(interval, onSingleClick))
 }
 
-@BindingAdapter("android:layout_height")
-fun setLayoutHeight(view: View, height: Int) {
-    view.layoutParams.apply {
-        this.height = height
-    }
-    //调用此方法,防止有些手机界面初始化requestLayout()可能失效问题
-    view.safeRequestLayout()
+fun Toolbar.setNavigationIconSingleClickListener(
+    singleClickInterval: Long? = 800,
+    onSingleClick: View.OnClickListener? = null,
+) {
+    val interval = singleClickInterval ?: 800
+    setNavigationOnClickListener(SingleClickListener(interval, onSingleClick))
 }
+
 
 @BindingAdapter("android:layout_marginStart")
 fun View.setStartMargin(startMargin: Int) {

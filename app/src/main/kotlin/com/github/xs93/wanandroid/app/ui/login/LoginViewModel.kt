@@ -5,7 +5,6 @@ import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
-import com.github.xs93.network.base.viewmodel.safeRequestApi
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.repository.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -53,9 +52,7 @@ class LoginViewModel @Inject constructor() : BaseViewModel() {
             }
 
             showLoadingDialog()
-            val repo = safeRequestApi {
-                loginRepository.login(username, password)
-            }
+            val repo = loginRepository.login(username, password)
             hideLoadingDialog()
             if (repo?.isSuccess() == true) {
                 loginEvent.sendEvent(LoginEvent.LoginResultEvent(true, null))

@@ -36,7 +36,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/iv_open_drawer"
             style="@style/WanCommonButtonStyle"
-            onSingleClick="@{()->clickHandler.clickOpenDrawer()}"
+            bindOnSingleClick="@{()->clickHandler.clickOpenDrawer()}"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="8dp"

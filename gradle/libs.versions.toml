@@ -10,7 +10,8 @@ androidxRoom = "2.6.1"
 androixHint = "2.47"
 androidxComposeBom = "2023.10.01"
 androidxComposeCompiler = "1.5.4"
-androidxCamera = "1.3.0"
+androidxCamera = "1.3.1"
+androidxActivity = "1.8.2"
 
 okHttp = "4.12.0"
 retrofit = "2.9.0"
@@ -24,18 +25,20 @@ smartRefreshLayout = "2.1.0"
 agentweb = "v5.0.6-androidx"
 
 [libraries]
-material = { group = "com.google.android.material", name = "material", version = "1.10.0" }
+material = { group = "com.google.android.material", name = "material", version = "1.11.0" }
 androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.12.0" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
-androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version = "1.8.1" }
+androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.6.2" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.0-alpha13" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0-beta02" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
-androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.7.0" }
+androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.7.1" }
 androidx-webkit = { module = "androidx.webkit:webkit", version = "1.9.0" }
 androidx-palette = { module = "androidx.palette:palette", version = "1.0.0" }
 #Lifecycle
@@ -61,15 +64,19 @@ androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensi
 
 #Compose 组件
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-lifecycleViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }
 androidx-compose-ui-core = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-compose-ui-toolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 #debugImplementation依赖
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-compose-lifecycleViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose" }
-
+#androidTestImplementation以来
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+#debugImplementation依赖
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
 androidx-hilt = { module = "com.google.dagger:hilt-android", version.ref = "androixHint" }
 androidx-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androixHint" }

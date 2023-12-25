@@ -44,7 +44,7 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/WanCommonButtonStyle"
-            onSingleClick="@{()->clickHandler.clickLogin()}"
+            bindOnSingleClick="@{()->clickHandler.clickLogin()}"
             android:layout_width="100dp"
             android:layout_height="32dp"
             android:layout_marginTop="24dp"

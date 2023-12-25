@@ -9,7 +9,7 @@ import retrofit2.Invocation
 
 /**
  *
- * 替换BaseUrl,see [com.berry.pinkberry.network.annotation.NewDomain]
+ * 替换BaseUrl,see [com.github.xs93.network.annotation.NewDomain]
  *
  *
  * @author xushuai

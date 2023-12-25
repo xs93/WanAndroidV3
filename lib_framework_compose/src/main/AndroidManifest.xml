@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application>
+
+        <!-- Surface ,module can replace value by add tag tools:replace="android:value" -->
+        <meta-data
+            android:name="surface_landscape_min_width_dp"
+            android:value="500" />
+
+    </application>
+</manifest>

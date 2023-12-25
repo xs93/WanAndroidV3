@@ -46,4 +46,8 @@ class NoNetworkException(error: ERROR, throwable: Throwable? = null) : IOExcepti
         errorCode = error.code
         errorMsg = error.errMsg
     }
+
+    override fun toString(): String {
+        return "errorCode = $errorCode,errorMsg = $errorMsg,$cause"
+    }
 }

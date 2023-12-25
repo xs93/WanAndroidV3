@@ -26,7 +26,7 @@ class LoginRepository @Inject constructor(private val userService: UserService) 
      * @return WanResponse<AccountInfo>? 返回信息
      */
     suspend fun login(username: String, password: String): WanResponse<AccountInfo>? {
-        return requestApi {
+        return safeRequestApi {
             userService.login(username, password)
         }
     }

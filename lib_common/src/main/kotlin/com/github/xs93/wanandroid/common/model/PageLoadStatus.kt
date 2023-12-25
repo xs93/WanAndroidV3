@@ -9,15 +9,16 @@ package com.github.xs93.wanandroid.common.model
  * @email 466911254@qq.com
  */
 sealed class PageLoadStatus(val status: Int) {
-    object Success : PageLoadStatus(0)
 
-    object Loading : PageLoadStatus(1)
+    data object Success : PageLoadStatus(0)
 
-    object Empty : PageLoadStatus(2)
+    data object Loading : PageLoadStatus(1)
 
-    object Failed : PageLoadStatus(3)
+    data object Empty : PageLoadStatus(2)
 
-    object NoNetwork : PageLoadStatus(4)
+    data object Failed : PageLoadStatus(3)
+
+    data object NoNetwork : PageLoadStatus(4)
 
     data class Other(val otherStatus: Int) : PageLoadStatus(status = otherStatus)
 }
