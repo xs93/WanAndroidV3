@@ -1,7 +1,7 @@
+@file:OptIn(ExperimentalStdlibApi::class)
+
 package com.github.xs93.network.cookie
 
-import com.github.xs93.utils.hexStringToByteArray
-import com.github.xs93.utils.toHexString
 import okhttp3.Cookie
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -18,7 +18,7 @@ import java.io.ObjectOutputStream
  */
 
 fun String.toCookie(): Cookie? {
-    val byteArray = hexStringToByteArray()
+    val byteArray = hexToByteArray(HexFormat.Default)
     val byteArrayInputStream = ByteArrayInputStream(byteArray)
     val cookie = try {
         val objectInputStream = ObjectInputStream(byteArrayInputStream)
@@ -36,7 +36,7 @@ fun Cookie.toHexString(): String? {
     val result = try {
         oos = ObjectOutputStream(baos)
         oos.writeObject(serializableCookie)
-        baos.toByteArray().toHexString()
+        baos.toByteArray().toHexString(HexFormat.Default)
     } catch (e: Exception) {
         null
     } finally {

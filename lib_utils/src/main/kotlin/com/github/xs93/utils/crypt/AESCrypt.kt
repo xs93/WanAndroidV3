@@ -3,8 +3,6 @@
 package com.github.xs93.utils.crypt
 
 import android.util.Base64
-import com.github.xs93.utils.hexStringToByteArray
-import com.github.xs93.utils.toHexString
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -22,6 +20,7 @@ import javax.crypto.spec.SecretKeySpec
  * @date 2023/4/13 10:48
  * @email 466911254@qq.com
  */
+@OptIn(ExperimentalStdlibApi::class)
 object AESCrypt {
 
     private const val TRANSFORMATION = "AES/CBC/PKCS7PADDING"
@@ -157,10 +156,10 @@ object AESCrypt {
 
 
     private fun bytesToString(byteArray: ByteArray): String {
-        return byteArray.toHexString()
+        return byteArray.toHexString(HexFormat.Default)
     }
 
     private fun stringToBytes(string: String): ByteArray {
-        return string.hexStringToByteArray()
+        return string.hexToByteArray(HexFormat.Default)
     }
 }

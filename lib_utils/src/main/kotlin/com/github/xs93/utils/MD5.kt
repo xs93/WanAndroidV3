@@ -1,6 +1,5 @@
 package com.github.xs93.utils
 
-import java.math.BigInteger
 import java.security.MessageDigest
 
 /**
@@ -13,15 +12,8 @@ import java.security.MessageDigest
  * @email 466911254@qq.com
  */
 
+@OptIn(ExperimentalStdlibApi::class)
 fun String.md5(): String {
     val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
-    return bytes.toHexString()
-}
-
-fun ByteArray.toHexString(): String {
-    return BigInteger(1, this).toString(16)
-}
-
-fun String.hexStringToByteArray(): ByteArray {
-    return BigInteger(this, 16).toByteArray()
+    return bytes.toHexString(HexFormat.Default)
 }
