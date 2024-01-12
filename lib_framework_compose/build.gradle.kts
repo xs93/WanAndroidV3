@@ -3,7 +3,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -62,7 +62,6 @@ dependencies {
     api(libs.bundles.kotlinx.coroutines)
 
     api(libs.mmkv)
-    ksp(libs.moshi.kotlin.codegen)
 
     api(libs.logger)
 
@@ -70,7 +69,8 @@ dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
     api(composeBom)
     api(libs.androidx.compose.animation)
-    api(libs.androidx.compose.material3)
+    // api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.material3.android)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.lifecycleViewModel)
     api(libs.androidx.compose.ui.core)

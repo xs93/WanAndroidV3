@@ -2,7 +2,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -34,12 +33,10 @@ android {
 
 dependencies {
 
-    implementation(project(mapOf("path" to ":lib_utils")))
+    implementation(project(":lib_utils"))
 
     api(libs.bundles.retrofit2)
-    implementation(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
+    api(libs.moshi.kotlin)
 
     implementation(libs.bundles.kotlinx.coroutines)
-    compileOnly(libs.androidx.lifecycle.viewmodel.ktx)
 }

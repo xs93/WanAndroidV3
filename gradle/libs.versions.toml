@@ -1,7 +1,7 @@
 [versions]
 minSdk = "26"
 targetSdk = "34"
-androidGradlePlugin = "8.2.0"
+androidGradlePlugin = "8.2.1"
 kotlin = "1.9.20"
 kotlinCoroutines = "1.7.3"
 ksp = "1.9.20-1.0.14"
@@ -16,6 +16,7 @@ androidxActivity = "1.8.2"
 okHttp = "4.12.0"
 retrofit = "2.9.0"
 moshi = "1.15.0"
+kotlinxSerialization = "1.6.2"
 
 junit = "4.13.2"
 androidx-test-ext-junit = "1.1.5"
@@ -23,6 +24,7 @@ espresso-core = "3.5.1"
 
 smartRefreshLayout = "2.1.0"
 agentweb = "v5.0.6-androidx"
+material3Android = "1.2.0-beta02"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version = "1.11.0" }
@@ -65,6 +67,7 @@ androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensi
 #Compose 组件
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3Android" }
 androidx-compose-lifecycleViewModel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }
@@ -89,6 +92,8 @@ kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
 moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
 
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+
 #网络库(https://github.com/square/okhttp)
 okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
 okhttp3-interceptor-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okHttp" }
@@ -98,6 +103,8 @@ retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref =
 retrofit2-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 #primitives, boxed, and String
 retrofit2-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
+#retrofit kotlinx.serialization Converter
+retrofit2-converter-kotlinxSerialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
 
 #权限库
 permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version = "1.7.1" }
@@ -157,6 +164,7 @@ espresso-core = { group = "androidx.test.espresso", name = "espresso-core", vers
 #内存泄漏监听库(https://github.com/square/leakcanary)
 leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = "2.12" }
 
+
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
 retrofit2 = ["okhttp3", "okhttp3-profiler", "retrofit2", "retrofit2-converter-moshi"]
@@ -164,9 +172,11 @@ retrofit2 = ["okhttp3", "okhttp3-profiler", "retrofit2", "retrofit2-converter-mo
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androixHint" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androixHint" }
 #google ksp 代替kapt(https://github.com/google/ksp)
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

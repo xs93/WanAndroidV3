@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -41,7 +41,7 @@ android {
 
 dependencies {
 
-    implementation(project(mapOf("path" to ":lib_utils")))
+    implementation(project(":lib_utils"))
 
     api(libs.androidx.core.kts)
     api(libs.androidx.appcompat)
@@ -49,7 +49,6 @@ dependencies {
     api(libs.androidx.constraintlayout)
     api(libs.androidx.activity.ktx)
     api(libs.androidx.fragment.ktx)
-
 
     api(libs.androidx.lifecycle.runtime.ktx)
     api(libs.androidx.lifecycle.viewmodel.ktx)
@@ -60,7 +59,6 @@ dependencies {
     api(libs.androidx.viewpager2)
 
     api(libs.mmkv)
-    ksp(libs.moshi.kotlin.codegen)
 
     api(libs.coil)
 

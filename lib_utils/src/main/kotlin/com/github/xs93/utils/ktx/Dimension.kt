@@ -110,20 +110,23 @@ fun Context.toSp(value: Float): Float {
     return value.toSp(this)
 }
 
+private val Fragment.compatContext: Context
+    get() = context ?: AppInject.getApp()
+
 fun Fragment.dp(value: Float): Float {
-    return requireContext().dp(value)
+    return compatContext.dp(value)
 }
 
 fun Fragment.toDp(value: Float): Float {
-    return requireContext().toDp(value)
+    return compatContext.toDp(value)
 }
 
 fun Fragment.sp(value: Float): Float {
-    return requireContext().sp(value)
+    return compatContext.sp(value)
 }
 
 fun Fragment.toSp(value: Float): Float {
-    return requireContext().toSp(value)
+    return compatContext.toSp(value)
 }
 // endregion
 
@@ -137,10 +140,10 @@ fun Context.toMm(value: Float): Float {
 }
 
 fun Fragment.mm(value: Float): Float {
-    return requireContext().mm(value)
+    return compatContext.mm(value)
 }
 
 fun Fragment.toMm(value: Float): Float {
-    return requireContext().toMm(value)
+    return compatContext.toMm(value)
 }
 // endregion

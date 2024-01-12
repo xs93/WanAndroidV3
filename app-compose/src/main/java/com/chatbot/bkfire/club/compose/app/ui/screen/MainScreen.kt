@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +17,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -64,7 +67,7 @@ fun MainScreen() {
         ModalNavigationDrawer(
             drawerState = drawerState,
             drawerContent = { MainDrawerContent() }) {
-            MainContent()
+            MainContent(drawerState)
         }
     }
 }
@@ -136,7 +139,7 @@ fun MainDrawerContent() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun MainContent() {
+fun MainContent(drawerState: DrawerState) {
     val scope = rememberCoroutineScope()
     val pagerState = rememberPagerState(0, 0f) {
         MainTab.entries.size
@@ -144,7 +147,10 @@ fun MainContent() {
     Scaffold(
         bottomBar = {
             val tabs = MainTab.entries.toTypedArray()
-            NavigationBar {
+            NavigationBar(
+                modifier = Modifier.height(60.dp),
+                windowInsets = WindowInsets(0, 0, 0, 0)
+            ) {
                 tabs.forEachIndexed { index, mainTab ->
                     NavigationBarItem(
                         selected = pagerState.currentPage == index,
@@ -171,7 +177,9 @@ fun MainContent() {
                             unselectedIconColor = mainTabColorNormal,
                             selectedTextColor = MaterialTheme.colorScheme.primary,
                             unselectedTextColor = mainTabColorNormal,
+                            indicatorColor = Color.Transparent
                         ),
+                        modifier = Modifier.height(60.dp)
                     )
                 }
             }
@@ -188,7 +196,7 @@ fun MainContent() {
                 beyondBoundsPageCount = MainTab.entries.size - 1
             ) { page ->
                 when (page) {
-                    0 -> HomeScreen()
+                    0 -> HomeScreen(drawerState = drawerState)
                     1 -> ClassifyScreen()
                     2 -> SystemScreen()
                     3 -> MineScreen()

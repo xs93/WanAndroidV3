@@ -5,8 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewParent
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.setMargins
-import androidx.databinding.BindingAdapter
 
 /**
  * View点击事件扩展事件
@@ -45,43 +43,6 @@ fun Toolbar.setNavigationIconSingleClickListener(
     setNavigationOnClickListener(SingleClickListener(interval, onSingleClick))
 }
 
-
-@BindingAdapter("android:layout_marginStart")
-fun View.setStartMargin(startMargin: Int) {
-    val marginParams = layoutParams as ViewGroup.MarginLayoutParams
-    marginParams.marginStart = startMargin
-    safeRequestLayout()
-}
-
-@BindingAdapter("android:layout_marginTop")
-fun View.setTopMargin(topMargin: Int) {
-    val marginParams = layoutParams as ViewGroup.MarginLayoutParams
-    marginParams.topMargin = topMargin
-    safeRequestLayout()
-}
-
-@BindingAdapter("android:layout_marginEnd")
-fun View.setEndMargin(endMargin: Int) {
-    val marginParams = layoutParams as ViewGroup.MarginLayoutParams
-    marginParams.marginEnd = endMargin
-    safeRequestLayout()
-}
-
-
-@BindingAdapter("android:layout_marginBottom")
-fun View.setBottomMargin(bottomMargin: Int) {
-    val marginParams = layoutParams as ViewGroup.MarginLayoutParams
-    marginParams.bottomMargin = bottomMargin
-    safeRequestLayout()
-}
-
-@BindingAdapter("android:layout_margin")
-fun View.setMargin(margin: Int) {
-    val marginParams = layoutParams as ViewGroup.MarginLayoutParams
-    marginParams.setMargins(margin)
-    safeRequestLayout()
-}
-
 /**判断当前View调用requestLayout是否有效*/
 fun View.isSafeToRequestDirectly(): Boolean {
     return if (isInLayout) {
@@ -108,7 +69,6 @@ fun View.safeRequestLayout() {
         post { requestLayout() }
     }
 }
-
 
 fun View.visible() {
     visibility = View.VISIBLE

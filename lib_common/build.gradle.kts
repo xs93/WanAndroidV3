@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.hilt)
 }
 
 android {
@@ -52,12 +52,10 @@ hilt {
 
 dependencies {
 
-    api(project(mapOf("path" to ":lib_utils")))
-    api(project(mapOf("path" to ":lib_network")))
-    api(project(mapOf("path" to ":lib_framework")))
+    api(project(":lib_utils"))
+    api(project(":lib_network"))
+    api(project(":lib_framework"))
 
-    api(libs.moshi.kotlin)
-    ksp(libs.moshi.kotlin.codegen)
 
     api(libs.brvah4)
     api(libs.smartRefreshLayout.core)
@@ -66,6 +64,8 @@ dependencies {
 
     api(libs.multiStateLayout)
     api(libs.avLoadingIndicatorView)
+
+    ksp(libs.moshi.kotlin.codegen)
 
     implementation(libs.androidx.hilt)
     kapt(libs.androidx.hilt.compiler)

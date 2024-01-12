@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.hilt)
 }
 
 android {
@@ -49,11 +49,6 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
     }
 }
 
@@ -67,12 +62,11 @@ hilt {
 
 
 dependencies {
-    implementation(project(mapOf("path" to ":lib_common")))
-    implementation(project(mapOf("path" to ":mod_web")))
+    implementation(project(":lib_common"))
+    implementation(project(":mod_web"))
 
     ksp(libs.androidx.lifecycle.compiler)
 
-    implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
 
     implementation(libs.androidx.core.splashscreen)
@@ -81,16 +75,6 @@ dependencies {
 
     implementation(libs.androidx.hilt)
     kapt(libs.androidx.hilt.compiler)
-
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-    implementation(libs.androidx.compose.ui.core)
-    implementation(libs.androidx.compose.animation)
-    implementation(libs.androidx.compose.ui.toolingPreview)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.lifecycleViewModel)
 
     debugImplementation(libs.leakcanary)
 }
