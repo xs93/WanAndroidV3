@@ -20,8 +20,8 @@ import javax.inject.Inject
 @ActivityRetainedScoped
 class HomeRepository @Inject constructor(private val homeService: HomeService) : BaseRepository() {
 
-    suspend fun getHomeBanner(): WanResponse<List<Banner>>? {
-        return safeRequestApi {
+    suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>> {
+        return runSafeSuspendCatching {
             homeService.getHomeBanner()
         }
     }
@@ -31,8 +31,8 @@ class HomeRepository @Inject constructor(private val homeService: HomeService) :
      * @param page Int 分页当前页数
      * @return WanResponse<PageResp<Article>>? 获取数据信息
      */
-    suspend fun getHomeArticle(page: Int): WanResponse<PageResp<Article>>? {
-        return safeRequestApi {
+    suspend fun getHomeArticle(page: Int): Result<WanResponse<PageResp<Article>>> {
+        return runSafeSuspendCatching {
             homeService.getHomeArticle(page)
         }
     }

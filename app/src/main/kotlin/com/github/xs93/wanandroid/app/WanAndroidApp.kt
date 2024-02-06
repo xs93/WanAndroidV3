@@ -1,7 +1,13 @@
 package com.github.xs93.wanandroid.app
 
+import com.almightyai.robot.coil.CoilManager
+import com.github.xs93.common.R
+import com.github.xs93.framework.toast.ToastManager
+import com.github.xs93.network.EasyRetrofit
+import com.github.xs93.network.exception.ServiceApiException
 import com.github.xs93.utils.net.NetworkMonitor
-import com.github.xs93.wanandroid.WanAndroidBaseApp
+import com.github.xs93.wanandroid.AppConstant
+import com.github.xs93.wanandroid.CommonApplication
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -16,18 +22,31 @@ import dagger.hilt.android.HiltAndroidApp
  * @email 466911254@qq.com
  */
 @HiltAndroidApp
-class WanAndroidApp : WanAndroidBaseApp() {
+class WanAndroidApp : CommonApplication() {
 
     override fun onCreate() {
         super.onCreate()
 
-        NetworkMonitor.init(this)
-
+        CoilManager.init(this)
+        initHttp()
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
             MaterialHeader(context)
         }
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             BallPulseFooter(context)
         }
+    }
+
+
+    private fun initHttp() {
+        NetworkMonitor.init(this)
+        EasyRetrofit.init(this) {
+            if (it is ServiceApiException) {
+                ToastManager.showToast(it.errorMsg)
+            } else {
+                ToastManager.showToast(R.string.network_error)
+            }
+        }
+        EasyRetrofit.addRetrofitClient(AppConstant.BaseUrl)
     }
 }

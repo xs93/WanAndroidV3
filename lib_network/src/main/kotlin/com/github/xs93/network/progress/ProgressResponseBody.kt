@@ -42,7 +42,7 @@ class ProgressResponseBody(
 
     private fun source(source: Source): Source {
         return object : ForwardingSource(source) {
-            //当前读取字节数
+            // 当前读取字节数
             var totalBytesRead = 0L
             override fun read(sink: Buffer, byteCount: Long): Long {
                 val bytesRead = super.read(sink, byteCount)

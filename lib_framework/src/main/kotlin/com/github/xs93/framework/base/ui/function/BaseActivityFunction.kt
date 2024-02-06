@@ -2,6 +2,7 @@ package com.github.xs93.framework.base.ui.function
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 
 /**
@@ -62,6 +63,15 @@ open class BaseActivityFunction {
     }
 
     open fun onWindowFocusChanged(activity: Activity, hasFocus: Boolean) {
+
+    }
+
+    /**
+     * 转换getResource 结果
+     * @param resources Resources 原getResource()结果值
+     * @return Resources 转换后的结果值
+     */
+    open fun convertGetResourceResult(activity: Activity, resources: Resources) {
 
     }
 }

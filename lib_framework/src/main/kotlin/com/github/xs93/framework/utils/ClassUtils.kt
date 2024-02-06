@@ -67,7 +67,7 @@ class ClassUtils {
 
 
         private fun getParameterizedType(clazz: Class<*>): ParameterizedType? {
-            //获取超类并包含泛型类型,superclass 只返回超类，不包含泛型
+            // 获取超类并包含泛型类型,superclass 只返回超类，不包含泛型
             val type = clazz.genericSuperclass
             if (type is ParameterizedType) {
                 return type

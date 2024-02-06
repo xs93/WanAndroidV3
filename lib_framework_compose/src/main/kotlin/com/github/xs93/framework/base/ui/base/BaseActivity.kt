@@ -1,7 +1,6 @@
 package com.github.xs93.framework.base.ui.base
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
@@ -15,10 +14,6 @@ import com.github.xs93.framework.toast.UiToastProxy
  * @date 2021/11/4 11:01
  */
 abstract class BaseActivity : FragmentActivity(), IToast by UiToastProxy() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
 
     override fun onNewIntent(intent: Intent?) {

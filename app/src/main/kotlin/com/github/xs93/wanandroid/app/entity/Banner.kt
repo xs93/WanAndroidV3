@@ -1,14 +1,10 @@
 package com.github.xs93.wanandroid.app.entity
 
 import android.os.Parcelable
-
-import kotlinx.parcelize.Parcelize
-
 import androidx.annotation.Keep
-
-import com.squareup.moshi.JsonClass
-
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 
 /**

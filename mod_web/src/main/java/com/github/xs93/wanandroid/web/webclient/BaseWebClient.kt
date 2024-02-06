@@ -29,7 +29,7 @@ open class BaseWebClient : WebViewClient() {
         "yun.lvehaisen.com",
         "yun.tuitiger.com",
         "bilibili://video/",
-        //广告
+        // 广告
         "https://api.interactive.xianyujoy.cn",
     )
 

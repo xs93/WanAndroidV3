@@ -53,13 +53,13 @@ fun BaseViewModel.registerCommonEvent(fragment: Fragment) {
         Lifecycle.State.STARTED
     ).onEach {
         when (it) {
-            CommonUiEvent.HideLoadingDialog -> {
+            CommonUiEvent.ShowLoadingDialog -> {
                 if (fragment is ILoadingDialogControl) {
                     fragment.showLoadingDialog()
                 }
             }
 
-            CommonUiEvent.ShowLoadingDialog -> {
+            CommonUiEvent.HideLoadingDialog -> {
                 if (fragment is ILoadingDialogControl) {
                     fragment.hideLoadingDialog()
                 }

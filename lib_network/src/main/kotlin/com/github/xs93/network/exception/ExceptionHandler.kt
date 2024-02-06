@@ -24,7 +24,7 @@ object ExceptionHandler {
     @JvmStatic
     fun handleException(e: Throwable): ApiException {
         val ex: ApiException
-        //HTTP错误
+        // HTTP错误
         when (e) {
             is ApiException -> {
                 ex = e
@@ -35,7 +35,7 @@ object ExceptionHandler {
             }
 
             is HttpException -> {
-                //均视为网络错误
+                // 均视为网络错误
                 ex = when (e.code()) {
                     ERROR.UNAUTHORIZED.code -> ApiException(ERROR.UNAUTHORIZED, e)
                     ERROR.FORBIDDEN.code -> ApiException(ERROR.FORBIDDEN, e)

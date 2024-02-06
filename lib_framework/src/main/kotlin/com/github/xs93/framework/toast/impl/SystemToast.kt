@@ -41,7 +41,7 @@ class SystemToast(context: Context) : IToast {
         mMainHandler.post {
             val toast = Toast.makeText(mContext, charSequence, duration)
             toast.setText(charSequence)
-            mCommonTransform?.onTransform(toast)
+            mCommonTransform?.onTransform(toast, charSequence)
             hook(toast)
             toast.show()
         }
@@ -76,7 +76,7 @@ class SystemToast(context: Context) : IToast {
     }
 
     interface OnToastTransform {
-        fun onTransform(toast: Toast)
+        fun onTransform(toast: Toast, charSequence: CharSequence)
     }
 }
 

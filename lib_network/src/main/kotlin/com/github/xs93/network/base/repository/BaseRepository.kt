@@ -4,6 +4,7 @@ package com.github.xs93.network.base.repository
 import com.github.xs93.network.exception.ExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.cancellation.CancellationException
 
 /**
  * 基础数据仓库类
@@ -32,5 +33,16 @@ open class BaseRepository {
             }.getOrNull()
         }
         return resp
+    }
+
+    protected inline fun <T> runSafeSuspendCatching(block: () -> T): Result<T> {
+        return try {
+            Result.success(block())
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            val apiException = ExceptionHandler.handleException(e)
+            Result.failure(apiException)
+        }
     }
 }

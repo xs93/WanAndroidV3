@@ -20,7 +20,7 @@ abstract class BaseViewModel : ViewModel() {
     val commonEventFlow by lazy { _commonEventFlow.uiEventFlow }
 
     protected fun getString(@StringRes resId: Int, vararg any: Any?): String {
-        return AppInject.getApp().string(resId, any)
+        return AppInject.getApp().string(resId, *any)
     }
 
     protected fun showToast(charSequence: CharSequence, duration: Int = Toast.LENGTH_SHORT) {

@@ -99,7 +99,7 @@ interface IRetrofitBuildStrategy {
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
         var encryptKey = sp.getString("key", "")
         if (encryptKey.isNullOrBlank()) {
-            encryptKey = AESCrypt.generateKey(128)
+            encryptKey = AESCrypt.generateKeyString(16)
             sp.edit().putString("key", encryptKey).apply()
         }
         return encryptKey
@@ -110,7 +110,7 @@ interface IRetrofitBuildStrategy {
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
         var iv = sp.getString("iv", "")
         if (iv.isNullOrBlank()) {
-            iv = AESCrypt.generateIv()
+            iv = AESCrypt.generateIvString()
             sp.edit().putString("iv", iv).apply()
         }
         return iv

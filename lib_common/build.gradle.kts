@@ -52,9 +52,10 @@ hilt {
 
 dependencies {
 
-    api(project(":lib_utils"))
-    api(project(":lib_network"))
     api(project(":lib_framework"))
+    api(project(":lib_coil"))
+    api(project(":lib_network"))
+    api(project(":lib_utils"))
 
 
     api(libs.brvah4)
@@ -64,6 +65,8 @@ dependencies {
 
     api(libs.multiStateLayout)
     api(libs.avLoadingIndicatorView)
+
+    api(libs.androidAutoSize)
 
     ksp(libs.moshi.kotlin.codegen)
 

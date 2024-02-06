@@ -5,7 +5,7 @@ package com.github.xs93.framework.activity
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import java.util.*
+import java.util.Stack
 import kotlin.system.exitProcess
 
 /**

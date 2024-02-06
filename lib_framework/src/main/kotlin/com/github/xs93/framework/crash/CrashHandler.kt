@@ -13,7 +13,8 @@ import java.io.FileWriter
 import java.io.IOException
 import java.io.PrintWriter
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.system.exitProcess
@@ -69,7 +70,7 @@ object CrashHandler : Thread.UncaughtExceptionHandler {
     }
 
     override fun uncaughtException(t: Thread, e: Throwable) {
-        //线程中执行收集日志处理
+        // 线程中执行收集日志处理
         mExecutor.execute {
             val date = Date()
             val fileName = "${mDateFormat.format(date)}.txt"
@@ -107,9 +108,9 @@ object CrashHandler : Thread.UncaughtExceptionHandler {
                 e1.printStackTrace()
             }
         }
-        //结束栈内所有的activity，防止程序自动重启
+        // 结束栈内所有的activity，防止程序自动重启
         com.github.xs93.framework.activity.ActivityStackManager.finishAllActivity()
-        //先使用默认的异常处理机制，否则直接杀死进程
+        // 先使用默认的异常处理机制，否则直接杀死进程
         DEFAULT_HANDLER?.uncaughtException(t, e) ?: kotlin.run {
             Process.killProcess(Process.myPid())
             exitProcess(0)

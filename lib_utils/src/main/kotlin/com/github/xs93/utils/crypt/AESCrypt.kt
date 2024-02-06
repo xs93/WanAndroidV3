@@ -3,6 +3,7 @@
 package com.github.xs93.utils.crypt
 
 import android.util.Base64
+import com.github.xs93.utils.ktx.randomString
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -20,15 +21,12 @@ import javax.crypto.spec.SecretKeySpec
  * @date 2023/4/13 10:48
  * @email 466911254@qq.com
  */
-@OptIn(ExperimentalStdlibApi::class)
 object AESCrypt {
 
     private const val TRANSFORMATION = "AES/CBC/PKCS7PADDING"
     private const val CHARSET = "UTF-8"
     private const val CIPHER = "AES"
     private const val HASH_ALGORITHM = "SHA-256"
-    private val IV_BYTES =
-        byteArrayOf(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00)
 
     // region 秘钥相关处理
     /**
@@ -36,25 +34,54 @@ object AESCrypt {
      * @param keySize Int  秘钥大小,取值只能是128位(16字节)，192位(24字节)，256位(32位字节)
      * @return ByteArray
      */
-    fun generateKey(keySize: Int): String {
+    fun generateKey(keySize: Int): ByteArray {
         val keyGenerate = KeyGenerator.getInstance(CIPHER)
         keyGenerate.init(keySize)
         val secretKey = keyGenerate.generateKey()
-        val keyBytes = secretKey.encoded
-        return bytesToString(keyBytes)
+        return secretKey.encoded
     }
+
+    /**
+     * 生成一个 AEC 秘钥
+     * @param length Int  秘钥大小,取值只能是16,24,32
+     * @return ByteArray
+     */
+    fun generateKeyString(length: Int): String {
+        return randomString(
+            length,
+            uppercaseLetters = true,
+            lowercaseLetters = true,
+            number = true,
+            specialCharacters = false
+        )
+    }
+
 
     /**
      * 随机生成一个IV偏移量,加密解密需要同一个偏移量
      * @param transformation String 加密解密模式
      * @return String
      */
-    fun generateIv(transformation: String = TRANSFORMATION): String {
+    fun generateIv(transformation: String = TRANSFORMATION): ByteArray {
         val cipher = Cipher.getInstance(transformation)
         val secureRandom = SecureRandom()
         val ivByte = ByteArray(cipher.blockSize)
         secureRandom.nextBytes(ivByte)
-        return bytesToString(ivByte)
+        return ivByte
+    }
+
+    /**
+     * 随机生成一个IV偏移量,加密解密需要同一个偏移量
+     * @return String
+     */
+    fun generateIvString(): String {
+        return randomString(
+            16,
+            uppercaseLetters = true,
+            lowercaseLetters = true,
+            number = true,
+            specialCharacters = false
+        )
     }
 
     /**
@@ -108,8 +135,8 @@ object AESCrypt {
      */
     fun encrypt(key: String, iv: String, transformation: String = TRANSFORMATION, message: String): String {
         val resultByte = encrypt(
-            stringToBytes(key),
-            stringToBytes(iv),
+            key.toByteArray(Charsets.UTF_8),
+            iv.toByteArray(Charsets.UTF_8),
             transformation,
             message.toByteArray(charset(CHARSET)),
         )
@@ -146,20 +173,11 @@ object AESCrypt {
     fun decrypt(key: String, iv: String, transformation: String = TRANSFORMATION, base64EncodeMessage: String): String {
         val decodeString = Base64.decode(base64EncodeMessage, Base64.NO_WRAP)
         val resultByte = decrypt(
-            stringToBytes(key),
-            stringToBytes(iv),
+            key.toByteArray(Charsets.UTF_8),
+            iv.toByteArray(Charsets.UTF_8),
             transformation,
             decodeString
         )
         return String(resultByte)
-    }
-
-
-    private fun bytesToString(byteArray: ByteArray): String {
-        return byteArray.toHexString(HexFormat.Default)
-    }
-
-    private fun stringToBytes(string: String): ByteArray {
-        return string.hexToByteArray(HexFormat.Default)
     }
 }

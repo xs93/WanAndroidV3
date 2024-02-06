@@ -39,7 +39,4 @@ abstract class BaseViewBindingFragment<VB : ViewBinding>(
     }
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

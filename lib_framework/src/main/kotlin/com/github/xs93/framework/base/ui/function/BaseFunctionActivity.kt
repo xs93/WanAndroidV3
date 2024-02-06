@@ -1,6 +1,7 @@
 package com.github.xs93.framework.base.ui.function
 
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import com.github.xs93.framework.base.ui.base.BaseActivity
 
@@ -51,7 +52,6 @@ abstract class BaseFunctionActivity : BaseActivity() {
         }
     }
 
-    @Suppress("DEPRECATION")
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -108,6 +108,14 @@ abstract class BaseFunctionActivity : BaseActivity() {
         for (function in functions) {
             function.onFinish(this)
         }
+    }
+
+    override fun getResources(): Resources {
+        val resources = super.getResources()
+        for (function in functions) {
+            function.convertGetResourceResult(this, resources)
+        }
+        return resources
     }
 
     /**

@@ -90,10 +90,6 @@ object NetworkMonitor {
 
         private var mLastNetworkType: NetworkType = NetworkType.NETWORK_NONE
 
-        override fun onAvailable(network: Network) {
-            super.onAvailable(network)
-        }
-
 
         override fun onLost(network: Network) {
             super.onLost(network)

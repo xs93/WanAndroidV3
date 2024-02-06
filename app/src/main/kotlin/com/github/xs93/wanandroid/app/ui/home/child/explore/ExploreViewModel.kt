@@ -9,6 +9,7 @@ import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
 import com.github.xs93.wanandroid.app.repository.HomeRepository
 import com.github.xs93.wanandroid.common.model.PageLoadStatus
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -62,10 +63,13 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
             }
 
             val bannerDeferred = async {
-                val bannerResponse = homeRepository.getHomeBanner()
-                val banners = bannerResponse?.data
+                val bannerResponse = homeRepository.getHomeBanner().getOrElse {
+                    Logger.e(it, "请求接口失败")
+                    return@async false
+                }
+                val banners = bannerResponse.data
 
-                if (bannerResponse == null || bannerResponse.isFailed() || banners == null) {
+                if (bannerResponse.isFailed() || banners == null) {
                     return@async false
                 }
 
@@ -99,8 +103,18 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
             val nextPage = if (refresh) 0 else {
                 mCurPage + 1
             }
-            val articlesResponse = homeRepository.getHomeArticle(nextPage)
-            val pageResp = articlesResponse?.data
+            val articlesResponse = homeRepository.getHomeArticle(nextPage).getOrElse {
+                Logger.e(it, "请求接口失败")
+                val event = ExploreUiEvent.RequestArticleDataComplete(
+                    finishRefresh = refresh,
+                    finishLoadMore = !refresh,
+                    requestSuccess = false,
+                    noMoreData = true
+                )
+                exploreEvents.sendEvent(event)
+                return@withContext false
+            }
+            val pageResp = articlesResponse.data
             if (articlesResponse == null || pageResp == null) {
                 val event = ExploreUiEvent.RequestArticleDataComplete(
                     finishRefresh = refresh,

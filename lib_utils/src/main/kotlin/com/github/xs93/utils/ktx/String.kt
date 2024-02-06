@@ -24,8 +24,37 @@ import androidx.core.content.ContextCompat
  * @param maxLength Int 当length <0时，随机字符串最大长度
  * @return String 生成字符串结果
  */
-fun randomString(length: Int = -1, minLength: Int = 1, maxLength: Int = 30): String {
-    val dictCharts = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789"
+fun randomString(
+    length: Int = -1,
+    minLength: Int = 1,
+    maxLength: Int = 30,
+    uppercaseLetters: Boolean = true,
+    lowercaseLetters: Boolean = true,
+    number: Boolean = true,
+    specialCharacters: Boolean = false
+): String {
+    val uppercaseLettersDict = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    val lowercaseLettersDict = "abcdefghijklmnopqrstuvwxyz"
+    val numberDict = "0123456789"
+    val specialCharactersDict = "!@#\$%^&*="
+    val dictBuilder = StringBuilder()
+    if (uppercaseLetters) {
+        dictBuilder.append(uppercaseLettersDict)
+    }
+    if (lowercaseLetters) {
+        dictBuilder.append(lowercaseLettersDict)
+    }
+    if (number) {
+        dictBuilder.append(numberDict)
+    }
+    if (specialCharacters) {
+        dictBuilder.append(specialCharactersDict)
+    }
+    if (dictBuilder.isEmpty()) {
+        dictBuilder.append(lowercaseLettersDict)
+        dictBuilder.append(numberDict)
+    }
+    val dictCharts = dictBuilder.toString()
     return StringBuilder().apply {
         if (length <= 0) {
             (1..(minLength..maxLength).random()).onEach {

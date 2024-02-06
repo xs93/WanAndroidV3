@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.setMargins
 import androidx.databinding.BindingAdapter
-import com.github.xs93.framework.ktx.SingleClickListener
-import com.github.xs93.framework.ktx.safeRequestLayout
+import com.github.xs93.utils.ktx.safeRequestLayout
+import com.github.xs93.utils.listener.SingleClickListener
 
 /**
  * View的通用dataBinding BindAdapter

@@ -6,7 +6,9 @@ import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import java.security.MessageDigest
-import java.util.*
+import java.util.Locale
+import java.util.Random
+import java.util.UUID
 
 
 /**
@@ -104,7 +106,7 @@ class DeviceIdUtils {
                 .commit()
         }
 
-        private fun getAndroidId(context: Context): String? {
+        fun getAndroidId(context: Context): String? {
             return Settings.System.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
         }
 

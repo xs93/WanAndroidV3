@@ -10,6 +10,4 @@ import androidx.lifecycle.ViewModel
  * @date   2022/5/5-21:21
  * @email  466911254@qq.com
  */
-abstract class BaseViewModel : ViewModel() {
-
-}
+abstract class BaseViewModel : ViewModel()
