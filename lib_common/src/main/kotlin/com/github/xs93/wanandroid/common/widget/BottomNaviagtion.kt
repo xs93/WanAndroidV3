@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.widget
+package com.github.xs93.wanandroid.common.widget
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween

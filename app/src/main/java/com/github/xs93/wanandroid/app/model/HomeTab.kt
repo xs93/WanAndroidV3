@@ -12,7 +12,6 @@ import com.github.xs93.wanandroid.app.R
  * @email 466911254@qq.com
  */
 enum class HomeTab(@StringRes val tabNameStringResId: Int) {
-
     Explore(R.string.home_tab_explore),
     Square(R.string.home_tab_square),
     Answer(R.string.home_tab_answer)

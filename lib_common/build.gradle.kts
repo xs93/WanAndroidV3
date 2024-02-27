@@ -3,10 +3,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.ksp)
-    alias(libs.plugins.google.hilt)
 }
 
 android {
@@ -34,15 +32,20 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-}
 
-kapt {
-    correctErrorTypes = true
-}
+    buildFeatures {
+        compose = true
+    }
 
-hilt {
-    enableAggregatingTask = true
-    enableExperimentalClasspathAggregation = true
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
@@ -52,11 +55,6 @@ dependencies {
     api(project(":lib_utils"))
 
     api(libs.androidx.constraintlayout.compose)
-
     api(libs.androidAutoSize)
-
     ksp(libs.moshi.kotlin.codegen)
-
-    implementation(libs.androidx.hilt)
-    kapt(libs.androidx.hilt.compiler)
 }

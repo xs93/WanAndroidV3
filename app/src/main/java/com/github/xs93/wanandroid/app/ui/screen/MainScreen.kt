@@ -47,9 +47,9 @@ import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.model.MainTab
 import com.github.xs93.wanandroid.app.ui.theme.AppTheme
 import com.github.xs93.wanandroid.app.ui.theme.mainTabColorNormal
-import com.github.xs93.wanandroid.app.ui.widget.BottomNavigationBar
-import com.github.xs93.wanandroid.app.ui.widget.BottomNavigationBarItem
-import com.github.xs93.wanandroid.app.ui.widget.BottomNavigationBarItemColors
+import com.github.xs93.wanandroid.common.widget.BottomNavigationBar
+import com.github.xs93.wanandroid.common.widget.BottomNavigationBarItem
+import com.github.xs93.wanandroid.common.widget.BottomNavigationBarItemColors
 import kotlinx.coroutines.launch
 
 /**
