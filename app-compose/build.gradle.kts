@@ -2,6 +2,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -54,8 +56,13 @@ android {
 
 dependencies {
     implementation(project(":lib_framework_compose"))
+    implementation(project(":lib_network"))
+
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.constraintlayout.compose)
+
+    ksp(libs.moshi.kotlin.codegen)
+
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)

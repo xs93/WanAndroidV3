@@ -115,7 +115,7 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
                 return@withContext false
             }
             val pageResp = articlesResponse.data
-            if (articlesResponse == null || pageResp == null) {
+            if (pageResp == null) {
                 val event = ExploreUiEvent.RequestArticleDataComplete(
                     finishRefresh = refresh,
                     finishLoadMore = !refresh,
