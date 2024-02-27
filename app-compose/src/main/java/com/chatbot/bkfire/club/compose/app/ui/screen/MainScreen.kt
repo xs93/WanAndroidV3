@@ -6,12 +6,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -22,9 +23,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -48,6 +47,9 @@ import com.chatbot.bkfire.club.compose.app.R
 import com.chatbot.bkfire.club.compose.app.model.MainTab
 import com.chatbot.bkfire.club.compose.app.ui.theme.AppTheme
 import com.chatbot.bkfire.club.compose.app.ui.theme.mainTabColorNormal
+import com.chatbot.bkfire.club.compose.app.ui.widget.BottomNavigationBar
+import com.chatbot.bkfire.club.compose.app.ui.widget.BottomNavigationBarItem
+import com.chatbot.bkfire.club.compose.app.ui.widget.BottomNavigationBarItemColors
 import kotlinx.coroutines.launch
 
 /**
@@ -145,41 +147,45 @@ fun MainContent(drawerState: DrawerState) {
         MainTab.entries.size
     }
     Scaffold(
+        modifier = Modifier.windowInsetsPadding(NavigationBarDefaults.windowInsets),
         bottomBar = {
             val tabs = MainTab.entries.toTypedArray()
-            NavigationBar(
-                modifier = Modifier.height(60.dp),
-                windowInsets = WindowInsets(0, 0, 0, 0)
-            ) {
+            BottomNavigationBar(modifier = Modifier.height(56.dp)) {
                 tabs.forEachIndexed { index, mainTab ->
-                    NavigationBarItem(
+                    BottomNavigationBarItem(
                         selected = pagerState.currentPage == index,
                         onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
                         icon = {
                             Image(
+                                modifier = Modifier.size(24.dp),
                                 painter = painterResource(id = mainTab.tabIconResId),
                                 contentDescription = stringResource(id = mainTab.tabNameStringResId),
-                                colorFilter = ColorFilter.tint(LocalContentColor.current)
+                                colorFilter = ColorFilter.tint(LocalContentColor.current),
                             )
                         },
                         label = {
                             if (pagerState.currentPage == index) {
                                 Text(
                                     text = stringResource(id = mainTab.tabNameStringResId),
+                                    fontSize = 12.sp,
                                     fontWeight = FontWeight.Bold
                                 )
                             } else {
-                                Text(text = stringResource(id = mainTab.tabNameStringResId))
+                                Text(
+                                    text = stringResource(id = mainTab.tabNameStringResId),
+                                    fontSize = 12.sp
+                                )
                             }
                         },
-                        colors = NavigationBarItemDefaults.colors(
+                        iconLabelSpace = 4.dp,
+                        colors = BottomNavigationBarItemColors(
                             selectedIconColor = MaterialTheme.colorScheme.primary,
                             unselectedIconColor = mainTabColorNormal,
                             selectedTextColor = MaterialTheme.colorScheme.primary,
                             unselectedTextColor = mainTabColorNormal,
-                            indicatorColor = Color.Transparent
-                        ),
-                        modifier = Modifier.height(60.dp)
+                            disabledIconColor = mainTabColorNormal.copy(alpha = 0.38f),
+                            disabledTextColor = mainTabColorNormal.copy(alpha = 0.38f)
+                        )
                     )
                 }
             }

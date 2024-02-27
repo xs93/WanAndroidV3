@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.github.xs93.framework"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdkVersion(libs.versions.targetSdk.get().toInt())
 
     defaultConfig {
         minSdk = 21

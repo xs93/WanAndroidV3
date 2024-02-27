@@ -1,7 +1,6 @@
 package com.chatbot.bkfire.club.compose.app.ui.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -14,8 +13,9 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PrimaryScrollableTabRow
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -57,25 +58,34 @@ fun HomeScreen(
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Red)
                 .height(48.dp)
         ) {
 
-            val (menuRef, tabRowRef) = remember {
+            val (menuRef, tabRowRef, dividerRef) = remember {
                 createRefs()
             }
 
+            HorizontalDivider(
+                modifier = Modifier.constrainAs(dividerRef) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                }
+            )
+
             var tabIndex by remember { mutableIntStateOf(0) }
-            PrimaryScrollableTabRow(
+            PrimaryTabRow(
                 selectedTabIndex = tabIndex,
-                edgePadding = 0.dp,
-                containerColor = Color.Gray,
+                containerColor = Color.Transparent,
                 modifier = Modifier.constrainAs(tabRowRef) {
                     top.linkTo(parent.top)
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    width = Dimension.preferredWrapContent
+                    width = Dimension.value(190.dp)
+                },
+                divider = {
+                    HorizontalDivider(color = Color.Transparent)
                 }
             ) {
                 HomeTab.entries.forEachIndexed { index, homeTab ->
@@ -83,7 +93,12 @@ fun HomeScreen(
                         onClick = {
                             tabIndex = index
                         },
-                        text = { Text(text = stringResource(id = homeTab.tabNameStringResId)) }
+                        text = {
+                            Text(
+                                text = stringResource(id = homeTab.tabNameStringResId),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     )
                 }
             }
@@ -113,6 +128,8 @@ fun HomeScreen(
                     ),
                 contentDescription = null
             )
+
+
         }
     }
 }
