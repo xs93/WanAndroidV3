@@ -8,22 +8,11 @@ import androidx.compose.runtime.Composable
  *
  * @author XuShuai
  * @version v1.0
- * @date 2023/8/14 14:05
+ * @date 2024/2/27 10:51
  * @email 466911254@qq.com
  */
 
-
 @Composable
-fun ClassifyScreen() {
-    Text(text = "ClassifyScreen")
-}
-
-@Composable
-fun SystemScreen() {
-    Text(text = "SystemScreen")
-}
-
-@Composable
-fun MineScreen() {
-    Text(text = "MineScreen")
+fun SquareScreen() {
+    Text(text = "SquareScreen")
 }

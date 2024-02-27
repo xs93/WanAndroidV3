@@ -1,5 +1,6 @@
 package com.chatbot.bkfire.club.compose.app.ui.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -9,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
@@ -20,11 +23,8 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -37,6 +37,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.chatbot.bkfire.club.compose.app.R
 import com.chatbot.bkfire.club.compose.app.model.HomeTab
+import com.chatbot.bkfire.club.compose.app.ui.theme.AppTheme
 import kotlinx.coroutines.launch
 
 /**
@@ -48,12 +49,16 @@ import kotlinx.coroutines.launch
  * @email 466911254@qq.com
  */
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     drawerState: DrawerState
 ) {
     val scope = rememberCoroutineScope()
+    val pagerState = rememberPagerState(0, 0f) {
+        HomeTab.entries.size
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(
             modifier = Modifier
@@ -73,9 +78,8 @@ fun HomeScreen(
                 }
             )
 
-            var tabIndex by remember { mutableIntStateOf(0) }
             PrimaryTabRow(
-                selectedTabIndex = tabIndex,
+                selectedTabIndex = pagerState.currentPage,
                 containerColor = Color.Transparent,
                 modifier = Modifier.constrainAs(tabRowRef) {
                     top.linkTo(parent.top)
@@ -89,9 +93,12 @@ fun HomeScreen(
                 }
             ) {
                 HomeTab.entries.forEachIndexed { index, homeTab ->
-                    Tab(selected = index == tabIndex,
+                    Tab(
+                        selected = index == pagerState.currentPage,
                         onClick = {
-                            tabIndex = index
+                            scope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
                         },
                         text = {
                             Text(
@@ -106,6 +113,7 @@ fun HomeScreen(
             val menuInteractionSource = remember {
                 MutableInteractionSource()
             }
+
             Image(
                 painter = painterResource(id = R.drawable.main_ic_menu_24dp),
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
@@ -128,16 +136,27 @@ fun HomeScreen(
                     ),
                 contentDescription = null
             )
-
-
+        }
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize(),
+            beyondBoundsPageCount = HomeTab.entries.size - 1
+        ) { page ->
+            when (page) {
+                0 -> ExploreScreen()
+                1 -> SquareScreen()
+                2 -> AnswerScreen()
+            }
         }
     }
 }
 
 
-@Preview(showBackground = false, showSystemUi = false)
+@Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun HomeScreenPreview() {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    HomeScreen(drawerState)
+    AppTheme {
+        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+        HomeScreen(drawerState)
+    }
 }
