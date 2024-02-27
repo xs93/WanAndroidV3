@@ -1,12 +1,9 @@
-@file:Suppress("UnstableApiUsage")
-
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.ksp)
-    alias(libs.plugins.google.hilt)
 }
 
 android {
@@ -14,67 +11,58 @@ android {
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "com.github.xs93.wanandroid"
-        minSdk = libs.versions.minSdk.get().toInt()
+        applicationId = "com.github.xs93.app.wanandroid.compose"
+        minSdk = 26
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
-            )
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
 
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
+    }
+
     packaging {
-        jniLibs {
-            useLegacyPackaging = true
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
 }
-
-kapt {
-    correctErrorTypes = true
-}
-
-hilt {
-    enableAggregatingTask = true
-}
-
 
 dependencies {
     implementation(project(":lib_common"))
-    implementation(project(":mod_web"))
 
-    ksp(libs.androidx.lifecycle.compiler)
+    implementation(libs.androidx.core.splashscreen)
 
     ksp(libs.moshi.kotlin.codegen)
 
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.banner)
-    implementation(libs.viewPagerIndicator)
-
-    implementation(libs.androidx.hilt)
-    kapt(libs.androidx.hilt.compiler)
-
-    debugImplementation(libs.leakcanary)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.androidx.compose.ui.tooling)
 }

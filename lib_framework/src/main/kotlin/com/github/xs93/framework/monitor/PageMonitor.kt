@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
 import android.view.Window
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -29,13 +29,13 @@ class PageMonitor(private val time: Long, private val listener: OnPageMonitorLis
 
 
     private val mBlackList = arrayListOf<String>()
-    private var mActivity: AppCompatActivity? = null
+    private var mActivity: ComponentActivity? = null
     private var mFragment: Fragment? = null
     private var mResume = false
 
     private val mRunnable = Runnable { listener?.onNotTouch() }
 
-    fun attach(activity: AppCompatActivity, tag: String = activity.javaClass.simpleName) {
+    fun attach(activity: ComponentActivity, tag: String = activity.javaClass.simpleName) {
         with(activity) {
             mTag = tag
             if (!mBlackList.contains(mTag)) {
@@ -113,6 +113,7 @@ class PageMonitor(private val time: Long, private val listener: OnPageMonitorLis
     }
 
     inner class WindowCallbackInvocation(val callback: Any) : InvocationHandler {
+
         override fun invoke(proxy: Any?, method: Method?, args: Array<out Any>?): Any? {
             try {
                 if ("dispatchTouchEvent" == method?.name) {
@@ -136,6 +137,7 @@ class PageMonitor(private val time: Long, private val listener: OnPageMonitorLis
     }
 
     interface OnPageMonitorListener {
+
         fun onNotTouch()
 
         fun onTouch()

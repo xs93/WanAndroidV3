@@ -23,6 +23,7 @@ interface IMVIStateContainer<STATE : IUIState> {
 }
 
 interface MutableMVIStateContainer<STATE : IUIState> : IMVIStateContainer<STATE> {
+
     fun updateState(action: STATE.() -> STATE)
 }
 

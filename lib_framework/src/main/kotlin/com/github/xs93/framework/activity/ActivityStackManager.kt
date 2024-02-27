@@ -16,6 +16,7 @@ import kotlin.system.exitProcess
  * @date 2022/1/27 16:26
  */
 object ActivityStackManager {
+
     private var mInit = false
     private val mActivityStack = Stack<Activity>()
     private val mActivityLifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {

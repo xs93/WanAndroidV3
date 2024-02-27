@@ -15,11 +15,7 @@ import com.github.xs93.utils.ktx.string
  * @date   2022/5/5-21:21
  * @email  466911254@qq.com
  */
-@Suppress("unused")
 abstract class BaseViewModel : ViewModel() {
-
-    private val _commonEventFlow by mviEvents<CommonUiEvent>()
-    val commonEventFlow by lazy { _commonEventFlow.uiEventFlow }
 
     protected fun getString(@StringRes resId: Int, vararg any: Any?): String {
         return AppInject.getApp().string(resId, *any)
@@ -32,13 +28,5 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun showToast(@StringRes resId: Int, vararg any: Any?, duration: Int = Toast.LENGTH_SHORT) {
         showToast(getString(resId, any), duration)
-    }
-
-    protected fun showLoadingDialog() {
-        _commonEventFlow.sendEvent(CommonUiEvent.ShowLoadingDialog)
-    }
-
-    protected fun hideLoadingDialog() {
-        _commonEventFlow.sendEvent(CommonUiEvent.HideLoadingDialog)
     }
 }

@@ -34,11 +34,6 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
 }
 
 kapt {
@@ -53,18 +48,10 @@ hilt {
 dependencies {
 
     api(project(":lib_framework"))
-    api(project(":lib_coil"))
     api(project(":lib_network"))
     api(project(":lib_utils"))
 
-
-    api(libs.brvah4)
-    api(libs.smartRefreshLayout.core)
-    api(libs.smartRefreshLayout.header.material)
-    api(libs.smartRefreshLayout.footer.ball)
-
-    api(libs.multiStateLayout)
-    api(libs.avLoadingIndicatorView)
+    api(libs.androidx.constraintlayout.compose)
 
     api(libs.androidAutoSize)
 

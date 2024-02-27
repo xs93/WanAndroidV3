@@ -18,9 +18,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "WanAndroidV3"
 include(":app")
-include(":mod_web")
 include(":lib_common")
 include(":lib_framework")
-include(":lib_coil")
 include(":lib_network")
 include(":lib_utils")

@@ -3,12 +3,10 @@ package com.github.xs93.wanandroid
 import android.app.Application
 import android.content.Context
 import com.github.xs93.framework.base.application.IAppComponent
-import com.github.xs93.framework.base.ui.function.FunctionsManager
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.framework.toast.impl.SystemToast
 import com.github.xs93.utils.ktx.appVersionCode
 import com.github.xs93.utils.ktx.isDebug
-import com.github.xs93.wanandroid.common.function.AutoSizeActivityFunction
 import com.github.xs93.wanandroid.common.store.AppCommonStore
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -31,7 +29,6 @@ class CommonAppComponent : IAppComponent {
         initAutoSize()
         initToast(application)
         checkInstallVersion(application)
-        FunctionsManager.addCommonActivityFunctionClassPath(AutoSizeActivityFunction::class.java)
     }
 
     private fun initLogger(application: Application) {

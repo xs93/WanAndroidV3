@@ -3,7 +3,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.ksp)
 }
 
@@ -12,7 +11,7 @@ android {
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 23
+        minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
     }
@@ -34,8 +33,17 @@ android {
     }
 
     buildFeatures {
-        dataBinding = true
-        viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidxComposeCompiler.get()
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
@@ -44,9 +52,6 @@ dependencies {
     implementation(project(":lib_utils"))
 
     api(libs.androidx.core.kts)
-    api(libs.androidx.appcompat)
-    api(libs.material)
-    api(libs.androidx.constraintlayout)
     api(libs.androidx.activity.ktx)
     api(libs.androidx.fragment.ktx)
 
@@ -56,9 +61,18 @@ dependencies {
 
     api(libs.bundles.kotlinx.coroutines)
 
-    api(libs.androidx.viewpager2)
-
     api(libs.mmkv)
 
     api(libs.logger)
+
+    api(libs.androidx.activity.compose)
+    val composeBom = platform(libs.androidx.compose.bom)
+    api(composeBom)
+    api(libs.androidx.compose.animation)
+    // api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.material3.android)
+    api(libs.androidx.compose.foundation)
+    api(libs.androidx.compose.lifecycleViewModel)
+    api(libs.androidx.compose.ui.core)
+    api(libs.androidx.compose.ui.toolingPreview)
 }

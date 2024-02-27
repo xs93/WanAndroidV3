@@ -23,6 +23,7 @@ interface IMVIActionContainer<ACTION : IUiAction> {
 
 
 interface MutableMVIActionContainer<ACTION : IUiAction> : IMVIActionContainer<ACTION> {
+
     fun sendAction(event: ACTION)
 }
 

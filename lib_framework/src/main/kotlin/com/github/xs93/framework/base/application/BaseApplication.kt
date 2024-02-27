@@ -9,8 +9,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.github.xs93.framework.activity.ActivityStackManager
 import com.github.xs93.framework.crash.CrashHandler
-import com.github.xs93.framework.loading.LoadingDialogHelper
-import com.github.xs93.framework.loading.impl.DefaultCreateLoadingDialog
 import com.github.xs93.utils.AppInject
 
 /**
@@ -35,7 +33,6 @@ abstract class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         AppInject.init(this)
-        LoadingDialogHelper.initLoadingDialog(DefaultCreateLoadingDialog())
         CrashHandler.init(this)
         ActivityStackManager.init(this)
         registerAppLifecycleListener()

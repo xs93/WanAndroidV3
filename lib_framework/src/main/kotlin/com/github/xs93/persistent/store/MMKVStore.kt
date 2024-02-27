@@ -16,6 +16,7 @@ interface MMKVStore : IStore {
     val mmkv: MMKV get() = defaultMMKV
 
     companion object {
+
         private val defaultMMKV = MMKV.defaultMMKV()
     }
 

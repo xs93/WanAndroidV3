@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="app_name">WanAndroid-Compose</string>
 
     <string name="main_bottom_menu_home">首页</string>
     <string name="main_bottom_menu_classify">分类</string>
