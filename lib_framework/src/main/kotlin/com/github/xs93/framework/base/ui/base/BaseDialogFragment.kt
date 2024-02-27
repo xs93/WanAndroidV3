@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
+import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
 import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
@@ -18,7 +18,6 @@ import com.github.xs93.framework.loading.ILoadingDialogControlProxy
 import com.github.xs93.framework.loading.LoadingDialogHelper
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
-import com.github.xs93.framework.ui.WindowSurface
 
 /**
  * 基础dialogFragment 封装
@@ -27,11 +26,8 @@ import com.github.xs93.framework.ui.WindowSurface
  * @version v1.0
  * @date 2021/11/4 13:40
  */
-abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToastProxy(),
-    ICreateLoadingDialog,
-    ILoadingDialogControl {
-
-    protected val windowSurface = WindowSurface()
+abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IToast by UiToastProxy(),
+    ICreateLoadingDialog, ILoadingDialogControl {
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
@@ -68,18 +64,15 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         dialog?.window?.apply {
             isStatusBarTranslucentCompat = true
             val contentView: View = decorView.findViewById(android.R.id.content)
             contentView.setOnInsertsChangedListener {
-                windowSurface.contentPadding = it
+                onSystemBarInsetsChanged(it)
             }
         }
-        beforeInitView(view, savedInstanceState)
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
-        beforeInitData(savedInstanceState)
         initData(savedInstanceState)
     }
 
@@ -92,24 +85,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IToast by UiToast
     protected open fun getCustomStyle(): Int {
         return 0
     }
-
-    /**返回布局Layout*/
-    @LayoutRes
-    abstract fun getContentLayoutId(): Int
-
-    open fun beforeInitView(view: View, savedInstanceState: Bundle?) {}
-
-    /** 初始化View */
-    abstract fun initView(view: View, savedInstanceState: Bundle?)
-
-
-    /** 初始化订阅观察者 */
-    open fun initObserver(savedInstanceState: Bundle?) {}
-
-    open fun beforeInitData(savedInstanceState: Bundle?) {}
-
-    /** 初始化数据 */
-    open fun initData(savedInstanceState: Bundle?) {}
 
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()

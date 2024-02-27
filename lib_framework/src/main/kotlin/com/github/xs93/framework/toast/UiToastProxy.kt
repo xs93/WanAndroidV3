@@ -10,7 +10,6 @@ package com.github.xs93.framework.toast
  */
 class UiToastProxy : IToast {
 
-
     override fun showToast(charSequence: CharSequence, duration: Int) {
         ToastManager.showToast(charSequence, duration)
     }

@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="windowSurface"
-            type="com.github.xs93.framework.ui.WindowSurface" />
+            name="contentPadding"
+            type="com.github.xs93.framework.ui.ContentPadding" />
 
         <variable
             name="clickHandler"
@@ -23,32 +23,35 @@
             android:id="@+id/tabLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingTop="@{windowSurface.contentPadding.top}"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingTop="@{contentPadding.top}"
             app:layout_constraintBottom_toTopOf="@id/vp_content_host"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabGravity="center"
+            app:tabRippleColor="@color/common_ripple_color_selector"
             app:tabTextAppearance="@style/TabLayout.TextAppearance"
             app:tabTextColor="?colorPrimary"
             app:tabUnboundedRipple="true" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_open_drawer"
             style="@style/WanCommonButtonStyle"
             bindOnSingleClick="@{()->clickHandler.clickOpenDrawer()}"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="@{windowSurface.contentPadding.top}"
+            android:layout_marginStart="16dp"
             android:backgroundTint="?android:colorBackground"
-            app:icon="@drawable/main_ic_menu_24dp"
-            app:iconPadding="0dp"
-            app:iconSize="24dp"
-            app:iconTint="?colorPrimary"
+            android:layout_marginTop="@{contentPadding.top}"
+            android:foreground="@drawable/common_ripple_circle"
+            android:src="@drawable/main_ic_menu_24dp"
+            app:contentPadding="8dp"
             app:layout_constraintBottom_toBottomOf="@id/tabLayout"
             app:layout_constraintStart_toStartOf="@id/tabLayout"
-            app:layout_constraintTop_toTopOf="@id/tabLayout" />
+            app:layout_constraintTop_toTopOf="@id/tabLayout"
+            app:tint="?colorPrimary" />
 
         <com.github.xs93.framework.widget.NestedScrollableHost
             android:id="@+id/vp_content_host"

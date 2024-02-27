@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
+import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
@@ -58,6 +59,9 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
         }
 
         binding.apply {
+
+            clickHandler = this@HomeFragment.clickHandler
+
             with(vpContent) {
                 offscreenPageLimit = homeTabs.size
                 adapter = childFragmentAdapter
@@ -67,10 +71,13 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
             TabLayoutMediator(tabLayout, vpContent) { tab, position ->
                 tab.text = string(homeTabs[position].titleResId)
             }.attach()
-
-            windowSurface = this@HomeFragment.windowSurface
-            clickHandler = this@HomeFragment.clickHandler
         }
+    }
+
+
+    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
+        super.onSystemBarInsetsChanged(contentPadding)
+        binding.contentPadding = contentPadding
     }
 
     private fun generateHomeTabs() = listOf(

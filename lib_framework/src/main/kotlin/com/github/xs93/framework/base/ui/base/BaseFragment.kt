@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -13,7 +14,6 @@ import com.github.xs93.framework.loading.ILoadingDialogControlProxy
 import com.github.xs93.framework.loading.LoadingDialogHelper
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
-import com.github.xs93.framework.ui.WindowSurface
 
 /**
  * 基础Fragment
@@ -22,17 +22,13 @@ import com.github.xs93.framework.ui.WindowSurface
  * @version v1.0
  * @date 2021/11/4 11:25
  */
-abstract class BaseFragment : androidx.fragment.app.Fragment(),
-    IToast by UiToastProxy(),
-    ICreateLoadingDialog,
+abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(), ICreateLoadingDialog,
     ILoadingDialogControl {
 
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
-
-    protected val windowSurface = WindowSurface()
 
     private var mLazyLoad = false
 
@@ -80,13 +76,11 @@ abstract class BaseFragment : androidx.fragment.app.Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setOnInsertsChangedListener {
-            windowSurface.contentPadding = it
+            onSystemBarInsetsChanged(it)
         }
-        beforeInitView(view, savedInstanceState)
         initView(view, savedInstanceState)
         mInitView = true
         initObserver(savedInstanceState)
-        beforeInitData(savedInstanceState)
         initData(savedInstanceState)
     }
 
@@ -134,26 +128,10 @@ abstract class BaseFragment : androidx.fragment.app.Fragment(),
         }
     }
 
-    /**返回布局Layout*/
-    @LayoutRes
-    abstract fun getContentLayoutId(): Int
-
-
-    open fun beforeInitView(view: View, savedInstanceState: Bundle?) {}
-
-    /** 初始化View */
-    abstract fun initView(view: View, savedInstanceState: Bundle?)
-
-    open fun beforeInitData(savedInstanceState: Bundle?) {}
-
-    /** 初始化订阅观察者 */
-    open fun initObserver(savedInstanceState: Bundle?) {}
-
-    /** 初始化数据 */
-    open fun initData(savedInstanceState: Bundle?) {}
 
     /** 该fragment 第一次被显示时调用,可用作懒加载 */
     open fun onFirstVisible() {}
+
 
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()

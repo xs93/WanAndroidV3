@@ -6,7 +6,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.github.xs93.framework.loading.ILoadingDialogControl
-import com.github.xs93.framework.toast.IToast
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -33,13 +32,6 @@ fun BaseViewModel.registerCommonEvent(activity: AppCompatActivity) {
                 CommonUiEvent.HideLoadingDialog -> {
                     if (activity is ILoadingDialogControl) {
                         activity.hideLoadingDialog()
-
-                    }
-                }
-
-                is CommonUiEvent.ShowToast -> {
-                    if (activity is IToast) {
-                        activity.showToast(it.charSequence, it.duration)
                     }
                 }
             }
@@ -62,12 +54,6 @@ fun BaseViewModel.registerCommonEvent(fragment: Fragment) {
             CommonUiEvent.HideLoadingDialog -> {
                 if (fragment is ILoadingDialogControl) {
                     fragment.hideLoadingDialog()
-                }
-            }
-
-            is CommonUiEvent.ShowToast -> {
-                if (fragment is IToast) {
-                    fragment.showToast(it.charSequence, it.duration)
                 }
             }
         }

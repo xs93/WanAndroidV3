@@ -10,7 +10,6 @@ package com.github.xs93.framework.loading
  */
 interface ILoadingDialogControl {
 
-
     fun showLoadingDialog()
 
     fun hideLoadingDialog()

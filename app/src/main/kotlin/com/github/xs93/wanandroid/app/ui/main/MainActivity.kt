@@ -52,8 +52,8 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
         splashScreen = installSplashScreen()
     }
 
-    override fun beforeInitView(savedInstanceState: Bundle?) {
-        super.beforeInitView(savedInstanceState)
+    override fun beforeSetContentView(savedInstanceState: Bundle?) {
+        super.beforeSetContentView(savedInstanceState)
         splashScreen.setKeepOnScreenCondition {
             keepOnScreenCondition
         }
