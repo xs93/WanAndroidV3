@@ -15,7 +15,7 @@ import com.github.xs93.wanandroid.app.entity.BannerData
  */
 
 data class ExploreUiState(
-    val banners: List<BannerData>
+    val banners: List<BannerData> = emptyList()
 ) : IUIState
 
 

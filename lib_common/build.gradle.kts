@@ -54,6 +54,7 @@ dependencies {
     api(project(":lib_network"))
     api(project(":lib_utils"))
 
+    api(libs.coilCompose)
     api(libs.androidx.constraintlayout.compose)
     api(libs.androidAutoSize)
     ksp(libs.moshi.kotlin.codegen)
