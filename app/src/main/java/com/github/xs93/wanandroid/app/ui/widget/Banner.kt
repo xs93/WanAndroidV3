@@ -70,7 +70,7 @@ fun Banner(
     Box(modifier = modifier.fillMaxWidth()) {
         if (dataList.isEmpty()) return@Box
         val pageSize = dataList.size
-        val pageCount = 50
+        val pageCount = 500
         val initialPage = (pageCount / 2) - (pageCount / 2) % pageSize
         val pageState = rememberPagerState(initialPage = initialPage) {
             pageCount
