@@ -52,5 +52,23 @@ class ExploreViewModel : BaseViewModel() {
                     }
                 }
         }
+
+        launcher {
+            val articleResult = exploreRepository.getHomeArticles(0)
+            articleResult
+                .onFailure {
+
+                }
+                .onSuccess {
+                    val pageData = it.data
+                    if (pageData != null) {
+                        val articleData = pageData.datas
+                        Logger.d(articleData)
+                        uiState.updateState {
+                            copy(articles = articleData)
+                        }
+                    }
+                }
+        }
     }
 }

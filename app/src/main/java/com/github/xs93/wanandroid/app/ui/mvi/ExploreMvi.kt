@@ -2,8 +2,8 @@ package com.github.xs93.wanandroid.app.ui.mvi
 
 import com.github.xs93.framework.base.viewmodel.IUIState
 import com.github.xs93.framework.base.viewmodel.IUiAction
-import com.github.xs93.framework.base.viewmodel.IUiEvent
 import com.github.xs93.wanandroid.app.entity.BannerData
+import com.github.xs93.wanandroid.common.entity.Article
 
 /**
  * 首页浏览状态
@@ -15,18 +15,9 @@ import com.github.xs93.wanandroid.app.entity.BannerData
  */
 
 data class ExploreUiState(
-    val banners: List<BannerData> = emptyList()
+    val banners: List<BannerData> = emptyList(),
+    val articles: List<Article> = emptyList()
 ) : IUIState
-
-
-sealed class ExploreUiEvent : IUiEvent {
-    data class RequestArticleDataComplete(
-        val finishRefresh: Boolean,
-        val finishLoadMore: Boolean,
-        val requestSuccess: Boolean,
-        val noMoreData: Boolean
-    ) : ExploreUiEvent()
-}
 
 sealed class ExploreUiAction : IUiAction {
 

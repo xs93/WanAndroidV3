@@ -82,7 +82,7 @@ data class Article(
     @Json(name = "title")
     val title: String,
     @Json(name = "type")
-    val type: Int,
+    val type: Int,// 1 为置顶文章,0为普通文章
     @Json(name = "userId")
     val userId: Int,
     @Json(name = "visible")

@@ -5,6 +5,8 @@ import com.github.xs93.network.base.repository.BaseRepository
 import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.app.api.ExploreService
 import com.github.xs93.wanandroid.app.entity.BannerData
+import com.github.xs93.wanandroid.common.entity.Article
+import com.github.xs93.wanandroid.common.network.PageData
 import com.github.xs93.wanandroid.common.network.WanResponse
 
 /**
@@ -28,6 +30,17 @@ class ExploreRepository : BaseRepository() {
     suspend fun getHomeBanner(): Result<WanResponse<List<BannerData>>> {
         return runSafeSuspendCatching {
             exploreService.getHomeBanner()
+        }
+    }
+
+    /**
+     * 获取首页文章列表
+     * @param page Int 请求数据的page
+     * @return Result<WanResponse<PageData<Article>>>
+     */
+    suspend fun getHomeArticles(page: Int): Result<WanResponse<PageData<Article>>> {
+        return runSafeSuspendCatching {
+            exploreService.getHomeArticles(page)
         }
     }
 }
