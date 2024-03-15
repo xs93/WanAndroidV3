@@ -12,7 +12,6 @@ import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
 import com.tencent.mmkv.MMKV
-import me.jessyan.autosize.AutoSizeConfig
 
 /**
  * CommonAppComponent 和 CommonApplication 相同实现
@@ -26,7 +25,6 @@ class CommonAppComponent : IAppComponent {
     override fun onCreate(application: Application) {
         MMKV.initialize(application)
         initLogger(application)
-        initAutoSize()
         initToast(application)
         checkInstallVersion(application)
     }
@@ -53,12 +51,6 @@ class CommonAppComponent : IAppComponent {
     private fun checkInstallVersion(application: Application) {
         if (AppCommonStore.appInstallVersionCode == -1L) {
             AppCommonStore.appInstallVersionCode = application.appVersionCode
-        }
-    }
-
-    private fun initAutoSize() {
-        AutoSizeConfig.getInstance().apply {
-            isExcludeFontScale = true
         }
     }
 }

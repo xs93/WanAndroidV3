@@ -56,6 +56,7 @@ dependencies {
 
     api(libs.coilCompose)
     api(libs.androidx.constraintlayout.compose)
-    api(libs.androidAutoSize)
+    api(libs.androidx.navigation.compose)
+
     ksp(libs.moshi.kotlin.codegen)
 }

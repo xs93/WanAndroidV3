@@ -40,6 +40,8 @@ import coil.compose.AsyncImage
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.utils.ktx.toHtml
 import com.github.xs93.wanandroid.app.R
+import com.github.xs93.wanandroid.app.router.AppNavHost
+import com.github.xs93.wanandroid.app.router.RouteConfig
 import com.github.xs93.wanandroid.app.ui.theme.AppTheme
 import com.github.xs93.wanandroid.app.ui.viewmodel.ExploreViewModel
 import com.github.xs93.wanandroid.app.ui.widget.Banner
@@ -96,7 +98,9 @@ fun ExploreScreen(viewModel: ExploreViewModel = viewModel()) {
 @Composable
 fun ArticleCardItem(article: Article) {
     ElevatedCard(
-        onClick = { ToastManager.showToast(article.title) },
+        onClick = {
+            AppNavHost.navController.navigate(RouteConfig.ROUTE_ARTICLE_DETAIL)
+        },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp, pressedElevation = 4.dp),
