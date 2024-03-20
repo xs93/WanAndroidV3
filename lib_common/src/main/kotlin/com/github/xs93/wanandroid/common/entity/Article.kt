@@ -48,7 +48,7 @@ data class Article(
     @Json(name = "host")
     val host: String,
     @Json(name = "id")
-    val id: Int,
+    val id: Long,
     @Json(name = "isAdminAdd")
     val isAdminAdd: Boolean,
     @Json(name = "link")

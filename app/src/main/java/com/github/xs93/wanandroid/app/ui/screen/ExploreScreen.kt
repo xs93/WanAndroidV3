@@ -46,6 +46,7 @@ import com.github.xs93.wanandroid.app.ui.theme.AppTheme
 import com.github.xs93.wanandroid.app.ui.viewmodel.ExploreViewModel
 import com.github.xs93.wanandroid.app.ui.widget.Banner
 import com.github.xs93.wanandroid.common.entity.Article
+import java.net.URLEncoder
 
 /**
  *
@@ -99,7 +100,9 @@ fun ExploreScreen(viewModel: ExploreViewModel = viewModel()) {
 fun ArticleCardItem(article: Article) {
     ElevatedCard(
         onClick = {
-            AppNavHost.navController.navigate(RouteConfig.ROUTE_ARTICLE_DETAIL)
+            val encodeUrl = URLEncoder.encode(article.link, Charsets.UTF_8.name())
+            val router = "${RouteConfig.ROUTE_ARTICLE_DETAIL}/${article.id}/${article.title}/${encodeUrl}"
+            AppNavHost.navController.navigate(router)
         },
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),

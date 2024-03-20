@@ -9,6 +9,7 @@ import androidx.core.view.WindowCompat
 import com.github.xs93.framework.base.ui.base.BaseActivity
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wanandroid.app.router.AppNavGraph
+import com.github.xs93.wanandroid.app.ui.theme.AppTheme
 import kotlinx.coroutines.delay
 
 class MainActivity : BaseActivity() {
@@ -29,7 +30,9 @@ class MainActivity : BaseActivity() {
             keepOnScreenCondition = false
         }
         setContent {
-            AppNavGraph()
+            AppTheme {
+                AppNavGraph()
+            }
         }
     }
 }

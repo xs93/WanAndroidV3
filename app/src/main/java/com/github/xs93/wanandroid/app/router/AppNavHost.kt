@@ -1,14 +1,17 @@
 package com.github.xs93.wanandroid.app.router
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.github.xs93.wanandroid.app.ui.screen.ArticleDetailsScreen
 import com.github.xs93.wanandroid.app.ui.screen.MainScreen
 
@@ -22,6 +25,7 @@ import com.github.xs93.wanandroid.app.ui.screen.MainScreen
  */
 
 object AppNavHost {
+    @SuppressLint("StaticFieldLeak")
     lateinit var navController: NavHostController
 }
 
@@ -58,8 +62,25 @@ fun AppNavGraph() {
             MainScreen()
         }
 
-        composable(RouteConfig.ROUTE_ARTICLE_DETAIL) {
-            ArticleDetailsScreen()
+        composable(route = "${RouteConfig.ROUTE_ARTICLE_DETAIL}/{articleId}/{title}/{url}",
+            arguments = listOf(
+                navArgument("articleId") {
+                    type = NavType.LongType
+                },
+
+                navArgument("title") {
+                    type = NavType.StringType
+                },
+                navArgument("url") {
+                    type = NavType.StringType
+                }
+            )
+
+        ) {
+            val articleId = it.arguments?.getLong("articleId") ?: 0
+            val title = it.arguments?.getString("title") ?: ""
+            val url = it.arguments?.getString("url") ?: ""
+            ArticleDetailsScreen(articleId, title, url)
         }
     }
 }

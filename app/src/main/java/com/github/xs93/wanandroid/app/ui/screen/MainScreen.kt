@@ -64,13 +64,11 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen() {
-    AppTheme {
-        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-        ModalNavigationDrawer(
-            drawerState = drawerState,
-            drawerContent = { MainDrawerContent() }) {
-            MainContent(drawerState)
-        }
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = { MainDrawerContent() }) {
+        MainContent(drawerState)
     }
 }
 
@@ -215,5 +213,7 @@ fun MainContent(drawerState: DrawerState) {
 @Preview(showBackground = true, showSystemUi = false)
 @Composable
 fun PreviewMainScreen() {
-    MainScreen()
+    AppTheme {
+        MainScreen()
+    }
 }
