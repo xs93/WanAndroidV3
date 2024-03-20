@@ -65,9 +65,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = { MainDrawerContent() }) {
+    ModalNavigationDrawer(drawerState = drawerState, drawerContent = { MainDrawerContent() }) {
         MainContent(drawerState)
     }
 }
@@ -96,8 +94,7 @@ fun MainDrawerContent() {
                     contentDescription = null
                 )
 
-                Image(
-                    painter = painterResource(id = R.drawable.img_avatar_no_login),
+                Image(painter = painterResource(id = R.drawable.img_avatar_no_login),
                     contentDescription = null,
                     modifier = Modifier
                         .constrainAs(photoImageRef) {
@@ -110,22 +107,20 @@ fun MainDrawerContent() {
                             verticalBias = 0.25f
                         }
                         .clip(CircleShape)
-                        .border(2.dp, Color.White, CircleShape)
-                )
+                        .border(2.dp, Color.White, CircleShape))
 
                 Button(
                     onClick = {
 
                     },
                     contentPadding = PaddingValues(0.dp),
-                    modifier = Modifier
-                        .constrainAs(loginBtnRef) {
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            top.linkTo(photoImageRef.bottom, margin = 24.dp)
-                            width = Dimension.value(100.dp)
-                            height = Dimension.value(32.dp)
-                        },
+                    modifier = Modifier.constrainAs(loginBtnRef) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(photoImageRef.bottom, margin = 24.dp)
+                        width = Dimension.value(100.dp)
+                        height = Dimension.value(32.dp)
+                    },
                 ) {
                     Text(
                         text = stringResource(id = R.string.main_drawer_click_login),
@@ -144,60 +139,54 @@ fun MainContent(drawerState: DrawerState) {
     val pagerState = rememberPagerState(0, 0f) {
         MainTab.entries.size
     }
-    Scaffold(
-        modifier = Modifier.windowInsetsPadding(NavigationBarDefaults.windowInsets),
-        bottomBar = {
-            val tabs = MainTab.entries.toTypedArray()
-            BottomNavigationBar(modifier = Modifier.height(56.dp)) {
-                tabs.forEachIndexed { index, mainTab ->
-                    BottomNavigationBarItem(
-                        selected = pagerState.currentPage == index,
-                        onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
-                        icon = {
-                            Image(
-                                modifier = Modifier.size(24.dp),
-                                painter = painterResource(id = mainTab.tabIconResId),
-                                contentDescription = stringResource(id = mainTab.tabNameStringResId),
-                                colorFilter = ColorFilter.tint(LocalContentColor.current),
-                            )
-                        },
-                        label = {
-                            if (pagerState.currentPage == index) {
-                                Text(
-                                    text = stringResource(id = mainTab.tabNameStringResId),
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            } else {
-                                Text(
-                                    text = stringResource(id = mainTab.tabNameStringResId),
-                                    fontSize = 12.sp
-                                )
-                            }
-                        },
-                        iconLabelSpace = 4.dp,
-                        colors = BottomNavigationBarItemColors(
-                            selectedIconColor = MaterialTheme.colorScheme.primary,
-                            unselectedIconColor = mainTabColorNormal,
-                            selectedTextColor = MaterialTheme.colorScheme.primary,
-                            unselectedTextColor = mainTabColorNormal,
-                            disabledIconColor = mainTabColorNormal.copy(alpha = 0.38f),
-                            disabledTextColor = mainTabColorNormal.copy(alpha = 0.38f)
+    Scaffold(modifier = Modifier.windowInsetsPadding(NavigationBarDefaults.windowInsets), bottomBar = {
+        val tabs = MainTab.entries.toTypedArray()
+        BottomNavigationBar(modifier = Modifier.height(56.dp)) {
+            tabs.forEachIndexed { index, mainTab ->
+                BottomNavigationBarItem(
+                    selected = pagerState.currentPage == index,
+                    onClick = { scope.launch { pagerState.animateScrollToPage(index) } },
+                    icon = {
+                        Image(
+                            modifier = Modifier.size(24.dp),
+                            painter = painterResource(id = mainTab.tabIconResId),
+                            contentDescription = stringResource(id = mainTab.tabNameStringResId),
+                            colorFilter = ColorFilter.tint(LocalContentColor.current),
                         )
+                    },
+                    label = {
+                        if (pagerState.currentPage == index) {
+                            Text(
+                                text = stringResource(id = mainTab.tabNameStringResId),
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                        } else {
+                            Text(
+                                text = stringResource(id = mainTab.tabNameStringResId), fontSize = 12.sp
+                            )
+                        }
+                    },
+                    iconLabelSpace = 4.dp,
+                    colors = BottomNavigationBarItemColors(
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = mainTabColorNormal,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        unselectedTextColor = mainTabColorNormal,
+                        disabledIconColor = mainTabColorNormal.copy(alpha = 0.38f),
+                        disabledTextColor = mainTabColorNormal.copy(alpha = 0.38f)
                     )
-                }
+                )
             }
         }
-    ) { paddingValues ->
+    }) { paddingValues ->
         Box(
             Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
             HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize(),
-                beyondBoundsPageCount = MainTab.entries.size - 1
+                state = pagerState, modifier = Modifier.fillMaxSize(), beyondBoundsPageCount = MainTab.entries.size - 1
             ) { page ->
                 when (page) {
                     0 -> HomeScreen(drawerState = drawerState)

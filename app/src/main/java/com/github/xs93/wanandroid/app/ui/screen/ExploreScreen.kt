@@ -67,7 +67,7 @@ fun ExploreScreen(viewModel: ExploreViewModel = viewModel()) {
             ElevatedCard(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp, pressedElevation = 4.dp),
+                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp, pressedElevation = 8.dp),
                 modifier = Modifier.padding(start = 12.dp, top = 16.dp, end = 12.dp, bottom = 16.dp)
             ) {
                 Banner(
