@@ -1,20 +1,17 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.parcelize)
-    alias(libs.plugins.google.ksp)
 }
 
 android {
-    namespace = "com.github.xs93.common"
+    namespace = "com.github.xs93.refreshlayout"
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
+        minSdk = 21
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -50,14 +47,11 @@ android {
 
 dependencies {
 
-    api(project(":lib_framework"))
-    api(project(":lib_network"))
-    api(project(":lib_utils"))
-    api(project(":lib_refreshlayout"))
-
-    api(libs.coilCompose)
-    api(libs.androidx.constraintlayout.compose)
-    api(libs.androidx.navigation.compose)
-
-    ksp(libs.moshi.kotlin.codegen)
+    val composeBom = platform(libs.androidx.compose.bom)
+    implementation(composeBom)
+    implementation(libs.androidx.compose.ui.core)
+    implementation(libs.androidx.compose.ui.toolingPreview)
+    implementation(libs.androidx.compose.animation)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3.android)
 }

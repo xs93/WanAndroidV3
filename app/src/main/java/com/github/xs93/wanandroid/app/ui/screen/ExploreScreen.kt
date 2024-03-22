@@ -18,9 +18,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -29,8 +31,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -38,6 +38,11 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.github.xs93.framework.toast.ToastManager
+import com.github.xs93.refreshlayout.ClassSwipeRefreshHeader
+import com.github.xs93.refreshlayout.SwipeRefreshLayout
+import com.github.xs93.refreshlayout.SwipeRefreshStateFlag
+import com.github.xs93.refreshlayout.SwipeRefreshStyle
+import com.github.xs93.refreshlayout.rememberSwipeRefreshState
 import com.github.xs93.utils.ktx.toHtml
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.router.AppNavHost
@@ -46,6 +51,8 @@ import com.github.xs93.wanandroid.app.ui.theme.AppTheme
 import com.github.xs93.wanandroid.app.ui.viewmodel.ExploreViewModel
 import com.github.xs93.wanandroid.app.ui.widget.Banner
 import com.github.xs93.wanandroid.common.entity.Article
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.net.URLEncoder
 
 /**
@@ -61,37 +68,58 @@ import java.net.URLEncoder
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ExploreScreen(viewModel: ExploreViewModel = viewModel()) {
+    val constraintsScope = rememberCoroutineScope()
+    val state = rememberSwipeRefreshState()
     val uiState by viewModel.uiStateFlow.collectAsState()
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        item {
-            ElevatedCard(
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-                elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp, pressedElevation = 8.dp),
-                modifier = Modifier.padding(start = 12.dp, top = 16.dp, end = 12.dp, bottom = 16.dp)
-            ) {
-                Banner(
-                    dataList = uiState.banners,
-                    modifier = Modifier.aspectRatio(16 / 9f),
-                    autoLoop = true,
-                    onItemClick = {
-                        ToastManager.showToast(it.title)
-                    },
-                    indicatorModifier = Modifier.padding(start = 16.dp, bottom = 8.dp, end = 16.dp),
-                    indicatorAlignment = Alignment.BottomEnd
+    rememberPullToRefreshState()
+    SwipeRefreshLayout(modifier = Modifier.fillMaxSize(),
+        state = state,
+        style = SwipeRefreshStyle.Translate,
+        refreshTriggerRate = 0.7f,
+        maxDragRate = 1f,
+        onRefresh = {
+            constraintsScope.launch {
+                delay(3000)
+                state.refreshStateFlag = SwipeRefreshStateFlag.SUCCESS
+            }
+        },
+        indicator = {
+            ClassSwipeRefreshHeader(
+                flag = state.refreshStateFlag,
+                containerColor = MaterialTheme.colorScheme.background
+            )
+        }) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item {
+                ElevatedCard(
+                    shape = RoundedCornerShape(12.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                    elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp, pressedElevation = 8.dp),
+                    modifier = Modifier.padding(start = 12.dp, top = 16.dp, end = 12.dp, bottom = 16.dp)
                 ) {
-                    AsyncImage(
-                        model = it.imagePath,
-                        modifier = Modifier.fillMaxSize(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop
-                    )
+                    Banner(
+                        dataList = uiState.banners,
+                        modifier = Modifier.aspectRatio(16 / 9f),
+                        autoLoop = true,
+                        onItemClick = {
+                            ToastManager.showToast(it.title)
+                        },
+                        indicatorModifier = Modifier.padding(start = 16.dp, bottom = 8.dp, end = 16.dp),
+                        indicatorAlignment = Alignment.BottomEnd
+                    ) {
+                        AsyncImage(
+                            model = it.imagePath,
+                            modifier = Modifier.fillMaxSize(),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                 }
             }
-        }
-        items(uiState.articles) {
-            ArticleCardItem(article = it)
-            Spacer(modifier = Modifier.height(12.dp))
+            items(uiState.articles) {
+                ArticleCardItem(article = it)
+                Spacer(modifier = Modifier.height(12.dp))
+            }
         }
     }
 }
@@ -116,8 +144,7 @@ fun ArticleCardItem(article: Article) {
                 modifier = Modifier.constrainAs(topInfoRef) {
                     start.linkTo(parent.start, 12.dp)
                     top.linkTo(parent.top, 12.dp)
-                },
-                verticalAlignment = Alignment.CenterVertically
+                }, verticalAlignment = Alignment.CenterVertically
             ) {
                 val articleName = article.author.ifBlank { article.shareUser }
                 Text(
@@ -167,7 +194,6 @@ fun ArticleCardItem(article: Article) {
                 text = article.title.toHtml().toString(),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                lineHeight = TextUnit(15f, TextUnitType.Sp),
                 modifier = Modifier.constrainAs(titleRef) {
                     top.linkTo(topInfoRef.bottom, 8.dp)
                     start.linkTo(parent.start, 12.dp)

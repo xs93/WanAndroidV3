@@ -36,7 +36,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.github.xs93.wanandroid.app.entity.BannerData
-import com.orhanobut.logger.Logger
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -80,7 +79,6 @@ fun Banner(
         var isAutoLoop by remember { mutableStateOf(autoLoop) }
 
         LaunchedEffect(key1 = pageState.currentPage, key2 = isAutoLoop) {
-            Logger.d("开启新协程:${isAutoLoop}")
             if (pageState.pageCount > 0 && isAutoLoop) {
                 delay(timeMillis)
                 val nextPage = pageState.currentPage + 1
