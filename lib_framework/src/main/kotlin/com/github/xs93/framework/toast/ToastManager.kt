@@ -24,7 +24,7 @@ object ToastManager : IToast {
         mIToast?.showToast(charSequence, duration)
     }
 
-    override fun showToast(resId: Int, duration: Int) {
-        mIToast?.showToast(resId, duration)
+    override fun showToast(resId: Int, vararg formatArgs: Any?, duration: Int) {
+        mIToast?.showToast(resId, formatArgs, duration)
     }
 }

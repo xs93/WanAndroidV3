@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -75,24 +74,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
             }
         }
 
-        view.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (view.measuredHeight == 0) {
-                    return
-                }
-                view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                val dialog = dialog
-                if (dialog is BottomSheetDialog) {
-                    val bottomSheet: FrameLayout =
-                        dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return
-                    val behavior: BottomSheetBehavior<FrameLayout> =
-                        BottomSheetBehavior.from(bottomSheet)
-                    onFixedPeekHeight(behavior, view.measuredHeight)
-                    behavior.peekHeight = view.measuredHeight
-                }
-            }
-        })
-
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)
@@ -107,16 +88,13 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         return 0
     }
 
-
-    /**
-     * 设置固定高度为内容高度
-     * @param behavior BottomSheetBehavior<FrameLayout>
-     * @param contentViewHeight Int
-     */
-    open fun onFixedPeekHeight(behavior: BottomSheetBehavior<FrameLayout>, contentViewHeight: Int) {
-        behavior.peekHeight = contentViewHeight
+    fun getSheetBehavior(): BottomSheetBehavior<*>? {
+        val dialog = dialog ?: return null
+        if (dialog !is BottomSheetDialog) return null
+        val bottomSheet: FrameLayout =
+            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return null
+        return BottomSheetBehavior.from(bottomSheet)
     }
-
 
     /**
      * 使用此方法显示弹出框，可以避免生命周期状态错误导致的异常(Can not perform this action after onSaveInstanceState)

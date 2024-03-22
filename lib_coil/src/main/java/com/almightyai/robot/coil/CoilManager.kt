@@ -6,7 +6,6 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
-import com.almightyai.robot.coil.cache.CacheKeyInterceptor
 import com.almightyai.robot.coil.progress.ProgressManager.coilProgressInterceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
@@ -39,7 +38,7 @@ object CoilManager {
                 val cacheDir = context.externalCacheDir ?: context.cacheDir
                 DiskCache.Builder()
                     .directory(cacheDir.resolve("coil_cache"))
-                    .maxSizePercent(0.2)
+                    .maxSizePercent(0.3)
                     .build()
             }
             .memoryCachePolicy(CachePolicy.ENABLED)
@@ -47,9 +46,6 @@ object CoilManager {
                 MemoryCache.Builder(context)
                     .maxSizePercent(0.3)
                     .build()
-            }
-            .components {
-                add(CacheKeyInterceptor())
             }
             .networkCachePolicy(CachePolicy.ENABLED)
             .crossfade(true)

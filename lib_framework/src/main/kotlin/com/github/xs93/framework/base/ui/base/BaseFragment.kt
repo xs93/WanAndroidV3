@@ -32,35 +32,7 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
 
     private var mLazyLoad = false
 
-    /**
-     * 当前Fragment是否对用户可见
-     */
-    private var mIsVisibleToUser = false
-
-    /**
-     * 是否调用了setUserVisibleHint方法。处理show+add+hide模式下，默认可见 Fragment 不调用
-     * onHiddenChanged 方法，进而不执行懒加载方法的问题。
-     */
-    private var mIsCallUserVisibleHint = false
-
-    /**
-     * 当使用ViewPager+Fragment形式会调用该方法时，setUserVisibleHint会优先Fragment生命周期函数调用，
-     * 所以这个时候就,会导致在setUserVisibleHint方法执行时就执行了懒加载，
-     * 而不是在onResume方法实际调用的时候执行懒加载。所以需要这个变量
-     */
-    private var mIsCallResume = false
-
-    /**
-     * 是否初始化View
-     */
-    private var mInitView: Boolean = false
-
-    /**
-     * 当前是否在OnResume生命周期范围
-     */
-    var resumed: Boolean = false
-        private set
-
+    private var mFirstVisibleCalled: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,59 +51,27 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
             onSystemBarInsetsChanged(it)
         }
         initView(view, savedInstanceState)
-        mInitView = true
         initObserver(savedInstanceState)
         initData(savedInstanceState)
     }
 
-    @Deprecated("Deprecated in Java")
-    @Suppress("DEPRECATION")
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        mIsVisibleToUser = isVisibleToUser
-        lazyLoad()
-    }
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        mIsVisibleToUser = !hidden
-        lazyLoad()
-    }
 
     override fun onResume() {
         super.onResume()
-        resumed = true
-        mIsCallResume = true
-        if (!mIsCallUserVisibleHint) {
-            mIsVisibleToUser = !isHidden
-        }
-        lazyLoad()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        resumed = false
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mInitView = false
-        mIsVisibleToUser = false
-        mIsCallResume = false
-        mIsCallUserVisibleHint = false
-    }
-
-    private fun lazyLoad() {
-        if (mIsVisibleToUser && mInitView && !mLazyLoad && mIsCallResume) {
-            mLazyLoad = true
+        if (!mFirstVisibleCalled) {
             onFirstVisible()
+            mFirstVisibleCalled = true
         }
     }
-
 
     /** 该fragment 第一次被显示时调用,可用作懒加载 */
     open fun onFirstVisible() {}
 
+    /**
+     * onFirstVisible是否被调用过
+     * @return Boolean true 被调用过,false没有被调用过
+     */
+    fun firstVisibleCalled(): Boolean = mFirstVisibleCalled
 
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()

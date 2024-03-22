@@ -50,7 +50,7 @@ object ProgressManager {
         addListener(url, listener)
     }
 
-    fun addListener(url: String, listener: OnProgressListener) {
+    private fun addListener(url: String, listener: OnProgressListener) {
         if (url.isNotBlank()) {
             mListenerMap[url] = listener
         }

@@ -47,11 +47,10 @@ class SystemToast(context: Context) : IToast {
         }
     }
 
-    override fun showToast(resId: Int, duration: Int) {
-        val content = mContext.getString(resId)
+    override fun showToast(resId: Int, vararg formatArgs: Any?, duration: Int) {
+        val content = mContext.getString(resId, *formatArgs)
         showToast(content, duration)
     }
-
 
     /** 修复版本7.1.1 toast显示错误bug */
     @SuppressLint("DiscouragedPrivateApi", "PrivateApi")

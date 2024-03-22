@@ -15,5 +15,5 @@ interface IToast {
 
     fun showToast(charSequence: CharSequence, duration: Int = Toast.LENGTH_SHORT)
 
-    fun showToast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT)
+    fun showToast(@StringRes resId: Int, vararg formatArgs: Any?, duration: Int = Toast.LENGTH_SHORT)
 }

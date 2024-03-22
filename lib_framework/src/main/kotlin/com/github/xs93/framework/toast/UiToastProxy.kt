@@ -1,5 +1,8 @@
 package com.github.xs93.framework.toast
 
+import androidx.annotation.StringRes
+import com.github.xs93.utils.AppInject
+
 /**
  * Toast代理类
  *
@@ -14,7 +17,8 @@ class UiToastProxy : IToast {
         ToastManager.showToast(charSequence, duration)
     }
 
-    override fun showToast(resId: Int, duration: Int) {
-        ToastManager.showToast(resId, duration)
+    override fun showToast(@StringRes resId: Int, vararg formatArgs: Any?, duration: Int) {
+        val toastContent = AppInject.getApp().getString(resId, formatArgs)
+        ToastManager.showToast(toastContent, duration)
     }
 }
