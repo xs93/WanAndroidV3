@@ -5,4 +5,15 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="AppBottomSheetDialog" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
+        <item name="enableEdgeToEdge">true</item>
+        <item name="bottomSheetStyle">@style/AppBottomSheetStyle</item>
+    </style>
+
+    <style name="AppBottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="paddingTopSystemWindowInsets">false</item>
+        <item name="paddingBottomSystemWindowInsets">false</item>
+        <item name="marginTopSystemWindowInsets">false</item>
+    </style>
 </resources>

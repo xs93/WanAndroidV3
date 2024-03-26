@@ -2,6 +2,7 @@ package com.github.xs93.wanandroid.app
 
 import com.almightyai.robot.coil.CoilManager
 import com.github.xs93.common.R
+import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.ServiceApiException
@@ -35,6 +36,8 @@ class WanAndroidApp : CommonApplication() {
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             BallPulseFooter(context)
         }
+        BaseDialogFragmentConfig.commonBottomSheetDialogTheme =
+            com.github.xs93.wanandroid.app.R.style.AppBottomSheetDialog
     }
 
 

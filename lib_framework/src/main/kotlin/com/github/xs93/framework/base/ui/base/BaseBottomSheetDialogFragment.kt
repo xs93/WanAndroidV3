@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
 import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
+import com.github.xs93.framework.ktx.isSystemBarsTranslucentCompat
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -54,9 +56,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
@@ -94,6 +94,54 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         val bottomSheet: FrameLayout =
             dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return null
         return BottomSheetBehavior.from(bottomSheet)
+    }
+
+    /**
+     * 内容高度,可以设置最大高度
+     * @param maxHeight Int dialog最大高度
+     */
+    fun warpContentHeight(maxHeight: Int = -1) {
+        val dialog = dialog ?: return
+        if (dialog !is BottomSheetDialog) return
+        val behavior = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        behavior.skipCollapsed = true
+        if (maxHeight != -1) {
+            behavior.maxHeight = maxHeight
+        }
+    }
+
+    /**
+     * 设置固定高度
+     * @param height Int
+     */
+    fun setFixedHeight(height: Int) {
+        val dialog = dialog ?: return
+        if (dialog !is BottomSheetDialog) return
+        val bottomSheet: FrameLayout =
+            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return
+        bottomSheet.updateLayoutParams<ViewGroup.LayoutParams> {
+            this.height = height
+        }
+        val behavior = dialog.behavior
+        behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        behavior.peekHeight = height
+        behavior.skipCollapsed = true
+    }
+
+    /**
+     * 实现全屏沉浸式
+     */
+    fun immersion() {
+        dialog?.window?.apply {
+            isSystemBarsTranslucentCompat = true
+        }
+        var viewParent: View? = view
+        while (viewParent is View) {
+            viewParent.fitsSystemWindows = false
+            viewParent.setOnApplyWindowInsetsListener { _, insets -> insets }
+            viewParent = viewParent.parent as View?
+        }
     }
 
     /**
