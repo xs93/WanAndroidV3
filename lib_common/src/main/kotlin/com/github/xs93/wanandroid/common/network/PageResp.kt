@@ -22,4 +22,7 @@ data class PageResp<out T>(
     val pageCount: Int = 0, // 667
     val size: Int = 0, // 20
     val total: Int = 0 // 13321
-)
+) {
+    val noMoreData: Boolean
+        get() = curPage >= pageCount
+}

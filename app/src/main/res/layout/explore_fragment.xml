@@ -10,13 +10,23 @@
     <com.github.xs93.statuslayout.MultiStatusLayout
         android:id="@+id/pageLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:msl_default_state="Content">
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srlEnableFooterTranslationContent="true">
+            app:srlEnableAutoLoadMore="true"
+            app:srlEnableFooterFollowWhenNoMoreData="false"
+            app:srlEnableFooterTranslationContent="true"
+            app:srlEnableLoadMoreWhenContentNotFull="false"
+            app:srlEnableRefresh="true"
+            app:srlEnableScrollContentWhenLoaded="true">
+
+            <com.scwang.smart.refresh.header.MaterialHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_article_list"

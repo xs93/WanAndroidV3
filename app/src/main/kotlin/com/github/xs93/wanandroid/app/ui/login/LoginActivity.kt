@@ -5,8 +5,8 @@ import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
-import com.github.xs93.framework.ktx.observer
 import com.github.xs93.framework.ktx.observerEvent
+import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.LoginActivityBinding
@@ -60,7 +60,7 @@ class LoginActivity : BaseDataBindingActivity<LoginActivityBinding>(R.layout.log
         super.initObserver(savedInstanceState)
         loginViewModel.registerCommonEvent(this)
 
-        observer(loginViewModel.loginStateFlow) {
+        observerState(loginViewModel.loginStateFlow) {
             binding.loginState = it
         }
 

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter.base.BaseSingleItemAdapter
+import com.chad.library.adapter4.BaseSingleItemAdapter
 import com.github.xs93.utils.ktx.color
 import com.github.xs93.utils.ktx.dp
 import com.github.xs93.wanandroid.app.R

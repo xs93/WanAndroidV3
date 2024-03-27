@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter.base.BaseDifferAdapter
+import com.chad.library.adapter4.BaseDifferAdapter
 import com.github.xs93.wanandroid.app.databinding.HomeArticleItemBinding
 import com.github.xs93.wanandroid.common.diff.ArticleItemCallback
 import com.github.xs93.wanandroid.common.entity.Article
