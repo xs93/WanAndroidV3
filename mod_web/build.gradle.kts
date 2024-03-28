@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id(libs.plugins.kotlin.kapt.get().pluginId)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 
@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(project(mapOf("path" to ":lib_common")))
+    implementation(project(":lib_common"))
 
     implementation(libs.agentWeb.core)
     implementation(libs.agentWeb.filechooser)
