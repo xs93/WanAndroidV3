@@ -1,13 +1,15 @@
 package com.github.xs93.wanandroid.app.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
@@ -16,6 +18,7 @@ import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.isNightMode
+import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.startActivitySafe
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
@@ -36,7 +39,7 @@ import kotlinx.coroutines.delay
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_activity) {
+class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_activity, MainActivityBinding::bind) {
 
     private lateinit var splashScreen: SplashScreen
     private var keepOnScreenCondition = true
@@ -44,8 +47,6 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
     private lateinit var mContentAdapter: SimpleViewPagerAdapter
 
     private val mainViewModel: MainViewModel by viewModels()
-
-    private val clickHandler = ClickHandler()
 
     override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
         super.beforeSuperOnCreate(savedInstanceState)
@@ -81,6 +82,24 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
             add { MineFragment.newInstance() }
         }
 
+        binding.apply {
+            with(drawerRoot) {
+                addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+                    override fun onDrawerOpened(drawerView: View) {
+                        if (drawerView.id == R.id.main_drawer_layout) {
+                            window.isLightStatusBarsCompat = false
+                        }
+                    }
+
+                    override fun onDrawerClosed(drawerView: View) {
+                        if (drawerView.id == R.id.main_drawer_layout) {
+                            window.isLightStatusBarsCompat = true
+                        }
+                    }
+                })
+            }
+        }
+
         binding.mainContentLayout.apply {
             with(vpContent) {
                 offscreenPageLimit = mContentAdapter.itemCount
@@ -108,8 +127,12 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
         }
 
 
-        binding.apply {
-            clickHandler = this@MainActivity.clickHandler
+        binding.mainDrawerLayout.apply {
+            with(btnLogin) {
+                setSingleClickListener {
+                    startActivitySafe<LoginActivity>()
+                }
+            }
         }
 
         addOnBackPressedCallback(true) {
@@ -126,14 +149,6 @@ class MainActivity : BaseDataBindingActivity<MainActivityBinding>(R.layout.main_
                     binding.drawerRoot.openDrawer(GravityCompat.START)
                 }
             }
-        }
-    }
-
-
-    inner class ClickHandler {
-
-        fun clickLogin() {
-            startActivitySafe<LoginActivity>()
         }
     }
 }

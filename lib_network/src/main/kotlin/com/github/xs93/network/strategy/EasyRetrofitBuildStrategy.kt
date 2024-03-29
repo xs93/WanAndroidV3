@@ -1,8 +1,13 @@
 package com.github.xs93.network.strategy
 
+import com.github.xs93.network.moshi.adapter.BooleanAdapter
+import com.github.xs93.utils.AppInject
+import com.github.xs93.utils.ktx.isDebug
+import com.squareup.moshi.Moshi
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 /**
  *
@@ -15,7 +20,13 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class EasyRetrofitBuildStrategy : IRetrofitBuildStrategy {
 
     override fun converterFactory(): List<Converter.Factory> {
-        return arrayListOf(MoshiConverterFactory.create())
+        val moshi = Moshi.Builder()
+            .add(BooleanAdapter())
+            .build()
+        return arrayListOf(
+            ScalarsConverterFactory.create(),
+            MoshiConverterFactory.create(moshi)
+        )
     }
 
     override fun callAdapterFactory(): CallAdapter.Factory? {
@@ -23,6 +34,6 @@ class EasyRetrofitBuildStrategy : IRetrofitBuildStrategy {
     }
 
     override fun openOkHttpProfiler(): Boolean {
-        return true
+        return AppInject.getApp().isDebug
     }
 }

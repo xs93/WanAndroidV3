@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter4.QuickAdapterHelper
-import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.statuslayout.MultiStatusLayout
@@ -28,7 +28,9 @@ import kotlinx.coroutines.flow.map
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout.explore_fragment) {
+class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
+    R.layout.explore_fragment, ExploreFragmentBinding::bind
+) {
     companion object {
         fun newInstance(): ExploreFragment {
             val args = Bundle()
@@ -114,8 +116,7 @@ class ExploreFragment : BaseDataBindingFragment<ExploreFragmentBinding>(R.layout
                     }
                 }
 
-                is ListUiState.LoadMoreFinished,
-                is ListUiState.RefreshFinished -> {
+                is ListUiState.LoadMoreFinished, is ListUiState.RefreshFinished -> {
                     articleAdapter.submitList(it.data) {
                         if (uiState is ListUiState.RefreshFinished) {
                             binding.refreshLayout.finishRefresh(uiState.success)

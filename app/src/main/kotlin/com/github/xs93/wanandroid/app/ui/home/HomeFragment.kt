@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.databinding.BaseDataBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.framework.ui.ContentPadding
+import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
@@ -29,7 +31,7 @@ import kotlinx.parcelize.Parcelize
  * @date 2023/8/18 13:47
  * @email 466911254@qq.com
  */
-class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_fragment) {
+class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(R.layout.home_fragment, HomeFragmentBinding::bind) {
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -44,7 +46,6 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
     private val homeTabs = generateHomeTabs()
 
     private val mainViewModel: MainViewModel by activityViewModels()
-    private val clickHandler = ClickHandler()
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 
@@ -59,9 +60,6 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
         }
 
         binding.apply {
-
-            clickHandler = this@HomeFragment.clickHandler
-
             with(vpContent) {
                 offscreenPageLimit = homeTabs.size
                 adapter = childFragmentAdapter
@@ -71,13 +69,19 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
             TabLayoutMediator(tabLayout, vpContent) { tab, position ->
                 tab.text = string(homeTabs[position].titleResId)
             }.attach()
+
+            with(ivOpenDrawer) {
+                setSingleClickListener {
+                    mainViewModel.mainActions.sendAction(MainAction.OpenDrawerAction)
+                }
+            }
         }
     }
 
 
     override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
         super.onSystemBarInsetsChanged(contentPadding)
-        binding.contentPadding = contentPadding
+        binding.clToolbar.updatePadding(top = contentPadding.top)
     }
 
     private fun generateHomeTabs() = listOf(
@@ -85,13 +89,6 @@ class HomeFragment : BaseDataBindingFragment<HomeFragmentBinding>(R.layout.home_
         HomeTabBean(R.string.home_tab_square),
         HomeTabBean(R.string.home_tab_answer)
     )
-
-
-    inner class ClickHandler {
-        fun clickOpenDrawer() {
-            mainViewModel.mainActions.sendAction(MainAction.OpenDrawerAction)
-        }
-    }
 }
 
 

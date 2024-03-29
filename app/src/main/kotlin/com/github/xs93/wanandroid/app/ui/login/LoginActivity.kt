@@ -3,7 +3,7 @@ package com.github.xs93.wanandroid.app.ui.login
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
-import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
@@ -22,10 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class LoginActivity : BaseDataBindingActivity<LoginActivityBinding>(R.layout.login_activity) {
+class LoginActivity :
+    BaseViewBindingActivity<LoginActivityBinding>(R.layout.login_activity, LoginActivityBinding::bind) {
 
 
-    private val clickHandler = ClickHandler()
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -50,8 +50,6 @@ class LoginActivity : BaseDataBindingActivity<LoginActivityBinding>(R.layout.log
                     }
                 }
             }
-
-            clickHandler = this@LoginActivity.clickHandler
         }
     }
 
@@ -61,7 +59,7 @@ class LoginActivity : BaseDataBindingActivity<LoginActivityBinding>(R.layout.log
         loginViewModel.registerCommonEvent(this)
 
         observerState(loginViewModel.loginStateFlow) {
-            binding.loginState = it
+
         }
 
         observerEvent(loginViewModel.loginEventFlow) {

@@ -3,7 +3,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.hilt)
@@ -37,12 +36,7 @@ android {
 
     buildFeatures {
         viewBinding = true
-        dataBinding = true
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 hilt {
@@ -64,6 +58,7 @@ dependencies {
     api(libs.smartRefreshLayout.footer.ball)
 
     api(libs.multiStateLayout)
+    api(libs.checkableView)
     api(libs.avLoadingIndicatorView)
 
     api(libs.androidAutoSize)
@@ -71,5 +66,5 @@ dependencies {
     ksp(libs.moshi.kotlin.codegen)
 
     implementation(libs.androidx.hilt)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 }

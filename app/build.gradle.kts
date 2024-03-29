@@ -3,7 +3,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.hilt)
@@ -48,18 +47,12 @@ android {
 
     buildFeatures {
         viewBinding = true
-        dataBinding = true
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 hilt {
     enableAggregatingTask = true
 }
-
 
 dependencies {
     implementation(project(":lib_common"))
@@ -74,7 +67,7 @@ dependencies {
     implementation(libs.viewPagerIndicator)
 
     implementation(libs.androidx.hilt)
-    kapt(libs.androidx.hilt.compiler)
+    ksp(libs.androidx.hilt.compiler)
 
     debugImplementation(libs.leakcanary)
 }

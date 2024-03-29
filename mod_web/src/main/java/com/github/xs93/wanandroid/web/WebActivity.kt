@@ -8,7 +8,7 @@ import android.view.KeyEvent
 import android.webkit.WebView
 import android.widget.FrameLayout
 import androidx.core.text.htmlEncode
-import com.github.xs93.framework.base.ui.databinding.BaseDataBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.utils.ktx.color
@@ -30,7 +30,10 @@ import com.just.agentweb.WebChromeClient
  * @email 466911254@qq.com
  */
 class WebActivity :
-    BaseDataBindingActivity<WebActivityAgentWebBinding>(R.layout.web_activity_agent_web) {
+    BaseViewBindingActivity<WebActivityAgentWebBinding>(
+        R.layout.web_activity_agent_web,
+        WebActivityAgentWebBinding::bind
+    ) {
 
     companion object {
 
@@ -51,9 +54,6 @@ class WebActivity :
     private var mUrl: String? = ""
 
     private lateinit var mAgentWeb: AgentWeb
-
-    private val mClickHandler = ClickHandler()
-
     private lateinit var mWebView: NestedScrollAgentWebView
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -98,27 +98,31 @@ class WebActivity :
             .go(mUrl)
 
         binding.apply {
-            clickHandler = mClickHandler
-            toolbar.title = title
-            toolbar.post {
-                try {
-                    val titleTextView = ToolbarUtils.getTitleTextView(toolbar)
-                    titleTextView?.let {
-                        it.ellipsize = TextUtils.TruncateAt.MARQUEE
-                        it.isFocusable = true
-                        it.isFocusableInTouchMode = true
-                        it.requestFocus()
-                    }
-                    titleTextView?.ellipsize = TextUtils.TruncateAt.MARQUEE
+            with(toolbar) {
+                title = mTitle
+                setNavigationOnClickListener {
+                    clickBack()
+                }
+                post {
+                    try {
+                        val titleTextView = ToolbarUtils.getTitleTextView(toolbar)
+                        titleTextView?.let {
+                            it.ellipsize = TextUtils.TruncateAt.MARQUEE
+                            it.isFocusable = true
+                            it.isFocusableInTouchMode = true
+                            it.requestFocus()
+                        }
+                        titleTextView?.ellipsize = TextUtils.TruncateAt.MARQUEE
 
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
 
         addOnBackPressedCallback(true) {
-            mClickHandler.clickBack()
+            clickBack()
         }
     }
 
@@ -145,12 +149,10 @@ class WebActivity :
         mAgentWeb.webLifeCycle.onDestroy()
     }
 
-    inner class ClickHandler {
 
-        fun clickBack() {
-            if (!mAgentWeb.back()) {
-                finish()
-            }
+    private fun clickBack() {
+        if (!mAgentWeb.back()) {
+            finish()
         }
     }
 }

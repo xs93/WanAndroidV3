@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app.ui.home.child.explore
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import coil.load
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerItemBinding
 import com.github.xs93.wanandroid.app.entity.Banner
@@ -24,9 +24,8 @@ class BannerAdapter : BaseBannerAdapter<Banner>() {
         itemView: View,
         viewType: Int
     ): BaseViewHolder<Banner> {
-        val binding = DataBindingUtil.bind<ExploreBannerItemBinding>(itemView)
-            ?: throw NullPointerException("binding is Null")
-        return DataBindingViewHolder(binding)
+        val binding = ExploreBannerItemBinding.bind(itemView)
+        return ViewBindingViewHolder(binding)
     }
 
     override fun bindData(
@@ -35,8 +34,11 @@ class BannerAdapter : BaseBannerAdapter<Banner>() {
         position: Int,
         pageSize: Int
     ) {
-        if (holder is DataBindingViewHolder) {
-            holder.binding.banner = data
+        if (holder is ViewBindingViewHolder) {
+            with(holder.binding) {
+                imgContent.load(data?.imagePath)
+                txtTitle.text = data?.title
+            }
         }
     }
 
@@ -44,6 +46,5 @@ class BannerAdapter : BaseBannerAdapter<Banner>() {
         return R.layout.explore_banner_item
     }
 
-    internal class DataBindingViewHolder(val binding: ExploreBannerItemBinding) :
-        BaseViewHolder<Banner>(binding.root)
+    internal class ViewBindingViewHolder(val binding: ExploreBannerItemBinding) : BaseViewHolder<Banner>(binding.root)
 }

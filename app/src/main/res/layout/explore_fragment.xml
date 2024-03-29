@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.xs93.statuslayout.MultiStatusLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pageLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:msl_default_state="Content">
 
-    <data>
-
-    </data>
-
-    <com.github.xs93.statuslayout.MultiStatusLayout
-        android:id="@+id/pageLayout"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:msl_default_state="Content">
+        app:srlEnableAutoLoadMore="true"
+        app:srlEnableFooterFollowWhenNoMoreData="false"
+        app:srlEnableFooterTranslationContent="true"
+        app:srlEnableLoadMoreWhenContentNotFull="false"
+        app:srlEnableRefresh="true"
+        app:srlEnableScrollContentWhenLoaded="true">
 
-        <com.scwang.smart.refresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
+        <com.scwang.smart.refresh.header.MaterialHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_article_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srlEnableAutoLoadMore="true"
-            app:srlEnableFooterFollowWhenNoMoreData="false"
-            app:srlEnableFooterTranslationContent="true"
-            app:srlEnableLoadMoreWhenContentNotFull="false"
-            app:srlEnableRefresh="true"
-            app:srlEnableScrollContentWhenLoaded="true">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/home_article_item" />
 
-            <com.scwang.smart.refresh.header.MaterialHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_article_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/home_article_item" />
-
-            <com.scwang.smart.refresh.footer.BallPulseFooter
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    </com.github.xs93.statuslayout.MultiStatusLayout>
-</layout>
+        <com.scwang.smart.refresh.footer.BallPulseFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+</com.github.xs93.statuslayout.MultiStatusLayout>

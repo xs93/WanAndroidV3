@@ -2,6 +2,5 @@
 <resources>
 
     <color name="base_color_loading_progress">@color/md_theme_light_primary</color>
-
     <color name="common_ripple_color">@color/black</color>
 </resources>

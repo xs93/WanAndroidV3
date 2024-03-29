@@ -1,47 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="h,16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <variable
-            name="banner"
-            type="com.github.xs93.wanandroid.app.entity.Banner" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_banner_img"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:coilUrl="@{banner.imagePath}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="h,16:9"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:background="#4f000000"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingStart="24dp"
-            android:paddingEnd="20dp"
-            android:text="@{banner.title}"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/iv_banner_img"
-            app:layout_constraintEnd_toEndOf="@id/iv_banner_img"
-            app:layout_constraintStart_toStartOf="@id/iv_banner_img"
-            tools:text="一起来做个app吧" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_title"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:background="#4f000000"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingStart="24dp"
+        android:paddingEnd="20dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/img_content"
+        app:layout_constraintEnd_toEndOf="@id/img_content"
+        app:layout_constraintStart_toStartOf="@id/img_content"
+        tools:text="一起来做个app吧" />
+</androidx.constraintlayout.widget.ConstraintLayout>

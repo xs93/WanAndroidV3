@@ -21,6 +21,7 @@
         <item name="android:insetRight">0dp</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:minHeight">0dp</item>
+        <item name="rippleColor">@color/common_ripple_color_selector</item>
     </style>
 
     <style name="ArticleTagStyle">

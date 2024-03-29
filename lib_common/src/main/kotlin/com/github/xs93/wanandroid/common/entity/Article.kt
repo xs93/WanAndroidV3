@@ -89,4 +89,12 @@ data class Article(
     val visible: Int,
     @Json(name = "zan")
     val zan: Int
-) : Parcelable
+) : Parcelable {
+
+
+    val showAuthorName: String
+        get() = author.ifEmpty { shareUser }
+
+    val isTop: Boolean
+        get() = type == 1
+}
