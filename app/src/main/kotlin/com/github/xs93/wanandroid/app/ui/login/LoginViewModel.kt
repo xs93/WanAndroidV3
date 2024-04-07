@@ -6,7 +6,7 @@ import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.common.services.impl.AccountServiceImpl
+import com.github.xs93.wanandroid.common.services.AccountService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @email 466911254@qq.com
  */
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val accountService: AccountServiceImpl) : BaseViewModel() {
+class LoginViewModel @Inject constructor(private val accountService: AccountService) : BaseViewModel() {
 
 
     private val loginState by mviStates(LoginState())
