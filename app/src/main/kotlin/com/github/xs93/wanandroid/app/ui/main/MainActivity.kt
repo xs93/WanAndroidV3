@@ -8,6 +8,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import coil.load
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
@@ -16,10 +17,14 @@ import com.github.xs93.framework.ktx.isLightStatusBarsCompat
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.framework.ktx.observerEvent
+import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
+import com.github.xs93.utils.ktx.gone
 import com.github.xs93.utils.ktx.isNightMode
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.startActivitySafe
+import com.github.xs93.utils.ktx.string
+import com.github.xs93.utils.ktx.visible
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
 import com.github.xs93.wanandroid.app.ui.classify.ClassifyFragment
@@ -27,6 +32,7 @@ import com.github.xs93.wanandroid.app.ui.home.HomeFragment
 import com.github.xs93.wanandroid.app.ui.login.LoginActivity
 import com.github.xs93.wanandroid.app.ui.mine.MineFragment
 import com.github.xs93.wanandroid.app.ui.system.SystemFragment
+import com.github.xs93.wanandroid.common.account.AccountManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
@@ -93,7 +99,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
 
                     override fun onDrawerClosed(drawerView: View) {
                         if (drawerView.id == R.id.main_drawer_layout) {
-                            window.isLightStatusBarsCompat = true
+                            window.isLightStatusBarsCompat = !isNightMode
                         }
                     }
                 })
@@ -133,6 +139,12 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
                     startActivitySafe<LoginActivity>()
                 }
             }
+
+            with(btnLogout) {
+                setOnClickListener {
+                    mainViewModel.mainActions.sendAction(MainAction.LogoutAction)
+                }
+            }
         }
 
         addOnBackPressedCallback(true) {
@@ -143,10 +155,44 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
         mainViewModel.registerCommonEvent(this)
+
         observerEvent(mainViewModel.mainEventFlow) {
             when (it) {
                 MainEvent.OpenDrawerEvent -> {
                     binding.drawerRoot.openDrawer(GravityCompat.START)
+                }
+            }
+        }
+
+        observerState(AccountManager.userFlow) {
+            if (it == null) {
+                with(binding.mainDrawerLayout) {
+                    btnLogin.visible()
+                    btnLogout.gone()
+                    groupUserInfo.gone()
+                    imgAvatar.load(R.drawable.img_avatar_no_login)
+                }
+            } else {
+                with(binding.mainDrawerLayout) {
+                    btnLogin.gone()
+                    btnLogout.visible()
+                    groupUserInfo.visible()
+                    imgAvatar.load(R.drawable.img_avatar_login)
+                    txtNickname.text = it.nickname
+                    txtUserId.text = string(R.string.main_drawer_user_id, it.id)
+                }
+            }
+        }
+
+        observerState(AccountManager.userDetailFlow) {
+            if (it != null) {
+                with(binding.mainDrawerLayout) {
+                    txtCoinInfo.text = string(
+                        R.string.main_drawer_user_coin_info,
+                        it.coinInfo.coinCount,
+                        it.coinInfo.level,
+                        it.coinInfo.rank
+                    )
                 }
             }
         }

@@ -1,8 +1,10 @@
 package com.github.xs93.wanandroid.common.entity
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 
 /**
@@ -15,7 +17,8 @@ import com.squareup.moshi.JsonClass
  */
 @Keep
 @JsonClass(generateAdapter = true)
+@Parcelize
 data class UserCollectArticleInfo(
     @Json(name = "count")
     val count: Int
-)
+) : Parcelable

@@ -2,6 +2,7 @@ package com.github.xs93.wanandroid.common.services.impl
 
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.wanandroid.AppConstant
+import com.github.xs93.wanandroid.common.account.AccountManager
 import com.github.xs93.wanandroid.common.entity.User
 import com.github.xs93.wanandroid.common.entity.UserDetailInfo
 import com.github.xs93.wanandroid.common.network.WanResponse
@@ -20,13 +21,41 @@ class AccountServiceImpl @Inject constructor() : AccountService {
 
     private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = AccountService::class.java) }
 
-    override suspend fun login(username: String, password: String): WanResponse<User> =
-        service.login(username, password)
+    override suspend fun login(username: String, password: String): Result<WanResponse<User>> {
+        val result = service.login(username, password)
+        result.onSuccess {
+            val user = it.data
+            if (user != null) {
+                AccountManager.logIn(user)
+            }
+        }
+        return result
+    }
 
-    override suspend fun logout(): WanResponse<Nothing> = service.logout()
+    override suspend fun logout(): Result<WanResponse<Int>> {
+        val result = service.logout()
+        result.onSuccess {
+            AccountManager.logout()
+        }
+        return result
+    }
 
-    override suspend fun register(username: String, password: String, confirmPassword: String): WanResponse<Nothing> =
-        service.register(username, password, confirmPassword)
+    override suspend fun register(
+        username: String,
+        password: String,
+        confirmPassword: String
+    ): Result<WanResponse<Nothing>> {
+        return service.register(username, password, confirmPassword)
+    }
 
-    override suspend fun getUserInfo(): WanResponse<UserDetailInfo> = service.getUserInfo()
+    override suspend fun getUserInfo(): Result<WanResponse<UserDetailInfo>> {
+        val result = service.getUserInfo()
+        result.onSuccess {
+            val userDetailInfo = it.data
+            if (userDetailInfo != null) {
+                AccountManager.cacheUserDetailInfo(userDetailInfo)
+            }
+        }
+        return result
+    }
 }

@@ -36,6 +36,7 @@ class WanAndroidApp : CommonApplication() {
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             BallPulseFooter(context)
         }
+
         BaseDialogFragmentConfig.commonBottomSheetDialogTheme =
             com.github.xs93.wanandroid.app.R.style.AppBottomSheetDialog
     }

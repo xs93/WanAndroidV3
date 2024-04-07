@@ -6,7 +6,7 @@ import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.app.repository.LoginRepository
+import com.github.xs93.wanandroid.common.services.impl.AccountServiceImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,10 +19,8 @@ import javax.inject.Inject
  * @email 466911254@qq.com
  */
 @HiltViewModel
-class LoginViewModel @Inject constructor() : BaseViewModel() {
+class LoginViewModel @Inject constructor(private val accountService: AccountServiceImpl) : BaseViewModel() {
 
-    @Inject
-    lateinit var loginRepository: LoginRepository
 
     private val loginState by mviStates(LoginState())
     val loginStateFlow = loginState.uiStateFlow
@@ -50,21 +48,22 @@ class LoginViewModel @Inject constructor() : BaseViewModel() {
                 pwdErrorEnable(true, getString(R.string.login_error_input_password))
                 return@launcher
             }
-
             showLoadingDialog()
-            val repo = loginRepository.login(username, password)
-            hideLoadingDialog()
-            repo
-                .onFailure {
-                    loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, it.message))
+            val loginResult = accountService.login(username, password)
+            loginResult.onSuccess {
+                if (it.isSuccess()) {
+                    // 更新用户详细信息
+                    accountService.getUserInfo()
+                    hideLoadingDialog()
+                    loginEvent.sendEvent(LoginEvent.LoginResultEvent(true, null))
+                } else {
+                    hideLoadingDialog()
+                    loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, it.errorMessage))
                 }
-                .onSuccess {
-                    if (it.isSuccess()) {
-                        loginEvent.sendEvent(LoginEvent.LoginResultEvent(true, null))
-                    } else {
-                        loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, it.errorMessage))
-                    }
-                }
+            }.onFailure {
+                hideLoadingDialog()
+                loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, it.message))
+            }
         }
     }
 

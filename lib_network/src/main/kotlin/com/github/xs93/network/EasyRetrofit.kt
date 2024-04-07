@@ -43,6 +43,10 @@ object EasyRetrofit {
         strategyMap[baseUrl] = EasyRetrofitClient(baseUrl, EasyRetrofitBuildStrategy())
     }
 
+    fun getRetrofitClient(baseUrl: String): IRetrofitClient {
+        return strategyMap[baseUrl] ?: throw IllegalStateException("please call EasyRetrofit.addRetrofitClient() method")
+    }
+
     fun <T> create(baseUrl: String, service: Class<T>): T {
         val retrofitClient =
             strategyMap[baseUrl] ?: throw IllegalStateException("please call EasyRetrofit.addRetrofitClient() method")

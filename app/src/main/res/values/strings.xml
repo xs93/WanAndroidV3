@@ -11,9 +11,10 @@
     <string name="main_title_project">项目</string>
 
     <!--region main drawer page -->
-    <string name="main_drawer_login">登录</string>
-    <string name="main_drawer_logout">退出登录</string>
     <string name="main_drawer_click_login">点击登录</string>
+    <string name="main_drawer_user_id">ID:%d</string>
+    <string name="main_drawer_user_coin_info">积分:%1$d 等级:%2$d 排名:%3$s</string>
+    <string name="main_drawer_logout">退出登录</string>
     <string name="main_drawer_menu_collect">收藏</string>
     <!--endregion -->
 
@@ -37,5 +38,6 @@
     <string name="login_btn_login">登录</string>
     <string name="login_success">Login Success</string>
     <string name="login_failed">Login Failed</string>
+
     <!--endregion -->
 </resources>

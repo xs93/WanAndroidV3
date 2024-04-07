@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="base_color_loading_progress">@color/md_theme_dark_primary</color>
+    <color name="common_ripple_color">@color/white</color>
+</resources>

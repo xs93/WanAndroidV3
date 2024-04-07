@@ -29,14 +29,14 @@ interface AccountService {
     suspend fun login(
         @Field("username") username: String,
         @Field("password") password: String,
-    ): WanResponse<User>
+    ): Result<WanResponse<User>>
 
     /**
      * 账号登出
      * @return WanResponse<Any>
      */
     @GET("user/logout/json")
-    suspend fun logout(): WanResponse<Nothing>
+    suspend fun logout(): Result<WanResponse<Int>>
 
     /**
      * 注册
@@ -51,12 +51,12 @@ interface AccountService {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") confirmPassword: String,
-    ): WanResponse<Nothing>
+    ): Result<WanResponse<Nothing>>
 
 
     /**
      * 获取用户信息
      */
     @GET("user/lg/userinfo/json")
-    suspend fun getUserInfo(): WanResponse<UserDetailInfo>
+    suspend fun getUserInfo(): Result<WanResponse<UserDetailInfo>>
 }

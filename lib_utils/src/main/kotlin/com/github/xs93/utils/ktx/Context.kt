@@ -74,7 +74,7 @@ inline val Context.appVersionCode: Long
 
 inline val Context.isNightMode: Boolean
     get() {
-        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES) != 0
+        return (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
     }
 
 inline fun <reified T : Activity> Context.startActivitySafe(

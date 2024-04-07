@@ -7,6 +7,7 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
+import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.LoginActivityBinding
@@ -31,6 +32,12 @@ class LoginActivity :
     override fun initView(savedInstanceState: Bundle?) {
         binding.apply {
 
+            with(toolbar) {
+                setNavigationOnClickListener {
+                    finish()
+                }
+            }
+
             with(etAccount) {
                 doOnTextChanged { text, _, _, _ ->
                     if (!text.isNullOrBlank()) {
@@ -48,6 +55,14 @@ class LoginActivity :
                             LoginAction.PwdErrorEnableAction(false)
                         )
                     }
+                }
+            }
+
+            with(btnLogin) {
+                setSingleClickListener {
+                    val username = etAccount.text?.toString()?.trim()
+                    val password = etPassword.text?.toString()?.trim()
+                    loginViewModel.loginAction.sendAction(LoginAction.ClickLoginAction(username, password))
                 }
             }
         }
@@ -73,21 +88,6 @@ class LoginActivity :
                     }
                 }
             }
-        }
-    }
-
-    inner class ClickHandler {
-
-        fun clickBack() {
-            finish()
-        }
-
-        fun clickLogin(username: String?, password: String?) {
-            loginViewModel.loginAction.sendAction(LoginAction.ClickLoginAction(username, password))
-        }
-
-        fun clickRegisterAccount() {
-
         }
     }
 }
