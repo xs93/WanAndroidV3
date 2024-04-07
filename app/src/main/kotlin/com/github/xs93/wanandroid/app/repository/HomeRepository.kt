@@ -21,10 +21,9 @@ import javax.inject.Inject
 class HomeRepository @Inject constructor(private val homeService: HomeService) : BaseRepository() {
 
     suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>> {
-        return runSafeSuspendCatching {
-            homeService.getHomeBanner()
-        }
+        return homeService.getHomeBanner()
     }
+
 
     /**
      * 查询文章数据

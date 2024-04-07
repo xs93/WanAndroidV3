@@ -25,7 +25,7 @@ interface HomeService {
      */
     @Cache(60 * 60 * 1000L)
     @GET("banner/json")
-    suspend fun getHomeBanner(): WanResponse<List<Banner>>
+    suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>>
 
 
     /**

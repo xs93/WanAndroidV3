@@ -1,5 +1,6 @@
 package com.github.xs93.network.strategy
 
+import com.github.xs93.network.adapter.result.ResultCallAdapterFactory
 import com.github.xs93.network.moshi.adapter.BooleanAdapter
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.ktx.isDebug
@@ -29,8 +30,8 @@ class EasyRetrofitBuildStrategy : IRetrofitBuildStrategy {
         )
     }
 
-    override fun callAdapterFactory(): CallAdapter.Factory? {
-        return null
+    override fun callAdapterFactory(): List<CallAdapter.Factory> {
+        return arrayListOf(ResultCallAdapterFactory())
     }
 
     override fun openOkHttpProfiler(): Boolean {

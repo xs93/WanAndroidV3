@@ -63,7 +63,7 @@ interface IRetrofitBuildStrategy {
     fun converterFactory(): List<Converter.Factory>?
 
     /** 构建Retrofit 的CallAdapter.Factory */
-    fun callAdapterFactory(): CallAdapter.Factory?
+    fun callAdapterFactory(): List<CallAdapter.Factory>?
 
     fun openOkHttpProfiler(): Boolean
 

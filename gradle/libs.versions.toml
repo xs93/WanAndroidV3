@@ -3,19 +3,19 @@ minSdk = "26"
 targetSdk = "34"
 androidGradlePlugin = "8.3.1"
 kotlin = "1.9.20"
-kotlinCoroutines = "1.7.3"
+kotlinCoroutines = "1.8.0"
 ksp = "1.9.20-1.0.14"
 androidxLifecycle = "2.7.0"
 androidxRoom = "2.6.1"
 androixHint = "2.47"
-androidxComposeBom = "2024.03.00"
+androidxComposeBom = "2024.04.00"
 androidxComposeCompiler = "1.5.4"
 androidxCamera = "1.3.2"
 androidxActivity = "1.8.2"
 
 okHttp = "4.12.0"
-retrofit = "2.9.0"
-moshi = "1.15.0"
+retrofit = "2.11.0"
+moshi = "1.15.1"
 kotlinxSerialization = "1.6.2"
 
 junit = "4.13.2"
@@ -113,7 +113,7 @@ permissionx = { group = "com.guolindev.permissionx", name = "permissionx", versi
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
 
 #key-value 持久化库(https://github.com/Tencent/MMKV)
-mmkv = { module = "com.tencent:mmkv", version = "1.3.1" }
+mmkv = { module = "com.tencent:mmkv", version = "1.3.4" }
 
 #图片加载库(https://github.com/coil-kt/coil)
 coil = { group = "io.coil-kt", name = "coil", version = "2.6.0" }

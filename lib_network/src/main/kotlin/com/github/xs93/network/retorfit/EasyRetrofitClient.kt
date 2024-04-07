@@ -22,8 +22,8 @@ class EasyRetrofitClient(override val baseUrl: String, override val retrofitBuil
             retrofitBuildStrategy.converterFactory()?.onEach {
                 addConverterFactory(it)
             }
-            retrofitBuildStrategy.callAdapterFactory()?.apply {
-                addCallAdapterFactory(this)
+            retrofitBuildStrategy.callAdapterFactory()?.onEach {
+                addCallAdapterFactory(it)
             }
         }
         builder.build()
