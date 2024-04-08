@@ -22,8 +22,8 @@ import okhttp3.HttpUrl
  */
 object AccountManager {
 
-    private val _userStateFlow: MutableStateFlow<User?> = MutableStateFlow(null)
-    private val _userDetailStateFlow: MutableStateFlow<UserDetailInfo?> = MutableStateFlow(null)
+    private val _accountStateFlow: MutableStateFlow<AccountState> = MutableStateFlow(AccountState.LogOut)
+    private val _userDetailStateFlow: MutableStateFlow<UserDetailInfo> = MutableStateFlow(UserDetailInfo())
 
     init {
         AppInject.mainScope.launch {
@@ -34,31 +34,29 @@ object AccountManager {
                 .host(uri.host!!)
                 .build()
             val cookies = cookieJar.loadForRequest(httpUrl)
-            if (cookies.isEmpty()) {
-                _userStateFlow.emit(null)
+            val userInfo = AccountStore.userInfo
+            if (cookies.isEmpty() || userInfo == null) {
+                _accountStateFlow.emit(AccountState.LogOut)
             } else {
-                val userInfo = AccountStore.userInfo
-                _userStateFlow.emit(userInfo)
+                _accountStateFlow.emit(AccountState.LogIn(true, userInfo))
             }
 
             val userDetailInfo = AccountStore.userDetailInfo
-            _userDetailStateFlow.emit(userDetailInfo)
+            userDetailInfo?.let { _userDetailStateFlow.emit(it) }
         }
     }
 
-    val userFlow: StateFlow<User?> = _userStateFlow
-    val userDetailFlow: StateFlow<UserDetailInfo?> = _userDetailStateFlow
+    val accountStateFlow: StateFlow<AccountState> = _accountStateFlow
 
+    val userDetailFlow: StateFlow<UserDetailInfo> = _userDetailStateFlow
 
-    fun peekUserInfo(): User? = userFlow.value
-
-    fun peekUserDetailInfo(): UserDetailInfo? = userDetailFlow.value
+    fun peekUserDetailInfo(): UserDetailInfo = userDetailFlow.value
 
     val isLogin: Boolean
-        get() = userFlow.value == null
+        get() = _accountStateFlow.value.isLogin
 
     val userId: Int
-        get() = userFlow.value?.id ?: 0
+        get() = peekUserDetailInfo().userInfo.id
 
     fun isMe(userId: Int): Boolean {
         return if (userId == 0) false else this.userId == userId
@@ -67,7 +65,7 @@ object AccountManager {
     fun logIn(user: User) {
         AppInject.mainScope.launch {
             AccountStore.userInfo = user
-            _userStateFlow.emit(user)
+            _accountStateFlow.emit(AccountState.LogIn(false, user))
         }
     }
 
@@ -75,7 +73,7 @@ object AccountManager {
         AppInject.mainScope.launch {
             AccountStore.userInfo = null
             AccountStore.userDetailInfo = null
-            _userStateFlow.emit(null)
+            _accountStateFlow.emit(AccountState.LogOut)
         }
     }
 

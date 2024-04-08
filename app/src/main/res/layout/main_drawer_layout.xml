@@ -139,7 +139,8 @@
                     android:paddingEnd="16dp"
                     android:text="@string/main_drawer_logout"
                     android:textColor="?colorPrimary"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>

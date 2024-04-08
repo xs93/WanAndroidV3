@@ -20,5 +20,5 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserCollectArticleInfo(
     @Json(name = "count")
-    val count: Int
+    val count: Int = 0
 ) : Parcelable

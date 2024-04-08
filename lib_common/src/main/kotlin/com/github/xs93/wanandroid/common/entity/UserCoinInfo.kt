@@ -20,15 +20,15 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserCoinInfo(
     @Json(name = "coinCount")
-    val coinCount: Int,
+    val coinCount: Int = 0,
     @Json(name = "level")
-    val level: Int,
+    val level: Int = 0,
     @Json(name = "nickname")
-    val nickname: String,
+    val nickname: String = "",
     @Json(name = "rank")
-    val rank: String,
+    val rank: String = "",
     @Json(name = "userId")
-    val userId: Int,
+    val userId: Int = 0,
     @Json(name = "username")
-    val username: String
+    val username: String = ""
 ) : Parcelable

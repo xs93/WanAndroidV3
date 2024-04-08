@@ -33,6 +33,7 @@ import com.github.xs93.wanandroid.app.ui.login.LoginActivity
 import com.github.xs93.wanandroid.app.ui.mine.MineFragment
 import com.github.xs93.wanandroid.app.ui.system.SystemFragment
 import com.github.xs93.wanandroid.common.account.AccountManager
+import com.github.xs93.wanandroid.common.account.AccountState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
@@ -164,36 +165,38 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
             }
         }
 
-        observerState(AccountManager.userFlow) {
-            if (it == null) {
-                with(binding.mainDrawerLayout) {
-                    btnLogin.visible()
-                    btnLogout.gone()
-                    groupUserInfo.gone()
-                    imgAvatar.load(R.drawable.img_avatar_no_login)
+        observerState(AccountManager.accountStateFlow) {
+            when (it) {
+                AccountState.LogOut -> {
+                    with(binding.mainDrawerLayout) {
+                        btnLogin.visible()
+                        btnLogout.gone()
+                        groupUserInfo.gone()
+                        imgAvatar.load(R.drawable.img_avatar_no_login)
+                    }
                 }
-            } else {
-                with(binding.mainDrawerLayout) {
-                    btnLogin.gone()
-                    btnLogout.visible()
-                    groupUserInfo.visible()
-                    imgAvatar.load(R.drawable.img_avatar_login)
-                    txtNickname.text = it.nickname
-                    txtUserId.text = string(R.string.main_drawer_user_id, it.id)
+
+                is AccountState.LogIn -> {
+                    with(binding.mainDrawerLayout) {
+                        btnLogin.gone()
+                        btnLogout.visible()
+                        groupUserInfo.visible()
+                        imgAvatar.load(R.drawable.img_avatar_login)
+                    }
                 }
             }
         }
 
         observerState(AccountManager.userDetailFlow) {
-            if (it != null) {
-                with(binding.mainDrawerLayout) {
-                    txtCoinInfo.text = string(
-                        R.string.main_drawer_user_coin_info,
-                        it.coinInfo.coinCount,
-                        it.coinInfo.level,
-                        it.coinInfo.rank
-                    )
-                }
+            with(binding.mainDrawerLayout) {
+                txtNickname.text = it.userInfo.nickname
+                txtUserId.text = string(R.string.main_drawer_user_id, it.userInfo.id)
+                txtCoinInfo.text = string(
+                    R.string.main_drawer_user_coin_info,
+                    it.coinInfo.coinCount,
+                    it.coinInfo.level,
+                    it.coinInfo.rank
+                )
             }
         }
     }
