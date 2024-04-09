@@ -85,7 +85,7 @@ class SharedPreferencesCookieStore(context: Context) : CookieStore {
     override fun removeCookie(url: HttpUrl, cookie: Cookie): Boolean {
         if (!cookies.containsKey(url.host)) return false
         val urlCookies = cookies[url.host] ?: return false
-        if (!urlCookies.contains(cookie.token)) return false
+        if (!urlCookies.containsKey(cookie.token)) return false
 
         val token = cookie.token
         urlCookies.remove(token)

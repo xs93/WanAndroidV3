@@ -1,10 +1,9 @@
-package com.github.xs93.wanandroid.app.api
+package com.github.xs93.wanandroid.common.services
 
 import com.github.xs93.network.annotation.Cache
-import com.github.xs93.wanandroid.app.entity.Banner
-import com.github.xs93.wanandroid.app.entity.ProjectTree
 import com.github.xs93.wanandroid.common.entity.Article
-import com.github.xs93.wanandroid.common.network.PageResp
+import com.github.xs93.wanandroid.common.entity.Banner
+import com.github.xs93.wanandroid.common.network.PageResponse
 import com.github.xs93.wanandroid.common.network.WanResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -34,12 +33,5 @@ interface HomeService {
      *
      */
     @GET("article/list/{page}/json")
-    suspend fun getHomeArticle(@Path("page") page: Int): WanResponse<PageResp<Article>>
-
-    /**
-     * 项目分类接口
-     * @return WanResponse<List<ProjectTree>>
-     */
-    @GET("project/tree/json")
-    suspend fun getProjectTree(): WanResponse<List<ProjectTree>>
+    suspend fun getHomeArticle(@Path("page") page: Int): Result<WanResponse<PageResponse<Article>>>
 }

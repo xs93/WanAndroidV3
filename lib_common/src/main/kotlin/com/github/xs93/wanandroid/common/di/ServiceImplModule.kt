@@ -1,7 +1,11 @@
 package com.github.xs93.wanandroid.common.di
 
 import com.github.xs93.wanandroid.common.services.AccountService
+import com.github.xs93.wanandroid.common.services.CollectService
+import com.github.xs93.wanandroid.common.services.HomeService
 import com.github.xs93.wanandroid.common.services.impl.AccountServiceImpl
+import com.github.xs93.wanandroid.common.services.impl.CollectServiceImpl
+import com.github.xs93.wanandroid.common.services.impl.HomeServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,4 +27,12 @@ abstract class ServiceImplModule {
     @Binds
     @Singleton
     abstract fun getAccountServiceImpl(impl: AccountServiceImpl): AccountService
+
+    @Binds
+    @Singleton
+    abstract fun getCollectServiceImpl(impl: CollectServiceImpl): CollectService
+
+    @Binds
+    @Singleton
+    abstract fun getHomeServiceImpl(impl: HomeServiceImpl): HomeService
 }

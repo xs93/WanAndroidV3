@@ -9,10 +9,12 @@ import com.github.xs93.network.exception.ServiceApiException
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.CommonApplication
+import com.github.xs93.wanandroid.common.network.WanRetrofitBuildStrategy
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 /**
  *
@@ -24,6 +26,9 @@ import dagger.hilt.android.HiltAndroidApp
  */
 @HiltAndroidApp
 class WanAndroidApp : CommonApplication() {
+
+    @Inject
+    lateinit var wanRetrofitBuildStrategy: WanRetrofitBuildStrategy
 
     override fun onCreate() {
         super.onCreate()
@@ -41,7 +46,6 @@ class WanAndroidApp : CommonApplication() {
             com.github.xs93.wanandroid.app.R.style.AppBottomSheetDialog
     }
 
-
     private fun initHttp() {
         NetworkMonitor.init(this)
         EasyRetrofit.init(this) {
@@ -51,6 +55,6 @@ class WanAndroidApp : CommonApplication() {
                 ToastManager.showToast(R.string.network_error)
             }
         }
-        EasyRetrofit.addRetrofitClient(AppConstant.BaseUrl)
+        EasyRetrofit.addRetrofitClient(AppConstant.BaseUrl, wanRetrofitBuildStrategy)
     }
 }

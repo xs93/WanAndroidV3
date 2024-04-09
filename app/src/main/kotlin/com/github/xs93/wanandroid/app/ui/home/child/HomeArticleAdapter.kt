@@ -11,6 +11,8 @@ import com.github.xs93.utils.ktx.visible
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.HomeArticleItemBinding
 import com.github.xs93.wanandroid.common.diff.ArticleItemCallback
+import com.github.xs93.wanandroid.common.diff.ArticleItemChangePayload
+import com.github.xs93.wanandroid.common.diff.ArticleItemChanged
 import com.github.xs93.wanandroid.common.entity.Article
 
 /**
@@ -65,6 +67,26 @@ class HomeArticleAdapter : BaseDifferAdapter<Article, HomeArticleAdapter.HomeArt
                 txtType.text = context.getString(R.string.article_chapter_name, it.superChapterName, it.chapterName)
                 imgCollect.isChecked = it.collect
             }
+        }
+    }
+
+    override fun onBindViewHolder(holder: HomeArticleViewHolder, position: Int, item: Article?, payloads: List<Any>) {
+        if (payloads.isNotEmpty()) {
+            payloads.forEach {
+                if (it is ArticleItemChanged) {
+                    it.payloads.forEach { payload ->
+                        when (payload) {
+                            ArticleItemChangePayload.CollectStateChanged -> {
+                                if (item != null) {
+                                    holder.bind.imgCollect.isChecked = item.collect
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            super.onBindViewHolder(holder, position, item, payloads)
         }
     }
 }

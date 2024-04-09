@@ -10,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -36,6 +37,13 @@ fun ViewModel.launcher(
     return viewModelScope.launch(context, start) {
         block()
     }
+}
+
+fun ViewModel.launcherIO(
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+): Job {
+    return launcher(Dispatchers.IO, start, block)
 }
 
 fun ComponentActivity.launcher(

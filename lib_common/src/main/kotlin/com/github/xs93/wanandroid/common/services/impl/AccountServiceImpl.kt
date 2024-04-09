@@ -21,12 +21,16 @@ class AccountServiceImpl @Inject constructor() : AccountService {
 
     private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = AccountService::class.java) }
 
+    @Inject
+    lateinit var accountManager: AccountManager
+
+
     override suspend fun login(username: String, password: String): Result<WanResponse<User>> {
         val result = service.login(username, password)
         result.onSuccess {
             val user = it.data
             if (user != null) {
-                AccountManager.logIn(user)
+                accountManager.logIn(user)
             }
         }
         return result
@@ -35,7 +39,7 @@ class AccountServiceImpl @Inject constructor() : AccountService {
     override suspend fun logout(): Result<WanResponse<Int>> {
         val result = service.logout()
         result.onSuccess {
-            AccountManager.logout()
+            accountManager.logout()
         }
         return result
     }
@@ -48,12 +52,12 @@ class AccountServiceImpl @Inject constructor() : AccountService {
         return service.register(username, password, confirmPassword)
     }
 
-    override suspend fun getUserInfo(): Result<WanResponse<UserDetailInfo>> {
-        val result = service.getUserInfo()
+    override suspend fun fetchUserInfo(): Result<WanResponse<UserDetailInfo>> {
+        val result = service.fetchUserInfo()
         result.onSuccess {
             val userDetailInfo = it.data
             if (userDetailInfo != null) {
-                AccountManager.cacheUserDetailInfo(userDetailInfo)
+                accountManager.cacheUserDetailInfo(userDetailInfo)
             }
         }
         return result

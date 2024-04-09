@@ -5,20 +5,25 @@ import com.github.xs93.framework.base.viewmodel.IUIState
 import com.github.xs93.framework.base.viewmodel.IUiAction
 import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviStates
-import com.github.xs93.framework.ktx.launcher
+import com.github.xs93.framework.ktx.launcherIO
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
-import com.github.xs93.wanandroid.app.entity.Banner
-import com.github.xs93.wanandroid.app.repository.HomeRepository
+import com.github.xs93.wanandroid.common.data.AccountDataModule
+import com.github.xs93.wanandroid.common.data.CollectDataModel
 import com.github.xs93.wanandroid.common.entity.Article
+import com.github.xs93.wanandroid.common.entity.Banner
+import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListState
 import com.github.xs93.wanandroid.common.model.ListUiState
 import com.github.xs93.wanandroid.common.model.ListUpdateDataMethod
 import com.github.xs93.wanandroid.common.model.PageStatus
+import com.github.xs93.wanandroid.common.services.HomeService
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -50,14 +55,21 @@ sealed class ExploreUiAction : IUiAction {
      * @constructor
      */
     data class RequestArticleData(val refreshData: Boolean) : ExploreUiAction()
+
+    /**
+     * 收藏或者取消收藏文章
+     * @param collectEvent CollectEvent
+     * @constructor
+     */
+    data class CollectArticle(val collectEvent: CollectEvent) : ExploreUiAction()
 }
 
 @HiltViewModel
-class ExploreViewModel @Inject constructor() : BaseViewModel() {
-
-    @Inject
-    lateinit var homeRepository: HomeRepository
-
+class ExploreViewModel @Inject constructor(
+    private val homeService: HomeService,
+    private val collectDataModel: CollectDataModel,
+    private val accountDataModule: AccountDataModule
+) : BaseViewModel() {
 
     private val uiState by mviStates(ExploreUiState())
     val uiStateFlow by lazy { uiState.uiStateFlow }
@@ -66,21 +78,75 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
         when (it) {
             ExploreUiAction.InitPageData -> loadPageData()
             is ExploreUiAction.RequestArticleData -> requestArticleData(it.refreshData)
+            is ExploreUiAction.CollectArticle -> collectArticle(it.collectEvent)
         }
     }
 
 
+    init {
+        launcherIO {
+            collectDataModel.collectArticleEventFlow.collect { event ->
+                val listState = uiStateFlow.value.articlesListState
+                val articleList = listState.data
+                val newList = articleList.map {
+                    if (it.id == event.id) {
+                        it.copy(collect = event.collect)
+                    } else {
+                        it
+                    }
+                }
+                val newListState = listState.copy(
+                    data = newList,
+                    updateDataMethod = ListUpdateDataMethod.Update(false)
+                )
+                uiState.updateState {
+                    copy(articlesListState = newListState)
+                }
+            }
+        }
+        launcherIO {
+            accountDataModule.userDetailFlow.map { it.userInfo.collectIds }
+                .distinctUntilChanged()
+                .collect { collectIds ->
+                    val listState = uiStateFlow.value.articlesListState
+                    val articleList = listState.data
+                    val newList = articleList.map {
+                        if (collectIds.contains(it.id)) {
+                            if (!it.collect) {
+                                it.copy(collect = true)
+                            } else {
+                                it
+                            }
+                        } else {
+                            if (it.collect) {
+                                it.copy(collect = false)
+                            } else {
+                                it
+                            }
+                        }
+                    }
+                    val newListState = listState.copy(
+                        data = newList,
+                        updateDataMethod = ListUpdateDataMethod.Update(false)
+                    )
+                    uiState.updateState {
+                        copy(articlesListState = newListState)
+                    }
+                }
+        }
+    }
+
     private fun loadPageData() {
-        launcher(Dispatchers.IO) {
+        launcherIO {
             uiState.updateState { copy(pageStatus = PageStatus.Loading) }
 
             if (!AppInject.getApp().isNetworkConnected()) {
                 uiState.updateState { copy(pageStatus = PageStatus.NoNetwork) }
-                return@launcher
+                return@launcherIO
             }
 
             val bannerDeferred = async {
-                val bannerResponse = homeRepository.getHomeBanner().getOrElse {
+                val bannerResponse = homeService.getHomeBanner().getOrElse {
                     Logger.e(it, "请求接口失败")
                     return@async false
                 }
@@ -113,7 +179,7 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
     }
 
     private fun requestArticleData(refreshData: Boolean) {
-        launcher {
+        launcherIO {
             if (refreshData) {
                 realRequestArticleData(0, true)
             } else {
@@ -131,7 +197,7 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
                 listState.copy(listUiState = if (refresh) ListUiState.Refreshing else ListUiState.LoadMore)
             uiState.updateState { copy(articlesListState = tempListState) }
 
-            val articlesResponse = homeRepository.getHomeArticle(page).getOrElse {
+            val articlesResponse = homeService.getHomeArticle(page).getOrElse {
                 tempListState = tempListState.copy(
                     listUiState = if (refresh) {
                         ListUiState.RefreshFinished(false, it)
@@ -172,6 +238,12 @@ class ExploreViewModel @Inject constructor() : BaseViewModel() {
             )
             uiState.updateState { copy(articlesListState = tempListState) }
             return@withContext true
+        }
+    }
+
+    private fun collectArticle(collectEvent: CollectEvent) {
+        launcherIO {
+            collectDataModel.articleCollectAction(collectEvent)
         }
     }
 }

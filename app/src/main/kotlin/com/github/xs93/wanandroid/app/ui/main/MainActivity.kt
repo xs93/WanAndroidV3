@@ -32,10 +32,12 @@ import com.github.xs93.wanandroid.app.ui.home.HomeFragment
 import com.github.xs93.wanandroid.app.ui.login.LoginActivity
 import com.github.xs93.wanandroid.app.ui.mine.MineFragment
 import com.github.xs93.wanandroid.app.ui.system.SystemFragment
-import com.github.xs93.wanandroid.common.account.AccountManager
 import com.github.xs93.wanandroid.common.account.AccountState
+import com.github.xs93.wanandroid.common.data.AccountDataModule
+import com.github.xs93.wanandroid.common.data.CollectDataModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 /**
  * 主页
@@ -54,6 +56,12 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
     private lateinit var mContentAdapter: SimpleViewPagerAdapter
 
     private val mainViewModel: MainViewModel by viewModels()
+
+    @Inject
+    lateinit var collectDataModel: CollectDataModel
+
+    @Inject
+    lateinit var accountDataModule: AccountDataModule
 
     override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
         super.beforeSuperOnCreate(savedInstanceState)
@@ -165,7 +173,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
             }
         }
 
-        observerState(AccountManager.accountStateFlow) {
+        observerState(accountDataModule.accountState) {
             when (it) {
                 AccountState.LogOut -> {
                     with(binding.mainDrawerLayout) {
@@ -187,7 +195,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
             }
         }
 
-        observerState(AccountManager.userDetailFlow) {
+        observerState(accountDataModule.userDetailFlow) {
             with(binding.mainDrawerLayout) {
                 txtNickname.text = it.userInfo.nickname
                 txtUserId.text = string(R.string.main_drawer_user_id, it.userInfo.id)

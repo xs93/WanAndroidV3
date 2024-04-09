@@ -11,7 +11,7 @@ import com.github.xs93.utils.ktx.dp
 import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerLayoutBinding
-import com.github.xs93.wanandroid.app.entity.Banner
+import com.github.xs93.wanandroid.common.entity.Banner
 import com.github.xs93.wanandroid.web.WebActivity
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity

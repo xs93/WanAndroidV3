@@ -58,5 +58,5 @@ interface AccountService {
      * 获取用户信息
      */
     @GET("user/lg/userinfo/json")
-    suspend fun getUserInfo(): Result<WanResponse<UserDetailInfo>>
+    suspend fun fetchUserInfo(): Result<WanResponse<UserDetailInfo>>
 }

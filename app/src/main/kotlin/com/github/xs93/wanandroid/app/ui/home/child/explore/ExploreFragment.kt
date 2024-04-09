@@ -5,6 +5,8 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter4.QuickAdapterHelper
+import com.chad.library.adapter4.util.addOnDebouncedChildClick
+import com.chad.library.adapter4.util.setOnDebouncedItemClick
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
@@ -14,6 +16,7 @@ import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreFragmentBinding
 import com.github.xs93.wanandroid.app.ui.home.child.HomeArticleAdapter
+import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListUiState
 import com.github.xs93.wanandroid.web.WebActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,9 +53,15 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
 
         bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
         articleAdapter = HomeArticleAdapter().apply {
-            setOnItemClickListener { _, _, position ->
+            setOnDebouncedItemClick { _, _, position ->
                 val article = items[position]
                 WebActivity.start(requireContext(), article.link, article.title)
+            }
+            addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
+                val article = adapter.getItem(position)
+                article?.let {
+                    viewModel.uiAction.sendAction(ExploreUiAction.CollectArticle(CollectEvent(it.id, it.collect.not())))
+                }
             }
         }
 

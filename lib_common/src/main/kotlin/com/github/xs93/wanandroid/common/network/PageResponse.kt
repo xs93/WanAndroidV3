@@ -14,7 +14,7 @@ import com.squareup.moshi.JsonClass
  */
 @Keep
 @JsonClass(generateAdapter = true)
-data class PageResp<out T>(
+data class PageResponse<out T>(
     val curPage: Int = 0, // 2
     val offset: Int = 0, // 20
     val datas: List<T> = listOf(),

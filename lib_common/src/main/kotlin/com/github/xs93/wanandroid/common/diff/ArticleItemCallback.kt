@@ -19,4 +19,22 @@ class ArticleItemCallback : DiffUtil.ItemCallback<Article>() {
     override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
         return oldItem.collect == newItem.collect
     }
+
+    override fun getChangePayload(oldItem: Article, newItem: Article): Any? {
+        val payloads = mutableListOf<ArticleItemChangePayload>()
+        if (oldItem.collect != newItem.collect) {
+            payloads.add(ArticleItemChangePayload.CollectStateChanged)
+        }
+        return if (payloads.isEmpty()) {
+            super.getChangePayload(oldItem, newItem)
+        } else {
+            ArticleItemChanged(payloads)
+        }
+    }
+}
+
+data class ArticleItemChanged(val payloads: List<ArticleItemChangePayload>)
+
+sealed class ArticleItemChangePayload {
+    data object CollectStateChanged : ArticleItemChangePayload()
 }

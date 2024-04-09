@@ -1,12 +1,15 @@
 package com.github.xs93.wanandroid.app.ui.login
 
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
+import com.github.xs93.framework.base.viewmodel.IUIState
+import com.github.xs93.framework.base.viewmodel.IUiAction
+import com.github.xs93.framework.base.viewmodel.IUiEvent
 import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.common.services.AccountService
+import com.github.xs93.wanandroid.common.data.AccountDataModule
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,8 +21,28 @@ import javax.inject.Inject
  * @date 2023/10/7 15:40
  * @email 466911254@qq.com
  */
+
+data class LoginState(
+    val accountErrorEnable: Boolean = false,
+    val accountErrorMsg: String? = null,
+    val pwdErrorEnable: Boolean = false,
+    val pwdErrorMsg: String? = null
+) : IUIState
+
+sealed class LoginEvent : IUiEvent {
+    data class LoginResultEvent(val success: Boolean, val errorMsg: String?) : LoginEvent()
+}
+
+sealed class LoginAction : IUiAction {
+    data class ClickLoginAction(val account: String?, val password: String?) : LoginAction()
+
+    data class AccountErrorEnableAction(val enable: Boolean) : LoginAction()
+
+    data class PwdErrorEnableAction(val enable: Boolean) : LoginAction()
+}
+
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val accountService: AccountService) : BaseViewModel() {
+class LoginViewModel @Inject constructor(private val accountDataModule: AccountDataModule) : BaseViewModel() {
 
 
     private val loginState by mviStates(LoginState())
@@ -49,11 +72,11 @@ class LoginViewModel @Inject constructor(private val accountService: AccountServ
                 return@launcher
             }
             showLoadingDialog()
-            val loginResult = accountService.login(username, password)
+            val loginResult = accountDataModule.login(username, password)
             loginResult.onSuccess {
                 if (it.isSuccess()) {
                     // 更新用户详细信息
-                    accountService.getUserInfo()
+                    accountDataModule.fetchUserInfo()
                     hideLoadingDialog()
                     loginEvent.sendEvent(LoginEvent.LoginResultEvent(true, null))
                 } else {

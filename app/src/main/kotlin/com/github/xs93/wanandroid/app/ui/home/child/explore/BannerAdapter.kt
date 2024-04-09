@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import coil.load
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerItemBinding
-import com.github.xs93.wanandroid.app.entity.Banner
+import com.github.xs93.wanandroid.common.entity.Banner
 import com.zhpan.bannerview.BaseBannerAdapter
 import com.zhpan.bannerview.BaseViewHolder
 

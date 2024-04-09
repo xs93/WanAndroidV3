@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.common.account
 
 import androidx.core.net.toUri
-import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.utils.AppInject
 import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.entity.User
@@ -10,7 +9,9 @@ import com.github.xs93.wanandroid.common.store.AccountStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import okhttp3.CookieJar
 import okhttp3.HttpUrl
+import javax.inject.Inject
 
 /**
  * 账号管理器
@@ -20,14 +21,13 @@ import okhttp3.HttpUrl
  * @date 2024/4/7 11:08
  * @email 466911254@qq.com
  */
-object AccountManager {
+class AccountManager @Inject constructor(private val cookieJar: CookieJar) {
 
     private val _accountStateFlow: MutableStateFlow<AccountState> = MutableStateFlow(AccountState.LogOut)
     private val _userDetailStateFlow: MutableStateFlow<UserDetailInfo> = MutableStateFlow(UserDetailInfo())
 
     init {
         AppInject.mainScope.launch {
-            val cookieJar = EasyRetrofit.getRetrofitClient(AppConstant.BaseUrl).getOkHttpClient().cookieJar
             val uri = AppConstant.BaseUrl.toUri()
             val httpUrl = HttpUrl.Builder()
                 .scheme(uri.scheme!!)
@@ -73,6 +73,7 @@ object AccountManager {
         AppInject.mainScope.launch {
             AccountStore.userInfo = null
             AccountStore.userDetailInfo = null
+            _userDetailStateFlow.emit(UserDetailInfo())
             _accountStateFlow.emit(AccountState.LogOut)
         }
     }
