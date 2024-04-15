@@ -28,6 +28,16 @@
 
         <activity
             android:name=".ui.login.LoginActivity"
-            android:configChanges="keyboard|orientation|screenSize|screenLayout|touchscreen" />
+            android:configChanges="keyboard|orientation|screenSize|screenLayout|touchscreen"
+            android:exported="false">
+
+            <intent-filter>
+                <action android:name="com.github.xs93.wanandroid.intent.action.login" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="wanandroid" />
+                <data android:host="login" />
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

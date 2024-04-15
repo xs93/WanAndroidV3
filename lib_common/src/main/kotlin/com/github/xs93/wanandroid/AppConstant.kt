@@ -12,5 +12,4 @@ object AppConstant {
 
 
     const val BaseUrl = "https://www.wanandroid.com/"
-
 }

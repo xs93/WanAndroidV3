@@ -31,5 +31,6 @@ object DataModelModule {
 
     @Singleton
     @Provides
-    fun providesAppCollectDataModel(collectService: CollectService) = CollectDataModel(collectService)
+    fun providesAppCollectDataModel(collectService: CollectService, accountDataModule: AccountDataModule) =
+        CollectDataModel(collectService, accountDataModule)
 }
