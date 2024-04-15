@@ -3,9 +3,11 @@ package com.github.xs93.wanandroid.app.ui.main
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
+import androidx.core.view.postDelayed
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import coil.load
@@ -35,6 +37,7 @@ import com.github.xs93.wanandroid.app.ui.system.SystemFragment
 import com.github.xs93.wanandroid.common.account.AccountState
 import com.github.xs93.wanandroid.common.data.AccountDataModule
 import com.github.xs93.wanandroid.common.data.CollectDataModel
+import com.github.xs93.wanandroid.common.store.AppCommonStore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import javax.inject.Inject
@@ -154,11 +157,38 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
                     mainViewModel.mainActions.sendAction(MainAction.LogoutAction)
                 }
             }
+
+            with(btnThemeMode) {
+                setOnClickListener {
+                    AppCommonStore.userCustomNightMode = true
+                    switchThemeMode.toggle()
+                }
+            }
+
+            with(switchThemeMode) {
+                isChecked = if (AppCommonStore.userCustomNightMode) {
+                    AppCommonStore.isNightMode
+                } else {
+                    isNightMode
+                }
+                setOnCheckedChangeListener { _, isChecked ->
+                    postDelayed(250) {
+                        AppCommonStore.isNightMode = isChecked
+                        if (isChecked) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                        }
+                        recreate()
+                    }
+                }
+            }
         }
 
         addOnBackPressedCallback(true) {
             moveTaskToBack(false)
         }
+
     }
 
     override fun initObserver(savedInstanceState: Bundle?) {

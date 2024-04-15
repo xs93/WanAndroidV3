@@ -1,19 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="WanToolbarStyle" parent="ToolbarStyle">
-        <item name="android:background">?colorPrimary</item>
-        <item name="titleTextColor">@color/white</item>
-        <item name="titleTextAppearance">@style/WanToolBarTitleTextAppearance</item>
-        <item name="titleCentered">true</item>
-        <item name="navigationIconTint">@color/white</item>
-        <item name="android:layout_height">@dimen/default_toolbar_height</item>
-    </style>
-
-    <style name="WanToolBarTitleTextAppearance">
-        <item name="android:textSize">18sp</item>
-    </style>
-
     <style name="WanCommonButtonStyle" parent="BaseCommonButtonStyle">
         <item name="android:insetBottom">0dp</item>
         <item name="android:insetTop">0dp</item>
@@ -31,4 +18,65 @@
         <item name="android:paddingBottom">2dp</item>
         <item name="android:textSize">12sp</item>
     </style>
+
+    <!--region BottomSheetDialog Theme  -->
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">?android:colorBackground</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <!--endregion -->
+
+
+    <!--region SwitchMaterial Component Style -->
+    <style name="Widget.App.Switch" parent="Widget.Material3.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Switch</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Switch" parent="">
+        <!--<item name="colorPrimary">?attr/colorPrimary</item> &lt;!&ndash; thumb checked&ndash;&gt;-->
+        <!--<item name="colorPrimaryContainer">?attr/colorPrimaryContainer</item>&lt;!&ndash; track checked&ndash;&gt;-->
+        <item name="colorOnSurface">#FAFAFA</item> <!-- thumb unchecked-->
+        <item name="colorOutline">#CECECE</item><!-- track unchecked-->
+    </style>
+    <!--endregion -->
+
+
+    <!--region ToolBar Component Style -->
+    <style name="Widget.App.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="navigationIconTint">?attr/colorOnPrimary</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+        <item name="android:minHeight">@dimen/default_toolbar_height</item>
+        <item name="android:elevation">8dp</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
+        <item name="titleTextAppearance">@style/TextAppearance.App.TitleLarge</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.App.TitleSmall</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Toolbar" parent="">
+        <item name="colorOnSurface">@color/md_theme_light_primary</item>
+        <item name="colorSurface">?attr/colorPrimary</item>
+    </style>
+    <!--endregion -->
+
+    <style name="TextAppearance.App.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextAppearance.App.TitleMedium" parent="TextAppearance.Material3.TitleMedium" />
+
+    <style name="TextAppearance.App.TitleSmall" parent="TextAppearance.Material3.TitleSmall" />
+
+    <style name="TextAppearance.App.BodyLarge" parent="TextAppearance.Material3.BodyLarge" />
+
 </resources>

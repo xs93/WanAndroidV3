@@ -11,7 +11,6 @@ import androidx.core.text.htmlEncode
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
-import com.github.xs93.utils.ktx.color
 import com.github.xs93.wanandroid.web.databinding.WebActivityAgentWebBinding
 import com.github.xs93.wanandroid.web.webclient.WebClientFactory
 import com.google.android.material.color.MaterialColors
@@ -74,11 +73,7 @@ class WebActivity :
         }
 
 
-        val colorPrimary = MaterialColors.getColor(
-            this, com.google.android.material.R.attr.colorPrimary, color(
-                com.github.xs93.common.R.color.md_theme_light_primary
-            )
-        )
+        val colorPrimary = MaterialColors.getColor(this, com.google.android.material.R.attr.colorPrimary, 0)
 
         mWebView = NestedScrollAgentWebView(this)
 

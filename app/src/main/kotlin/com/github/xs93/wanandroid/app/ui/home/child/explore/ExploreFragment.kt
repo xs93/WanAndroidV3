@@ -11,6 +11,7 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.statuslayout.MultiStatusLayout
+import com.github.xs93.utils.ktx.getParcelableCompat
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.app.R
@@ -31,9 +32,8 @@ import kotlinx.coroutines.flow.map
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
-    R.layout.explore_fragment, ExploreFragmentBinding::bind
-) {
+class ExploreFragment :
+    BaseViewBindingFragment<ExploreFragmentBinding>(R.layout.explore_fragment, ExploreFragmentBinding::bind) {
     companion object {
         fun newInstance(): ExploreFragment {
             val args = Bundle()
@@ -48,9 +48,13 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
     private lateinit var bannerHeaderAdapter: ExploreBannerHeaderAdapter
     private lateinit var articleAdapter: HomeArticleAdapter
     private lateinit var adapterHelper: QuickAdapterHelper
+    private lateinit var mLayoutManager: LinearLayoutManager
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-
         bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
         articleAdapter = HomeArticleAdapter().apply {
             setOnDebouncedItemClick { _, _, position ->
@@ -86,6 +90,7 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
 
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                    .also { mLayoutManager = it }
                 adapter = adapterHelper.adapter
             }
         }
@@ -139,6 +144,17 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
                 }
             }
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable("articleLayoutManagerState", mLayoutManager.onSaveInstanceState())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        val state = savedInstanceState?.getParcelableCompat("articleLayoutManagerState", SavedState::class.java)
+        mLayoutManager.onRestoreInstanceState(state)
     }
 
     override fun onFirstVisible() {

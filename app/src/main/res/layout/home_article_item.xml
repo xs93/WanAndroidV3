@@ -4,20 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="12dp"
+    android:layout_marginStart="16dp"
     android:layout_marginTop="6dp"
-    android:layout_marginEnd="12dp"
+    android:layout_marginEnd="16dp"
     android:layout_marginBottom="6dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
-    app:cardPreventCornerOverlap="true"
     app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?colorSecondaryContainer"
-        android:foreground="?attr/selectableItemBackground">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txt_author"
@@ -25,6 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
+            android:textColor="?colorOnSurfaceVariant"
             android:textSize="13sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

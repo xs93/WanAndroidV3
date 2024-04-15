@@ -6,17 +6,13 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        style="@style/WanToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_scrollFlags="enterAlways|snap"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:title="@string/login_title"
-        app:titleCentered="false" />
+        app:navigationIcon="?homeAsUpIndicator"
+        app:title="@string/login_title" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_logo"
@@ -78,7 +74,6 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
-        style="@style/WanCommonButtonStyle"
         android:layout_width="240dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"

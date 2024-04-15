@@ -5,8 +5,11 @@ import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
+import com.github.xs93.framework.ktx.isLightStatusBarsCompat
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
+import com.github.xs93.utils.ktx.getColorByAttr
+import com.github.xs93.utils.ktx.isNightMode
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.wanandroid.app.R
@@ -30,6 +33,11 @@ class LoginActivity :
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun initView(savedInstanceState: Bundle?) {
+        window.apply {
+            statusBarColor = context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary)
+            isLightStatusBarsCompat = isNightMode
+        }
+
         binding.apply {
 
             with(toolbar) {

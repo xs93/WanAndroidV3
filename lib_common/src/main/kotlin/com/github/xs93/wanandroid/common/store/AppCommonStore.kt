@@ -26,4 +26,10 @@ object AppCommonStore : MMKVStore {
 
     // 当获取appsFlyer id为空时，使用此Id
     var appsFlyerUUID by mmkvString("appsFlyerUUID", null)
+
+    // 是否使用户设置黑夜模式,当使用用户黑夜模式,则不随系统模式变化
+    var userCustomNightMode by mmkvBoolean("use_custom_night_mode", false)
+
+    // 当前是否黑夜模式
+    var isNightMode by mmkvBoolean("app_night_mode", false)
 }

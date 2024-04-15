@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/base_shape_bg_dialog_loading"
-    android:backgroundTint="@color/base_color_loading_background">
+    android:backgroundTint="?colorSurface">
 
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_margin="24dp"
-        android:indeterminateTint="@color/base_color_loading_progress"
+        android:indeterminateTint="?colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -24,7 +24,4 @@
     <color name="color_ff7562">#FF7562</color>
     <color name="color_a1000f">#A1000F</color>
     <color name="color_2979ff">#2979ff</color>
-
-    <color name="base_color_loading_progress">@color/color_a1000f</color>
-    <color name="base_color_loading_background">@color/white</color>
 </resources>

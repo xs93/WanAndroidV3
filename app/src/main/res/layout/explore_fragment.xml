@@ -14,13 +14,10 @@
         app:srlEnableAutoLoadMore="true"
         app:srlEnableFooterFollowWhenNoMoreData="false"
         app:srlEnableFooterTranslationContent="true"
+        app:srlEnableLoadMore="true"
         app:srlEnableLoadMoreWhenContentNotFull="false"
         app:srlEnableRefresh="true"
         app:srlEnableScrollContentWhenLoaded="true">
-
-        <com.scwang.smart.refresh.header.MaterialHeader
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_article_list"
@@ -31,9 +28,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/home_article_item" />
-
-        <com.scwang.smart.refresh.footer.BallPulseFooter
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 </com.github.xs93.statuslayout.MultiStatusLayout>

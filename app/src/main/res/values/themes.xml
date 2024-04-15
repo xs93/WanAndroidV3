@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="WanAndroidTheme.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/md_theme_light_primary</item>
+    <style name="AppTheme.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">?colorPrimary</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
         <item name="windowSplashScreenAnimationDuration">2000</item>
-        <item name="postSplashScreenTheme">@style/WanAndroidTheme</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
 </resources>

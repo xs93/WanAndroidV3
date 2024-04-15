@@ -9,7 +9,8 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav_view"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:minHeight="56dp"
         app:itemActiveIndicatorStyle="@null"
         app:itemIconSize="24dp"
         app:itemIconTint="@color/sel_main_tab"

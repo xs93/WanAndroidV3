@@ -7,6 +7,6 @@
             android:name=".WebActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/WanAndroidTheme.Immersive" />
+            android:theme="@style/AppTheme.Immersive" />
     </application>
 </manifest>

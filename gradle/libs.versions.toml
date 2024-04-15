@@ -1,7 +1,7 @@
 [versions]
 minSdk = "26"
 targetSdk = "34"
-androidGradlePlugin = "8.3.1"
+androidGradlePlugin = "8.3.2"
 kotlin = "1.9.22"
 kotlinCoroutines = "1.8.0"
 ksp = "1.9.22-1.0.18"

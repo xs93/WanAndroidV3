@@ -1,15 +1,17 @@
 package com.github.xs93.wanandroid.app
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.almightyai.robot.coil.CoilManager
 import com.github.xs93.common.R
-import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.ServiceApiException
+import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.CommonApplication
 import com.github.xs93.wanandroid.common.network.WanRetrofitBuildStrategy
+import com.github.xs93.wanandroid.common.store.AppCommonStore
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -35,15 +37,8 @@ class WanAndroidApp : CommonApplication() {
 
         CoilManager.init(this)
         initHttp()
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
-            MaterialHeader(context)
-        }
-        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
-            BallPulseFooter(context)
-        }
-
-        BaseDialogFragmentConfig.commonBottomSheetDialogTheme =
-            com.github.xs93.wanandroid.app.R.style.AppBottomSheetDialog
+        initSmartRefreshLayout()
+        initThemeMode()
     }
 
     private fun initHttp() {
@@ -56,5 +51,32 @@ class WanAndroidApp : CommonApplication() {
             }
         }
         EasyRetrofit.addRetrofitClient(AppConstant.BaseUrl, wanRetrofitBuildStrategy)
+    }
+
+    private fun initSmartRefreshLayout() {
+        SmartRefreshLayout.setDefaultRefreshInitializer { context, layout ->
+            layout.setPrimaryColors(
+                context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary),
+                context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary)
+            )
+        }
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
+            MaterialHeader(context).apply {
+                setColorSchemeColors(context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary))
+            }
+        }
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
+            BallPulseFooter(context)
+        }
+    }
+
+    private fun initThemeMode() {
+        if (AppCommonStore.userCustomNightMode) {
+            if (AppCommonStore.isNightMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 }
