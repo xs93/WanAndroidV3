@@ -61,6 +61,8 @@ dependencies {
     api(libs.checkableView)
     api(libs.avLoadingIndicatorView)
 
+    api(libs.androidx.webkit)
+
     api(libs.androidAutoSize)
 
     ksp(libs.moshi.kotlin.codegen)

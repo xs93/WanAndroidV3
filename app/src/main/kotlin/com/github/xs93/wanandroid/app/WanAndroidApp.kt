@@ -1,5 +1,7 @@
 package com.github.xs93.wanandroid.app
 
+import android.os.Looper
+import android.os.MessageQueue.IdleHandler
 import androidx.appcompat.app.AppCompatDelegate
 import com.almightyai.robot.coil.CoilManager
 import com.github.xs93.common.R
@@ -12,6 +14,7 @@ import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.CommonApplication
 import com.github.xs93.wanandroid.common.network.WanRetrofitBuildStrategy
 import com.github.xs93.wanandroid.common.store.AppCommonStore
+import com.github.xs93.wanandroid.common.web.WebViewPool
 import com.scwang.smart.refresh.footer.BallPulseFooter
 import com.scwang.smart.refresh.header.MaterialHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -31,6 +34,9 @@ class WanAndroidApp : CommonApplication() {
 
     @Inject
     lateinit var wanRetrofitBuildStrategy: WanRetrofitBuildStrategy
+
+    @Inject
+    lateinit var webViewPool: WebViewPool
 
     override fun onCreate() {
         super.onCreate()
@@ -77,6 +83,13 @@ class WanAndroidApp : CommonApplication() {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
+        }
+    }
+
+    private fun initWebViewPool() {
+        Looper.getMainLooper().queue.addIdleHandler {
+            webViewPool.init()
+            return@addIdleHandler false
         }
     }
 }

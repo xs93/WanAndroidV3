@@ -39,5 +39,7 @@
                 <data android:host="login" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.web.ArticleWebActivity" />
     </application>
 </manifest>

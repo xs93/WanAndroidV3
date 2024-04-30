@@ -17,9 +17,9 @@ import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreFragmentBinding
 import com.github.xs93.wanandroid.app.ui.home.child.HomeArticleAdapter
+import com.github.xs93.wanandroid.app.ui.web.ArticleWebActivity
 import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListUiState
-import com.github.xs93.wanandroid.web.WebActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
 
@@ -59,7 +59,7 @@ class ExploreFragment :
         articleAdapter = HomeArticleAdapter().apply {
             setOnDebouncedItemClick { _, _, position ->
                 val article = items[position]
-                WebActivity.start(requireContext(), article.link, article.title)
+                ArticleWebActivity.start(requireContext(), article.link)
             }
             addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
                 val article = adapter.getItem(position)
