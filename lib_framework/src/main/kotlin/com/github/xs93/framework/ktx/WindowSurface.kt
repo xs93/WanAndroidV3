@@ -3,7 +3,6 @@ package com.github.xs93.framework.ktx
 import android.content.Context
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.ktx.dp
@@ -55,12 +54,11 @@ fun View.setOnInsertsChangedListener(adaptLandscape: Boolean = true, listener: (
     setOnApplyWindowInsetsListener { v, ins ->
         val compat = WindowInsetsCompat.toWindowInsetsCompat(ins)
         val insets = compat.getInsets(WindowInsetsCompat.Type.systemBars())
-        val rContentPadding =
-            if (ViewCompat.getLayoutDirection(v) == ViewCompat.LAYOUT_DIRECTION_LTR) {
-                ContentPadding(insets.left, insets.top, insets.right, insets.bottom)
-            } else {
-                ContentPadding(insets.right, insets.top, insets.left, insets.bottom)
-            }
+        val rContentPadding = if (v.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
+            ContentPadding(insets.left, insets.top, insets.right, insets.bottom)
+        } else {
+            ContentPadding(insets.right, insets.top, insets.left, insets.bottom)
+        }
         listener(if (adaptLandscape) rContentPadding.landscape(v.context) else rContentPadding)
         v.onApplyWindowInsets(compat.toWindowInsets())
     }

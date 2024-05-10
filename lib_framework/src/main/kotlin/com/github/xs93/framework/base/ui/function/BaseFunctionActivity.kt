@@ -24,7 +24,7 @@ abstract class BaseFunctionActivity : BaseActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         for (function in functions) {
             function.onNewIntent(this, intent)
