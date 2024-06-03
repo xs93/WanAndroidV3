@@ -1,6 +1,7 @@
 package com.github.xs93.wanandroid.app.ui.home.child.explore
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +50,8 @@ class ExploreFragment :
     private lateinit var articleAdapter: HomeArticleAdapter
     private lateinit var adapterHelper: QuickAdapterHelper
     private lateinit var mLayoutManager: LinearLayoutManager
+
+    private var layoutManagerState: Parcelable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,6 +143,11 @@ class ExploreFragment :
                             binding.refreshLayout.finishLoadMore(uiState.success)
                             binding.refreshLayout.setNoMoreData(it.noMoreData)
                         }
+                        // 从重建中恢复滚动状态
+                        if (layoutManagerState != null) {
+                            mLayoutManager.onRestoreInstanceState(layoutManagerState)
+                            layoutManagerState = null
+                        }
                     }
                 }
             }
@@ -153,8 +161,8 @@ class ExploreFragment :
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        val state = savedInstanceState?.getParcelableCompat("articleLayoutManagerState", SavedState::class.java)
-        mLayoutManager.onRestoreInstanceState(state)
+        val state = savedInstanceState?.getParcelableCompat("articleLayoutManagerState", Parcelable::class.java)
+        layoutManagerState = state
     }
 
     override fun onFirstVisible() {

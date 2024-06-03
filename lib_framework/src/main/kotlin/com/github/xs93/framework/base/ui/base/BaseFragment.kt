@@ -55,6 +55,15 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
         initData(savedInstanceState)
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("FIRST_VISIBLE_CALLED", mFirstVisibleCalled)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        mFirstVisibleCalled = savedInstanceState?.getBoolean("FIRST_VISIBLE_CALLED") ?: false
+    }
 
     override fun onResume() {
         super.onResume()

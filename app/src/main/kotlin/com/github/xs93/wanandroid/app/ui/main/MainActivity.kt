@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
-import androidx.core.view.postDelayed
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import coil.load
@@ -73,13 +72,16 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
 
     override fun beforeSetContentView(savedInstanceState: Bundle?) {
         super.beforeSetContentView(savedInstanceState)
-        splashScreen.setKeepOnScreenCondition {
-            keepOnScreenCondition
-        }
-        launcher {
-            delay(1500L)
+        if (savedInstanceState != null) {
             keepOnScreenCondition = false
-            initView(savedInstanceState)
+        } else {
+            splashScreen.setKeepOnScreenCondition {
+                keepOnScreenCondition
+            }
+            launcher {
+                delay(1500L)
+                keepOnScreenCondition = false
+            }
         }
     }
 
@@ -87,10 +89,6 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
         window.apply {
             isStatusBarTranslucentCompat = true
             isLightStatusBarsCompat = !isNightMode
-        }
-
-        if (keepOnScreenCondition) {
-            return
         }
 
         mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
@@ -172,15 +170,13 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
                     isNightMode
                 }
                 setOnCheckedChangeListener { _, isChecked ->
-                    postDelayed(250) {
-                        AppCommonStore.isNightMode = isChecked
-                        if (isChecked) {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                        } else {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                        }
-                        recreate()
+                    AppCommonStore.isNightMode = isChecked
+                    if (isChecked) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    } else {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     }
+                    recreate()
                 }
             }
         }
@@ -236,6 +232,13 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
                     it.coinInfo.rank
                 )
             }
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        if (binding.drawerRoot.isDrawerOpen(GravityCompat.START)) {
+            window.isLightStatusBarsCompat = false
         }
     }
 }
