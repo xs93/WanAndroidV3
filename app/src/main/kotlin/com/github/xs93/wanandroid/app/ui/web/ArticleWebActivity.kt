@@ -64,12 +64,6 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
         with(mWebView) {
             isNestedScrollingEnabled = true
 
-            with(settings) {
-                javaScriptEnabled = true
-                javaScriptCanOpenWindowsAutomatically = true
-                domStorageEnabled = true
-            }
-
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)

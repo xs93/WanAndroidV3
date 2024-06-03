@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.app
 
 import android.os.Looper
-import android.os.MessageQueue.IdleHandler
 import androidx.appcompat.app.AppCompatDelegate
 import com.almightyai.robot.coil.CoilManager
 import com.github.xs93.common.R
@@ -45,6 +44,7 @@ class WanAndroidApp : CommonApplication() {
         initHttp()
         initSmartRefreshLayout()
         initThemeMode()
+        initWebViewPool()
     }
 
     private fun initHttp() {
