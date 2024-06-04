@@ -9,6 +9,7 @@ import com.github.xs93.framework.toast.impl.SystemToast
 import com.github.xs93.utils.ktx.appVersionCode
 import com.github.xs93.utils.ktx.isDebug
 import com.github.xs93.wanandroid.common.function.AutoSizeActivityFunction
+import com.github.xs93.wanandroid.common.function.EdgeToEdgeActivityFunction
 import com.github.xs93.wanandroid.common.store.AppCommonStore
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -32,6 +33,7 @@ class CommonAppComponent : IAppComponent {
         initToast(application)
         checkInstallVersion(application)
         FunctionsManager.addCommonActivityFunctionClassPath(AutoSizeActivityFunction::class.java)
+        FunctionsManager.addCommonActivityFunctionClassPath(EdgeToEdgeActivityFunction::class.java)
     }
 
     private fun initLogger(application: Application) {

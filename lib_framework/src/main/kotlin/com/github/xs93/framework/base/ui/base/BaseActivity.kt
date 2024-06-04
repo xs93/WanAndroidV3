@@ -3,6 +3,8 @@ package com.github.xs93.framework.base.ui.base
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.ComponentActivity
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseActivity
@@ -35,6 +37,7 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
     override fun onCreate(savedInstanceState: Bundle?) {
         beforeSuperOnCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
+        setupEnableEdgeToEdge(this)
         beforeSetContentView(savedInstanceState)
         if (getContentLayoutId() != 0) {
             setContentView(getContentLayoutId())
@@ -54,20 +57,13 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
         initData(savedInstanceState)
     }
 
+    open fun setupEnableEdgeToEdge(activity: ComponentActivity) {
+        activity.enableEdgeToEdge()
+    }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        resumed = true
-    }
-
-    override fun onPause() {
-        super.onPause()
-        resumed = false
     }
 
     override fun createLoadingDialog(): DialogFragment {

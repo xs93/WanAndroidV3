@@ -15,7 +15,6 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
-import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
@@ -86,11 +85,6 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        window.apply {
-            isStatusBarTranslucentCompat = true
-            isLightStatusBarsCompat = !isNightMode
-        }
-
         mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
             add { HomeFragment.newInstance() }
             add { ClassifyFragment.newInstance() }

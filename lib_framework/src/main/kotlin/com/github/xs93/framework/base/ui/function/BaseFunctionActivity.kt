@@ -3,6 +3,7 @@ package com.github.xs93.framework.base.ui.function
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import com.github.xs93.framework.base.ui.base.BaseActivity
 
 /**
@@ -21,6 +22,15 @@ abstract class BaseFunctionActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         for (function in functions) {
             function.onCreated(this, savedInstanceState)
+        }
+    }
+
+    override fun setupEnableEdgeToEdge(activity: ComponentActivity) {
+        val enableEdgeToEdge = functions.any {
+            it.setupEnableEdgeToEdge(activity)
+        }
+        if (!enableEdgeToEdge) {
+            super.setupEnableEdgeToEdge(activity)
         }
     }
 

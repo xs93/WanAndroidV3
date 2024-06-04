@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 
 /**
  * activity生命周期功能
@@ -21,6 +22,11 @@ open class BaseActivityFunction {
     open fun onCreated(activity: Activity, savedInstanceState: Bundle?) {
 
     }
+
+    open fun setupEnableEdgeToEdge(activity: ComponentActivity): Boolean {
+        return false
+    }
+
 
     open fun onRestarted(activity: Activity) {
 

@@ -85,7 +85,6 @@ var Window.isLightStatusBarsCompat: Boolean
     get() {
         throw UnsupportedOperationException("set value only")
     }
-    @TargetApi(23)
     set(value) {
         if (value) {
             if (Build.VERSION.SDK_INT >= 30) {
