@@ -3,7 +3,7 @@ package com.github.xs93.network.utils
 import android.content.Context
 import com.github.xs93.utils.crypt.AESCrypt.decrypt
 import com.github.xs93.utils.crypt.AESCrypt.encrypt
-import com.github.xs93.utils.md5
+import com.github.xs93.utils.hashWithMD5
 import okhttp3.Request
 import okio.Buffer
 import java.io.File
@@ -43,7 +43,7 @@ object CacheUtils {
      */
     fun getCacheKey(request: Request): String {
         val key = "${getRequestUrl(request)}?${getPostParams(request)}"
-        return key.md5()
+        return key.hashWithMD5()
     }
 
     /**
