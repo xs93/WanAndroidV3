@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
  */
 interface IMVIActionContainer<ACTION : IUiAction> {
 
-    val uiActionFlow: Flow<IUiAction>
+    val flow: Flow<IUiAction>
 }
 
 
 interface MutableMVIActionContainer<ACTION : IUiAction> : IMVIActionContainer<ACTION> {
-    fun sendAction(event: ACTION)
+    fun send(event: ACTION)
 }
 
 
@@ -33,8 +33,8 @@ internal class RealMVIActionContainer<ACTION : IUiAction>(
 ) : MutableMVIActionContainer<ACTION> {
 
     private val _uiActionFlow: Channel<ACTION> = Channel(Channel.UNLIMITED)
-    override val uiActionFlow = _uiActionFlow.receiveAsFlow()
-    override fun sendAction(event: ACTION) {
+    override val flow = _uiActionFlow.receiveAsFlow()
+    override fun send(event: ACTION) {
         scope.launch {
             _uiActionFlow.send(event)
         }
@@ -42,7 +42,7 @@ internal class RealMVIActionContainer<ACTION : IUiAction>(
 
     init {
         scope.launch {
-            uiActionFlow.collect {
+            flow.collect {
                 handler(it)
             }
         }

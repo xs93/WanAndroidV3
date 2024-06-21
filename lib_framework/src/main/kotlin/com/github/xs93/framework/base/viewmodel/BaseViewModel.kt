@@ -17,17 +17,17 @@ import com.github.xs93.utils.AppInject
 abstract class BaseViewModel : ViewModel(), IToast by UiToastProxy() {
 
     private val _commonEventFlow by mviEvents<CommonUiEvent>()
-    val commonEventFlow by lazy { _commonEventFlow.uiEventFlow }
+    val commonEventFlow by lazy { _commonEventFlow.flow }
 
     protected fun getString(@StringRes resId: Int, vararg formatArgs: Any?): String {
         return AppInject.getApp().getString(resId, *formatArgs)
     }
 
     protected fun showLoadingDialog() {
-        _commonEventFlow.sendEvent(CommonUiEvent.ShowLoadingDialog)
+        _commonEventFlow.send(CommonUiEvent.ShowLoadingDialog)
     }
 
     protected fun hideLoadingDialog() {
-        _commonEventFlow.sendEvent(CommonUiEvent.HideLoadingDialog)
+        _commonEventFlow.send(CommonUiEvent.HideLoadingDialog)
     }
 }

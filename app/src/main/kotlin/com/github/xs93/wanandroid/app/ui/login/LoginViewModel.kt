@@ -46,10 +46,10 @@ class LoginViewModel @Inject constructor(private val accountDataModule: AccountD
 
 
     private val loginState by mviStates(LoginState())
-    val loginStateFlow = loginState.uiStateFlow
+    val loginStateFlow = loginState.flow
 
     private val loginEvent by mviEvents<LoginEvent>()
-    val loginEventFlow = loginEvent.uiEventFlow
+    val loginEventFlow = loginEvent.flow
 
     val loginAction by mviActions<LoginAction> {
         when (it) {
@@ -78,26 +78,26 @@ class LoginViewModel @Inject constructor(private val accountDataModule: AccountD
                     // 更新用户详细信息
                     accountDataModule.fetchUserInfo()
                     hideLoadingDialog()
-                    loginEvent.sendEvent(LoginEvent.LoginResultEvent(true, null))
+                    loginEvent.send(LoginEvent.LoginResultEvent(true, null))
                 } else {
                     hideLoadingDialog()
-                    loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, it.errorMessage))
+                    loginEvent.send(LoginEvent.LoginResultEvent(false, it.errorMessage))
                 }
             }.onFailure {
                 hideLoadingDialog()
-                loginEvent.sendEvent(LoginEvent.LoginResultEvent(false, it.message))
+                loginEvent.send(LoginEvent.LoginResultEvent(false, it.message))
             }
         }
     }
 
     private fun accountErrorEnable(enable: Boolean, errorMsg: String?) {
-        loginState.updateState {
+        loginState.update {
             copy(accountErrorEnable = enable, accountErrorMsg = errorMsg)
         }
     }
 
     private fun pwdErrorEnable(enable: Boolean, errorMsg: String?) {
-        loginState.updateState {
+        loginState.update {
             copy(pwdErrorEnable = enable, pwdErrorMsg = errorMsg)
         }
     }

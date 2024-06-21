@@ -72,7 +72,7 @@ class ExploreViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     private val uiState by mviStates(ExploreUiState())
-    val uiStateFlow by lazy { uiState.uiStateFlow }
+    val uiStateFlow by lazy { uiState.flow }
 
     val uiAction by mviActions<ExploreUiAction> {
         when (it) {
@@ -99,7 +99,7 @@ class ExploreViewModel @Inject constructor(
                     data = newList,
                     updateDataMethod = ListUpdateDataMethod.Update(false)
                 )
-                uiState.updateState {
+                uiState.update {
                     copy(articlesListState = newListState)
                 }
             }
@@ -129,7 +129,7 @@ class ExploreViewModel @Inject constructor(
                         data = newList,
                         updateDataMethod = ListUpdateDataMethod.Update(false)
                     )
-                    uiState.updateState {
+                    uiState.update {
                         copy(articlesListState = newListState)
                     }
                 }
@@ -138,10 +138,10 @@ class ExploreViewModel @Inject constructor(
 
     private fun loadPageData() {
         launcherIO {
-            uiState.updateState { copy(pageStatus = PageStatus.Loading) }
+            uiState.update { copy(pageStatus = PageStatus.Loading) }
 
             if (!AppInject.getApp().isNetworkConnected()) {
-                uiState.updateState { copy(pageStatus = PageStatus.NoNetwork) }
+                uiState.update { copy(pageStatus = PageStatus.NoNetwork) }
                 return@launcherIO
             }
 
@@ -156,7 +156,7 @@ class ExploreViewModel @Inject constructor(
                     return@async false
                 }
 
-                uiState.updateState { copy(banners = banners) }
+                uiState.update { copy(banners = banners) }
                 return@async true
             }
 
@@ -166,7 +166,7 @@ class ExploreViewModel @Inject constructor(
 
             val bannerSuccess = bannerDeferred.await()
             val articlesSuccess = articleDeferred.await()
-            uiState.updateState {
+            uiState.update {
                 copy(
                     pageStatus = if (bannerSuccess && articlesSuccess) {
                         PageStatus.Success
@@ -195,7 +195,7 @@ class ExploreViewModel @Inject constructor(
 
             var tempListState =
                 listState.copy(listUiState = if (refresh) ListUiState.Refreshing else ListUiState.LoadMore)
-            uiState.updateState { copy(articlesListState = tempListState) }
+            uiState.update { copy(articlesListState = tempListState) }
 
             val articlesResponse = homeService.getHomeArticle(page).getOrElse {
                 tempListState = tempListState.copy(
@@ -205,7 +205,7 @@ class ExploreViewModel @Inject constructor(
                         ListUiState.LoadMoreFinished(false, it)
                     }
                 )
-                uiState.updateState { copy(articlesListState = tempListState) }
+                uiState.update { copy(articlesListState = tempListState) }
                 Logger.e(it, "请求接口失败")
                 return@withContext false
             }
@@ -218,7 +218,7 @@ class ExploreViewModel @Inject constructor(
                         ListUiState.LoadMoreFinished(false, Throwable(articlesResponse.errorMessage))
                     }
                 )
-                uiState.updateState { copy(articlesListState = tempListState) }
+                uiState.update { copy(articlesListState = tempListState) }
                 return@withContext false
             }
 
@@ -236,7 +236,7 @@ class ExploreViewModel @Inject constructor(
                     ListUiState.LoadMoreFinished(false, null)
                 }, data = newData, updateDataMethod = resetMethod, curPage = page, noMoreData = pageResp.noMoreData
             )
-            uiState.updateState { copy(articlesListState = tempListState) }
+            uiState.update { copy(articlesListState = tempListState) }
             return@withContext true
         }
     }

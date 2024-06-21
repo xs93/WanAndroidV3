@@ -11,8 +11,8 @@ import com.github.xs93.utils.ktx.dp
 import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerLayoutBinding
+import com.github.xs93.wanandroid.app.ui.web.ArticleWebActivity
 import com.github.xs93.wanandroid.common.entity.Banner
-import com.github.xs93.wanandroid.web.WebActivity
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.bannerview.constants.PageStyle
@@ -62,7 +62,7 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
             adapter = BannerAdapter()
             setOnPageClickListener { _, position ->
                 val banner = data[position]
-                WebActivity.start(context, banner.url, banner.title)
+                ArticleWebActivity.start(context, banner.url)
             }
         }.create()
         return BannerHeaderViewHolder(binding)

@@ -72,7 +72,7 @@ class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(R.layout.home_
 
             with(ivOpenDrawer) {
                 setSingleClickListener {
-                    mainViewModel.mainActions.sendAction(MainAction.OpenDrawerAction)
+                    mainViewModel.mainActions.send(MainAction.OpenDrawerAction)
                 }
             }
         }

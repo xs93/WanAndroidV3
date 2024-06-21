@@ -19,20 +19,25 @@ interface IMVIStateContainer<STATE : IUIState> {
     /**
      * Ui 状态流
      */
-    val uiStateFlow: StateFlow<STATE>
+    val flow: StateFlow<STATE>
+
+    /**
+     * 当前UIState值
+     */
+    val value: STATE get() = flow.value
 }
 
 interface MutableMVIStateContainer<STATE : IUIState> : IMVIStateContainer<STATE> {
-    fun updateState(action: STATE.() -> STATE)
+    fun update(action: STATE.() -> STATE)
 }
 
 internal class RealMVIStateContainer<STATE : IUIState>(initialState: STATE) :
     MutableMVIStateContainer<STATE> {
 
     private val _uiStateFlow: MutableStateFlow<STATE> by lazy { MutableStateFlow(initialState) }
-    override val uiStateFlow: StateFlow<STATE> = _uiStateFlow.asStateFlow()
+    override val flow: StateFlow<STATE> = _uiStateFlow.asStateFlow()
 
-    override fun updateState(action: STATE.() -> STATE) {
+    override fun update(action: STATE.() -> STATE) {
         _uiStateFlow.update { action(_uiStateFlow.value) }
     }
 }

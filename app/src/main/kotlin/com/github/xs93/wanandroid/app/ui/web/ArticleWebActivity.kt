@@ -3,17 +3,17 @@ package com.github.xs93.wanandroid.app.ui.web
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import androidx.core.view.updatePadding
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
-import com.github.xs93.framework.ktx.isLightStatusBarsCompat
-import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
-import com.github.xs93.utils.ktx.isNightMode
+import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ArticleWebActivityBinding
 import com.github.xs93.wanandroid.common.web.WebViewPool
@@ -55,11 +55,6 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView(savedInstanceState: Bundle?) {
-        window.apply {
-            isStatusBarTranslucentCompat = true
-            isLightStatusBarsCompat = isNightMode
-        }
-
         mWebView = mWebViewPool.acquireWebView(this)
         with(mWebView) {
             isNestedScrollingEnabled = true
@@ -74,6 +69,16 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
             webViewClient = object : WebViewClient() {
                 override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                     return false
+                }
+
+                override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                    super.onPageStarted(view, url, favicon)
+                    binding.progressIndicator.show()
+                }
+
+                override fun onPageFinished(view: WebView?, url: String?) {
+                    super.onPageFinished(view, url)
+                    binding.progressIndicator.hide()
                 }
             }
         }
@@ -94,6 +99,12 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
         addOnBackPressedCallback(true) {
             clickBack()
         }
+    }
+
+    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
+        super.onSystemBarInsetsChanged(contentPadding)
+        binding.flWebContainer.updatePadding(bottom = contentPadding.bottom)
+        binding.toolbar.updatePadding(top = contentPadding.top)
     }
 
     override fun initData(savedInstanceState: Bundle?) {

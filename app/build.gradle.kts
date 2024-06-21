@@ -56,7 +56,6 @@ hilt {
 
 dependencies {
     implementation(project(":lib_common"))
-    implementation(project(":mod_web"))
 
     ksp(libs.androidx.lifecycle.compiler)
 

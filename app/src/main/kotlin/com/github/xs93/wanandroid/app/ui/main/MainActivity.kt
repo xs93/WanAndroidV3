@@ -146,7 +146,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
 
             with(btnLogout) {
                 setOnClickListener {
-                    mainViewModel.mainActions.sendAction(MainAction.LogoutAction)
+                    mainViewModel.mainActions.send(MainAction.LogoutAction)
                 }
             }
 

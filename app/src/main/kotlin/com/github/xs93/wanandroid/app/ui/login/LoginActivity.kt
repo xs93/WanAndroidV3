@@ -49,7 +49,7 @@ class LoginActivity :
             with(etAccount) {
                 doOnTextChanged { text, _, _, _ ->
                     if (!text.isNullOrBlank()) {
-                        loginViewModel.loginAction.sendAction(
+                        loginViewModel.loginAction.send(
                             LoginAction.AccountErrorEnableAction(false)
                         )
                     }
@@ -59,7 +59,7 @@ class LoginActivity :
             with(etPassword) {
                 doOnTextChanged { text, _, _, _ ->
                     if (!text.isNullOrBlank()) {
-                        loginViewModel.loginAction.sendAction(
+                        loginViewModel.loginAction.send(
                             LoginAction.PwdErrorEnableAction(false)
                         )
                     }
@@ -70,7 +70,7 @@ class LoginActivity :
                 setSingleClickListener {
                     val username = etAccount.text?.toString()?.trim()
                     val password = etPassword.text?.toString()?.trim()
-                    loginViewModel.loginAction.sendAction(LoginAction.ClickLoginAction(username, password))
+                    loginViewModel.loginAction.send(LoginAction.ClickLoginAction(username, password))
                 }
             }
         }

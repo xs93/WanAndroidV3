@@ -67,7 +67,7 @@ class ExploreFragment :
             addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
                 val article = adapter.getItem(position)
                 article?.let {
-                    viewModel.uiAction.sendAction(ExploreUiAction.CollectArticle(CollectEvent(it.id, it.collect.not())))
+                    viewModel.uiAction.send(ExploreUiAction.CollectArticle(CollectEvent(it.id, it.collect.not())))
                 }
             }
         }
@@ -77,17 +77,17 @@ class ExploreFragment :
         binding.apply {
             with(pageLayout) {
                 setRetryClickListener {
-                    viewModel.uiAction.sendAction(ExploreUiAction.InitPageData)
+                    viewModel.uiAction.send(ExploreUiAction.InitPageData)
                 }
             }
 
             with(refreshLayout) {
                 setOnRefreshListener {
-                    viewModel.uiAction.sendAction(ExploreUiAction.RequestArticleData(true))
+                    viewModel.uiAction.send(ExploreUiAction.RequestArticleData(true))
                 }
 
                 setOnLoadMoreListener {
-                    viewModel.uiAction.sendAction(ExploreUiAction.RequestArticleData(false))
+                    viewModel.uiAction.send(ExploreUiAction.RequestArticleData(false))
                 }
             }
 
@@ -100,7 +100,7 @@ class ExploreFragment :
 
         NetworkMonitor.observer(viewLifecycleOwner.lifecycle) { isConnected, _ ->
             if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
-                viewModel.uiAction.sendAction(ExploreUiAction.InitPageData)
+                viewModel.uiAction.send(ExploreUiAction.InitPageData)
             }
         }
     }
@@ -166,6 +166,6 @@ class ExploreFragment :
     }
 
     override fun onFirstVisible() {
-        viewModel.uiAction.sendAction(ExploreUiAction.InitPageData)
+        viewModel.uiAction.send(ExploreUiAction.InitPageData)
     }
 }

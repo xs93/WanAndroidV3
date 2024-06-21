@@ -7,10 +7,9 @@
         <item name="android:statusBarColor">?colorSurface</item>
     </style>
 
-    <style name="AppBaseTheme" parent="Theme.Material3.DayNight">
+    <style name="AppBaseTheme" parent="Theme.Material3.Light">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">?colorSurface</item>
         <item name="materialButtonStyle">@style/WanCommonButtonStyle</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="switchStyle">@style/Widget.App.Switch</item>

@@ -23,18 +23,18 @@ interface IMVIEventContainer<EVENT : IUiEvent> {
     /**
      * Ui 状态流
      */
-    val uiEventFlow: Flow<EVENT>
+    val flow: Flow<EVENT>
 }
 
 interface MutableMVIEventContainer<EVENT : IUiEvent> : IMVIEventContainer<EVENT> {
-    fun sendEvent(event: EVENT)
+    fun send(event: EVENT)
 }
 
 internal class RealMVIEventContainer<EVENT : IUiEvent>(private val scope: CoroutineScope) :
     MutableMVIEventContainer<EVENT> {
     private val _uiEventFlow: Channel<EVENT> = Channel(Channel.UNLIMITED)
-    override val uiEventFlow: Flow<EVENT> = _uiEventFlow.receiveAsFlow()
-    override fun sendEvent(event: EVENT) {
+    override val flow: Flow<EVENT> = _uiEventFlow.receiveAsFlow()
+    override fun send(event: EVENT) {
         scope.launch {
             _uiEventFlow.send(event)
         }

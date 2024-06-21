@@ -33,7 +33,7 @@ sealed class MainAction : IUiAction {
 class MainViewModel @Inject constructor(private val accountDataModule: AccountDataModule) : BaseViewModel() {
 
     private val mainEvents by mviEvents<MainEvent>()
-    val mainEventFlow = mainEvents.uiEventFlow
+    val mainEventFlow = mainEvents.flow
 
 
     val mainActions by mviActions<MainAction> {
@@ -44,7 +44,7 @@ class MainViewModel @Inject constructor(private val accountDataModule: AccountDa
     }
 
     private fun openDrawer() {
-        mainEvents.sendEvent(MainEvent.OpenDrawerEvent)
+        mainEvents.send(MainEvent.OpenDrawerEvent)
     }
 
     private fun logout() {
