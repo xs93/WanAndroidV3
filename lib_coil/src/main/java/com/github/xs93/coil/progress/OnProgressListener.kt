@@ -1,4 +1,4 @@
-package com.almightyai.robot.coil.progress
+package com.github.xs93.coil.progress
 
 /**
  *

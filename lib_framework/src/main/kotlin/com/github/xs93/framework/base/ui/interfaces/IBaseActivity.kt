@@ -23,13 +23,13 @@ interface IBaseActivity {
 
     /**返回布局Layout*/
     @LayoutRes
-    abstract fun getContentLayoutId(): Int
+    fun getContentLayoutId(): Int
 
     /**返回ContentView*/
-    abstract fun getContentView(): View?
+    fun getContentView(): View?
 
     /** 自定义如何去调用SetContentView方法，调用此方法前提是 getContentLayoutId ==0 并且 getContentView ==null */
-    open fun customSetContentView() {}
+    fun customSetContentView() {}
 
     /**初始化View*/
     fun initView(savedInstanceState: Bundle?)

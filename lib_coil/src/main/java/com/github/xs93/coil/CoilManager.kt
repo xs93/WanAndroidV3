@@ -1,4 +1,4 @@
-package com.almightyai.robot.coil
+package com.github.xs93.coil
 
 import android.content.Context
 import coil.Coil
@@ -6,7 +6,7 @@ import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
-import com.almightyai.robot.coil.progress.ProgressManager.coilProgressInterceptor
+import com.github.xs93.coil.progress.ProgressManager.coilProgressInterceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 

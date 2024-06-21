@@ -53,10 +53,6 @@ class ExploreFragment :
 
     private var layoutManagerState: Parcelable? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun initView(view: View, savedInstanceState: Bundle?) {
         bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
         articleAdapter = HomeArticleAdapter().apply {

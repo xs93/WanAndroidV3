@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app
 
 import android.os.Looper
 import androidx.appcompat.app.AppCompatDelegate
-import com.almightyai.robot.coil.CoilManager
+import com.github.xs93.coil.CoilManager
 import com.github.xs93.common.R
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.network.EasyRetrofit

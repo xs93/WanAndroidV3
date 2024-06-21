@@ -238,8 +238,8 @@ fun Bitmap.compressByQuality(maxByteSize: Long, recycle: Boolean): ByteArray {
                 }
             }
             if (end == mid - 1) {
-                baos.reset();
-                compress(CompressFormat.JPEG, st, baos);
+                baos.reset()
+                compress(CompressFormat.JPEG, st, baos)
             }
             byteArray = baos.toByteArray()
         }

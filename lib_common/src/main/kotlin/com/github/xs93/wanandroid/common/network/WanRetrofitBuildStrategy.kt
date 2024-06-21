@@ -32,7 +32,7 @@ class WanRetrofitBuildStrategy @Inject constructor(private val cookieJar: Cookie
         )
     }
 
-    override fun callAdapterFactory(): List<CallAdapter.Factory>? {
+    override fun callAdapterFactory(): List<CallAdapter.Factory> {
         return arrayListOf(ResultCallAdapterFactory())
     }
 
