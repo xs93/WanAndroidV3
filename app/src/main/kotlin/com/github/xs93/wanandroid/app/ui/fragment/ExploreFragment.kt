@@ -70,7 +70,6 @@ class ExploreFragment :
                 }
             }
         }
-
         adapterHelper = QuickAdapterHelper.Builder(articleAdapter).build().addBeforeAdapter(bannerHeaderAdapter)
 
         binding.apply {
@@ -93,6 +92,8 @@ class ExploreFragment :
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                     .also { mLayoutManager = it }
+                // 移除动画,优化黑夜模式切换时，界面恢复导致的列表动画闪烁
+                itemAnimator = null
                 adapter = adapterHelper.adapter
             }
         }

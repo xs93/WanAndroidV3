@@ -75,6 +75,7 @@
 
     <style name="Widget.App.Toolbar.Shadow">
         <item name="android:elevation">4dp</item>
+        <item name="android:background">?colorSurface</item>
         <item name="android:outlineSpotShadowColor" tools:ignore="NewApi">@color/black</item>
         <item name="android:outlineAmbientShadowColor" tools:ignore="NewApi">@color/black</item>
     </style>
