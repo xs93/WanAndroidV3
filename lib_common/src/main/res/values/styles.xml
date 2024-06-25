@@ -19,6 +19,19 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <!--region MaterialCardView Theme -->
+    <style name="Widget.App.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Card</item>
+        <item name="cardBackgroundColor">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Card" parent="">
+        <item name="colorSurface">@color/white</item>
+        <item name="colorSurfaceContainerHighest">@color/white</item>
+        <item name="colorSurfaceContainerLow">@color/white</item>
+    </style>
+    <!--endregion -->
+
     <!--region BottomSheetDialog Theme  -->
     <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
@@ -68,7 +81,6 @@
 
     <style name="ThemeOverlay.App.Toolbar" parent="">
         <item name="colorOnSurface">@color/md_theme_light_primary</item>
-        <item name="colorSurface">?attr/colorPrimary</item>
     </style>
     <!--endregion -->
 

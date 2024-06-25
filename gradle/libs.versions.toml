@@ -20,8 +20,8 @@ moshi = "1.15.1"
 kotlinxSerialization = "1.6.2"
 
 junit = "4.13.2"
-androidx-test-ext-junit = "1.1.5"
-espresso-core = "3.5.1"
+androidx-test-ext-junit = "1.2.0"
+espresso-core = "3.6.0"
 
 smartRefreshLayout = "2.1.0"
 agentweb = "v5.0.6-androidx"

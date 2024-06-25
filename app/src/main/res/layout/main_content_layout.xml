@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="56dp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
         app:itemActiveIndicatorStyle="@null"
         app:itemIconSize="24dp"
         app:itemIconTint="@color/sel_main_tab"
@@ -22,12 +24,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/main_bottom_nav" />
+        app:menu="@menu/main_bottom_nav"
+        tools:ignore="UnusedAttribute" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_content"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
