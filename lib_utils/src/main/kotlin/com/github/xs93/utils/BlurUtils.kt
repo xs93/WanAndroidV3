@@ -202,6 +202,7 @@ object BlurUtils {
                 gsum += ginsum
                 bsum += binsum
                 stackpointer = (stackpointer + 1) % div
+
                 sir = stack[stackpointer]
                 routsum += sir[0]
                 goutsum += sir[1]

@@ -11,7 +11,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
-import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
 import com.github.xs93.framework.ktx.isSystemBarsTranslucentCompat
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
@@ -40,24 +39,18 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
-    var onDismissListener: (() -> Unit)? = null
+    private var onDismissListener: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val styleId = if (getCustomStyle() != 0) {
-            getCustomStyle()
-        } else {
-            BaseDialogFragmentConfig.commonBottomSheetDialogTheme
-        }
+        val styleId = getCustomStyle()
         if (styleId != 0) {
             setStyle(DialogFragment.STYLE_NORMAL, styleId)
         }
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -88,12 +81,14 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         return 0
     }
 
+    fun setOnDismissListener(listener: (() -> Unit)? = null) {
+        onDismissListener = listener
+    }
+
     fun getSheetBehavior(): BottomSheetBehavior<*>? {
         val dialog = dialog ?: return null
         if (dialog !is BottomSheetDialog) return null
-        val bottomSheet: FrameLayout =
-            dialog.findViewById(com.google.android.material.R.id.design_bottom_sheet) ?: return null
-        return BottomSheetBehavior.from(bottomSheet)
+        return dialog.behavior
     }
 
     /**

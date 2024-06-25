@@ -1,8 +1,8 @@
 package com.github.xs93.wanandroid.app.ui.home.child.explore
 
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
-import com.github.xs93.framework.base.viewmodel.IUIState
 import com.github.xs93.framework.base.viewmodel.IUiAction
+import com.github.xs93.framework.base.viewmodel.IUiState
 import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcherIO
@@ -40,7 +40,7 @@ data class ExploreUiState(
     val pageStatus: PageStatus = PageStatus.Loading,
     val banners: List<Banner> = listOf(),
     val articlesListState: ListState<Article> = ListState()
-) : IUIState
+) : IUiState
 
 sealed class ExploreUiAction : IUiAction {
 

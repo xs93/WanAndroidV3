@@ -3,13 +3,4 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <application>
-
-        <!-- Surface ,module can replace value by add tag tools:replace="android:value" -->
-        <meta-data
-            android:name="surface_landscape_min_width_dp"
-            android:value="500" />
-
-    </application>
 </manifest>

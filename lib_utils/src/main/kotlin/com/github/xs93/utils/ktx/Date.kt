@@ -54,22 +54,18 @@ fun Long.formatDateTime(
 /**
  * 判断 2个时间戳是否是同一天
  * @receiver Long 时间戳
- * @param secondTime Long 目标时间戳
+ * @param timestamp Long 目标时间戳
  * @param timeZone TimeZone 时区
  * @return Boolean true 是同一天,false，不是同一天
  */
-fun Long.isSameDay(secondTime: Long, timeZone: TimeZone): Boolean {
-    val nowCal = Calendar.getInstance(timeZone)
-    val secondCal = Calendar.getInstance(timeZone)
-
-    val nowDate = Date(this)
-    val secondDate = Date(secondTime)
-
-    nowCal.time = nowDate
-    secondCal.time = secondDate
-    return nowCal.get(Calendar.ERA) == secondCal.get(Calendar.ERA) &&
-            nowCal.get(Calendar.YEAR) == secondCal.get(Calendar.YEAR) &&
-            nowCal.get(Calendar.DAY_OF_YEAR) == secondCal.get(Calendar.DAY_OF_YEAR)
+fun Long.isSameDay(timestamp: Long, timeZone: TimeZone): Boolean {
+    val calendar1 = Calendar.getInstance(timeZone)
+    val calendar2 = Calendar.getInstance(timeZone)
+    calendar1.timeInMillis = this
+    calendar2.timeInMillis = timestamp
+    return calendar1.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR) &&
+            calendar1.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH) &&
+            calendar1.get(Calendar.DAY_OF_MONTH) == calendar2.get(Calendar.DAY_OF_MONTH)
 }
 
 /**

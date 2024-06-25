@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
  * @date 2023/9/8 8:50
  * @email 466911254@qq.com
  */
-interface IMVIStateContainer<STATE : IUIState> {
+interface IMVIStateContainer<STATE : IUiState> {
 
     /**
      * Ui 状态流
@@ -27,12 +27,11 @@ interface IMVIStateContainer<STATE : IUIState> {
     val value: STATE get() = flow.value
 }
 
-interface MutableMVIStateContainer<STATE : IUIState> : IMVIStateContainer<STATE> {
+interface MutableMVIStateContainer<STATE : IUiState> : IMVIStateContainer<STATE> {
     fun update(action: STATE.() -> STATE)
 }
 
-internal class RealMVIStateContainer<STATE : IUIState>(initialState: STATE) :
-    MutableMVIStateContainer<STATE> {
+internal class RealMVIStateContainer<STATE : IUiState>(initialState: STATE) : MutableMVIStateContainer<STATE> {
 
     private val _uiStateFlow: MutableStateFlow<STATE> by lazy { MutableStateFlow(initialState) }
     override val flow: StateFlow<STATE> = _uiStateFlow.asStateFlow()
@@ -42,8 +41,7 @@ internal class RealMVIStateContainer<STATE : IUIState>(initialState: STATE) :
     }
 }
 
-class MVIStateContainerLazy<STATE : IUIState>(initialState: STATE) :
-    Lazy<MutableMVIStateContainer<STATE>> {
+class MVIStateContainerLazy<STATE : IUiState>(initialState: STATE) : Lazy<MutableMVIStateContainer<STATE>> {
 
     private var cached: MutableMVIStateContainer<STATE>? = null
 
@@ -55,6 +53,6 @@ class MVIStateContainerLazy<STATE : IUIState>(initialState: STATE) :
     }
 }
 
-fun <STATE : IUIState> ViewModel.mviStates(initialState: STATE): Lazy<MutableMVIStateContainer<STATE>> {
+fun <STATE : IUiState> ViewModel.mviStates(initialState: STATE): Lazy<MutableMVIStateContainer<STATE>> {
     return MVIStateContainerLazy(initialState)
 }

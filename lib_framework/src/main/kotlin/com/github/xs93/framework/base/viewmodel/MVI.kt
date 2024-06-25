@@ -12,7 +12,7 @@ import androidx.annotation.Keep
  */
 
 @Keep
-interface IUIState
+interface IUiState
 
 @Keep
 interface IUiAction

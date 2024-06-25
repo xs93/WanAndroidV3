@@ -1,9 +1,9 @@
 package com.github.xs93.wanandroid.app.ui.login
 
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
-import com.github.xs93.framework.base.viewmodel.IUIState
 import com.github.xs93.framework.base.viewmodel.IUiAction
 import com.github.xs93.framework.base.viewmodel.IUiEvent
+import com.github.xs93.framework.base.viewmodel.IUiState
 import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
@@ -27,7 +27,7 @@ data class LoginState(
     val accountErrorMsg: String? = null,
     val pwdErrorEnable: Boolean = false,
     val pwdErrorMsg: String? = null
-) : IUIState
+) : IUiState
 
 sealed class LoginEvent : IUiEvent {
     data class LoginResultEvent(val success: Boolean, val errorMsg: String?) : LoginEvent()

@@ -8,8 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
-import com.github.xs93.framework.base.ui.utils.BaseDialogFragmentConfig
 import com.github.xs93.framework.ktx.isStatusBarTranslucentCompat
 import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
@@ -18,6 +19,7 @@ import com.github.xs93.framework.loading.ILoadingDialogControlProxy
 import com.github.xs93.framework.loading.LoadingDialogHelper
 import com.github.xs93.framework.toast.IToast
 import com.github.xs93.framework.toast.UiToastProxy
+import java.lang.reflect.Field
 
 /**
  * 基础dialogFragment 封装
@@ -33,15 +35,11 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
-    var onDismissListener: (() -> Unit)? = null
+    private var onDismissListener: (() -> Unit)? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val styleId = if (getCustomStyle() != 0) {
-            getCustomStyle()
-        } else {
-            BaseDialogFragmentConfig.commonDialogTheme
-        }
+        val styleId = getCustomStyle()
         if (styleId != 0) {
             setStyle(DialogFragment.STYLE_NORMAL, styleId)
         }
@@ -51,11 +49,7 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
         return DialogInterfaceProxyDialog(requireContext(), theme)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -82,10 +76,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
         onDismissListener?.invoke()
     }
 
-    protected open fun getCustomStyle(): Int {
-        return 0
-    }
-
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()
     }
@@ -96,5 +86,34 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
 
     override fun hideLoadingDialog() {
         mIUiLoadingDialog.hideLoadingDialog()
+    }
+
+    protected open fun getCustomStyle(): Int {
+        return 0
+    }
+
+    fun setOnDismissListener(listener: (() -> Unit)? = null) {
+        onDismissListener = listener
+    }
+
+    /**
+     * 使用此方法显示弹出框，可以避免生命周期状态错误导致的异常(Can not perform this action after onSaveInstanceState)
+     * @param manager FragmentManager
+     * @param tag String?
+     */
+    fun showAllowingStateLoss(manager: FragmentManager, tag: String? = this::class.java.simpleName) {
+        try {
+            val dismissed: Field = DialogFragment::class.java.getDeclaredField("mDismissed")
+            dismissed.isAccessible = true
+            dismissed.set(this, false)
+            val shown: Field = DialogFragment::class.java.getDeclaredField("mShownByMe")
+            shown.isAccessible = true
+            shown.set(this, true)
+            val ft: FragmentTransaction = manager.beginTransaction()
+            ft.add(this, tag)
+            ft.commitAllowingStateLoss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
