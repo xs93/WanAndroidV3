@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home.child.square
+package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View

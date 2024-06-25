@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home.child.explore
+package com.github.xs93.wanandroid.app.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup

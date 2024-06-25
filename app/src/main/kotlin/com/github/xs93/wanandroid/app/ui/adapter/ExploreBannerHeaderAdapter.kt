@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home.child.explore
+package com.github.xs93.wanandroid.app.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.github.xs93.utils.ktx.dp
 import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerLayoutBinding
-import com.github.xs93.wanandroid.app.ui.web.ArticleWebActivity
+import com.github.xs93.wanandroid.app.ui.activity.ArticleWebActivity
 import com.github.xs93.wanandroid.common.entity.Banner
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity

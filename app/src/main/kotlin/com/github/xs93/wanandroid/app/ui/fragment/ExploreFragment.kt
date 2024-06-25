@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home.child.explore
+package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -17,8 +17,11 @@ import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreFragmentBinding
-import com.github.xs93.wanandroid.app.ui.home.child.HomeArticleAdapter
-import com.github.xs93.wanandroid.app.ui.web.ArticleWebActivity
+import com.github.xs93.wanandroid.app.ui.activity.ArticleWebActivity
+import com.github.xs93.wanandroid.app.ui.adapter.ExploreBannerHeaderAdapter
+import com.github.xs93.wanandroid.app.ui.adapter.HomeArticleAdapter
+import com.github.xs93.wanandroid.app.ui.viewmodel.ExploreUiAction
+import com.github.xs93.wanandroid.app.ui.viewmodel.ExploreViewModel
 import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListUiState
 import dagger.hilt.android.AndroidEntryPoint

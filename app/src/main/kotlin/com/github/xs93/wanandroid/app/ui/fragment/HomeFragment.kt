@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home
+package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -15,11 +15,8 @@ import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.HomeFragmentBinding
-import com.github.xs93.wanandroid.app.ui.home.child.answer.AnswerFragment
-import com.github.xs93.wanandroid.app.ui.home.child.explore.ExploreFragment
-import com.github.xs93.wanandroid.app.ui.home.child.square.SquareFragment
-import com.github.xs93.wanandroid.app.ui.main.MainAction
-import com.github.xs93.wanandroid.app.ui.main.MainViewModel
+import com.github.xs93.wanandroid.app.ui.viewmodel.MainAction
+import com.github.xs93.wanandroid.app.ui.viewmodel.MainViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.parcelize.Parcelize
 

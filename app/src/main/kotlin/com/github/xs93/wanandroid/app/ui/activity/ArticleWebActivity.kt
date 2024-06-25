@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.web
+package com.github.xs93.wanandroid.app.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.login
+package com.github.xs93.wanandroid.app.ui.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -14,6 +14,9 @@ import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.LoginActivityBinding
+import com.github.xs93.wanandroid.app.ui.viewmodel.LoginAction
+import com.github.xs93.wanandroid.app.ui.viewmodel.LoginEvent
+import com.github.xs93.wanandroid.app.ui.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 /**

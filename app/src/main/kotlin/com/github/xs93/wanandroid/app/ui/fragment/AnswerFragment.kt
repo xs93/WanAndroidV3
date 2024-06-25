@@ -1,32 +1,32 @@
-package com.github.xs93.wanandroid.app.ui.system
+package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.app.databinding.FragmentSystemBinding
+import com.github.xs93.wanandroid.app.databinding.AnswerFragmentBinding
 
 /**
  *
  *
  * @author XuShuai
  * @version v1.0
- * @date 2023/5/22 14:24
+ * @date 2023/8/18 14:29
  * @email 466911254@qq.com
  */
-class SystemFragment : BaseViewBindingFragment<FragmentSystemBinding>(
-    R.layout.fragment_system,
-    FragmentSystemBinding::bind
+class AnswerFragment : BaseViewBindingFragment<AnswerFragmentBinding>(
+    R.layout.answer_fragment,
+    AnswerFragmentBinding::bind
 ) {
+
     companion object {
-        fun newInstance(): SystemFragment {
+        fun newInstance(): AnswerFragment {
             val args = Bundle()
-            val fragment = SystemFragment()
+            val fragment = AnswerFragment()
             fragment.arguments = args
             return fragment
         }
     }
-
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 

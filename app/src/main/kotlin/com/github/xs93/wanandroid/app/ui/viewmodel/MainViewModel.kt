@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.main
+package com.github.xs93.wanandroid.app.ui.viewmodel
 
 import com.github.xs93.framework.base.viewmodel.BaseViewModel
 import com.github.xs93.framework.base.viewmodel.IUiAction

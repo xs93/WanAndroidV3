@@ -16,9 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
+
         <activity
-            android:name=".ui.main.MainActivity"
-            android:configChanges="keyboard|orientation|screenSize|screenLayout|touchscreen"
+            android:name=".ui.activity.StartActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Starting">
@@ -29,10 +29,15 @@
         </activity>
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="keyboard|orientation|screenSize|screenLayout|touchscreen"
             android:exported="false"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:configChanges="keyboard|orientation|screenSize|screenLayout|touchscreen"
+            android:exported="false">
 
             <intent-filter>
                 <action android:name="com.github.xs93.wanandroid.intent.action.login" />
@@ -43,6 +48,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.web.ArticleWebActivity" />
+        <activity android:name=".ui.activity.ArticleWebActivity" />
     </application>
 </manifest>

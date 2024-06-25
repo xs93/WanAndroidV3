@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.home.child
+package com.github.xs93.wanandroid.app.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

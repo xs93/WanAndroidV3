@@ -1,11 +1,9 @@
-package com.github.xs93.wanandroid.app.ui.main
+package com.github.xs93.wanandroid.app.ui.activity
 
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.splashscreen.SplashScreen
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -15,7 +13,6 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.isLightStatusBarsCompat
-import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
@@ -27,17 +24,18 @@ import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.visible
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
-import com.github.xs93.wanandroid.app.ui.classify.ClassifyFragment
-import com.github.xs93.wanandroid.app.ui.home.HomeFragment
-import com.github.xs93.wanandroid.app.ui.login.LoginActivity
-import com.github.xs93.wanandroid.app.ui.mine.MineFragment
-import com.github.xs93.wanandroid.app.ui.system.SystemFragment
+import com.github.xs93.wanandroid.app.ui.fragment.ClassifyFragment
+import com.github.xs93.wanandroid.app.ui.fragment.HomeFragment
+import com.github.xs93.wanandroid.app.ui.fragment.MineFragment
+import com.github.xs93.wanandroid.app.ui.fragment.SystemFragment
+import com.github.xs93.wanandroid.app.ui.viewmodel.MainAction
+import com.github.xs93.wanandroid.app.ui.viewmodel.MainEvent
+import com.github.xs93.wanandroid.app.ui.viewmodel.MainViewModel
 import com.github.xs93.wanandroid.common.account.AccountState
 import com.github.xs93.wanandroid.common.data.AccountDataModule
 import com.github.xs93.wanandroid.common.data.CollectDataModel
 import com.github.xs93.wanandroid.common.store.AppCommonStore
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 /**
@@ -51,8 +49,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_activity, MainActivityBinding::bind) {
 
-    private lateinit var splashScreen: SplashScreen
-    private var keepOnScreenCondition = true
 
     private lateinit var mContentAdapter: SimpleViewPagerAdapter
 
@@ -63,26 +59,6 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
 
     @Inject
     lateinit var accountDataModule: AccountDataModule
-
-    override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
-        super.beforeSuperOnCreate(savedInstanceState)
-        splashScreen = installSplashScreen()
-    }
-
-    override fun beforeSetContentView(savedInstanceState: Bundle?) {
-        super.beforeSetContentView(savedInstanceState)
-        if (savedInstanceState != null) {
-            keepOnScreenCondition = false
-        } else {
-            splashScreen.setKeepOnScreenCondition {
-                keepOnScreenCondition
-            }
-            launcher {
-                delay(1500L)
-                keepOnScreenCondition = false
-            }
-        }
-    }
 
     override fun initView(savedInstanceState: Bundle?) {
         mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
