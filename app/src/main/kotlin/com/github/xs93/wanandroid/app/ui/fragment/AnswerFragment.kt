@@ -7,7 +7,7 @@ import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.AnswerFragmentBinding
 
 /**
- *
+ * 问答界面
  *
  * @author XuShuai
  * @version v1.0

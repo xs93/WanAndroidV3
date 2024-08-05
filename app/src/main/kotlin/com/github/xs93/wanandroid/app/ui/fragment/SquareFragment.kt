@@ -1,17 +1,16 @@
 package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
-import android.os.Parcelable
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.util.addOnDebouncedChildClick
 import com.chad.library.adapter4.util.setOnDebouncedItemClick
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.statuslayout.MultiStatusLayout
-import com.github.xs93.utils.ktx.getParcelableCompat
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.SquareFragmentBinding
@@ -51,12 +50,11 @@ class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
     private val viewModel: SquareViewModel by viewModels()
 
     private lateinit var articleAdapter: HomeArticleAdapter
-    private lateinit var mLayoutManager: LinearLayoutManager
-
-    private var layoutManagerState: Parcelable? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         articleAdapter = HomeArticleAdapter().apply {
+            // 用于异步恢复状态
+            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
             setOnDebouncedItemClick { _, _, position ->
                 val article = items[position]
                 ArticleWebActivity.start(requireContext(), article.link)
@@ -88,7 +86,6 @@ class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
 
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                    .also { mLayoutManager = it }
                 // 移除动画,优化黑夜模式切换时，界面恢复导致的列表动画闪烁
                 itemAnimator = null
                 adapter = articleAdapter
@@ -136,26 +133,10 @@ class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
                             binding.refreshLayout.finishLoadMore(uiState.success)
                             binding.refreshLayout.setNoMoreData(it.noMoreData)
                         }
-                        // 从重建中恢复滚动状态
-                        if (layoutManagerState != null) {
-                            mLayoutManager.onRestoreInstanceState(layoutManagerState)
-                            layoutManagerState = null
-                        }
                     }
                 }
             }
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable("articleLayoutManagerState", mLayoutManager.onSaveInstanceState())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        val state = savedInstanceState?.getParcelableCompat("articleLayoutManagerState", Parcelable::class.java)
-        layoutManagerState = state
     }
 
     override fun onFirstVisible() {
