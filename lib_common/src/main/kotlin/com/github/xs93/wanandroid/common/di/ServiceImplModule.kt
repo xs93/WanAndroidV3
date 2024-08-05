@@ -3,9 +3,11 @@ package com.github.xs93.wanandroid.common.di
 import com.github.xs93.wanandroid.common.services.AccountService
 import com.github.xs93.wanandroid.common.services.CollectService
 import com.github.xs93.wanandroid.common.services.HomeService
+import com.github.xs93.wanandroid.common.services.SquareService
 import com.github.xs93.wanandroid.common.services.impl.AccountServiceImpl
 import com.github.xs93.wanandroid.common.services.impl.CollectServiceImpl
 import com.github.xs93.wanandroid.common.services.impl.HomeServiceImpl
+import com.github.xs93.wanandroid.common.services.impl.SquareServiceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,4 +37,8 @@ abstract class ServiceImplModule {
     @Binds
     @Singleton
     abstract fun getHomeServiceImpl(impl: HomeServiceImpl): HomeService
+
+    @Binds
+    @Singleton
+    abstract fun getSquareServiceImpl(impl: SquareServiceImpl): SquareService
 }

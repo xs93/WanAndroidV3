@@ -17,7 +17,7 @@ class SingleClickListener(private val interval: Long = 1000, private val singleC
     override fun onClick(v: View) {
         if (System.currentTimeMillis() - mLastClickTime > interval) {
             singleClick?.onClick(v)
+            mLastClickTime = System.currentTimeMillis()
         }
-        mLastClickTime = System.currentTimeMillis()
     }
 }
