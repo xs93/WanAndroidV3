@@ -50,6 +50,7 @@ dependencies {
     api(project(":lib_coil"))
     api(project(":lib_network"))
     api(project(":lib_utils"))
+    api(project(":lib_gdview"))
 
 
     api(libs.brvah4)

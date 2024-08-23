@@ -5,6 +5,7 @@
     <string name="main_content_bottom_menu_classify">分类</string>
     <string name="main_content_bottom_menu_system">体系</string>
     <string name="main_content_bottom_menu_mine">我的</string>
+    <string name="main_content_bottom_menu_navigator">导航</string>
     <!--endregion -->
 
     <string name="main_title_official_accounts">公众号</string>
@@ -26,6 +27,7 @@
     <string name="home_tab_answer">问答</string>
     <!--endregion -->
 
+
     <string name="article_tag_top">置顶</string>
     <string name="article_tag_new">新</string>
     <string name="article_chapter_name">%1$s • %2$s</string>
@@ -40,6 +42,11 @@
     <string name="login_btn_login">登录</string>
     <string name="login_success">Login Success</string>
     <string name="login_failed">Login Failed</string>
+    <!--endregion -->
 
+    <!--region 导航tab title -->
+    <string name="navigator_tab_navigator">导航</string>
+    <string name="navigator_tab_series">体系</string>
+    <string name="navigator_tab_tutorial">教程</string>
     <!--endregion -->
 </resources>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
@@ -72,6 +73,11 @@ class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(R.layout.home_
                 }
             }
         }
+    }
+
+    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
+        super.onSystemBarInsetsChanged(contentPadding)
+        binding.clToolbar.updatePadding(top = contentPadding.top)
     }
 
 

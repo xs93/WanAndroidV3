@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="gdBgDrawable" format="reference" />
+    <attr name="gdBgColor" format="color" />
+    <attr name="gdBorderColor" format="color" />
+    <attr name="gdBorderWidth" format="dimension" />
+    <attr name="gdStartColor" format="color" />
+    <attr name="gdCenterColor" format="color" />
+    <attr name="gdEndColor" format="color" />
+    <attr name="gdColors" format="string" />
+    <attr name="gdGradientOrientation">
+        <enum name="TOP_BOTTOM" value="0" />
+        <enum name="TR_BL" value="1" />
+        <enum name="RIGHT_LEFT" value="2" />
+        <enum name="BR_TL" value="3" />
+        <enum name="BOTTOM_TOP" value="4" />
+        <enum name="BL_TR" value="5" />
+        <enum name="LEFT_RIGHT" value="6" />
+        <enum name="TL_BR" value="7" />
+    </attr>
+    <attr name="gdRadius" format="dimension" />
+    <attr name="gdLeftTopRadius" format="dimension" />
+    <attr name="gdRightTopRadius" format="dimension" />
+    <attr name="gdRightBottomRadius" format="dimension" />
+    <attr name="gdLeftBottomRadius" format="dimension" />
+
+    <declare-styleable name="GDView">
+        <attr name="gdBgDrawable" />
+        <attr name="gdBgColor" />
+        <attr name="gdBorderColor" />
+        <attr name="gdBorderWidth" />
+        <attr name="gdStartColor" />
+        <attr name="gdCenterColor" />
+        <attr name="gdEndColor" />
+        <attr name="gdColors" />
+        <attr name="gdGradientOrientation" />
+        <attr name="gdRadius" />
+        <attr name="gdLeftTopRadius" />
+        <attr name="gdRightTopRadius" />
+        <attr name="gdRightBottomRadius" />
+        <attr name="gdLeftBottomRadius" />
+    </declare-styleable>
+
+    <declare-styleable name="GDTextView">
+        <attr name="gdBgDrawable" />
+        <attr name="gdBgColor" />
+        <attr name="gdBorderColor" />
+        <attr name="gdBorderWidth" />
+        <attr name="gdStartColor" />
+        <attr name="gdCenterColor" />
+        <attr name="gdEndColor" />
+        <attr name="gdColors" />
+        <attr name="gdGradientOrientation" />
+        <attr name="gdRadius" />
+        <attr name="gdLeftTopRadius" />
+        <attr name="gdRightTopRadius" />
+        <attr name="gdRightBottomRadius" />
+        <attr name="gdLeftBottomRadius" />
+    </declare-styleable>
+</resources>

@@ -27,7 +27,7 @@ import com.github.xs93.wanandroid.app.databinding.MainActivityBinding
 import com.github.xs93.wanandroid.app.ui.fragment.ClassifyFragment
 import com.github.xs93.wanandroid.app.ui.fragment.HomeFragment
 import com.github.xs93.wanandroid.app.ui.fragment.MineFragment
-import com.github.xs93.wanandroid.app.ui.fragment.SystemFragment
+import com.github.xs93.wanandroid.app.ui.fragment.NavigatorFragment
 import com.github.xs93.wanandroid.app.ui.viewmodel.MainAction
 import com.github.xs93.wanandroid.app.ui.viewmodel.MainEvent
 import com.github.xs93.wanandroid.app.ui.viewmodel.MainViewModel
@@ -63,8 +63,8 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
     override fun initView(savedInstanceState: Bundle?) {
         mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
             add { HomeFragment.newInstance() }
+            add { NavigatorFragment.newInstance() }
             add { ClassifyFragment.newInstance() }
-            add { SystemFragment.newInstance() }
             add { MineFragment.newInstance() }
         }
 
@@ -103,8 +103,8 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
                 setOnItemSelectedListener {
                     when (it.itemId) {
                         R.id.menu_home -> vpContent.setCurrentItem(0, false)
-                        R.id.menu_classify -> vpContent.setCurrentItem(1, false)
-                        R.id.menu_system -> vpContent.setCurrentItem(2, false)
+                        R.id.menu_navigator -> vpContent.setCurrentItem(1, false)
+                        R.id.menu_classify -> vpContent.setCurrentItem(2, false)
                         R.id.menu_mine -> vpContent.setCurrentItem(3, false)
                     }
                     true

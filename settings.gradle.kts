@@ -10,6 +10,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -29,3 +30,4 @@ include(":lib_framework")
 include(":lib_coil")
 include(":lib_network")
 include(":lib_utils")
+include(":lib_gdview")
