@@ -1,17 +1,17 @@
 [versions]
 minSdk = "26"
-targetSdk = "34"
-androidGradlePlugin = "8.5.2"
+targetSdk = "35"
+androidGradlePlugin = "8.6.1"
 kotlin = "1.9.23"
 kotlinCoroutines = "1.8.1"
 ksp = "1.9.23-1.0.20"
-androidxLifecycle = "2.8.4"
+androidxLifecycle = "2.8.6"
 androidxRoom = "2.6.1"
 androixHint = "2.52"
-androidxComposeBom = "2024.08.00"
+androidxComposeBom = "2024.09.02"
 androidxComposeCompiler = "1.5.4"
 androidxCamera = "1.3.4"
-androidxActivity = "1.9.1"
+androidxActivity = "1.9.2"
 androidxAppcompat = "1.7.0"
 
 okHttp = "4.12.0"
@@ -25,7 +25,7 @@ espresso-core = "3.6.1"
 
 smartRefreshLayout = "2.1.0"
 agentweb = "v5.0.6-androidx"
-material3Android = "1.2.1"
+material3Android = "1.3.0"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
@@ -35,14 +35,14 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.2" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.3" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
-androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.0-alpha14" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.0-beta01" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.8.2" }
-androidx-webkit = { module = "androidx.webkit:webkit", version = "1.11.0" }
+androidx-webkit = { module = "androidx.webkit:webkit", version = "1.12.0" }
 androidx-palette = { module = "androidx.palette:palette", version = "1.0.0" }
 #Lifecycle
 androidx-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
@@ -108,7 +108,7 @@ retrofit2-converter-scalars = { group = "com.squareup.retrofit2", name = "conver
 retrofit2-converter-kotlinxSerialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version = "1.0.0" }
 
 #权限库
-permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version = "1.7.1" }
+permissionx = { group = "com.guolindev.permissionx", name = "permissionx", version = "1.8.1" }
 
 #界面适配库(https://github.com/JessYanCoding/AndroidAutoSize)
 androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize", version = "v1.2.1" }
@@ -138,7 +138,7 @@ viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator
 brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version = "4.1.6" }
 
 #RecyclerView Adapter封装库(https://github.com/liangjingkanji/BRV)
-brv = { module = "com.github.liangjingkanji:BRV", version = "1.5.0" }
+brv = { module = "com.github.liangjingkanji:BRV", version = "1.6.0" }
 
 #RecyclerView 下拉刷新，上拉加载库(https://github.com/scwang90/SmartRefreshLayout)
 smartRefreshLayout-core = { group = "io.github.scwang90", name = "refresh-layout-kernel", version.ref = "smartRefreshLayout" } #核心必须依赖

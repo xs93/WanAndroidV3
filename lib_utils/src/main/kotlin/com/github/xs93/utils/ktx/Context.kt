@@ -33,8 +33,10 @@ inline val Context.appName: String
         try {
             val packageManager = packageManager
             val packageInfo = packageManager.getPackageInfoCompat(packageName, 0)
-            val labelRes = packageInfo.applicationInfo.labelRes
-            appName = resources.getString(labelRes)
+            val labelRes = packageInfo.applicationInfo?.labelRes
+            labelRes?.let {
+                appName = resources.getString(it)
+            }
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
@@ -47,7 +49,9 @@ inline val Context.appVersionName: String
         try {
             val packageManager = packageManager
             val packageInfo = packageManager.getPackageInfoCompat(packageName, 0)
-            versionName = packageInfo.versionName
+            packageInfo.versionName?.let {
+                versionName = it
+            }
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }

@@ -115,9 +115,9 @@ class GDView @JvmOverloads constructor(
         } else {
             floatArrayOf(
                 leftTopRadius, leftTopRadius,
-                leftBottomRadius, leftBottomRadius,
+                rightTopRadius, rightTopRadius,
                 rightBottomRadius, rightBottomRadius,
-                rightTopRadius, rightTopRadius
+                leftBottomRadius, leftBottomRadius,
             )
         }
     }
