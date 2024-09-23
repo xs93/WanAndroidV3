@@ -47,6 +47,7 @@ abstract class BaseApplication : Application() {
         mHelper.onTerminate(this)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onLowMemory() {
         super.onLowMemory()
         mHelper.onLowMemory(this)
