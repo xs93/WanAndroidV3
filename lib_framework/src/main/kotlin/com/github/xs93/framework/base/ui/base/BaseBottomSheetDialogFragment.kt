@@ -45,7 +45,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         super.onCreate(savedInstanceState)
         val styleId = getCustomStyle()
         if (styleId != 0) {
-            setStyle(DialogFragment.STYLE_NORMAL, styleId)
+            setStyle(STYLE_NORMAL, styleId)
         }
     }
 

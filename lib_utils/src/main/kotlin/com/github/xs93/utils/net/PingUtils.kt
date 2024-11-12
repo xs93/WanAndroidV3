@@ -19,7 +19,7 @@ import java.util.regex.Pattern
 class PingUtils {
 
     companion object {
-        private const val ipRegex =
+        private const val IP_REGEX =
             "((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))"
 
         @JvmStatic
@@ -64,7 +64,7 @@ class PingUtils {
          */
         @JvmStatic
         fun isIp(string: String): Boolean {
-            return Pattern.matches(ipRegex, string)
+            return Pattern.matches(IP_REGEX, string)
         }
 
         /**

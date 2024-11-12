@@ -24,8 +24,8 @@ import com.github.xs93.framework.toast.UiToastProxy
  * @version v1.0
  * @date 2021/11/4 11:01
  */
-abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiToastProxy(), ICreateLoadingDialog,
-    ILoadingDialogControl {
+abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiToastProxy(),
+    ICreateLoadingDialog, ILoadingDialogControl {
 
     var resumed: Boolean = false
         private set

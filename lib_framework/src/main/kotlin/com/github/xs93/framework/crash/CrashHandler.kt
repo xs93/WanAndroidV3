@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.os.Environment
 import android.os.Process
+import com.github.xs93.framework.activity.ActivityStackManager
 import com.github.xs93.utils.ktx.appVersionCode
 import com.github.xs93.utils.ktx.appVersionName
 import java.io.File
@@ -109,7 +110,7 @@ object CrashHandler : Thread.UncaughtExceptionHandler {
             }
         }
         // 结束栈内所有的activity，防止程序自动重启
-        com.github.xs93.framework.activity.ActivityStackManager.finishAllActivity()
+        ActivityStackManager.finishAllActivity()
         // 先使用默认的异常处理机制，否则直接杀死进程
         DEFAULT_HANDLER?.uncaughtException(t, e) ?: kotlin.run {
             Process.killProcess(Process.myPid())

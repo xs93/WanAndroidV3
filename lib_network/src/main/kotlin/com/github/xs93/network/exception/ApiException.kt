@@ -39,13 +39,8 @@ class ServiceApiException : ApiException {
 
 class NoNetworkException(error: ERROR, throwable: Throwable? = null) : IOException(throwable) {
 
-    var errorCode: Int
-    var errorMsg: String
-
-    init {
-        errorCode = error.code
-        errorMsg = error.errMsg
-    }
+    var errorCode: Int = error.code
+    var errorMsg: String = error.errMsg
 
     override fun toString(): String {
         return "errorCode = $errorCode,errorMsg = $errorMsg,$cause"

@@ -22,20 +22,15 @@ class SystemToast(context: Context) : IToast {
     private var sFieldTN: Field? = null
     private var sFieldTNHandler: Field? = null
 
-    private val mContext: Context
+    private val mContext: Context = context.applicationContext
 
     private val mMainHandler = Handler(Looper.getMainLooper())
 
     private var mCommonTransform: OnToastTransform? = null
 
-    init {
-        mContext = context.applicationContext
-    }
-
     fun setCommonTransform(transform: OnToastTransform?) {
         mCommonTransform = transform
     }
-
 
     override fun showToast(charSequence: CharSequence, duration: Int) {
         mMainHandler.post {
