@@ -1,6 +1,6 @@
 package com.github.xs93.coil.progress
 
-import coil.request.ImageRequest
+import coil3.request.ImageRequest
 import okhttp3.OkHttpClient
 import java.util.concurrent.ConcurrentHashMap
 
@@ -63,7 +63,7 @@ object ProgressManager {
     }
 
     fun getProgressListener(url: String?): OnProgressListener {
-        return if (url.isNullOrBlank() || mListenerMap.isEmpty()) {
+        return if (url.isNullOrBlank() || mListenerMap.isEmpty) {
             null
         } else {
             mListenerMap[url]

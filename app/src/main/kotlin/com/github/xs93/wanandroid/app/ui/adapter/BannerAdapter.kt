@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
-import coil.load
+import coil3.load
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ExploreBannerItemBinding
 import com.github.xs93.wanandroid.common.entity.Banner
@@ -46,5 +46,6 @@ class BannerAdapter : BaseBannerAdapter<Banner>() {
         return R.layout.explore_banner_item
     }
 
-    internal class ViewBindingViewHolder(val binding: ExploreBannerItemBinding) : BaseViewHolder<Banner>(binding.root)
+    internal class ViewBindingViewHolder(val binding: ExploreBannerItemBinding) :
+        BaseViewHolder<Banner>(binding.root)
 }

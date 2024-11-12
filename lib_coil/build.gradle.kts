@@ -32,5 +32,6 @@ android {
 }
 
 dependencies {
-    api(libs.coil)
+    api(libs.coil3.core)
+    api(libs.coil3.network.okhttp)
 }

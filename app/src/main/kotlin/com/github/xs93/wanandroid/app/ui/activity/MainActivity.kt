@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
-import coil.load
+import coil3.load
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
