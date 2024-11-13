@@ -28,6 +28,8 @@ import kotlin.math.absoluteValue
 import kotlin.math.sign
 
 /**
+ * 用于Viewpager2 嵌套滑动，使用此View包裹内部ViewPager2解决滑动冲突问题
+ *
  * Layout to wrap a scrollable component inside a ViewPager2. Provided as a solution to the problem
  * where pages of ViewPager2 have nested scrollable elements that scroll in the same direction as
  * ViewPager2. The scrollable element needs to be the immediate and only child of this host layout.
@@ -48,7 +50,7 @@ class NestedScrollableHost : FrameLayout {
             while (v != null && v !is ViewPager2) {
                 v = v.parent as? View
             }
-            return v as? ViewPager2
+            return v
         }
 
     private val child: View? get() = if (childCount > 0) getChildAt(0) else null
@@ -60,8 +62,8 @@ class NestedScrollableHost : FrameLayout {
     private fun canChildScroll(orientation: Int, delta: Float): Boolean {
         val direction = -delta.sign.toInt()
         return when (orientation) {
-            0 -> child?.canScrollHorizontally(direction) ?: false
-            1 -> child?.canScrollVertically(direction) ?: false
+            0 -> child?.canScrollHorizontally(direction) == true
+            1 -> child?.canScrollVertically(direction) == true
             else -> throw IllegalArgumentException()
         }
     }
