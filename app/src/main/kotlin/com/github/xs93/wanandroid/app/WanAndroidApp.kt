@@ -4,6 +4,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatDelegate
 import com.github.xs93.coil.CoilManager
 import com.github.xs93.common.R
+import com.github.xs93.framework.crash.CrashHandler
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.ServiceApiException
@@ -37,8 +38,11 @@ class WanAndroidApp : CommonApplication() {
     @Inject
     lateinit var webViewPool: WebViewPool
 
+    private val crashHandler by lazy { CrashHandler() }
+
     override fun onCreate() {
         super.onCreate()
+        crashHandler.init(this, true)
 
         CoilManager.init(this)
         initHttp()
