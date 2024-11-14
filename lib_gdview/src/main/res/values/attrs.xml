@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="gdBgDrawable" format="reference" />
-    <attr name="gdBgColor" format="color" />
-    <attr name="gdBorderColor" format="color" />
-    <attr name="gdBorderWidth" format="dimension" />
-    <attr name="gdStartColor" format="color" />
-    <attr name="gdCenterColor" format="color" />
-    <attr name="gdEndColor" format="color" />
-    <attr name="gdColors" format="string" />
-    <attr name="gdGradientOrientation">
+    <attr name="roundViewClip" format="boolean" />
+    <attr name="roundViewIsCircle" format="boolean" />
+    <attr name="roundViewRadius" format="dimension" />
+    <attr name="roundViewLeftTopRadius" format="dimension" />
+    <attr name="roundViewRightTopRadius" format="dimension" />
+    <attr name="roundViewLeftBottomRadius" format="dimension" />
+    <attr name="roundViewRightBottomRadius" format="dimension" />
+    <attr name="roundViewStrokeWidth" format="dimension" />
+    <attr name="roundViewStrokeColor" format="color" />
+    <attr name="roundViewBgColor" format="color" />
+    <attr name="roundViewBgDrawable" format="reference" />
+    <attr name="roundViewBgStartColor" format="color" />
+    <attr name="roundViewBgCenterColor" format="color" />
+    <attr name="roundViewBgEndColor" format="color" />
+    <attr name="roundViewGradientOrientation">
         <enum name="TOP_BOTTOM" value="0" />
         <enum name="TR_BL" value="1" />
         <enum name="RIGHT_LEFT" value="2" />
@@ -18,43 +24,22 @@
         <enum name="LEFT_RIGHT" value="6" />
         <enum name="TL_BR" value="7" />
     </attr>
-    <attr name="gdRadius" format="dimension" />
-    <attr name="gdLeftTopRadius" format="dimension" />
-    <attr name="gdRightTopRadius" format="dimension" />
-    <attr name="gdRightBottomRadius" format="dimension" />
-    <attr name="gdLeftBottomRadius" format="dimension" />
 
-    <declare-styleable name="GDView">
-        <attr name="gdBgDrawable" />
-        <attr name="gdBgColor" />
-        <attr name="gdBorderColor" />
-        <attr name="gdBorderWidth" />
-        <attr name="gdStartColor" />
-        <attr name="gdCenterColor" />
-        <attr name="gdEndColor" />
-        <attr name="gdColors" />
-        <attr name="gdGradientOrientation" />
-        <attr name="gdRadius" />
-        <attr name="gdLeftTopRadius" />
-        <attr name="gdRightTopRadius" />
-        <attr name="gdRightBottomRadius" />
-        <attr name="gdLeftBottomRadius" />
-    </declare-styleable>
-
-    <declare-styleable name="GDTextView">
-        <attr name="gdBgDrawable" />
-        <attr name="gdBgColor" />
-        <attr name="gdBorderColor" />
-        <attr name="gdBorderWidth" />
-        <attr name="gdStartColor" />
-        <attr name="gdCenterColor" />
-        <attr name="gdEndColor" />
-        <attr name="gdColors" />
-        <attr name="gdGradientOrientation" />
-        <attr name="gdRadius" />
-        <attr name="gdLeftTopRadius" />
-        <attr name="gdRightTopRadius" />
-        <attr name="gdRightBottomRadius" />
-        <attr name="gdLeftBottomRadius" />
+    <declare-styleable name="RoundedCornerFrameLayout">
+        <attr name="roundViewClip" />
+        <attr name="roundViewIsCircle" />
+        <attr name="roundViewRadius" />
+        <attr name="roundViewLeftTopRadius" />
+        <attr name="roundViewRightTopRadius" />
+        <attr name="roundViewRightBottomRadius" />
+        <attr name="roundViewLeftBottomRadius" />
+        <attr name="roundViewStrokeWidth" />
+        <attr name="roundViewStrokeColor" />
+        <attr name="roundViewBgColor" />
+        <attr name="roundViewBgDrawable" />
+        <attr name="roundViewBgStartColor" />
+        <attr name="roundViewBgCenterColor" />
+        <attr name="roundViewBgEndColor" />
+        <attr name="roundViewGradientOrientation" />
     </declare-styleable>
 </resources>
