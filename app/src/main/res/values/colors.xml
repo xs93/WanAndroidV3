@@ -11,4 +11,6 @@
     <color name="main_drawer_user_name">#FFFFFF</color>
     <color name="main_drawer_user_info">#FFFFFF</color>
     <color name="main_drawer_menu_text">#333333</color>
+
+    <color name="color_909090">#909090</color>
 </resources>

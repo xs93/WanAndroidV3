@@ -42,6 +42,6 @@
 
     <style name="AppTheme.Immersive">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:statusBarColor">@color/black_transparent</item>
     </style>
 </resources>

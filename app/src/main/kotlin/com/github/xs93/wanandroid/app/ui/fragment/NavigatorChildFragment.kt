@@ -3,12 +3,19 @@ package com.github.xs93.wanandroid.app.ui.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.ktx.observerState
+import com.github.xs93.framework.ui.layoutManager.CenterLinearLayoutManager
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorChildNavigatorBinding
+import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipAdapter
 import com.github.xs93.wanandroid.app.ui.viewmodel.NavigatorChildUiAction
 import com.github.xs93.wanandroid.app.ui.viewmodel.NavigatorChildViewModel
+import com.github.xs93.wanandroid.common.entity.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.map
 
 /**
  *  导航内容Fragment
@@ -35,8 +42,45 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
 
     private val viewModel: NavigatorChildViewModel by viewModels()
 
-    override fun initView(view: View, savedInstanceState: Bundle?) {
+    private lateinit var chipAdapter: NavigatorChipAdapter
+    private lateinit var chipLayoutManager: CenterLinearLayoutManager
 
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        binding.apply {
+            with(rvChipList) {
+                adapter = NavigatorChipAdapter()
+                    .apply {
+                        setOnItemClickListener(object :
+                            BaseQuickAdapter.OnItemClickListener<Navigation> {
+                            override fun onClick(
+                                adapter: BaseQuickAdapter<Navigation, *>,
+                                view: View,
+                                position: Int
+                            ) {
+                                val item = getItem(position)
+                                item?.let { setSelectedNavigation(it) }
+                            }
+                        })
+                    }
+                    .also { chipAdapter = it }
+                layoutManager = CenterLinearLayoutManager(
+                    context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                ).also { chipLayoutManager = it }
+            }
+        }
+    }
+
+    override fun initObserver(savedInstanceState: Bundle?) {
+        super.initObserver(savedInstanceState)
+        observerState(viewModel.uiStateFlow.map { it.pageStatus }) {
+            binding.pageLayout.showViewByStatus(it.status)
+        }
+
+        observerState(viewModel.uiStateFlow.map { it.navigationList }) {
+            chipAdapter.submitList(it)
+        }
     }
 
     override fun onFirstVisible() {

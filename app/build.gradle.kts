@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.banner)
     implementation(libs.viewPagerIndicator)
 
+    implementation(libs.flexbox)
+
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
 

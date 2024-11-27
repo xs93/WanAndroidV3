@@ -25,7 +25,61 @@
         <enum name="TL_BR" value="7" />
     </attr>
 
-    <declare-styleable name="RoundedCornerFrameLayout">
+    <declare-styleable name="RoundCornerFrameLayout">
+        <attr name="roundViewClip" />
+        <attr name="roundViewIsCircle" />
+        <attr name="roundViewRadius" />
+        <attr name="roundViewLeftTopRadius" />
+        <attr name="roundViewRightTopRadius" />
+        <attr name="roundViewRightBottomRadius" />
+        <attr name="roundViewLeftBottomRadius" />
+        <attr name="roundViewStrokeWidth" />
+        <attr name="roundViewStrokeColor" />
+        <attr name="roundViewBgColor" />
+        <attr name="roundViewBgDrawable" />
+        <attr name="roundViewBgStartColor" />
+        <attr name="roundViewBgCenterColor" />
+        <attr name="roundViewBgEndColor" />
+        <attr name="roundViewGradientOrientation" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerLinearLayout">
+        <attr name="roundViewClip" />
+        <attr name="roundViewIsCircle" />
+        <attr name="roundViewRadius" />
+        <attr name="roundViewLeftTopRadius" />
+        <attr name="roundViewRightTopRadius" />
+        <attr name="roundViewRightBottomRadius" />
+        <attr name="roundViewLeftBottomRadius" />
+        <attr name="roundViewStrokeWidth" />
+        <attr name="roundViewStrokeColor" />
+        <attr name="roundViewBgColor" />
+        <attr name="roundViewBgDrawable" />
+        <attr name="roundViewBgStartColor" />
+        <attr name="roundViewBgCenterColor" />
+        <attr name="roundViewBgEndColor" />
+        <attr name="roundViewGradientOrientation" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerConstraintLayout">
+        <attr name="roundViewClip" />
+        <attr name="roundViewIsCircle" />
+        <attr name="roundViewRadius" />
+        <attr name="roundViewLeftTopRadius" />
+        <attr name="roundViewRightTopRadius" />
+        <attr name="roundViewRightBottomRadius" />
+        <attr name="roundViewLeftBottomRadius" />
+        <attr name="roundViewStrokeWidth" />
+        <attr name="roundViewStrokeColor" />
+        <attr name="roundViewBgColor" />
+        <attr name="roundViewBgDrawable" />
+        <attr name="roundViewBgStartColor" />
+        <attr name="roundViewBgCenterColor" />
+        <attr name="roundViewBgEndColor" />
+        <attr name="roundViewGradientOrientation" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerTextView">
         <attr name="roundViewClip" />
         <attr name="roundViewIsCircle" />
         <attr name="roundViewRadius" />

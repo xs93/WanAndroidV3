@@ -32,14 +32,15 @@ import java.lang.reflect.Field
  * @date 2023/6/16 14:17
  * @email 466911254@qq.com
  */
-abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBaseFragment, IToast by UiToastProxy(),
+abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBaseFragment,
+    IToast by UiToastProxy(),
     ICreateLoadingDialog, ILoadingDialogControl {
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
-    private var onDismissListener: (() -> Unit)? = null
+    private val dismissListeners by lazy { mutableListOf<() -> Unit>() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,11 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -74,15 +79,18 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissListener?.invoke()
+        val iterator = dismissListeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().invoke()
+        }
     }
 
     protected open fun getCustomStyle(): Int {
         return 0
     }
 
-    fun setOnDismissListener(listener: (() -> Unit)? = null) {
-        onDismissListener = listener
+    fun addOnDismissListener(listener: () -> Unit) {
+        dismissListeners.add(listener)
     }
 
     fun getSheetBehavior(): BottomSheetBehavior<*>? {
@@ -144,7 +152,10 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
      * @param manager FragmentManager
      * @param tag String?
      */
-    fun showAllowingStateLoss(manager: FragmentManager, tag: String? = this::class.java.simpleName) {
+    fun showAllowingStateLoss(
+        manager: FragmentManager,
+        tag: String? = this::class.java.simpleName
+    ) {
         try {
             val dismissed: Field = DialogFragment::class.java.getDeclaredField("mDismissed")
             dismissed.isAccessible = true

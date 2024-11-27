@@ -28,7 +28,10 @@ import kotlinx.parcelize.Parcelize
  * @date 2023/8/18 13:47
  * @email 466911254@qq.com
  */
-class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(R.layout.home_fragment, HomeFragmentBinding::bind) {
+class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(
+    R.layout.home_fragment,
+    HomeFragmentBinding::bind
+) {
 
     companion object {
         fun newInstance(): HomeFragment {

@@ -10,8 +10,8 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
+import android.view.View.LAYER_TYPE_SOFTWARE
 import android.view.ViewOutlineProvider
 
 /**
@@ -108,13 +108,14 @@ class RoundCornerViewImpl(
                 } else {
                     outline.setRect(0, 0, view.width, view.height)
                 }
-                Log.d(TAG, "getOutline: $outlineCanClip")
             }
         }
     }
 
     override fun beforeDispatchDraw(canvas: Canvas?) {
         if (needClip() && !outlineCanClip) {
+            view.setLayerType(LAYER_TYPE_SOFTWARE, null)
+            setupClipPath(view.width, view.height)
             saveCanvasId = canvas?.save()
             canvas?.clipPath(clipPath)
         }

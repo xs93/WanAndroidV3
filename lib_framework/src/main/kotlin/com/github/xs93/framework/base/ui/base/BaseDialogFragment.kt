@@ -28,20 +28,21 @@ import java.lang.reflect.Field
  * @version v1.0
  * @date 2021/11/4 13:40
  */
-abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IToast by UiToastProxy(),
+abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment,
+    IToast by UiToastProxy(),
     ICreateLoadingDialog, ILoadingDialogControl {
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
-    private var onDismissListener: (() -> Unit)? = null
+    private val dismissListeners by lazy { mutableListOf<() -> Unit>() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val styleId = getCustomStyle()
         if (styleId != 0) {
-            setStyle(DialogFragment.STYLE_NORMAL, styleId)
+            setStyle(STYLE_NORMAL, styleId)
         }
     }
 
@@ -49,7 +50,11 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
         return DialogInterfaceProxyDialog(requireContext(), theme)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -73,7 +78,10 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-        onDismissListener?.invoke()
+        val iterator = dismissListeners.iterator()
+        while (iterator.hasNext()) {
+            iterator.next().invoke()
+        }
     }
 
     override fun createLoadingDialog(): DialogFragment {
@@ -92,8 +100,8 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
         return 0
     }
 
-    fun setOnDismissListener(listener: (() -> Unit)? = null) {
-        onDismissListener = listener
+    fun addOnDismissListener(listener: () -> Unit) {
+        dismissListeners.add(listener)
     }
 
     /**
@@ -101,7 +109,10 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment, IT
      * @param manager FragmentManager
      * @param tag String?
      */
-    fun showAllowingStateLoss(manager: FragmentManager, tag: String? = this::class.java.simpleName) {
+    fun showAllowingStateLoss(
+        manager: FragmentManager,
+        tag: String? = this::class.java.simpleName
+    ) {
         try {
             val dismissed: Field = DialogFragment::class.java.getDeclaredField("mDismissed")
             dismissed.isAccessible = true

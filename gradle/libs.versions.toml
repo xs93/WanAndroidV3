@@ -161,6 +161,9 @@ agentWeb-core = { group = "com.github.Justson.AgentWeb", name = "agentweb-core",
 agentWeb-filechooser = { group = "com.github.Justson.AgentWeb", name = "agentweb-filechooser", version.ref = "agentweb" }
 agentWeb-download = { group = "com.github.Justson", name = "Downloader", version = "v5.0.4-androidx" }
 
+#flexbox
+flexbox = { group = "com.google.android.flexbox", name = "flexbox", version = "3.0.0" }
+
 #日志库
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
 

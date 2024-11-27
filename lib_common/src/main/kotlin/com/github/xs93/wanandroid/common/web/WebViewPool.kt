@@ -133,6 +133,7 @@ class WebViewPool @Inject constructor(private val poolSize: Int) {
             // 是否可以访问文件
             allowFileAccess = true
             // 是否启用 database storage API
+            @Suppress("DEPRECATION")
             databaseEnabled = true
             // 这次JavaScript
             javaScriptEnabled = true

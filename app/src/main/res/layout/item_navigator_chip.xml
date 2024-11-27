@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="48dp"
+    tools:layout_width="100dp">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.github.xs93.round.RoundCornerTextView
+        android:id="@+id/tvChipName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:paddingVertical="8dp"
+        android:textSize="12sp"
+        app:roundViewBgDrawable="@drawable/sel_bg_navigator_chip"
+        app:roundViewClip="true"
+        app:roundViewRadius="24dp"
+        tools:text="常用网站" />
+</FrameLayout>
