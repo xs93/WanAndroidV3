@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.webkit.DownloadListener
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -17,11 +19,12 @@ import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ArticleWebActivityBinding
 import com.github.xs93.wanandroid.common.web.WebViewPool
+import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- *
+ * 文章web界面
  *
  * @author XuShuai
  * @version v1.0
@@ -67,8 +70,23 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
             }
 
             webViewClient = object : WebViewClient() {
-                override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                    return false
+                override fun shouldOverrideUrlLoading(
+                    view: WebView?,
+                    request: WebResourceRequest?,
+                ): Boolean {
+                    val url = request?.url
+                    Logger.d(url.toString())
+                    val scheme = url?.scheme
+                    return when (scheme) {
+                        "https", "http" -> {
+                            false
+                        }
+
+                        else -> {
+                            url?.let { goToOtherAppBySchemeProtocol(it) }
+                            true
+                        }
+                    }
                 }
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
@@ -81,6 +99,18 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
                     binding.progressIndicator.hide()
                 }
             }
+
+            setDownloadListener(object : DownloadListener {
+                override fun onDownloadStart(
+                    url: String?,
+                    userAgent: String?,
+                    contentDisposition: String?,
+                    mimetype: String?,
+                    contentLength: Long,
+                ) {
+                    Logger.d("$url,$userAgent,$contentDisposition,$mimetype,$contentLength")
+                }
+            })
         }
 
         binding.apply {
@@ -135,6 +165,16 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
             mWebView.goBack()
         } else {
             finish()
+        }
+    }
+
+    private fun goToOtherAppBySchemeProtocol(uri: Uri) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
+            startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }
