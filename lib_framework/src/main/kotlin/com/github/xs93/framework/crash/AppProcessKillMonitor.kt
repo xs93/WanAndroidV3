@@ -26,13 +26,22 @@ object AppProcessKillMonitor : Application.ActivityLifecycleCallbacks {
     private var application: Application? = null
     private var activityCount = 0
 
+    private val excludeActivities = mutableListOf<String>()
+
     fun register(app: Application) {
         this.application = app
         app.registerActivityLifecycleCallbacks(this)
     }
 
+    /**
+     * 添加需要排除的Activity,比如通知栏点击启动时直接打开目标activity时,新建进程不能判断为进程被杀死
+     */
+    fun addExcludeActivity(activityName: String) {
+        excludeActivities.add(activityName)
+    }
+
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        if (isLaunchActivity(activity)) {
+        if (isLaunchActivity(activity) || isExcludeActivity(activity)) {
             if (activityCount == 0 || activity.isTaskRoot) {
                 isProcessKilled = false
             }
@@ -73,6 +82,10 @@ object AppProcessKillMonitor : Application.ActivityLifecycleCallbacks {
         val launcherIntent = packageManager.getLaunchIntentForPackage(packageName)
         val launcherActivityName = launcherIntent?.component?.className
         return launcherActivityName == activity.javaClass.name
+    }
+
+    private fun isExcludeActivity(activity: Activity): Boolean {
+        return excludeActivities.contains(activity.javaClass.name)
     }
 
     private fun restartApp(context: Context) {
