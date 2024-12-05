@@ -11,6 +11,7 @@ import com.github.xs93.framework.ui.layoutManager.CenterLinearLayoutManager
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorChildNavigatorBinding
 import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipAdapter
+import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipChildrenAdapter
 import com.github.xs93.wanandroid.app.ui.viewmodel.NavigatorChildUiAction
 import com.github.xs93.wanandroid.app.ui.viewmodel.NavigatorChildViewModel
 import com.github.xs93.wanandroid.common.entity.Navigation
@@ -45,6 +46,8 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
     private lateinit var chipAdapter: NavigatorChipAdapter
     private lateinit var chipLayoutManager: CenterLinearLayoutManager
 
+    private lateinit var chipChildrenAdapter: NavigatorChipChildrenAdapter
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             with(rvChipList) {
@@ -55,7 +58,7 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
                             override fun onClick(
                                 adapter: BaseQuickAdapter<Navigation, *>,
                                 view: View,
-                                position: Int
+                                position: Int,
                             ) {
                                 val item = getItem(position)
                                 item?.let { setSelectedNavigation(it) }
@@ -69,6 +72,12 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
                     false
                 ).also { chipLayoutManager = it }
             }
+
+            with(rvChipChildrenList) {
+                adapter = NavigatorChipChildrenAdapter()
+                    .also { chipChildrenAdapter = it }
+                layoutManager = LinearLayoutManager(context)
+            }
         }
     }
 
@@ -80,6 +89,7 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
 
         observerState(viewModel.uiStateFlow.map { it.navigationList }) {
             chipAdapter.submitList(it)
+            chipChildrenAdapter.submitList(it)
         }
     }
 
