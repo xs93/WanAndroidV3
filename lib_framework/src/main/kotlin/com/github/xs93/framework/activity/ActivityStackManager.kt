@@ -5,7 +5,7 @@ package com.github.xs93.framework.activity
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import java.util.Stack
+import java.util.LinkedList
 import kotlin.system.exitProcess
 
 /**
@@ -17,18 +17,18 @@ import kotlin.system.exitProcess
  */
 object ActivityStackManager {
     private var mInit = false
-    private val mActivityStack = Stack<Activity>()
+    private val mActivityList = LinkedList<Activity>()
     private val mActivityLifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            addActivity(activity)
+            setTopActivity(activity)
         }
 
         override fun onActivityStarted(activity: Activity) {
-
+            setTopActivity(activity)
         }
 
         override fun onActivityResumed(activity: Activity) {
-
+            setTopActivity(activity)
         }
 
         override fun onActivityPaused(activity: Activity) {
@@ -57,18 +57,30 @@ object ActivityStackManager {
         }
     }
 
+
     @JvmStatic
-    private fun addActivity(activity: Activity?) {
+    private fun setTopActivity(activity: Activity?) {
         activity?.let {
-            mActivityStack.add(activity)
+            if (mActivityList.contains(it)) {
+                if (mActivityList.first() != it) {
+                    mActivityList.remove(it)
+                    mActivityList.addFirst(it)
+                }
+            } else {
+                mActivityList.addFirst(it)
+            }
         }
     }
 
     @JvmStatic
     private fun removeActivity(activity: Activity?) {
         activity?.let {
-            mActivityStack.remove(activity)
+            mActivityList.remove(activity)
         }
+    }
+
+    private fun isActivityAlive(activity: Activity?): Boolean {
+        return activity != null && !activity.isFinishing && !activity.isDestroyed
     }
 
     /**
@@ -77,7 +89,18 @@ object ActivityStackManager {
      */
     @JvmStatic
     fun getSize(): Int {
-        return mActivityStack.size
+        return mActivityList.size
+    }
+
+    /**
+     * 获取当前Activity列表
+     */
+    @JvmStatic
+    fun getActivityList(): List<Activity> {
+        if (mActivityList.isNotEmpty()) {
+            return LinkedList(mActivityList)
+        }
+        return LinkedList()
     }
 
     /**
@@ -86,7 +109,7 @@ object ActivityStackManager {
      */
     @JvmStatic
     fun isEmpty(): Boolean {
-        return mActivityStack.isEmpty()
+        return mActivityList.isEmpty()
     }
 
     /**
@@ -95,7 +118,7 @@ object ActivityStackManager {
      */
     @JvmStatic
     fun isNotEmpty(): Boolean {
-        return mActivityStack.isNotEmpty()
+        return mActivityList.isNotEmpty()
     }
 
     /**
@@ -104,17 +127,9 @@ object ActivityStackManager {
      */
     @JvmStatic
     fun topActivity(): Activity? {
-        if (isNotEmpty()) {
-            return mActivityStack.lastElement()
-        }
-        return null
-    }
-
-    fun secondActivity(): Activity? {
-        if (isEmpty() || getSize() < 2) {
-            return null
-        }
-        return mActivityStack.elementAt(mActivityStack.size - 2)
+        val activities = mActivityList
+        if (activities.isEmpty()) return null
+        return activities.firstOrNull { isActivityAlive(it) }
     }
 
     /**
@@ -125,7 +140,7 @@ object ActivityStackManager {
     @JvmStatic
     fun getActivity(cls: Class<*>): Activity? {
         if (isNotEmpty()) {
-            for (activity in mActivityStack) {
+            for (activity in mActivityList) {
                 if (activity.javaClass == cls) {
                     return activity
                 }
@@ -142,7 +157,7 @@ object ActivityStackManager {
     @JvmStatic
     fun getActivity(clazzName: String): Activity? {
         if (isNotEmpty()) {
-            for (activity in mActivityStack) {
+            for (activity in mActivityList) {
                 if (activity.javaClass.name == clazzName) {
                     return activity
                 }
@@ -194,7 +209,7 @@ object ActivityStackManager {
     @JvmStatic
     fun finishAllActivity() {
         if (isNotEmpty()) {
-            for (activity in mActivityStack) {
+            for (activity in mActivityList) {
                 finishActivity(activity)
             }
         }
@@ -207,7 +222,7 @@ object ActivityStackManager {
     @JvmStatic
     fun finishAllActivityExcludeClassName(exclude: List<String>) {
         if (isNotEmpty()) {
-            for (activity in mActivityStack) {
+            for (activity in mActivityList) {
                 if (!exclude.contains(activity.javaClass.name)) {
                     finishActivity(activity)
                 }
@@ -222,7 +237,7 @@ object ActivityStackManager {
     @JvmStatic
     fun finishAllActivityExcludeClass(exclude: List<Class<*>>) {
         if (isNotEmpty()) {
-            for (activity in mActivityStack) {
+            for (activity in mActivityList) {
                 if (!exclude.contains(activity::class.java)) {
                     finishActivity(activity)
                 }
