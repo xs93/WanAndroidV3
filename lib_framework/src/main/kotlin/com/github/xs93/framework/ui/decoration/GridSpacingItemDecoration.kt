@@ -16,14 +16,17 @@ import kotlin.math.roundToInt
  * @date 2023/3/24 14:29
  * @email 466911254@qq.com
  */
-
-
 class GridSpacingItemDecoration(
     private val horizontalSpaceWidth: Int,
-    private val verticalSpaceWidth: Int
+    private val verticalSpaceWidth: Int,
 ) : ItemDecoration() {
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State,
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
 
         val layoutManager = parent.layoutManager
@@ -42,20 +45,33 @@ class GridSpacingItemDecoration(
         if (orientation == GridLayoutManager.VERTICAL) {
             val column = itemPosition % spanCount
             outRect.left = (column * horizontalSpaceWidth * 1.0f / spanCount).roundToInt()
-            outRect.right = (horizontalSpaceWidth - (column + 1) * horizontalSpaceWidth * 1.0f / spanCount).roundToInt()
+            outRect.right =
+                (horizontalSpaceWidth - (column + 1) * horizontalSpaceWidth * 1.0f / spanCount).roundToInt()
             if (itemPosition / spanCount == 0) {
                 outRect.top = 0
             } else {
                 outRect.top = verticalSpaceWidth
             }
+            if (parent.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+                val tempLeft = outRect.left
+                outRect.left = outRect.right
+                outRect.right = tempLeft
+            }
+
         } else {
             val row = itemPosition % spanCount
             outRect.top = (row * verticalSpaceWidth * 1.0f / spanCount).roundToInt()
-            outRect.bottom = (verticalSpaceWidth - (row + 1) * verticalSpaceWidth * 1.0f / spanCount).roundToInt()
+            outRect.bottom =
+                (verticalSpaceWidth - (row + 1) * verticalSpaceWidth * 1.0f / spanCount).roundToInt()
             if (itemPosition / spanCount == 0) {
                 outRect.left = 0
             } else {
                 outRect.left = horizontalSpaceWidth
+            }
+            if (parent.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+                val tempLeft = outRect.left
+                outRect.left = outRect.right
+                outRect.right = tempLeft
             }
         }
     }

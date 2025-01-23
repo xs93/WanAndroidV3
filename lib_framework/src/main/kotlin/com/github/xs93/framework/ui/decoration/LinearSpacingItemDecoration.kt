@@ -16,7 +16,12 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class LinearSpacingItemDecoration(private val spacingWidth: Int) : RecyclerView.ItemDecoration() {
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State,
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         val layoutManager = parent.layoutManager
         if (layoutManager !is LinearLayoutManager) {
@@ -32,6 +37,11 @@ class LinearSpacingItemDecoration(private val spacingWidth: Int) : RecyclerView.
             if (itemPosition > 0) {
                 outRect.left = spacingWidth
             }
+        }
+        if (parent.layoutDirection == View.LAYOUT_DIRECTION_RTL) {
+            val tempLeft = outRect.left
+            outRect.left = outRect.right
+            outRect.right = tempLeft
         }
     }
 }
