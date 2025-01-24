@@ -178,6 +178,14 @@
                             android:clickable="false"
                             app:useMaterialThemeColors="true" />
                     </LinearLayout>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTest"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="10dp"
+                        android:text="软键盘高度测试" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

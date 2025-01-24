@@ -47,7 +47,10 @@ import javax.inject.Inject
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_activity, MainActivityBinding::bind) {
+class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
+    R.layout.main_activity,
+    MainActivityBinding::bind
+) {
 
 
     private lateinit var mContentAdapter: SimpleViewPagerAdapter
@@ -147,6 +150,12 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(R.layout.main_
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     }
                     recreate()
+                }
+            }
+
+            with(tvTest) {
+                setOnClickListener {
+                    startActivitySafe<SoftKeyboardTestActivity>()
                 }
             }
         }
