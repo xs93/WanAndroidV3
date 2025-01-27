@@ -1,14 +1,17 @@
 package com.github.xs93.wanandroid.app.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.github.xs93.framework.base.ui.interfaces.ISoftKeyboardListener
 import com.github.xs93.framework.base.ui.interfaces.SoftKeyboardInsetsCallback
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ui.ContentPadding
+import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ActivitySoftKeyboardTestBinding
+import com.github.xs93.wanandroid.app.ui.dialog.SoftKeyboardTestDialog
 
 /**
  *
@@ -33,15 +36,19 @@ class SoftKeyboardTestActivity : BaseViewBindingActivity<ActivitySoftKeyboardTes
                     binding.spaceKeyboard.updateLayoutParams {
                         this.height = height
                     }
-                    // Log.d("SoftKeyboardInsetsCallback", "onSoftKeyboardChanged: $show,$height")
+                    Log.d("SoftKeyboardInsetsCallback", "onSoftKeyboardChanged: $show,$height")
                 }
             }
         )
         softKeyboardInsetsCallback?.attachToView(binding.editText)
+
+        binding.btnNormalDialog.setSingleClickListener {
+            SoftKeyboardTestDialog.newInstance().showAllowingStateLoss(supportFragmentManager)
+        }
     }
 
     override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
         super.onSystemBarInsetsChanged(contentPadding)
-        binding.root.updatePadding(bottom = contentPadding.bottom)
+        binding.root.updatePadding(bottom = contentPadding.bottom, top = contentPadding.top)
     }
 }

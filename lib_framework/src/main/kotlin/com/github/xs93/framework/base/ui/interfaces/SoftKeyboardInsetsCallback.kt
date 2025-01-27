@@ -7,7 +7,17 @@ import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 
 /**
- * 软键盘 window insets callback
+ * 软键盘 window insets callback,使用window insets动画回调，监听软键盘弹出和收起动画
+ *
+ * 注意:windowSoftInputMode 设置为adjustResize,可以有效覆大部分低版本兼容问题
+ * 在Dialog和DialogFragment中,使用windowSoftInputMode 设置为adjustResize,可以有效覆大部分低版本兼容问题
+ * 如果需要动画,则dialog 或者 dialogFragment 显示的时候,最好使用全屏高度，可以避免动画卡顿,使动画更流畅
+ *
+ *
+ * 在 API 级别为 30+ 的设备上运行时，此功能可在 IME 进入/退出屏幕时完美跟踪 IME。
+ * 在 API 级别为 21-29 的设备上运行时，WindowInsetsAnimationCompat 将运行一个动画，该动画会尝试模拟系统 IME 动画。这永远无法完美地跟踪 IME，但应该为用户提供愉快的体验。
+ * 当运行具有 API < 21 的设备时，动画根本不会运行，并且会恢复为即时“对齐”。
+ *
  *
  * @author XuShuai
  * @version v1.0

@@ -52,6 +52,6 @@
 
         <activity
             android:name=".ui.activity.SoftKeyboardTestActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
     </application>
 </manifest>
