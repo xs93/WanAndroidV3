@@ -1,15 +1,18 @@
+@file:Suppress("unused", "UNCHECKED_CAST")
+
 package com.github.xs93.framework.bus
 
+import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
-import kotlin.collections.set
 
 /**
  * flow实现的事件总线
@@ -21,65 +24,63 @@ import kotlin.collections.set
  */
 object FlowBus {
 
-    private val mEvents = ConcurrentHashMap<String, EventBus<*>>()
-    private val mStickyEvents = ConcurrentHashMap<String, EventBus<*>>()
+    private const val TAG = "FlowBus"
+    private val busMap = ConcurrentHashMap<String, FlowEventBus<*>>()
+    private val stickyBusMap = ConcurrentHashMap<String, FlowStickyEventBus<*>>()
+    private val defaultScope by lazy { MainScope() }
 
-    @Suppress("UNCHECKED_CAST")
     @Synchronized
-    fun <T> with(key: String): EventBus<T> {
-        if (!mEvents.containsKey(key)) {
-            mEvents[key] = EventBus<T>(key)
-        }
-        return mEvents[key] as EventBus<T>
+    fun <T> with(key: String): FlowEventBus<T> {
+        return busMap.getOrPut(key) { FlowEventBus<T>(key) } as FlowEventBus<T>
     }
 
-    @Suppress("UNCHECKED_CAST")
     @Synchronized
-    fun <T> withSticky(key: String): StickyEventBus<T> {
-        if (!mStickyEvents.containsKey(key)) {
-            mStickyEvents[key] = StickyEventBus<T>(key)
-        }
-        return mStickyEvents[key] as StickyEventBus<T>
+    fun <T> withSticky(key: String): FlowStickyEventBus<T> {
+        return stickyBusMap.getOrPut(key) { FlowStickyEventBus<T>(key) } as FlowStickyEventBus<T>
     }
 
-    suspend fun <T> post(key: String, value: T) {
-        with<T>(key).post(value)
+    fun <T> post(key: String, event: T) {
+        post(defaultScope, key, event)
     }
 
-    fun <T> post(scope: CoroutineScope, key: String, value: T) {
-        with<T>(key).post(scope, value)
+    fun <T> post(scope: CoroutineScope, key: String, event: T) {
+        with<T>(key).post(scope, event)
     }
 
-    suspend fun <T> postSticky(key: String, value: T) {
-        withSticky<T>(key).post(value)
+    suspend fun <T> postSuspend(key: String, event: T) {
+        with<T>(key).post(event)
     }
 
-    fun <T> postSticky(scope: CoroutineScope, key: String, value: T) {
-        withSticky<T>(key).post(scope, value)
+    fun <T> postSticky(key: String, event: T) {
+        postSticky(defaultScope, key, event)
     }
 
-
-    suspend fun <T> subscribe(key: String, action: (T) -> Unit) {
-        with<T>(key).subscribe(action)
+    fun <T> postSticky(scope: CoroutineScope, key: String, event: T) {
+        withSticky<T>(key).post(scope, event)
     }
 
-    fun <T> subscribe(key: String, lifecycleOwner: LifecycleOwner, action: (T) -> Unit) {
+    suspend fun <T> postStickySuspend(key: String, event: T) {
+        withSticky<T>(key).post(event)
+    }
+
+    fun <T> observer(key: String, lifecycleOwner: LifecycleOwner, action: (t: T) -> Unit) {
         with<T>(key).subscribe(lifecycleOwner, action)
     }
 
-    suspend fun <T> subscribeSticky(key: String, action: (T) -> Unit) {
-        withSticky<T>(key).subscribe(action)
-    }
-
-    fun <T> subscribeSticky(key: String, lifecycleOwner: LifecycleOwner, action: (T) -> Unit) {
+    fun <T> observerSticky(key: String, lifecycleOwner: LifecycleOwner, action: (t: T) -> Unit) {
         withSticky<T>(key).subscribe(lifecycleOwner, action)
     }
 
+    suspend fun <T> observer(key: String, action: (t: T) -> Unit) {
+        with<T>(key).observer(action)
+    }
 
-    open class EventBus<T>(private val key: String) : LifecycleEventObserver {
+    suspend fun <T> observerSticky(key: String, action: (t: T) -> Unit) {
+        withSticky<T>(key).observer(action)
+    }
 
-
-        private val _eventFlow: MutableSharedFlow<T> by lazy {
+    open class FlowEventBus<T>(private val key: String) : LifecycleEventObserver {
+        private val _events: MutableSharedFlow<T> by lazy {
             obtainEvent()
         }
 
@@ -88,9 +89,9 @@ object FlowBus {
 
         override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
             if (event == Lifecycle.Event.ON_DESTROY) {
-                val subscribeCount = _eventFlow.subscriptionCount.value
+                val subscribeCount = _events.subscriptionCount.value
                 if (subscribeCount <= 0) {
-                    mEvents.remove(key)
+                    busMap.remove(key)
                 }
             }
         }
@@ -100,11 +101,16 @@ object FlowBus {
          * @param lifecycleOwner LifecycleOwner
          * @param action Function1<T, Unit> 消息处理事件
          */
-        fun subscribe(lifecycleOwner: LifecycleOwner, action: (T) -> Unit) {
+        fun subscribe(lifecycleOwner: LifecycleOwner, action: (t: T) -> Unit) {
             lifecycleOwner.lifecycle.addObserver(this)
             lifecycleOwner.lifecycleScope.launch {
-                _eventFlow.collect {
-                    action(it)
+                _events.collect {
+                    try {
+                        action(it)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        Log.e(TAG, "subscribe: error", e)
+                    }
                 }
             }
         }
@@ -113,9 +119,23 @@ object FlowBus {
          * 协程中订阅事件,需要自己在合适的时候取消订阅
          * @param action (T) -> Unit 消息处理事件
          */
-        suspend fun subscribe(action: (T) -> Unit) {
-            _eventFlow.collect {
-                action(it)
+        suspend fun observer(action: (t: T) -> Unit) {
+            _events.collect {
+                try {
+                    action(it)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Log.e(TAG, "subscribe: error", e)
+                }
+            }
+        }
+
+        /**
+         * 主线程中订阅事件,使用合适的 scope取消订阅
+         */
+        fun observer(scope: CoroutineScope, action: (t: T) -> Unit) {
+            scope.launch {
+                observer(action)
             }
         }
 
@@ -124,22 +144,33 @@ object FlowBus {
          * @param value T 消息值
          */
         suspend fun post(value: T) {
-            _eventFlow.emit(value)
+            _events.emit(value)
         }
 
         /**
          * 主线程中发送消息
-         * @param scope CoroutineScope 协程scope
          * @param value T 消息值
+         * @param scope CoroutineScope 协程scope
          */
         fun post(scope: CoroutineScope, value: T) {
             scope.launch {
-                _eventFlow.emit(value)
+                post(value)
+            }
+        }
+
+        fun destroy() {
+            Log.w(TAG, "destroy: 手动销毁")
+            val subscribeCount = _events.subscriptionCount.value
+            if (subscribeCount <= 0) {
+                busMap.remove(key)
             }
         }
     }
 
-    class StickyEventBus<T>(key: String) : EventBus<T>(key) {
+    /**
+     * 粘性事件
+     */
+    class FlowStickyEventBus<T>(key: String) : FlowEventBus<T>(key) {
 
         override fun obtainEvent(): MutableSharedFlow<T> =
             MutableSharedFlow(1, 1, BufferOverflow.DROP_OLDEST)
