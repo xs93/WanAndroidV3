@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.app.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.github.xs93.framework.base.ui.interfaces.ISoftKeyboardListener
@@ -31,12 +30,12 @@ class SoftKeyboardTestActivity : BaseViewBindingActivity<ActivitySoftKeyboardTes
     override fun initView(savedInstanceState: Bundle?) {
 
         softKeyboardInsetsCallback = SoftKeyboardInsetsCallback(
+            tag = "activity",
             listener = object : ISoftKeyboardListener {
                 override fun onSoftKeyboardChanged(show: Boolean, height: Int) {
                     binding.spaceKeyboard.updateLayoutParams {
                         this.height = height
                     }
-                    Log.d("SoftKeyboardInsetsCallback", "onSoftKeyboardChanged: $show,$height")
                 }
             }
         )

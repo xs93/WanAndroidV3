@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.app.ui.dialog
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.core.view.updateLayoutParams
@@ -42,6 +41,13 @@ class SoftKeyboardTestDialog : BaseViewBindingDialogFragment<DialogSoftKeyboardT
 
     override fun onStart() {
         super.onStart()
+        // dialog?.window?.let {
+        //     val layoutParams = it.attributes
+        //     layoutParams.width = 300f.dp().toInt()
+        //     layoutParams.height = -2
+        //     it.attributes = layoutParams
+        // }
+
         dialog?.window?.let {
             val layoutParams = it.attributes
             layoutParams.width = -1
@@ -52,17 +58,14 @@ class SoftKeyboardTestDialog : BaseViewBindingDialogFragment<DialogSoftKeyboardT
     }
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-
         softKeyboardInsetsCallback = SoftKeyboardInsetsCallback(
+            debug = true,
+            tag = "dialog",
             listener = object : ISoftKeyboardListener {
                 override fun onSoftKeyboardChanged(show: Boolean, height: Int) {
                     binding.spaceKeyboard.updateLayoutParams {
                         this.height = height
                     }
-                    Log.d(
-                        "SoftKeyboardInsetsCallback-dialog",
-                        "onSoftKeyboardChanged: $show,$height"
-                    )
                 }
             }
         )

@@ -1,5 +1,6 @@
 package com.github.xs93.framework.base.ui.interfaces
 
+import android.util.Log
 import android.view.View
 import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
@@ -26,7 +27,9 @@ import androidx.core.view.WindowInsetsCompat
  */
 class SoftKeyboardInsetsCallback(
     dispatchMode: Int = DISPATCH_MODE_CONTINUE_ON_SUBTREE,
-    val listener: ISoftKeyboardListener? = null,
+    private val debug: Boolean = false,
+    private val tag: String = "SoftKeyboardInsetsCallback",
+    private val listener: ISoftKeyboardListener? = null,
 ) : WindowInsetsAnimationCompat.Callback(dispatchMode),
     OnApplyWindowInsetsListener,
     ISoftKeyboardListener {
@@ -53,6 +56,14 @@ class SoftKeyboardInsetsCallback(
         // 保存view和window insets,当软键盘弹出动画结束以后,可以校准软键盘高度和显示状态,
         view = v
         lastWindowInsets = insets
+        /*
+        当前回调之前没有执行软键盘动画并且软键盘显示,则计算软键盘高度和状态,因为软键盘功能可能导致软键盘高度发生变化
+        当在dialog中使用时,activity中注册的OnApplyWindowInsetsListener也会回调，故 lastImeVisible可以过滤activity的错误调用
+        */
+        if (!deferredInsets && lastImeVisible) {
+            computeImHeight(insets)
+            logI("onApplyWindowInsets: $lastImeVisible,$lastImeHeight")
+        }
         return WindowInsetsCompat.CONSUMED
     }
 
@@ -110,7 +121,14 @@ class SoftKeyboardInsetsCallback(
         if (imeVisible != lastImeVisible || resultImeHeight != lastImeHeight) {
             lastImeVisible = imeVisible
             lastImeHeight = resultImeHeight
+            logI("onSoftKeyboardChanged: $lastImeVisible,$lastImeHeight")
             onSoftKeyboardChanged(imeVisible, resultImeHeight)
+        }
+    }
+
+    private fun logI(msg: String) {
+        if (debug) {
+            Log.i("SoftKeyboardInsetsCallback-$tag", msg)
         }
     }
 }
