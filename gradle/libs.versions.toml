@@ -1,14 +1,14 @@
 [versions]
 minSdk = "26"
 targetSdk = "35"
-androidGradlePlugin = "8.8.0"
+androidGradlePlugin = "8.8.1"
 kotlin = "2.0.20"
 kotlinCoroutines = "1.9.0"
 ksp = "2.0.20-1.0.25"
 androidxLifecycle = "2.8.7"
 androidxRoom = "2.6.1"
 androixHint = "2.52"
-androidxComposeBom = "2025.01.00"
+androidxComposeBom = "2025.02.00"
 androidxComposeCompiler = "1.5.4"
 androidxCamera = "1.4.1"
 androidxActivity = "1.10.0"
@@ -37,7 +37,7 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.5" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.6" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.0" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.0" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
@@ -53,7 +53,7 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-lifecycle-liveData-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
 #Paging3
-androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.3.5" }
+androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.3.6" }
 #Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
