@@ -10,4 +10,9 @@
     <declare-styleable name="MockClickEventConstraintLayout">
         <attr name="exclude_child_view_ids" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="StrokedTextView">
+        <attr name="stroke_width" format="dimension" />
+        <attr name="stroke_color" format="color" />
+    </declare-styleable>
 </resources>
