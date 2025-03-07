@@ -152,12 +152,6 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
                     recreate()
                 }
             }
-
-            with(tvTest) {
-                setOnClickListener {
-                    startActivitySafe<SoftKeyboardTestActivity>()
-                }
-            }
         }
 
         addOnBackPressedCallback(true) {

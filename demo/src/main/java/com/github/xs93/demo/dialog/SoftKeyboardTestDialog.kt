@@ -1,14 +1,14 @@
-package com.github.xs93.wanandroid.app.ui.dialog
+package com.github.xs93.demo.dialog
 
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import androidx.core.view.updateLayoutParams
+import com.github.xs93.demo.R
+import com.github.xs93.demo.databinding.DialogSoftKeyboardTestBinding
 import com.github.xs93.framework.base.ui.interfaces.ISoftKeyboardListener
 import com.github.xs93.framework.base.ui.interfaces.SoftKeyboardInsetsCallback
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingDialogFragment
-import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.app.databinding.DialogSoftKeyboardTestBinding
 
 /**
  *

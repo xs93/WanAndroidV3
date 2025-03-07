@@ -1,18 +1,15 @@
-package com.github.xs93.wanandroid.app.ui.activity
+package com.github.xs93.demo
 
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import com.github.xs93.demo.databinding.ActivitySoftKeyboardTestBinding
+import com.github.xs93.demo.dialog.SoftKeyboardTestDialog
 import com.github.xs93.framework.base.ui.interfaces.ISoftKeyboardListener
 import com.github.xs93.framework.base.ui.interfaces.SoftKeyboardInsetsCallback
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ui.ContentPadding
-import com.github.xs93.utils.interval.Interval
 import com.github.xs93.utils.ktx.setSingleClickListener
-import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.app.databinding.ActivitySoftKeyboardTestBinding
-import java.util.concurrent.TimeUnit
 
 /**
  *
@@ -44,17 +41,7 @@ class SoftKeyboardTestActivity : BaseViewBindingActivity<ActivitySoftKeyboardTes
         softKeyboardInsetsCallback?.attachToView(binding.editText)
 
         binding.btnNormalDialog.setSingleClickListener {
-            Interval(0, 1, TimeUnit.SECONDS, 5).subscribe {
-                Log.d("Interval", "initView:$it ")
-            }.finish {
-                start()
-                Log.d("Interval", "finish:$it ")
-            }
-                .life(this)
-                .onlyResumed(this)
-                .start()
-
-            // SoftKeyboardTestDialog.newInstance().showAllowingStateLoss(supportFragmentManager)
+            SoftKeyboardTestDialog.newInstance().showAllowingStateLoss(supportFragmentManager)
         }
     }
 

@@ -49,9 +49,5 @@
         </activity>
 
         <activity android:name=".ui.activity.ArticleWebActivity" />
-
-        <activity
-            android:name=".ui.activity.SoftKeyboardTestActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
     </application>
 </manifest>
