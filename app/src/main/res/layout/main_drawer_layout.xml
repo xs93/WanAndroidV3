@@ -24,6 +24,7 @@
         android:id="@+id/img_avatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:padding="1dp"
         android:src="@drawable/img_avatar_no_login"
         app:layout_constraintBottom_toBottomOf="@id/img_header_bg"
         app:layout_constraintEnd_toEndOf="parent"

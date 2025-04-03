@@ -46,6 +46,7 @@ dependencies {
     api(project(":lib_network"))
     api(project(":lib_utils"))
     api(project(":lib_gdview"))
+    api(project(":lib_camera"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
