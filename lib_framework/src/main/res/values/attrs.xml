@@ -15,4 +15,8 @@
         <attr name="stroke_width" format="dimension" />
         <attr name="stroke_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="EnforceWidthSwitchCompact">
+        <attr name="enforce_width" format="boolean" />
+    </declare-styleable>
 </resources>

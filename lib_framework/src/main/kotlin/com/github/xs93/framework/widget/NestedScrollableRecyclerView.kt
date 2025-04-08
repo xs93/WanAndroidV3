@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewConfiguration
+import androidx.core.content.withStyledAttributes
 import androidx.recyclerview.widget.RecyclerView
 import com.github.xs93.framework.R
 import kotlin.math.absoluteValue
@@ -30,10 +31,10 @@ class NestedScrollableRecyclerView @JvmOverloads constructor(
 
     init {
         touchSlop = ViewConfiguration.get(context).scaledTouchSlop
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.NestedScrollableRecyclerView)
-        parentOrientation =
-            ta.getInt(R.styleable.NestedScrollableRecyclerView_parentOrientation, HORIZONTAL)
-        ta.recycle()
+        context.withStyledAttributes(attrs, R.styleable.NestedScrollableRecyclerView) {
+            parentOrientation =
+                getInt(R.styleable.NestedScrollableRecyclerView_parentOrientation, HORIZONTAL)
+        }
     }
 
     private fun canScroll(orientation: Int, delta: Float): Boolean {

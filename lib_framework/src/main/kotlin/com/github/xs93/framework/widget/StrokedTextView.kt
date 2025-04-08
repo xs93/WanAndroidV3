@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.withStyledAttributes
 import com.github.xs93.framework.R
 
 /**
@@ -83,10 +84,10 @@ class StrokedTextView @JvmOverloads constructor(
     }
 
     init {
-        val ta = context.obtainStyledAttributes(attrs, R.styleable.StrokedTextView)
-        strokeWidth = ta.getDimension(R.styleable.StrokedTextView_stroke_width, 0f)
-        strokeColor = ta.getColor(R.styleable.StrokedTextView_stroke_color, Color.TRANSPARENT)
-        ta.recycle()
+        context.withStyledAttributes(attrs, R.styleable.StrokedTextView) {
+            strokeWidth = getDimension(R.styleable.StrokedTextView_stroke_width, 0f)
+            strokeColor = getColor(R.styleable.StrokedTextView_stroke_color, Color.TRANSPARENT)
+        }
         gravity = Gravity.CENTER
 
         borderTextView.textDirection = textDirection
