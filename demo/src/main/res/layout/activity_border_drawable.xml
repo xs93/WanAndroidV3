@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignMargins"
+        android:background="#FFFFf0"
+        android:columnCount="3"
+        android:orientation="horizontal">
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_color="#FF0000"
+            app:border_radius="10dp"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_color="#FF0000"
+            app:border_inner_radius="6dp"
+            app:border_radius="10dp"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_color="#FF0000"
+            app:border_inner_radius="2dp"
+            app:border_outer_radius="10dp"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_radius="10dp"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="TL_BR"
+            app:border_radius="10dp"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="BOTTOM_TOP"
+            app:border_radius="10dp"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="TL_BR"
+            app:border_outer_radii="10,10,0,0,10,10,0,0"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radii="6,6,0,0,6,6,0,0"
+            app:border_orientation="TL_BR"
+            app:border_outer_radii="10,10,0,0,10,10,0,0"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radii="0,0,6,6,0,0,6,6"
+            app:border_orientation="TL_BR"
+            app:border_outer_radii="10,10,0,0,10,10,0,0"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_bottom_width="30dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="TOP_BOTTOM"
+            app:border_outer_radii="10,10,10,10,0,0,0,0"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_bottom_width="30dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_left_width="20dp"
+            app:border_orientation="TOP_BOTTOM"
+            app:border_outer_radii="10,10,10,10,0,0,0,0"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_bottom_width="30dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="BL_TR"
+            app:border_outer_radii="10,10,10,10,0,0,0,0"
+            app:border_right_width="20dp"
+            app:border_width="4dp" />
+
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_bottom_width="0dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radii="6,6,6,6,0,0,0,0"
+            app:border_orientation="TOP_BOTTOM"
+            app:border_outer_radii="10,10,10,10,0,0,0,0"
+            app:border_width="4dp" />
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            android:padding="4dp"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="TOP_BOTTOM"
+            app:border_outer_radius="10dp"
+            app:border_use_foreground="true"
+            app:border_width="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@color/black" />
+        </com.github.xs93.framework.widget.drawable.BorderDrawableView>
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            android:background="#FF00FF"
+            app:border_colors="#FF0000,#0000FF,#00FF00,#FFFF00"
+            app:border_inner_radius="6dp"
+            app:border_orientation="TOP_BOTTOM"
+            app:border_outer_radius="10dp"
+            app:border_use_foreground="true"
+            app:border_width="4dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+        </com.github.xs93.framework.widget.drawable.BorderDrawableView>
+
+        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+            android:layout_height="100dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            android:layout_margin="10dp"
+            app:border_colors="#FF0000FF,#FF000000,#FF000000,#FFFF0000,#FFFF0000,#FF00FF00,#FF0000FF,#FFFFFF00,#FF000000,#FF000000,#FFFF0000,#FFFF0000,#FFFFFF00,#FF0000FF"
+            app:border_colors_positions="0,0.02,0.25,0.27,0.37,0.39,0.49,0.51,0.53,0.75,0.77,0.87,0.91,0.96"
+            app:border_fluid="true"
+            app:border_inner_radius="6dp"
+            app:border_orientation="TL_BR"
+            app:border_radius="10dp"
+            app:border_width="4dp" />
+    </GridLayout>
+
+</ScrollView>

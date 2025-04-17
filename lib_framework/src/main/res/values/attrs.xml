@@ -19,4 +19,33 @@
     <declare-styleable name="EnforceWidthSwitchCompact">
         <attr name="enforce_width" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="BorderDrawableView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_left_width" format="dimension" />
+        <attr name="border_top_width" format="dimension" />
+        <attr name="border_right_width" format="dimension" />
+        <attr name="border_bottom_width" format="dimension" />
+        <attr name="border_radius" format="dimension" />
+        <attr name="border_outer_radius" format="dimension" />
+        <attr name="border_inner_radius" format="dimension" />
+        <attr name="border_outer_radii" format="string" />
+        <attr name="border_inner_radii" format="string" />
+        <attr name="border_color" format="color" />
+        <attr name="border_colors" format="string" />
+        <attr name="border_colors_positions" format="string" />
+        <attr name="border_orientation" format="enum">
+            <enum name="TOP_BOTTOM" value="0" />
+            <enum name="TR_BL" value="1" />
+            <enum name="RIGHT_LEFT" value="2" />
+            <enum name="BR_TL" value="3" />
+            <enum name="BOTTOM_TOP" value="4" />
+            <enum name="BL_TR" value="5" />
+            <enum name="LEFT_RIGHT" value="6" />
+            <enum name="TL_BR" value="7" />
+        </attr>
+        <attr name="border_use_foreground" format="boolean" />
+        <!--是否流动渐变-->
+        <attr name="border_fluid" format="boolean" />
+    </declare-styleable>
 </resources>

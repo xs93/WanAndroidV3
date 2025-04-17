@@ -1,0 +1,216 @@
+package com.github.xs93.framework.widget.drawable
+
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.FrameLayout
+import androidx.core.content.withStyledAttributes
+import androidx.core.graphics.toColorInt
+import com.github.xs93.framework.R
+import com.github.xs93.framework.widget.drawable.BorderDrawable.Orientation
+
+/**
+ * @author XuShuai
+ * @version v1.0
+ * @date 2025/4/17 15:15
+ * @description 使用BorderDrawable作为背景的View，可以简单使用BorderDrawable
+ *
+ */
+class BorderDrawableView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr) {
+
+    private lateinit var borderDrawable: BorderDrawable
+    private var borderWidth = 0
+    private var borderLeftWidth = 0
+    private var borderTopWidth = 0
+    private var borderRightWidth = 0
+    private var borderBottomWidth = 0
+    private var borderColor = 0
+    private var borderColors: IntArray? = null
+    private var borderColorsPositions: FloatArray? = null
+    private var borderOrientation = Orientation.TOP_BOTTOM
+    private var borderInnerRadius = 0f
+    private var borderInnerRadiusArray: FloatArray? = null
+    private var borderOuterRadius = 0f
+    private var borderOuterRadiusArray: FloatArray? = null
+    private var useForeground = false
+    private var borderFluid = false
+
+    init {
+        context.withStyledAttributes(attrs, R.styleable.BorderDrawableView) {
+            borderFluid = getBoolean(R.styleable.BorderDrawableView_border_fluid, false)
+            borderDrawable = if (borderFluid) {
+                FluidBorderDrawable(borderWidth)
+            } else {
+                BorderDrawable(borderWidth)
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_width)) {
+                borderWidth = getDimensionPixelSize(R.styleable.BorderDrawableView_border_width, 0)
+                borderLeftWidth = borderWidth
+                borderTopWidth = borderWidth
+                borderRightWidth = borderWidth
+                borderBottomWidth = borderWidth
+            }
+            if (hasValue(R.styleable.BorderDrawableView_border_left_width)) {
+                borderLeftWidth =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_left_width, 0)
+            }
+            if (hasValue(R.styleable.BorderDrawableView_border_top_width)) {
+                borderTopWidth =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_top_width, 0)
+            }
+            if (hasValue(R.styleable.BorderDrawableView_border_right_width)) {
+                borderRightWidth =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_right_width, 0)
+            }
+            if (hasValue(R.styleable.BorderDrawableView_border_bottom_width)) {
+                borderBottomWidth =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_bottom_width, 0)
+            }
+
+            borderDrawable.setBorderWidth(
+                borderLeftWidth,
+                borderTopWidth,
+                borderRightWidth,
+                borderBottomWidth
+            )
+
+            if (hasValue(R.styleable.BorderDrawableView_border_color)) {
+                borderColor = getColor(R.styleable.BorderDrawableView_border_color, 0)
+                borderDrawable.setColor(borderColor)
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_colors)) {
+                val colorsStr = getString(R.styleable.BorderDrawableView_border_colors)
+                borderColors = parseColors(colorsStr)
+                borderDrawable.setColors(borderColors)
+
+                if (hasValue(R.styleable.BorderDrawableView_border_colors_positions)) {
+                    val positionsStr =
+                        getString(R.styleable.BorderDrawableView_border_colors_positions)
+                    borderColorsPositions = parseColorsPositions(positionsStr)
+                    if (borderColorsPositions != null) {
+                        if (borderColorsPositions?.size != borderColors?.size) {
+                            throw IllegalArgumentException("border_colors_positions size must be equal to border_colors size")
+                        } else {
+                            borderDrawable.setColorPositions(borderColorsPositions)
+                        }
+                    }
+                }
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_orientation)) {
+                val orientation = getInt(R.styleable.BorderDrawableView_border_orientation, 0)
+                borderOrientation = when (orientation) {
+                    0 -> Orientation.TOP_BOTTOM
+                    1 -> Orientation.TR_BL
+                    2 -> Orientation.RIGHT_LEFT
+                    3 -> Orientation.BR_TL
+                    4 -> Orientation.BOTTOM_TOP
+                    5 -> Orientation.BL_TR
+                    6 -> Orientation.LEFT_RIGHT
+                    7 -> Orientation.TL_BR
+                    else -> Orientation.TOP_BOTTOM
+                }
+                borderDrawable.setOrientation(borderOrientation)
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_radius)) {
+                val borderRadius =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_radius, 0)
+                borderOuterRadius = borderRadius.toFloat()
+                borderInnerRadius = borderRadius.toFloat()
+                borderDrawable.setOuterRadius(borderOuterRadius)
+                borderDrawable.setInnerRadius(borderInnerRadius)
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_outer_radius)) {
+                borderOuterRadius =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_outer_radius, 0)
+                        .toFloat()
+                borderDrawable.setOuterRadius(borderOuterRadius)
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_inner_radius)) {
+                borderInnerRadius =
+                    getDimensionPixelSize(R.styleable.BorderDrawableView_border_inner_radius, 0)
+                        .toFloat()
+                borderDrawable.setInnerRadius(borderInnerRadius)
+            }
+            if (hasValue(R.styleable.BorderDrawableView_border_outer_radii)) {
+                val outerRadiusArrayStr =
+                    getString(R.styleable.BorderDrawableView_border_outer_radii)
+                borderOuterRadiusArray = parseRadiusArray(outerRadiusArrayStr)
+                borderDrawable.setOuterRadii(borderOuterRadiusArray)
+            }
+
+            if (hasValue(R.styleable.BorderDrawableView_border_inner_radii)) {
+                val innerRadiusArrayStr =
+                    getString(R.styleable.BorderDrawableView_border_inner_radii)
+                borderInnerRadiusArray = parseRadiusArray(innerRadiusArrayStr)
+                borderDrawable.setInnerRadii(borderInnerRadiusArray)
+            }
+            useForeground = getBoolean(R.styleable.BorderDrawableView_border_use_foreground, false)
+            if (useForeground) {
+                foreground = borderDrawable
+            } else {
+                background = borderDrawable
+            }
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (borderDrawable is FluidBorderDrawable) {
+            (borderDrawable as FluidBorderDrawable).startFluid()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        if (borderDrawable is FluidBorderDrawable) {
+            (borderDrawable as FluidBorderDrawable).cancelFluid()
+        }
+    }
+
+
+    private fun parseColors(colorsStr: String?): IntArray? {
+        if (colorsStr.isNullOrBlank()) return null
+        val colors = colorsStr.split(",")
+        if (colors.isEmpty()) return null
+        return colors.map {
+            it.trim().toColorInt()
+        }.toIntArray()
+    }
+
+
+    private fun parseColorsPositions(positionsStr: String?): FloatArray? {
+        if (positionsStr.isNullOrBlank()) return null
+        val positions = positionsStr.split(",")
+        if (positions.isEmpty()) return null
+        return positions.map {
+            it.trim().toFloat()
+        }.toFloatArray()
+    }
+
+
+    private fun parseRadiusArray(radiusArrayStr: String?): FloatArray? {
+        if (radiusArrayStr.isNullOrBlank()) return null
+        val radiusArray = radiusArrayStr.split(",")
+        if (radiusArray.isEmpty()) return null
+        if (radiusArray.size != 8) {
+            throw IllegalArgumentException(("radii  must be 8 values"))
+        }
+        return radiusArray.map {
+            val dpValue = it.trim().toFloat()
+            context.resources.displayMetrics.density * dpValue
+        }.toFloatArray()
+    }
+
+    fun getBorderDrawable(): BorderDrawable {
+        return borderDrawable
+    }
+}

@@ -24,6 +24,7 @@
 
         <activity android:name=".IntervalTestActivity" />
         <activity android:name=".CameraTestActivity" />
+        <activity android:name=".BorderDrawableActivity" />
     </application>
 
 </manifest>

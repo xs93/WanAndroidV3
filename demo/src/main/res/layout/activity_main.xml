@@ -30,4 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="相机测试" />
+
+    <Button
+        android:id="@+id/btnBorderDrawable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BorderDrawable" />
 </LinearLayout>

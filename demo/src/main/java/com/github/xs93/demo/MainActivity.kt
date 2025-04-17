@@ -24,6 +24,9 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>(
         binding.btnCamera.setSingleClickListener {
             startActivitySafe<CameraTestActivity>()
         }
+        binding.btnBorderDrawable.setSingleClickListener {
+            startActivitySafe<BorderDrawableActivity>()
+        }
     }
 
     override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
