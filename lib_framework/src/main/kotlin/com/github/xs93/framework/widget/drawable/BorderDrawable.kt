@@ -1,8 +1,10 @@
 package com.github.xs93.framework.widget.drawable
 
+import android.animation.ObjectAnimator
 import android.graphics.Canvas
 import android.graphics.ColorFilter
 import android.graphics.LinearGradient
+import android.graphics.Matrix
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PixelFormat
@@ -10,16 +12,25 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.SweepGradient
 import android.graphics.drawable.Drawable
+import android.view.animation.LinearInterpolator
 
 /**
  * @author XuShuai
  * @version v1.0
  * @date 2025/4/16 17:10
- * @description 自定义Drawable边框,可以实现渐变边框
+ * @description 自定义Drawable边框,可以实现渐变边框及流动颜色边框
  *
  */
 open class BorderDrawable : Drawable {
+
+    companion object {
+        const val STYLE_NORMAL_LINEAR = 0
+        const val STYLE_NORMAL_SWEEP = 1
+        const val STYLE_FLUID_LINEAR = 2
+        const val STYLE_FLUID_SWEEP = 3
+    }
 
     /**
      * 渐变颜色方向
@@ -34,6 +45,8 @@ open class BorderDrawable : Drawable {
         LEFT_RIGHT,
         TL_BR
     }
+
+    private var borderStyle: Int = 0
 
     private var leftBorderWidth = 0
     private var topBorderWidth = 0
@@ -68,19 +81,36 @@ open class BorderDrawable : Drawable {
     private var radiusChanged = false
     private var borderWidthChanged = false
 
+    private val fluidMatrix by lazy { Matrix() }
+    private var fluidDegree = 0f
+        set(value) {
+            field = value
+            invalidateSelf()
+        }
+
+    private var fluidAnim: ObjectAnimator? = null
+    private var fluidDuration = 2000L
 
     private val clearXfermode by lazy {
         PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
-    constructor(borderWidth: Int) : this(borderWidth, borderWidth, borderWidth, borderWidth)
+    constructor(borderMode: Int, borderWidth: Int) : this(
+        borderMode,
+        borderWidth,
+        borderWidth,
+        borderWidth,
+        borderWidth
+    )
 
     constructor(
+        borderMode: Int,
         leftBorderWidth: Int,
         topBorderWidth: Int,
         rightBorderWidth: Int,
         bottomBorderWidth: Int
     ) {
+        this.borderStyle = borderMode
         this.leftBorderWidth = leftBorderWidth
         this.topBorderWidth = topBorderWidth
         this.rightBorderWidth = rightBorderWidth
@@ -146,7 +176,8 @@ open class BorderDrawable : Drawable {
     }
 
     override fun setColorFilter(colorFilter: ColorFilter?) {
-
+        this.paint.colorFilter = colorFilter
+        invalidateSelf()
     }
 
     override fun onStateChange(state: IntArray): Boolean {
@@ -158,7 +189,83 @@ open class BorderDrawable : Drawable {
         return PixelFormat.UNKNOWN
     }
 
+    open fun createShader(
+        contentRectF: RectF,
+        colors: IntArray,
+        colorPositions: FloatArray? = null
+    ): Shader {
+        if (colorPositions != null && colors.size != colorPositions.size) {
+            throw IllegalArgumentException("colors and colorPositions must have the same length")
+        }
+        return when (borderStyle) {
+            STYLE_NORMAL_SWEEP -> {
+                SweepGradient(
+                    contentRectF.centerX(),
+                    contentRectF.centerY(),
+                    colors,
+                    colorPositions
+                )
+            }
+
+            STYLE_FLUID_SWEEP -> {
+                SweepGradient(
+                    contentRectF.centerX(),
+                    contentRectF.centerY(),
+                    colors,
+                    colorPositions
+                ).apply {
+                    setLocalMatrix(fluidMatrix)
+                }
+            }
+
+            STYLE_FLUID_LINEAR -> {
+                val shaderRectF =
+                    getGradientRectByOrientation(
+                        orientation,
+                        contentRectF.width(),
+                        contentRectF.height()
+                    )
+                LinearGradient(
+                    shaderRectF.left,
+                    shaderRectF.top,
+                    shaderRectF.right,
+                    shaderRectF.bottom,
+                    colors,
+                    colorPositions,
+                    Shader.TileMode.REPEAT
+                ).apply {
+                    setLocalMatrix(fluidMatrix)
+                }
+            }
+
+            else -> {
+                val shaderRectF =
+                    getGradientRectByOrientation(
+                        orientation,
+                        contentRectF.width(),
+                        contentRectF.height()
+                    )
+                LinearGradient(
+                    shaderRectF.left,
+                    shaderRectF.top,
+                    shaderRectF.right,
+                    shaderRectF.bottom,
+                    colors,
+                    colorPositions,
+                    Shader.TileMode.REPEAT
+                )
+            }
+        }
+    }
+
+    open fun updateShaderByAnimation(contentRectF: RectF, shader: Shader?) {
+        fluidMatrix.reset()
+        fluidMatrix.setRotate(fluidDegree, contentRectF.centerX(), contentRectF.centerY())
+        shader?.setLocalMatrix(fluidMatrix)
+    }
+
     private fun getGradientRectByOrientation(
+        orientation: Orientation,
         width: Float,
         height: Float
     ): RectF {
@@ -199,30 +306,7 @@ open class BorderDrawable : Drawable {
         return rectF
     }
 
-    open fun createShader(
-        contentRectF: RectF,
-        colors: IntArray,
-        colorPositions: FloatArray? = null
-    ): Shader {
-        if (colorPositions != null && colors.size != colorPositions.size) {
-            throw IllegalArgumentException("colors and colorPositions must have the same length")
-        }
-        val shaderRectF = getGradientRectByOrientation(contentRectF.width(), contentRectF.height())
-        return LinearGradient(
-            shaderRectF.left,
-            shaderRectF.top,
-            shaderRectF.right,
-            shaderRectF.bottom,
-            colors,
-            colorPositions,
-            Shader.TileMode.REPEAT
-        )
-    }
-
-    open fun updateShaderByAnimation(contentRectF: RectF, shader: Shader?) {
-
-    }
-
+    //<editor-fold desc="公共方法">
     fun setOuterRadius(outerRadius: Float) {
         this.outerRadius = outerRadius
         radiusChanged = true
@@ -288,5 +372,39 @@ open class BorderDrawable : Drawable {
         this.bottomBorderWidth = width
         borderWidthChanged = true
         invalidateSelf()
+    }
+
+    //</editor-fold>
+    fun setDuration(duration: Long) {
+        this.fluidDuration = duration
+        if (isFluidRunning()) {
+            startFluid()
+        }
+    }
+
+    /**
+     * 开始流动
+     */
+    fun startFluid() {
+        if (borderStyle != STYLE_FLUID_SWEEP && borderStyle != STYLE_FLUID_LINEAR) return
+        fluidAnim?.cancel()
+        fluidAnim = ObjectAnimator.ofFloat(this, "fluidDegree", 0f, 360f).apply {
+            duration = fluidDuration
+            interpolator = LinearInterpolator()
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.RESTART
+            start()
+        }
+    }
+
+    fun isFluidRunning(): Boolean {
+        return fluidAnim?.isRunning == true
+    }
+
+    /**
+     * 停止流动
+     */
+    fun cancelFluid() {
+        fluidAnim?.cancel()
     }
 }

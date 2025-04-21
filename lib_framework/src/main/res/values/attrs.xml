@@ -21,6 +21,12 @@
     </declare-styleable>
 
     <declare-styleable name="BorderDrawableView">
+        <attr name="border_style" format="enum">
+            <enum name="normal_linear" value="0" />
+            <enum name="normal_sweep" value="1" />
+            <enum name="fluid_linear" value="2" />
+            <enum name="fluid_sweep" value="3" />
+        </attr>
         <attr name="border_width" format="dimension" />
         <attr name="border_left_width" format="dimension" />
         <attr name="border_top_width" format="dimension" />
@@ -46,6 +52,6 @@
         </attr>
         <attr name="border_use_foreground" format="boolean" />
         <!--是否流动渐变-->
-        <attr name="border_fluid" format="boolean" />
+        <attr name="border_anim_duration" format="integer" />
     </declare-styleable>
 </resources>

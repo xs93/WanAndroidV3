@@ -22,6 +22,7 @@ class BorderDrawableView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     private lateinit var borderDrawable: BorderDrawable
+    private var borderStyle = 0
     private var borderWidth = 0
     private var borderLeftWidth = 0
     private var borderTopWidth = 0
@@ -36,16 +37,17 @@ class BorderDrawableView @JvmOverloads constructor(
     private var borderOuterRadius = 0f
     private var borderOuterRadiusArray: FloatArray? = null
     private var useForeground = false
-    private var borderFluid = false
+    private var borderAnimDuration = 2000L
 
     init {
         context.withStyledAttributes(attrs, R.styleable.BorderDrawableView) {
-            borderFluid = getBoolean(R.styleable.BorderDrawableView_border_fluid, false)
-            borderDrawable = if (borderFluid) {
-                FluidBorderDrawable(borderWidth)
-            } else {
-                BorderDrawable(borderWidth)
-            }
+            borderStyle = getInt(
+                R.styleable.BorderDrawableView_border_style,
+                BorderDrawable.STYLE_NORMAL_LINEAR
+            )
+            borderAnimDuration =
+                getInteger(R.styleable.BorderDrawableView_border_anim_duration, 2000).toLong()
+            borderDrawable = BorderDrawable(borderStyle, borderWidth)
 
             if (hasValue(R.styleable.BorderDrawableView_border_width)) {
                 borderWidth = getDimensionPixelSize(R.styleable.BorderDrawableView_border_width, 0)
@@ -164,16 +166,12 @@ class BorderDrawableView @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (borderDrawable is FluidBorderDrawable) {
-            (borderDrawable as FluidBorderDrawable).startFluid()
-        }
+        borderDrawable.startFluid()
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if (borderDrawable is FluidBorderDrawable) {
-            (borderDrawable as FluidBorderDrawable).cancelFluid()
-        }
+        borderDrawable.cancelFluid()
     }
 
 
@@ -212,5 +210,73 @@ class BorderDrawableView @JvmOverloads constructor(
 
     fun getBorderDrawable(): BorderDrawable {
         return borderDrawable
+    }
+
+    fun setBorderWidth(width: Int) {
+        borderWidth = width
+        borderLeftWidth = width
+        borderTopWidth = width
+        borderRightWidth = width
+        borderBottomWidth = width
+        borderDrawable.setBorderWidth(
+            borderLeftWidth,
+            borderTopWidth,
+            borderRightWidth,
+            borderBottomWidth
+        )
+    }
+
+    fun setBorderWidth(left: Int, top: Int, right: Int, bottom: Int) {
+        borderLeftWidth = left
+        borderTopWidth = top
+        borderRightWidth = right
+        borderBottomWidth = bottom
+        borderDrawable.setBorderWidth(left, top, right, bottom)
+    }
+
+    fun setBorderColor(color: Int) {
+        borderColor = color
+        borderDrawable.setColor(color)
+    }
+
+    fun setBorderColors(colors: IntArray?, colorPositions: FloatArray? = null) {
+        borderColors = colors
+        borderColorsPositions = colorPositions
+        borderDrawable.setColors(colors, colorPositions)
+    }
+
+    fun setBorderColorsPositions(colorPositions: FloatArray?) {
+        borderColorsPositions = colorPositions
+        borderDrawable.setColorPositions(colorPositions)
+    }
+
+    fun setBorderOrientation(orientation: Orientation) {
+        borderOrientation = orientation
+        borderDrawable.setOrientation(orientation)
+    }
+
+    fun setBorderOuterRadius(outerRadius: Float) {
+        borderOuterRadius = outerRadius
+        borderDrawable.setOuterRadius(outerRadius)
+    }
+
+    fun setBorderOuterRadii(outerRadii: FloatArray?) {
+        borderOuterRadiusArray = outerRadii
+        borderDrawable.setOuterRadii(outerRadii)
+    }
+
+    fun setBorderInnerRadius(innerRadius: Float) {
+        borderInnerRadius = innerRadius
+        borderDrawable.setInnerRadius(innerRadius)
+    }
+
+    fun setBorderInnerRadii(innerRadii: FloatArray?) {
+        borderInnerRadiusArray = innerRadii
+        borderDrawable.setInnerRadii(innerRadii)
+    }
+
+    fun setDuration(duration: Long) {
+        borderAnimDuration = duration
+        borderDrawable.setDuration(duration)
     }
 }
