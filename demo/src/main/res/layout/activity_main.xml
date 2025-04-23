@@ -36,4 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="BorderDrawable" />
+
+    <Button
+        android:id="@+id/btnStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Store" />
 </LinearLayout>

@@ -1,6 +1,6 @@
-package com.github.xs93.persistent.store
+package com.github.xs93.kv
 
-import android.os.Parcelable
+import java.io.Serializable
 
 /**
  * key-value 存储接口
@@ -10,7 +10,7 @@ import android.os.Parcelable
  * @date 2023/5/19 10:47
  * @email 466911254@qq.com
  */
-interface IStore {
+interface IKV {
 
     fun putBool(key: String, value: Boolean): Boolean
     fun getBool(key: String, defaultValue: Boolean = false): Boolean
@@ -33,10 +33,19 @@ interface IStore {
     fun putStringSet(key: String, value: Set<String>?): Boolean
     fun getStringSet(key: String, defaultValue: Set<String>? = null): Set<String>?
 
-
     fun putBytes(key: String, value: ByteArray?): Boolean
     fun getBytes(key: String, defaultValue: ByteArray? = null): ByteArray?
 
-    fun <T : Parcelable> putParcelable(key: String, value: T?): Boolean
-    fun <T : Parcelable> getParcelable(key: String, clazz: Class<T>, defaultValue: T? = null): T?
+    fun <T : Serializable> putSerializable(key: String, value: T?): Boolean
+    fun <T : Serializable> getSerializable(
+        key: String,
+        clazz: Class<T>,
+        defaultValue: T? = null
+    ): T?
+
+    fun containsKey(key: String): Boolean
+
+    fun remove(key: String)
+
+    fun clear()
 }

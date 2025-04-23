@@ -25,6 +25,7 @@
         <activity android:name=".IntervalTestActivity" />
         <activity android:name=".CameraTestActivity" />
         <activity android:name=".BorderDrawableActivity" />
+        <activity android:name=".StoreTestActivity" />
     </application>
 
 </manifest>

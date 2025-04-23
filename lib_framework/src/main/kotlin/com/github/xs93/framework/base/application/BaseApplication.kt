@@ -26,6 +26,8 @@ abstract class BaseApplication : Application() {
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
+        // 初始化AppInject，在这里就初始化,保证SP在attachBaseContext里面使用sp没有初始化问题
+        AppInject.init(this)
         addComponentApplication(mComponentAppClassNameList)
         mHelper.initAppObjects(mComponentAppClassNameList)
         mHelper.attachBaseContext(base)

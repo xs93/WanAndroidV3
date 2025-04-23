@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -47,6 +48,9 @@ dependencies {
     api(project(":lib_utils"))
     api(project(":lib_gdview"))
     api(project(":lib_camera"))
+    api(project(":lib_kv"))
+
+    implementation(libs.mmkv)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

@@ -5,6 +5,7 @@ import androidx.core.view.updatePadding
 import com.github.xs93.demo.databinding.ActivityMainBinding
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ui.ContentPadding
+import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.startActivitySafe
 
@@ -13,7 +14,7 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>(
     ActivityMainBinding::bind
 ) {
     override fun initView(savedInstanceState: Bundle?) {
-
+        AppInject.init(this.application)
         binding.btnSoftInput.setSingleClickListener {
             startActivitySafe<SoftKeyboardTestActivity>()
         }
@@ -26,6 +27,9 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>(
         }
         binding.btnBorderDrawable.setSingleClickListener {
             startActivitySafe<BorderDrawableActivity>()
+        }
+        binding.btnStore.setSingleClickListener {
+            startActivitySafe<StoreTestActivity>()
         }
     }
 

@@ -21,7 +21,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -51,6 +54,7 @@ dependencies {
     api(project(":lib_network"))
     api(project(":lib_utils"))
     api(project(":lib_gdview"))
+    api(project(":lib_kv"))
 
 
     api(libs.brvah4)
@@ -70,4 +74,6 @@ dependencies {
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
+
+    api(libs.mmkv)
 }
