@@ -1,5 +1,6 @@
 package com.github.xs93.kv
 
+import android.os.Parcelable
 import java.io.Serializable
 
 /**
@@ -42,6 +43,9 @@ interface IKV {
         clazz: Class<T>,
         defaultValue: T? = null
     ): T?
+
+    fun <T : Parcelable> putParcelable(key: String, value: T?): Boolean
+    fun <T : Parcelable> getParcelable(key: String, clazz: Class<T>, defaultValue: T? = null): T?
 
     fun containsKey(key: String): Boolean
 

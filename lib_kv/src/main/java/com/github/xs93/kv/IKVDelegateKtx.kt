@@ -1,10 +1,7 @@
 package com.github.xs93.kv
 
 import android.os.Parcelable
-import androidx.annotation.NonNull
 import java.io.Serializable
-import kotlin.properties.ReadWriteProperty
-import kotlin.reflect.KProperty
 
 /**
  * @author XuShuai
@@ -14,92 +11,47 @@ import kotlin.reflect.KProperty
  *
  */
 
-/** 基础数据类型代理方法 */
-private inline fun <T> IKV.delegate(
-    key: String,
-    @NonNull defaultValue: T,
-    crossinline getter: IKV.(String, T) -> T,
-    crossinline setter: IKV.(String, T) -> Boolean
-): ReadWriteProperty<Any, T> = object : ReadWriteProperty<Any, T> {
-    override fun getValue(thisRef: Any, property: KProperty<*>): T {
-        return getter(key, defaultValue)
-    }
+fun IKV.bool(key: String, defaultValue: Boolean = false) =
+    KVProperty(key, defaultValue, { k, d -> getBool(k, d) }, { k, v -> putBool(k, v) })
 
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
-        setter(key, value)
-    }
-}
+fun IKV.int(key: String, defaultValue: Int = 0) =
+    KVProperty(key, defaultValue, { k, d -> getInt(k, d) }, { k, v -> putInt(k, v) })
 
-fun IKV.bool(key: String, defaultValue: Boolean = false): ReadWriteProperty<Any, Boolean> =
-    delegate(key, defaultValue, IKV::getBool, IKV::putBool)
+fun IKV.long(key: String, defaultValue: Long = 0L) =
+    KVProperty(key, defaultValue, { k, d -> getLong(k, d) }, { k, v -> putLong(k, v) })
 
-fun IKV.int(key: String, defaultValue: Int = 0): ReadWriteProperty<Any, Int> =
-    delegate(key, defaultValue, IKV::getInt, IKV::putInt)
+fun IKV.float(key: String, defaultValue: Float = 0.0f) =
+    KVProperty(key, defaultValue, { k, d -> getFloat(k, d) }, { k, v -> putFloat(k, v) })
 
-fun IKV.long(key: String, defaultValue: Long = 0L): ReadWriteProperty<Any, Long> =
-    delegate(key, defaultValue, IKV::getLong, IKV::putLong)
+fun IKV.double(key: String, defaultValue: Double = 0.0) =
+    KVProperty(key, defaultValue, { k, d -> getDouble(k, d) }, { k, v -> putDouble(k, v) })
 
-fun IKV.float(key: String, defaultValue: Float = 0.0f): ReadWriteProperty<Any, Float> =
-    delegate(key, defaultValue, IKV::getFloat, IKV::putFloat)
+fun IKV.string(key: String, defaultValue: String? = null) =
+    KVProperty(key, defaultValue, { k, d -> getString(k, d) }, { k, v -> putString(k, v) })
 
-fun IKV.double(key: String, defaultValue: Double = 0.0): ReadWriteProperty<Any, Double> =
-    delegate(key, defaultValue, IKV::getDouble, IKV::putDouble)
+fun IKV.stringSet(key: String, defaultValue: Set<String>? = null) =
+    KVProperty(
+        key,
+        defaultValue,
+        { k, d -> getStringSet(k, d) },
+        { k, v -> putStringSet(k, v) })
 
-fun IKV.string(
-    key: String,
-    defaultValue: String? = null
-): ReadWriteProperty<Any, String?> =
-    delegate(key, defaultValue, IKV::getString, IKV::putString)
+fun IKV.bytes(key: String, defaultValue: ByteArray? = null) =
+    KVProperty(key, defaultValue, { k, d -> getBytes(k, d) }, { k, v -> putBytes(k, v) })
 
-fun IKV.stringSet(
-    key: String,
-    defaultValue: Set<String>? = null
-): ReadWriteProperty<Any, Set<String>?> =
-    delegate(key, defaultValue, IKV::getStringSet, IKV::putStringSet)
+inline fun <reified T : Serializable> IKV.serializable(key: String, defaultValue: T? = null) =
+    KVProperty(
+        key,
+        defaultValue,
+        { k, d -> getSerializable(k, T::class.java, d) ?: defaultValue },
+        { k, v -> putSerializable(k, v) })
 
-fun IKV.bytes(
-    key: String,
-    defaultValue: ByteArray? = null
-): ReadWriteProperty<Any, ByteArray?> =
-    delegate(key, defaultValue, IKV::getBytes, IKV::putBytes)
+inline fun <reified T : Parcelable> IKV.parcelable(key: String, defaultValue: T? = null) =
+    KVProperty(
+        key,
+        defaultValue,
+        { k, d -> getParcelable(k, T::class.java, d) ?: defaultValue },
+        { k, v -> putParcelable(k, v) })
 
-
-inline fun <reified T : Serializable> IKV.delegateSerializable(
-    key: String,
-    defaultValue: T?
-): ReadWriteProperty<Any, T?> = object : ReadWriteProperty<Any, T?> {
-    override fun getValue(thisRef: Any, property: KProperty<*>): T? {
-        val decodeResult = getSerializable(key, T::class.java, defaultValue)
-        return decodeResult ?: defaultValue
-    }
-
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) {
-        putSerializable(key, value)
-    }
-}
-
-inline fun <reified T : Serializable> IKV.serializable(
-    key: String,
-    defaultValue: T? = null
-): ReadWriteProperty<Any, T?> = delegateSerializable(key, defaultValue)
-
-inline fun <reified T : Parcelable> IKVWithParcelable.delegateParcelable(
-    key: String,
-    defaultValue: T?
-): ReadWriteProperty<Any, T?> = object : ReadWriteProperty<Any, T?> {
-    override fun getValue(thisRef: Any, property: KProperty<*>): T? {
-        val decodeResult = getParcelable(key, T::class.java, defaultValue)
-        return decodeResult ?: defaultValue
-    }
-
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) {
-        putParcelable(key, value)
-    }
-}
-
-inline fun <reified T : Parcelable> IKVWithParcelable.parcelable(
-    key: String,
-    defaultValue: T? = null
-): ReadWriteProperty<Any, T?> = delegateParcelable(key, defaultValue)
-
+fun <T> KVProperty<T>.asStateFlow() = KVStateFlowProperty(this)
 

@@ -3,6 +3,7 @@ package com.github.xs93.demo
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import com.github.xs93.demo.databinding.ActivityStoreTestBinding
 import com.github.xs93.demo.entity.Student
 import com.github.xs93.demo.entity.Teacher
@@ -11,6 +12,7 @@ import com.github.xs93.demo.store.MyMMKVOwner
 import com.github.xs93.demo.store.MySharedPrefsOwner
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ui.ContentPadding
+import kotlinx.coroutines.launch
 
 /**
  * @author XuShuai
@@ -117,6 +119,16 @@ class StoreTestActivity : BaseViewBindingActivity<ActivityStoreTestBinding>(
 
         binding.btnGetSet.setOnClickListener {
             binding.tvContent.text = MyMMKVOwner.testStringSet.toString()
+        }
+
+        lifecycleScope.launch {
+            MySharedPrefsOwner.num2Flow.collect {
+                binding.tvContent.text = it.toString()
+            }
+        }
+
+        binding.btnSaveFlow.setOnClickListener {
+            MySharedPrefsOwner.num2Flow.value = MySharedPrefsOwner.num2Flow.value + 1
         }
     }
 

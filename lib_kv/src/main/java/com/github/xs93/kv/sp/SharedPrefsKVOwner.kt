@@ -2,6 +2,7 @@ package com.github.xs93.kv.sp
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Parcelable
 import android.util.Base64
 import androidx.core.content.edit
 import com.github.xs93.kv.IKV
@@ -184,6 +185,18 @@ interface ISharedPrefsKVOwner : IKV {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun <T : Parcelable> putParcelable(key: String, value: T?): Boolean {
+        throw Throwable("SharedPreferences not supper save and get parcelable bean")
+    }
+
+    override fun <T : Parcelable> getParcelable(
+        key: String,
+        clazz: Class<T>,
+        defaultValue: T?
+    ): T? {
+        throw Throwable("SharedPreferences not supper save and get parcelable bean")
     }
 
     override fun containsKey(key: String): Boolean {

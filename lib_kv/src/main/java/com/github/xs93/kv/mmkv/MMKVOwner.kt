@@ -2,7 +2,7 @@ package com.github.xs93.kv.mmkv
 
 import android.os.Parcelable
 import android.util.Base64
-import com.github.xs93.kv.IKVWithParcelable
+import com.github.xs93.kv.IKV
 import com.tencent.mmkv.MMKV
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
@@ -26,7 +26,7 @@ open class MMKVOwner(
     override val mmkv: MMKV by lazy { MMKV.mmkvWithID(mmapId, mode) }
 }
 
-interface IMMKVOwner : IKVWithParcelable {
+interface IMMKVOwner : IKV {
 
     val mmapId: String
 
