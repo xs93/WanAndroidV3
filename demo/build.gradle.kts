@@ -51,8 +51,10 @@ dependencies {
     api(project(":lib_kv"))
 
     implementation(libs.mmkv)
+    implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 }
