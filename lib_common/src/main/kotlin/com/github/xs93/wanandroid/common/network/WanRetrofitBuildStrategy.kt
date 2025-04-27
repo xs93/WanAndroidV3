@@ -21,7 +21,11 @@ import javax.inject.Inject
  * @date 2024/4/8 13:49
  * @email 466911254@qq.com
  */
-class WanRetrofitBuildStrategy @Inject constructor(private val cookieJar: CookieJar) : IRetrofitBuildStrategy {
+class WanRetrofitBuildStrategy @Inject constructor(private val cookieJar: CookieJar) :
+    IRetrofitBuildStrategy {
+
+    private var globalBaseUrl: String? = null
+
     override fun converterFactory(): List<Converter.Factory> {
         val moshi = Moshi.Builder()
             .add(BooleanAdapter())
@@ -42,5 +46,25 @@ class WanRetrofitBuildStrategy @Inject constructor(private val cookieJar: Cookie
 
     override fun getCookieJar(): CookieJar {
         return cookieJar
+    }
+
+    override fun isMultipleBaseUrlEnable(): Boolean {
+        return true
+    }
+
+    override fun getDynamicBaseUrlByKey(key: String): String? {
+        return null
+    }
+
+    override fun setDynamicBaseUrlByKey(key: String, baseUrl: String) {
+
+    }
+
+    override fun getGlobalBaseUrl(): String? {
+        return globalBaseUrl
+    }
+
+    override fun setGlobalBaseUrl(baseUrl: String) {
+        this.globalBaseUrl = baseUrl
     }
 }

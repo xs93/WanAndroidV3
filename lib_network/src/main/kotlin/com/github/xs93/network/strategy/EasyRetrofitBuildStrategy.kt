@@ -37,4 +37,23 @@ class EasyRetrofitBuildStrategy : IRetrofitBuildStrategy {
     override fun openOkHttpProfiler(): Boolean {
         return AppInject.getApp().isDebug
     }
+
+    override fun isMultipleBaseUrlEnable(): Boolean {
+        return false
+    }
+
+    override fun getDynamicBaseUrlByKey(key: String): String? {
+        return null
+    }
+
+    override fun setDynamicBaseUrlByKey(key: String, baseUrl: String) {
+
+    }
+
+    override fun getGlobalBaseUrl(): String? {
+        return null
+    }
+
+    override fun setGlobalBaseUrl(baseUrl: String) {
+    }
 }

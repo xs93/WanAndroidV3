@@ -4,6 +4,7 @@ import android.content.Context
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.cookie.CookieJarManager
 import com.github.xs93.network.cookie.SharedPreferencesCookieStore
+import com.github.xs93.network.interceptor.BaseUrlsInterceptor
 import com.github.xs93.network.interceptor.CacheInterceptor
 import com.github.xs93.network.interceptor.DomainInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
@@ -40,7 +41,17 @@ interface IRetrofitBuildStrategy {
             cookieJar(getCookieJar())
             addInterceptor(NetworkInterceptor())
             addInterceptor(DomainInterceptor())
-            addInterceptor(CacheInterceptor(AppInject.getApp(), getCacheEncryptKey(), getCacheEncryptIv()))
+            if (isMultipleBaseUrlEnable()) {
+                addInterceptor(BaseUrlsInterceptor(this@IRetrofitBuildStrategy))
+            }
+            addInterceptor(
+                CacheInterceptor(
+                    AppInject.getApp(),
+                    getCacheEncryptKey(),
+                    getCacheEncryptIv()
+                )
+            )
+
             getInterceptors().let {
                 for (interceptor in it) {
                     addInterceptor(interceptor)
@@ -93,7 +104,6 @@ interface IRetrofitBuildStrategy {
         return emptyList()
     }
 
-
     fun getCacheEncryptKey(): String {
         val context: Context = EasyRetrofit.getApp()
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
@@ -115,4 +125,29 @@ interface IRetrofitBuildStrategy {
         }
         return iv
     }
+
+    /**
+     * 是否支持多个baseUrl
+     */
+    fun isMultipleBaseUrlEnable(): Boolean
+
+    /**
+     * 根据key获取baseUrl
+     */
+    fun getDynamicBaseUrlByKey(key: String): String?
+
+    /**
+     * 设置baseUrl
+     */
+    fun setDynamicBaseUrlByKey(key: String, baseUrl: String)
+
+    /**
+     * 获取全局的baseUrl
+     */
+    fun getGlobalBaseUrl(): String?
+
+    /**
+     * 设置全局的baseUrl,可以动态修改
+     */
+    fun setGlobalBaseUrl(baseUrl: String)
 }
