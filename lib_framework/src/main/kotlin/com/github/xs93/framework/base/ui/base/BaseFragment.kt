@@ -22,7 +22,8 @@ import com.github.xs93.framework.toast.UiToastProxy
  * @version v1.0
  * @date 2021/11/4 11:25
  */
-abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(), ICreateLoadingDialog,
+abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(),
+    ICreateLoadingDialog,
     ILoadingDialogControl {
 
 
@@ -30,11 +31,13 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
-    private var mLazyLoad = false
-
     private var mFirstVisibleCalled: Boolean = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         if (getContentLayoutId() != 0) {
             return inflater.inflate(getContentLayoutId(), container, false)
         }
@@ -58,7 +61,7 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        mFirstVisibleCalled = savedInstanceState?.getBoolean("FIRST_VISIBLE_CALLED") ?: false
+        mFirstVisibleCalled = savedInstanceState?.getBoolean("FIRST_VISIBLE_CALLED") == true
     }
 
     override fun onResume() {
