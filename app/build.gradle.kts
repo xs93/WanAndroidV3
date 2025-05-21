@@ -1,5 +1,11 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.TimeZone
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -21,6 +27,17 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    applicationVariants.all { ->
+        outputs.all {
+            val dataFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+            dataFormat.timeZone = TimeZone.getTimeZone("GMT+08")
+            val time = dataFormat.format(Date())
+            val name = "Poppy_${buildType.name}_${defaultConfig.versionName}_$time}.apk"
+            (this as BaseVariantOutputImpl).outputFileName = name
+        }
+    }
+
 
     buildTypes {
         release {

@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.WanAndroidV3" parent="Base.Theme.WanAndroidV3" />
+    <style name="Theme.WanAndroidV3" parent="Base.Theme.WanAndroidV3">
+        <item name="colorAccent">#FF00FF</item>
+    </style>
 </resources>

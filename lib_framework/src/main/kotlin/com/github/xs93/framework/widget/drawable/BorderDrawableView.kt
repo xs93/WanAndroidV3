@@ -2,6 +2,7 @@ package com.github.xs93.framework.widget.drawable
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.FrameLayout
 import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.toColorInt
@@ -40,6 +41,7 @@ class BorderDrawableView @JvmOverloads constructor(
     private var borderAnimDuration = 2000L
 
     init {
+        Log.d("aaaa", "aaa: ")
         context.withStyledAttributes(attrs, R.styleable.BorderDrawableView) {
             borderStyle = getInt(
                 R.styleable.BorderDrawableView_border_style,

@@ -54,4 +54,29 @@
         <!--是否流动渐变-->
         <attr name="border_anim_duration" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="ProgressView">
+        <attr name="progress_style" format="enum">
+            <enum name="linear" value="0" />
+            <enum name="circle" value="1" />
+        </attr>
+        <attr name="progress_width" format="dimension" />
+        <attr name="progress_background_color" format="color" />
+        <attr name="progress_color" format="color" />
+        <attr name="progress_colors" format="string|reference" />
+        <attr name="progress_colors_positions" format="string|reference" />
+        <attr name="progress_start_angle" format="integer">
+            <enum name="angle0" value="-1" />
+            <enum name="angle90" value="-2" />
+            <enum name="angle180" value="-3" />
+            <enum name="angle270" value="-4" />
+        </attr>
+        <attr name="progress_max" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="progress_cap" format="enum">
+            <enum name="butt" value="0" />
+            <enum name="round" value="1" />
+            <enum name="square" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>

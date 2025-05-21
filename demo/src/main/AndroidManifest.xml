@@ -26,6 +26,7 @@
         <activity android:name=".CameraTestActivity" />
         <activity android:name=".BorderDrawableActivity" />
         <activity android:name=".StoreTestActivity" />
+        <activity android:name=".ProgressViewTestActivity" />
     </application>
 
 </manifest>

@@ -31,6 +31,9 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>(
         binding.btnStore.setSingleClickListener {
             startActivitySafe<StoreTestActivity>()
         }
+        binding.btnProgress.setSingleClickListener {
+            startActivitySafe<ProgressViewTestActivity>()
+        }
     }
 
     override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
