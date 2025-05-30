@@ -1,14 +1,17 @@
 package com.github.xs93.framework.base.ui.base
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.Insets
 import androidx.fragment.app.DialogFragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseActivity
-import com.github.xs93.framework.ktx.setOnInsertsChangedListener
+import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
 import com.github.xs93.framework.loading.ILoadingDialogControlProxy
@@ -25,14 +28,13 @@ import com.github.xs93.framework.toast.UiToastProxy
  * @date 2021/11/4 11:01
  */
 abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiToastProxy(),
-    ICreateLoadingDialog, ILoadingDialogControl {
-
-    var resumed: Boolean = false
-        private set
+    ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(supportFragmentManager, this, this)
     }
+
+    private val windowInsetsHelper = WindowInsetsHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         beforeSuperOnCreate(savedInstanceState)
@@ -51,9 +53,10 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
             }
         }
 
-        val contentView: View? = findViewById(android.R.id.content)
-        contentView?.setOnInsertsChangedListener {
-            onSystemBarInsetsChanged(it)
+        windowInsetsHelper.attach(window, this)
+        windowInsetsHelper.controllerCompat?.let {
+            it.isAppearanceLightStatusBars = isAppearanceLightStatusBars()
+            it.isAppearanceLightNavigationBars = isAppearanceLightNavigationBars()
         }
 
         initView(savedInstanceState)
@@ -61,14 +64,46 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
         initData(savedInstanceState)
     }
 
-    open fun setupEnableEdgeToEdge(activity: ComponentActivity) {
-        activity.enableEdgeToEdge()
+    //region EdgeToEdge样式设置
+    protected open fun setupEnableEdgeToEdge(activity: ComponentActivity) {
+        activity.enableEdgeToEdge(
+            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+        )
     }
+
+    /**
+     * 修改导航栏图标是否是浅色
+     */
+    protected open fun isAppearanceLightNavigationBars(): Boolean {
+        val nightMode =
+            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        return !nightMode
+    }
+
+    /**
+     * 修改状态栏图标是否是浅色
+     */
+    protected open fun isAppearanceLightStatusBars(): Boolean {
+        val nightMode =
+            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        return !nightMode
+    }
+    //endregion
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
     }
+
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+
+    }
+
+    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
+
+    }
+
 
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()

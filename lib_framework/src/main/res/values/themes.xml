@@ -9,34 +9,41 @@
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="BaseDialogTheme" parent="@style/ThemeOverlay.Material3.Dialog">
+    <style name="BaseDialogTheme" parent="Theme.Material3.DayNight.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <!-- 默认Material3 按钮会设置为白底，颜色为主题色,一般不适应自定义界面,改为普通按钮样式-->
         <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
         <!-- 设置弹窗是否浮在Activity上，如果为true，则默认window 宽高为wrap_content,左右会有边距-->
         <item name="android:windowIsFloating">true</item>
+
         <!--窗口背景透明-->
         <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowFrame">@null</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">true</item>
         <item name="android:windowSoftInputMode">stateUnchanged|adjustResize</item>
     </style>
 
-    <style name="BaseDialogTheme.FullScreen">
+    <style name="BaseDialogTheme.FullScreen" parent="BaseDialogTheme">
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="BaseDialogTheme.Immersive" parent="BaseDialogTheme">
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+
+        <!--沉浸式透明导航栏和状态栏-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="android:enforceNavigationBarContrast" tools:ignore="NewApi">false</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
     </style>
 
-    <style name="BaseDialogTheme.FullScreen.Immersive">
-        <item name="android:windowFullscreen">false</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
-
+    <style name="BaseBottomDialogWindowAnim" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/base_bottom_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/base_bottom_slide_out</item>
     </style>
 </resources>

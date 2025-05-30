@@ -3,7 +3,6 @@ package com.github.xs93.framework.base.ui.interfaces
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.LayoutRes
-import com.github.xs93.framework.ui.ContentPadding
 
 /**
  * Fragment基类封装方法
@@ -27,10 +26,4 @@ interface IBaseFragment {
 
     /** 初始化数据 */
     fun initData(savedInstanceState: Bundle?) {}
-
-    /**
-     * 系统UI的宽高变更
-     * @param contentPadding ContentPadding 系统Ui边距
-     */
-    fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {}
 }

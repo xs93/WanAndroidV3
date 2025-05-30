@@ -3,11 +3,11 @@ package com.github.xs93.demo.dialog
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import androidx.core.graphics.Insets
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePaddingRelative
 import com.github.xs93.demo.R
 import com.github.xs93.demo.databinding.DialogSoftKeyboardTestBinding
-import com.github.xs93.framework.base.ui.interfaces.ISoftKeyboardListener
-import com.github.xs93.framework.base.ui.interfaces.SoftKeyboardInsetsCallback
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingDialogFragment
 
 /**
@@ -32,43 +32,26 @@ class SoftKeyboardTestDialog : BaseViewBindingDialogFragment<DialogSoftKeyboardT
         }
     }
 
-    private var softKeyboardInsetsCallback: SoftKeyboardInsetsCallback? = null
-
-    override fun getCustomStyle(): Int {
-        return com.github.xs93.framework.R.style.BaseDialogTheme_FullScreen_Immersive
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        // dialog?.window?.let {
-        //     val layoutParams = it.attributes
-        //     layoutParams.width = 300f.dp().toInt()
-        //     layoutParams.height = -2
-        //     it.attributes = layoutParams
-        // }
-
-        dialog?.window?.let {
-            val layoutParams = it.attributes
-            layoutParams.width = -1
-            layoutParams.height = -1
-            it.attributes = layoutParams
-            it.setGravity(Gravity.BOTTOM)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        val gravity = dialog?.window?.attributes?.gravity ?: 0
+        if (isImmersive() && (isFullScreen() || (gravity and Gravity.BOTTOM) == Gravity.BOTTOM)) {
+            binding.layoutBottom.updatePaddingRelative(bottom = insets.bottom)
         }
     }
 
+    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
+        super.onSoftKeyboardHeightChanged(imeVisible, height)
+        binding.spaceKeyboard.updateLayoutParams {
+            this.height = height
+        }
+    }
+
+    override fun isImmersive() = true
+    override fun isFullScreen() = true
+    override fun isBottomDialog() = false
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        softKeyboardInsetsCallback = SoftKeyboardInsetsCallback(
-            debug = true,
-            tag = "dialog",
-            listener = object : ISoftKeyboardListener {
-                override fun onSoftKeyboardChanged(show: Boolean, height: Int) {
-                    binding.spaceKeyboard.updateLayoutParams {
-                        this.height = height
-                    }
-                }
-            }
-        )
-        softKeyboardInsetsCallback?.attachToView(binding.editText)
+
     }
 }

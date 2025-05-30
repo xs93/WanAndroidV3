@@ -1,14 +1,12 @@
 package com.github.xs93.demo
 
 import android.os.Bundle
+import androidx.core.graphics.Insets
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import com.github.xs93.demo.databinding.ActivitySoftKeyboardTestBinding
 import com.github.xs93.demo.dialog.SoftKeyboardTestDialog
-import com.github.xs93.framework.base.ui.interfaces.ISoftKeyboardListener
-import com.github.xs93.framework.base.ui.interfaces.SoftKeyboardInsetsCallback
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
-import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.ktx.setSingleClickListener
 
 /**
@@ -24,29 +22,21 @@ class SoftKeyboardTestActivity : BaseViewBindingActivity<ActivitySoftKeyboardTes
     ActivitySoftKeyboardTestBinding::bind
 ) {
 
-    private var softKeyboardInsetsCallback: SoftKeyboardInsetsCallback? = null
-
     override fun initView(savedInstanceState: Bundle?) {
-
-        softKeyboardInsetsCallback = SoftKeyboardInsetsCallback(
-            tag = "activity",
-            listener = object : ISoftKeyboardListener {
-                override fun onSoftKeyboardChanged(show: Boolean, height: Int) {
-                    binding.spaceKeyboard.updateLayoutParams {
-                        this.height = height
-                    }
-                }
-            }
-        )
-        softKeyboardInsetsCallback?.attachToView(binding.editText)
-
         binding.btnNormalDialog.setSingleClickListener {
             SoftKeyboardTestDialog.newInstance().showAllowingStateLoss(supportFragmentManager)
         }
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.root.updatePadding(bottom = contentPadding.bottom, top = contentPadding.top)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.root.updatePadding(bottom = insets.bottom, top = insets.top)
+    }
+
+    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
+        super.onSoftKeyboardHeightChanged(imeVisible, height)
+        binding.spaceKeyboard.updateLayoutParams {
+            this.height = height
+        }
     }
 }

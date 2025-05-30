@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
-import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
 import com.github.xs93.framework.loading.ILoadingDialogControlProxy
@@ -46,9 +45,6 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.setOnInsertsChangedListener {
-            onSystemBarInsetsChanged(it)
-        }
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)

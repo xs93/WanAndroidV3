@@ -1,10 +1,10 @@
 package com.github.xs93.demo
 
 import android.os.Bundle
+import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.demo.databinding.ActivityBorderDrawableBinding
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
-import com.github.xs93.framework.ui.ContentPadding
 
 /**
  * @author XuShuai
@@ -21,8 +21,8 @@ class BorderDrawableActivity : BaseViewBindingActivity<ActivityBorderDrawableBin
 
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.root.updatePadding(top = contentPadding.top, bottom = contentPadding.bottom)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }

@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
 import com.github.xs93.framework.ktx.isSystemBarsTranslucentCompat
-import com.github.xs93.framework.ktx.setOnInsertsChangedListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
 import com.github.xs93.framework.loading.ILoadingDialogControlProxy
@@ -64,14 +63,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        dialog?.window?.apply {
-            val contentView: View = decorView.findViewById(android.R.id.content)
-            contentView.setOnInsertsChangedListener {
-                onSystemBarInsetsChanged(it)
-            }
-        }
-
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)

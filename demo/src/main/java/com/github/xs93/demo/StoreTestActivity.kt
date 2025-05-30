@@ -2,6 +2,7 @@ package com.github.xs93.demo
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import com.github.xs93.demo.databinding.ActivityStoreTestBinding
@@ -11,7 +12,6 @@ import com.github.xs93.demo.entity.TestResponse
 import com.github.xs93.demo.store.MyMMKVOwner
 import com.github.xs93.demo.store.MySharedPrefsOwner
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
-import com.github.xs93.framework.ui.ContentPadding
 import kotlinx.coroutines.launch
 
 /**
@@ -132,8 +132,8 @@ class StoreTestActivity : BaseViewBindingActivity<ActivityStoreTestBinding>(
         }
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.root.updatePadding(top = contentPadding.top, bottom = contentPadding.bottom)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }

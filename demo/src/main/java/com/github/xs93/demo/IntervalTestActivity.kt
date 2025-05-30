@@ -1,10 +1,10 @@
 package com.github.xs93.demo
 
 import android.os.Bundle
+import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.demo.databinding.ActivityIntervalTestBinding
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
-import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.interval.Interval
 import com.github.xs93.utils.ktx.setSingleClickListener
 import java.util.concurrent.TimeUnit
@@ -43,8 +43,8 @@ class IntervalTestActivity : BaseViewBindingActivity<ActivityIntervalTestBinding
         }
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.root.updatePadding(top = contentPadding.top, bottom = contentPadding.bottom)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }
