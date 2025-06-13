@@ -1,13 +1,10 @@
 package com.github.xs93.framework.base.ui.base
 
 import android.view.View
-import android.view.Window
 import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
 
 /**
@@ -33,25 +30,11 @@ class WindowInsetsHelper(dispatchMode: Int = DISPATCH_MODE_CONTINUE_ON_SUBTREE) 
     private var lastImeVisible: Boolean = false
     private var lastImeHeight: Int = 0
 
-    var controllerCompat: WindowInsetsControllerCompat? = null
-        private set
 
-    fun attach(window: Window, listener: IWindowInsetsListener) {
+    fun attach(view: View, listener: IWindowInsetsListener) {
         this.listener = listener
-        val decorView: View = window.decorView
-        val contentView = decorView.findViewById<View>(android.R.id.content)
-        val targetView = contentView ?: decorView
-        ViewCompat.setOnApplyWindowInsetsListener(targetView, this)
-        ViewCompat.setWindowInsetsAnimationCallback(targetView, this)
-        controllerCompat = WindowCompat.getInsetsController(window, decorView)
-    }
-
-    fun hideSoftKeyboard() {
-        controllerCompat?.hide(WindowInsetsCompat.Type.ime())
-    }
-
-    fun showSoftKeyboard() {
-        controllerCompat?.show(WindowInsetsCompat.Type.ime())
+        ViewCompat.setOnApplyWindowInsetsListener(view, this)
+        ViewCompat.setWindowInsetsAnimationCallback(view, this)
     }
 
     override fun onApplyWindowInsets(v: View, insets: WindowInsetsCompat): WindowInsetsCompat {

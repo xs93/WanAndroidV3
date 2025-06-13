@@ -60,11 +60,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment,
         val dialog = customDialog(requireContext(), theme) ?: BaseDialog(requireContext(), theme)
         dialog.window?.let {
             setupEnableEdgeToEdge(it)
-            windowInsetsHelper.attach(it, this@BaseDialogFragment)
-            windowInsetsHelper.controllerCompat?.let { controller ->
-                controller.isAppearanceLightStatusBars = isAppearanceLightStatusBars()
-                controller.isAppearanceLightNavigationBars = isAppearanceLightNavigationBars()
-            }
             setupWindow(it)
         }
         return dialog
@@ -83,6 +78,15 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        windowInsetsHelper.attach(view, this)
+        val window = dialog?.window
+        window?.let {
+            val controllerCompat = WindowCompat.getInsetsController(it, it.decorView)
+            controllerCompat.isAppearanceLightStatusBars = isAppearanceLightStatusBars()
+            controllerCompat.isAppearanceLightNavigationBars = isAppearanceLightNavigationBars()
+        }
+
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)

@@ -1,17 +1,20 @@
 package com.github.xs93.framework.base.ui.base
 
 import android.content.DialogInterface
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.graphics.Insets
+import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
-import com.github.xs93.framework.ktx.isSystemBarsTranslucentCompat
+import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
 import com.github.xs93.framework.loading.ILoadingDialogControlProxy
@@ -32,14 +35,15 @@ import java.lang.reflect.Field
  * @email 466911254@qq.com
  */
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBaseFragment,
-    IToast by UiToastProxy(),
-    ICreateLoadingDialog, ILoadingDialogControl {
+    IToast by UiToastProxy(), ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
     }
 
     private val dismissListeners by lazy { mutableListOf<() -> Unit>() }
+
+    private val windowInsetsHelper = WindowInsetsHelper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +67,15 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        windowInsetsHelper.attach(view, this)
+        val window = dialog?.window
+        window?.let {
+            val controllerCompat = WindowCompat.getInsetsController(it, it.decorView)
+            controllerCompat.isAppearanceLightStatusBars = isAppearanceLightStatusBars()
+            controllerCompat.isAppearanceLightNavigationBars = isAppearanceLightNavigationBars()
+        }
+
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)
@@ -80,10 +93,54 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         return 0
     }
 
+
+    //region 样式设置
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+
+    }
+
+    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
+
+    }
+
+    /**
+     * 修改导航栏图标是否是浅色
+     */
+    protected open fun isAppearanceLightNavigationBars(): Boolean {
+        val nightMode =
+            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        return !nightMode
+    }
+
+    /**
+     * 修改状态栏图标是否是浅色
+     */
+    protected open fun isAppearanceLightStatusBars(): Boolean {
+        val nightMode =
+            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        return !nightMode
+    }
+    //endregion
+
+    //region loading 弹窗
+    override fun createLoadingDialog(): DialogFragment {
+        return LoadingDialogHelper.createLoadingDialog()
+    }
+
+    override fun showLoadingDialog() {
+        mIUiLoadingDialog.showLoadingDialog()
+    }
+
+    override fun hideLoadingDialog() {
+        mIUiLoadingDialog.hideLoadingDialog()
+    }
+    //endregion
+
     fun addOnDismissListener(listener: () -> Unit) {
         dismissListeners.add(listener)
     }
 
+    //region 定制BottomSheetDialog
     fun getSheetBehavior(): BottomSheetBehavior<*>? {
         val dialog = dialog ?: return null
         if (dialog !is BottomSheetDialog) return null
@@ -122,21 +179,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         behavior.peekHeight = height
         behavior.skipCollapsed = true
     }
-
-    /**
-     * 实现全屏沉浸式
-     */
-    fun immersion() {
-        dialog?.window?.apply {
-            isSystemBarsTranslucentCompat = true
-        }
-        var viewParent: View? = view
-        while (viewParent is View) {
-            viewParent.fitsSystemWindows = false
-            viewParent.setOnApplyWindowInsetsListener { _, insets -> insets }
-            viewParent = viewParent.parent as View?
-        }
-    }
+    //endregion
 
     /**
      * 使用此方法显示弹出框，可以避免生命周期状态错误导致的异常(Can not perform this action after onSaveInstanceState)
@@ -162,15 +205,5 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         }
     }
 
-    override fun createLoadingDialog(): DialogFragment {
-        return LoadingDialogHelper.createLoadingDialog()
-    }
 
-    override fun showLoadingDialog() {
-        mIUiLoadingDialog.showLoadingDialog()
-    }
-
-    override fun hideLoadingDialog() {
-        mIUiLoadingDialog.hideLoadingDialog()
-    }
 }

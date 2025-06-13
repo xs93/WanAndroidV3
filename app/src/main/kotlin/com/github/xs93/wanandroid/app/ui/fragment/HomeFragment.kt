@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
 import androidx.annotation.StringRes
+import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
-import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
@@ -78,9 +78,10 @@ class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(
         }
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.clToolbar.updatePadding(top = contentPadding.top)
+
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.clToolbar.updatePadding(top = insets.top)
     }
 
 

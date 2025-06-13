@@ -9,6 +9,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.Insets
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.DialogFragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseActivity
 import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
@@ -53,8 +54,10 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
             }
         }
 
-        windowInsetsHelper.attach(window, this)
-        windowInsetsHelper.controllerCompat?.let {
+        val decorView = window.decorView
+        windowInsetsHelper.attach(decorView, this)
+        val controllerCompat = WindowCompat.getInsetsController(window, decorView)
+        controllerCompat.let {
             it.isAppearanceLightStatusBars = isAppearanceLightStatusBars()
             it.isAppearanceLightNavigationBars = isAppearanceLightNavigationBars()
         }

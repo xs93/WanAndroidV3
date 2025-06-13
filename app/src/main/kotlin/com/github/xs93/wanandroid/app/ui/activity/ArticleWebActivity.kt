@@ -12,10 +12,10 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
-import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ArticleWebActivityBinding
 import com.github.xs93.wanandroid.common.web.WebViewPool
@@ -131,10 +131,10 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
         }
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.flWebContainer.updatePadding(bottom = contentPadding.bottom)
-        binding.toolbar.updatePadding(top = contentPadding.top)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.flWebContainer.updatePadding(bottom = insets.bottom)
+        binding.toolbar.updatePadding(top = insets.top)
     }
 
     override fun initData(savedInstanceState: Bundle?) {

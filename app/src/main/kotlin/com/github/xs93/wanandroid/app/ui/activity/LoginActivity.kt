@@ -2,13 +2,13 @@ package com.github.xs93.wanandroid.app.ui.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
-import com.github.xs93.framework.ui.ContentPadding
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.wanandroid.app.R
@@ -29,7 +29,10 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity :
-    BaseViewBindingActivity<LoginActivityBinding>(R.layout.login_activity, LoginActivityBinding::bind) {
+    BaseViewBindingActivity<LoginActivityBinding>(
+        R.layout.login_activity,
+        LoginActivityBinding::bind
+    ) {
 
 
     private val loginViewModel: LoginViewModel by viewModels()
@@ -66,7 +69,12 @@ class LoginActivity :
                 setSingleClickListener {
                     val username = etAccount.text?.toString()?.trim()
                     val password = etPassword.text?.toString()?.trim()
-                    loginViewModel.loginAction.send(LoginAction.ClickLoginAction(username, password))
+                    loginViewModel.loginAction.send(
+                        LoginAction.ClickLoginAction(
+                            username,
+                            password
+                        )
+                    )
                 }
             }
         }
@@ -95,8 +103,8 @@ class LoginActivity :
         }
     }
 
-    override fun onSystemBarInsetsChanged(contentPadding: ContentPadding) {
-        super.onSystemBarInsetsChanged(contentPadding)
-        binding.toolbar.updatePadding(top = contentPadding.top)
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        binding.toolbar.updatePadding(top = insets.top)
     }
 }

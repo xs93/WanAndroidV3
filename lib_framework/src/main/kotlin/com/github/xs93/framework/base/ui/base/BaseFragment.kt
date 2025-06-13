@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.Insets
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
+import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
 import com.github.xs93.framework.loading.ILoadingDialogControlProxy
@@ -22,8 +24,7 @@ import com.github.xs93.framework.toast.UiToastProxy
  * @date 2021/11/4 11:25
  */
 abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(),
-    ICreateLoadingDialog,
-    ILoadingDialogControl {
+    ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
 
 
     private val mIUiLoadingDialog by lazy {
@@ -31,6 +32,8 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
     }
 
     private var mFirstVisibleCalled: Boolean = false
+
+    private val windowInsetsHelper = WindowInsetsHelper()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,6 +48,9 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        windowInsetsHelper.attach(view, this)
+
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)
@@ -76,6 +82,15 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
      * @return Boolean true 被调用过,false没有被调用过
      */
     fun firstVisibleCalled(): Boolean = mFirstVisibleCalled
+
+
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+
+    }
+
+    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
+
+    }
 
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()

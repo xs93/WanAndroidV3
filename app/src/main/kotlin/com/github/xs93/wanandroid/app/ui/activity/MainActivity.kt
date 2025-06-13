@@ -5,6 +5,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import coil3.load
@@ -12,7 +14,6 @@ import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
-import com.github.xs93.framework.ktx.isLightStatusBarsCompat
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
@@ -63,7 +64,13 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
     @Inject
     lateinit var accountDataModule: AccountDataModule
 
+    private var windowController: WindowInsetsControllerCompat? = null
+
     override fun initView(savedInstanceState: Bundle?) {
+
+        windowController = WindowCompat.getInsetsController(window, window.decorView)
+
+
         mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
             add { HomeFragment.newInstance() }
             add { NavigatorFragment.newInstance() }
@@ -76,13 +83,13 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
                 addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
                     override fun onDrawerOpened(drawerView: View) {
                         if (drawerView.id == R.id.main_drawer_layout) {
-                            window.isLightStatusBarsCompat = false
+                            windowController?.isAppearanceLightStatusBars = false
                         }
                     }
 
                     override fun onDrawerClosed(drawerView: View) {
                         if (drawerView.id == R.id.main_drawer_layout) {
-                            window.isLightStatusBarsCompat = !isNightMode
+                            windowController?.isAppearanceLightStatusBars = !isNightMode
                         }
                     }
                 })
@@ -211,7 +218,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         if (binding.drawerRoot.isDrawerOpen(GravityCompat.START)) {
-            window.isLightStatusBarsCompat = false
+            windowController?.isAppearanceLightStatusBars = false
         }
     }
 }
