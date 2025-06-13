@@ -62,9 +62,10 @@ class WebViewPool @Inject constructor(private val poolSize: Int) {
     @Synchronized
     fun releaseWebView(webView: WebView) {
         webView.stopLoading()
+        webView.pauseTimers()
         (webView.parent as ViewGroup?)?.removeView(webView)
         mInUseWebViews.remove(webView)
-        if (mAvailableWebViews.size < poolSize) {
+        if (getAvailableWebViewSize() < poolSize) {
             val webViewContext = webView.context
             if (webViewContext is MutableContextWrapper) {
                 webViewContext.baseContext = AppInject.getApp()
@@ -72,13 +73,18 @@ class WebViewPool @Inject constructor(private val poolSize: Int) {
             defaultSettings(webView)
             // 这样才能完全清除旧的历史记录
             webView.webViewClient = object : WebViewClient() {
-                override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+                override fun doUpdateVisitedHistory(
+                    view: WebView?,
+                    url: String?,
+                    isReload: Boolean
+                ) {
                     super.doUpdateVisitedHistory(view, url, isReload)
                     webView.clearHistory()
                     // 重设一个WebViewClient,防止用户不设置导致历史记录被清除
                     webView.webViewClient = WebViewClient()
                 }
             }
+            webView.webChromeClient = null
             webView.loadUrl(WrapWebView.DEFAULT_URL)
 
             for (i in 0 until poolSize) {
@@ -111,6 +117,16 @@ class WebViewPool @Inject constructor(private val poolSize: Int) {
         defaultSettings(webView)
         return webView
     }
+
+
+    private fun getAvailableWebViewSize(): Int {
+        var size = 0
+        mAvailableWebViews.forEach {
+            if (it != null) size++
+        }
+        return size
+    }
+
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun defaultSettings(webView: WebView) {
