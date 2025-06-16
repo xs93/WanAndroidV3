@@ -1,6 +1,7 @@
 package com.github.xs93.framework.permission
 
 import android.content.pm.PackageManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 
@@ -37,6 +38,7 @@ object PermissionManager {
         val interceptor = interceptors.firstOrNull {
             it.shouldIntercept(activity, filteredPermissions)
         }
+
         if (interceptor != null) {
             interceptor.intercept(activity, filteredPermissions) {
                 realRequest(activity, filteredPermissions, onResult)
@@ -52,6 +54,12 @@ object PermissionManager {
         permissions: List<String>,
         onResult: (granted: List<String>, denied: List<String>) -> Unit
     ) {
-
+        val launcher =
+            activity.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
+                val granted = result.filter { it.value }.keys.toList()
+                val denied = result.filter { !it.value }.keys.toList()
+                onResult(granted, denied)
+            }
+        launcher.launch(permissions.toTypedArray())
     }
 }
