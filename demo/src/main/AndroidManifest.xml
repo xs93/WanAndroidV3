@@ -27,6 +27,7 @@
         <activity android:name=".BorderDrawableActivity" />
         <activity android:name=".StoreTestActivity" />
         <activity android:name=".ProgressViewTestActivity" />
+        <activity android:name=".CornerConstraintLayoutTestActivity" />
     </application>
 
 </manifest>

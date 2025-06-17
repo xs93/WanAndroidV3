@@ -79,4 +79,12 @@
             <enum name="square" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="CornersConstraintLayout">
+        <attr name="ccl_radius" format="dimension" />
+        <attr name="ccl_start_top_radius" format="dimension" />
+        <attr name="ccl_end_top_radius" format="dimension" />
+        <attr name="ccl_end_bottom_radius" format="dimension" />
+        <attr name="ccl_start_bottom_radius" format="dimension" />
+    </declare-styleable>
 </resources>

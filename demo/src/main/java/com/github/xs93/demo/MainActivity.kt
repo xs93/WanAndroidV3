@@ -34,6 +34,9 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>(
         binding.btnProgress.setSingleClickListener {
             startActivitySafe<ProgressViewTestActivity>()
         }
+        binding.btnCornerLayout.setSingleClickListener {
+            startActivitySafe<CornerConstraintLayoutTestActivity>()
+        }
     }
 
     override fun onSystemBarInsetsChanged(insets: Insets) {

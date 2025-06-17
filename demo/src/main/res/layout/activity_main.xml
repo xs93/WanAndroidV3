@@ -48,4 +48,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="ProgressView" />
+
+    <Button
+        android:id="@+id/btnCornerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CornerConstraintLayout" />
 </LinearLayout>
