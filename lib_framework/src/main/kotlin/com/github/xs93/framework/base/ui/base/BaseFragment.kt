@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.Insets
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
@@ -83,14 +82,6 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
      */
     fun firstVisibleCalled(): Boolean = mFirstVisibleCalled
 
-
-    override fun onSystemBarInsetsChanged(insets: Insets) {
-
-    }
-
-    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
-
-    }
 
     override fun createLoadingDialog(): DialogFragment {
         return LoadingDialogHelper.createLoadingDialog()

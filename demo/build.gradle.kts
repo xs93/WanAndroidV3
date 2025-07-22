@@ -6,12 +6,13 @@ plugins {
 
 android {
     namespace = "com.github.xs93.demo"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.github.xs93.demo"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
+
         versionCode = 1
         versionName = "1.0"
 
@@ -26,13 +27,6 @@ android {
                 "proguard-rules.pro"
             )
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-    kotlinOptions {
-        jvmTarget = "17"
     }
 
     buildFeatures {

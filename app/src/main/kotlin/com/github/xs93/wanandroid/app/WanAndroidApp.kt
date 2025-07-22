@@ -42,7 +42,7 @@ class WanAndroidApp : CommonApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        crashHandler.init(this, true)
+        crashHandler.init(this)
 
         CoilManager.init(this)
         initHttp()

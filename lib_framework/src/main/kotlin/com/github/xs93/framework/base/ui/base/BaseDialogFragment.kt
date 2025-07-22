@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.graphics.Insets
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -99,16 +98,6 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment,
             iterator.next().invoke()
         }
     }
-
-
-    override fun onSystemBarInsetsChanged(insets: Insets) {
-
-    }
-
-    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
-
-    }
-
     //region 样式设置
     /**
      * 自定义Dialog返回,返回null，则默认使用BaseDialog
@@ -228,6 +217,9 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment,
     }
     //endregion
 
+    /**
+     * dismiss监听
+     */
     fun addOnDismissListener(listener: () -> Unit) {
         dismissListeners.add(listener)
     }

@@ -1,10 +1,10 @@
 [versions]
 minSdk = "26"
-targetSdk = "35"
-androidGradlePlugin = "8.9.3"
+targetSdk = "36"
+androidGradlePlugin = "8.11.1"
 kotlin = "2.2.0"
 kotlinCoroutines = "1.10.2"
-ksp = "2.1.10-1.0.31"
+ksp = "2.2.0-2.0.2"
 androidxLifecycle = "2.9.2"
 androidxRoom = "2.7.2"
 androixHint = "2.57"
@@ -109,7 +109,7 @@ moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-code
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 #Gson 解析库(https://github.com/google/gson)
-gson = { group = "com.google.code.gson", name = "gson", version = "2.13.0" }
+gson = { group = "com.google.code.gson", name = "gson", version = "2.13.1" }
 
 #网络库(https://github.com/square/okhttp)
 okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
@@ -156,7 +156,7 @@ banner = { group = "com.github.zhpanvip", name = "bannerviewpager", version = "3
 viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator", version = "1.2.3" }
 
 #RecyclerView Adapter封装库(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
-brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version = "4.1.6" }
+brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version = "4.1.7" }
 
 #RecyclerView Adapter封装库(https://github.com/liangjingkanji/BRV)
 brv = { module = "com.github.liangjingkanji:BRV", version = "1.6.0" }

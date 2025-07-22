@@ -1,6 +1,7 @@
 package com.github.xs93.framework.base.ui.interfaces
 
 import androidx.core.graphics.Insets
+import androidx.core.view.WindowInsetsCompat
 
 
 /**
@@ -13,12 +14,17 @@ import androidx.core.graphics.Insets
 interface IWindowInsetsListener {
 
     /**
+     * 系统onApplyWindowInsets回调的调用,用于外部定制特殊处理
+     */
+    fun onWindowInsetsChanged(insets: WindowInsetsCompat) {}
+
+    /**
      * 系统栏 insets 改变
      */
-    fun onSystemBarInsetsChanged(insets: Insets)
+    fun onSystemBarInsetsChanged(insets: Insets) {}
 
     /**
      * 软键盘高度改变
      */
-    fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int)
+    fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {}
 }

@@ -29,6 +29,8 @@ import androidx.core.content.ContextCompat.getSystemService
  * 网络是否可连接
  *
  */
+@Suppress("DEPRECATION")
+@SuppressLint("ObsoleteSdkInt")
 @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 fun Context.isNetworkConnected(): Boolean {
     val cm = getSystemService(this, ConnectivityManager::class.java) ?: return false
@@ -37,7 +39,6 @@ fun Context.isNetworkConnected(): Boolean {
         networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
     } else {
         // 只是判断有网络连接
-        @Suppress("DEPRECATION")
         cm.activeNetworkInfo?.isConnected == true
     }
 }
@@ -53,6 +54,7 @@ fun Context.getNetworkOperatorName(): String {
 /**
  * 当前可用网络类型
  */
+@SuppressLint("ObsoleteSdkInt")
 @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 fun Context.getNetworkType(): NetworkType {
     val accessNetworkStatePermission =
@@ -100,7 +102,9 @@ fun Context.getNetworkType(network: Network): NetworkType {
  * 获取具体的移动网络详细信息
  * @receiver Context
  * @return MobileNetworkType
+ *
  */
+@Suppress("DEPRECATION")
 @RequiresPermission(allOf = [Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.READ_PHONE_STATE])
 fun Context.getMobileNetworkType(): MobileNetworkType {
     val networkType = getNetworkType()
@@ -120,7 +124,6 @@ fun Context.getMobileNetworkType(): MobileNetworkType {
     val type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
         tm.dataNetworkType
     } else {
-        @Suppress("DEPRECATION")
         tm.networkType
     }
 
@@ -135,7 +138,6 @@ fun Context.getMobileNetworkType(): MobileNetworkType {
         TelephonyManager.NETWORK_TYPE_EDGE,
         TelephonyManager.NETWORK_TYPE_CDMA,
         TelephonyManager.NETWORK_TYPE_1xRTT,
-        @Suppress("DEPRECATION")
         TelephonyManager.NETWORK_TYPE_IDEN -> MobileNetworkType.MOBILE_2G
 
         TelephonyManager.NETWORK_TYPE_UMTS,
@@ -203,6 +205,7 @@ private fun getNetworkType(cm: ConnectivityManager): NetworkType {
     }
 }
 
+@SuppressLint("ObsoleteSdkInt")
 @RequiresApi(Build.VERSION_CODES.M)
 @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
 private fun getNetworkType23OrNew(cm: ConnectivityManager): NetworkType {

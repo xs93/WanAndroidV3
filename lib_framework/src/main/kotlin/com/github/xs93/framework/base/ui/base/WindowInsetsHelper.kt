@@ -54,6 +54,8 @@ class WindowInsetsHelper(dispatchMode: Int = DISPATCH_MODE_CONTINUE_ON_SUBTREE) 
         applyWindowView = v
         lastWindowInsets = WindowInsetsCompat(insets)
 
+        listener?.onWindowInsetsChanged(insets)
+
         val systemBarsInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
         listener?.onSystemBarInsetsChanged(systemBarsInsets)
 

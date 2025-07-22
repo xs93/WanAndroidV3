@@ -63,7 +63,7 @@ object ProgressManager {
     }
 
     fun getProgressListener(url: String?): OnProgressListener {
-        return if (url.isNullOrBlank() || mListenerMap.isEmpty) {
+        return if (url.isNullOrBlank() || mListenerMap.isEmpty()) {
             null
         } else {
             mListenerMap[url]

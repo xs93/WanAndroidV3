@@ -8,7 +8,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.Insets
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.DialogFragment
 import com.github.xs93.framework.base.ui.interfaces.IBaseActivity
@@ -97,14 +96,6 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
-    }
-
-    override fun onSystemBarInsetsChanged(insets: Insets) {
-
-    }
-
-    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
-
     }
 
 

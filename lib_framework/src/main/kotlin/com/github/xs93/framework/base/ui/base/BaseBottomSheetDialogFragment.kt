@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.graphics.Insets
 import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.DialogFragment
@@ -95,14 +94,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
 
 
     //region 样式设置
-    override fun onSystemBarInsetsChanged(insets: Insets) {
-
-    }
-
-    override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
-
-    }
-
     /**
      * 修改导航栏图标是否是浅色
      */
