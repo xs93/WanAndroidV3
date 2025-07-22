@@ -1,33 +1,33 @@
 [versions]
 minSdk = "26"
 targetSdk = "35"
-androidGradlePlugin = "8.9.2"
-kotlin = "2.1.10"
+androidGradlePlugin = "8.9.3"
+kotlin = "2.2.0"
 kotlinCoroutines = "1.10.2"
 ksp = "2.1.10-1.0.31"
-androidxLifecycle = "2.8.7"
-androidxRoom = "2.7.1"
-androixHint = "2.56.1"
-androidxComposeBom = "2025.04.01"
+androidxLifecycle = "2.9.2"
+androidxRoom = "2.7.2"
+androixHint = "2.57"
+androidxComposeBom = "2025.07.00"
 androidxComposeCompiler = "1.5.4"
 androidxCamera = "1.4.2"
 androidxActivity = "1.10.1"
-androidxAppcompat = "1.7.0"
+androidxAppcompat = "1.7.1"
 #1.1.5有问题,不要升级
-androidxDataStore = "1.1.4"
+androidxDataStore = "1.1.7"
 
 okHttp = "4.12.0"
 retrofit = "2.11.0"
-moshi = "1.15.1"
-kotlinxSerialization = "1.6.3"
+moshi = "1.15.2"
+kotlinxSerialization = "1.9.0"
 
-coilVersion = "3.1.0"
+coilVersion = "3.2.0"
 
 junit = "4.13.2"
 androidx-test-ext-junit = "1.2.1"
 espresso-core = "3.6.1"
 
-smartRefreshLayout = "2.1.0"
+smartRefreshLayout = "2.1.1"
 agentweb = "v5.0.6-androidx"
 material3Android = "1.3.2"
 
@@ -42,14 +42,14 @@ androidx-startup = { group = "androidx.startup", name = "startup-runtime", versi
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.6" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.8" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.1" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.4.0" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.9.1" }
-androidx-webkit = { module = "androidx.webkit:webkit", version = "1.13.0" }
+androidx-webkit = { module = "androidx.webkit:webkit", version = "1.14.0" }
 androidx-palette = { module = "androidx.palette:palette", version = "1.0.0" }
 #Lifecycle
 androidx-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
@@ -131,7 +131,7 @@ androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize"
 
 #(从 v2.0.0 开始，MMKV 不再支持 32 位架构和 API 级别 22 或 21，如果需要 32 位或 API 级别 21~22，请使用 v1.3.x LTS 系列)
 #key-value 持久化库(https://github.com/Tencent/MMKV)
-mmkv = { module = "com.tencent:mmkv", version = "2.1.0" }
+mmkv = { module = "com.tencent:mmkv", version = "2.2.2" }
 
 #图片加载库(https://github.com/coil-kt/coil)
 coil3-core = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coilVersion" }
@@ -180,7 +180,10 @@ agentWeb-download = { group = "com.github.Justson", name = "Downloader", version
 flexbox = { group = "com.google.android.flexbox", name = "flexbox", version = "3.0.0" }
 
 #日志库
+# logger (https://github.com/orhanobut/logger)
 logger = { group = "com.orhanobut", name = "logger", version = "2.2.0" }
+# timber (https://github.com/JakeWharton/timber)
+timber = { group = "com.jakewharton.timber", name = "timber", version = "5.0.1" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }

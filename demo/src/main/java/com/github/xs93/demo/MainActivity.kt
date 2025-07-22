@@ -37,6 +37,9 @@ class MainActivity : BaseViewBindingActivity<ActivityMainBinding>(
         binding.btnCornerLayout.setSingleClickListener {
             startActivitySafe<CornerConstraintLayoutTestActivity>()
         }
+        binding.btnCrash.setSingleClickListener {
+            throw RuntimeException("测试崩溃")
+        }
     }
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
