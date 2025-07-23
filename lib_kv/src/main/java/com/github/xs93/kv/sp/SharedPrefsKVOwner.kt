@@ -32,10 +32,9 @@ interface ISharedPrefsKVOwner : IKV {
 
     val name: String
     val sharedPreferences: SharedPreferences
-    val userCommit: Boolean get() = true
 
-    override fun putBool(key: String, value: Boolean): Boolean {
-        edit { putBoolean(key, value) }
+    override fun putBool(key: String, value: Boolean, isSync: Boolean): Boolean {
+        edit(isSync) { putBoolean(key, value) }
         return true
     }
 
@@ -43,8 +42,8 @@ interface ISharedPrefsKVOwner : IKV {
         return sharedPreferences.getBoolean(key, defaultValue)
     }
 
-    override fun putInt(key: String, value: Int): Boolean {
-        edit { putInt(key, value) }
+    override fun putInt(key: String, value: Int, isSync: Boolean): Boolean {
+        edit(isSync) { putInt(key, value) }
         return true
     }
 
@@ -52,8 +51,8 @@ interface ISharedPrefsKVOwner : IKV {
         return sharedPreferences.getInt(key, defaultValue)
     }
 
-    override fun putLong(key: String, value: Long): Boolean {
-        edit { putLong(key, value) }
+    override fun putLong(key: String, value: Long, isSync: Boolean): Boolean {
+        edit(isSync) { putLong(key, value) }
         return true
     }
 
@@ -61,8 +60,8 @@ interface ISharedPrefsKVOwner : IKV {
         return sharedPreferences.getLong(key, defaultValue)
     }
 
-    override fun putFloat(key: String, value: Float): Boolean {
-        edit { putFloat(key, value) }
+    override fun putFloat(key: String, value: Float, isSync: Boolean): Boolean {
+        edit(isSync) { putFloat(key, value) }
         return true
     }
 
@@ -70,8 +69,8 @@ interface ISharedPrefsKVOwner : IKV {
         return sharedPreferences.getFloat(key, defaultValue)
     }
 
-    override fun putDouble(key: String, value: Double): Boolean {
-        edit { putFloat(key, value.toFloat()) }
+    override fun putDouble(key: String, value: Double, isSync: Boolean): Boolean {
+        edit(isSync) { putFloat(key, value.toFloat()) }
         return true
     }
 
@@ -79,8 +78,8 @@ interface ISharedPrefsKVOwner : IKV {
         return sharedPreferences.getFloat(key, defaultValue.toFloat()).toDouble()
     }
 
-    override fun putString(key: String, value: String?): Boolean {
-        edit { putString(key, value) }
+    override fun putString(key: String, value: String?, isSync: Boolean): Boolean {
+        edit(isSync) { putString(key, value) }
         return true
     }
 
@@ -90,9 +89,10 @@ interface ISharedPrefsKVOwner : IKV {
 
     override fun putStringSet(
         key: String,
-        value: Set<String>?
+        value: Set<String>?,
+        isSync: Boolean
     ): Boolean {
-        edit { putStringSet(key, value) }
+        edit(isSync) { putStringSet(key, value) }
         return true
     }
 
@@ -103,12 +103,12 @@ interface ISharedPrefsKVOwner : IKV {
         return sharedPreferences.getStringSet(key, defaultValue)
     }
 
-    override fun putBytes(key: String, value: ByteArray?): Boolean {
+    override fun putBytes(key: String, value: ByteArray?, isSync: Boolean): Boolean {
         if (value == null) {
-            edit { putString(key, null) }
+            edit(isSync) { putString(key, null) }
         } else {
             val encodedString = Base64.encodeToString(value, Base64.DEFAULT)
-            edit { putString(key, encodedString) }
+            edit(isSync) { putString(key, encodedString) }
         }
         return true
     }
@@ -122,10 +122,11 @@ interface ISharedPrefsKVOwner : IKV {
 
     override fun <T : Serializable> putSerializable(
         key: String,
-        value: T?
+        value: T?,
+        isSync: Boolean
     ): Boolean {
         if (value == null) {
-            edit { putString(key, null) }
+            edit(isSync) { putString(key, null) }
             return true
         }
         val baos = ByteArrayOutputStream()
@@ -134,7 +135,7 @@ interface ISharedPrefsKVOwner : IKV {
             out = ObjectOutputStream(baos)
             out.writeObject(value)
             val encodeJson = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
-            edit { putString(key, encodeJson) }
+            edit(isSync) { putString(key, encodeJson) }
             return true
         } catch (e: Exception) {
             e.printStackTrace()
@@ -187,7 +188,7 @@ interface ISharedPrefsKVOwner : IKV {
         }
     }
 
-    override fun <T : Parcelable> putParcelable(key: String, value: T?): Boolean {
+    override fun <T : Parcelable> putParcelable(key: String, value: T?, isSync: Boolean): Boolean {
         throw Throwable("SharedPreferences not supper save and get parcelable bean")
     }
 
@@ -204,15 +205,15 @@ interface ISharedPrefsKVOwner : IKV {
     }
 
     override fun remove(key: String) {
-        edit { remove(key) }
+        edit(false) { remove(key) }
     }
 
     override fun clear() {
-        edit { clear() }
+        edit(false) { clear() }
     }
 
-    private fun edit(action: SharedPreferences.Editor.() -> Unit) {
-        sharedPreferences.edit(userCommit) {
+    private fun edit(isSync: Boolean, action: SharedPreferences.Editor.() -> Unit) {
+        sharedPreferences.edit(!isSync) {
             action()
         }
     }

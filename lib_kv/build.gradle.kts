@@ -27,5 +27,5 @@ dependencies {
     implementation(libs.androidx.core.kts)
     implementation(libs.androidx.startup)
     compileOnly(libs.mmkv)
-    implementation(libs.androidx.datastore.preferences)
+    compileOnly(libs.androidx.datastore.preferences)
 }

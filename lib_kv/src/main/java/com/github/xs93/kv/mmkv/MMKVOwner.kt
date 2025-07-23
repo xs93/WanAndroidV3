@@ -34,7 +34,7 @@ interface IMMKVOwner : IKV {
 
     val mmkv: MMKV
 
-    override fun putBool(key: String, value: Boolean): Boolean {
+    override fun putBool(key: String, value: Boolean, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -42,7 +42,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeBool(key, defaultValue)
     }
 
-    override fun putInt(key: String, value: Int): Boolean {
+    override fun putInt(key: String, value: Int, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -50,7 +50,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeInt(key, defaultValue)
     }
 
-    override fun putLong(key: String, value: Long): Boolean {
+    override fun putLong(key: String, value: Long, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -58,7 +58,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeLong(key, defaultValue)
     }
 
-    override fun putFloat(key: String, value: Float): Boolean {
+    override fun putFloat(key: String, value: Float, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -66,7 +66,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeFloat(key, defaultValue)
     }
 
-    override fun putDouble(key: String, value: Double): Boolean {
+    override fun putDouble(key: String, value: Double, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -74,7 +74,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeDouble(key, defaultValue)
     }
 
-    override fun putString(key: String, value: String?): Boolean {
+    override fun putString(key: String, value: String?, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -82,7 +82,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeString(key, defaultValue)
     }
 
-    override fun putStringSet(key: String, value: Set<String>?): Boolean {
+    override fun putStringSet(key: String, value: Set<String>?, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -90,7 +90,7 @@ interface IMMKVOwner : IKV {
         return mmkv.decodeStringSet(key, defaultValue)
     }
 
-    override fun putBytes(key: String, value: ByteArray?): Boolean {
+    override fun putBytes(key: String, value: ByteArray?, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
@@ -100,7 +100,8 @@ interface IMMKVOwner : IKV {
 
     override fun <T : Serializable> putSerializable(
         key: String,
-        value: T?
+        value: T?,
+        isSync: Boolean
     ): Boolean {
         if (value == null) {
             mmkv.putString(key, null)
@@ -166,7 +167,7 @@ interface IMMKVOwner : IKV {
     }
 
 
-    override fun <T : Parcelable> putParcelable(key: String, value: T?): Boolean {
+    override fun <T : Parcelable> putParcelable(key: String, value: T?, isSync: Boolean): Boolean {
         return mmkv.encode(key, value)
     }
 
