@@ -7,6 +7,7 @@ import com.github.xs93.network.cookie.SharedPreferencesCookieStore
 import com.github.xs93.network.interceptor.BaseUrlsInterceptor
 import com.github.xs93.network.interceptor.CacheInterceptor
 import com.github.xs93.network.interceptor.DomainInterceptor
+import com.github.xs93.network.interceptor.DynamicTimeoutInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.crypt.AESCrypt
@@ -44,6 +45,7 @@ interface IRetrofitBuildStrategy {
             if (isMultipleBaseUrlEnable()) {
                 addInterceptor(BaseUrlsInterceptor(this@IRetrofitBuildStrategy))
             }
+            addInterceptor(DynamicTimeoutInterceptor())
             addInterceptor(
                 CacheInterceptor(
                     AppInject.getApp(),

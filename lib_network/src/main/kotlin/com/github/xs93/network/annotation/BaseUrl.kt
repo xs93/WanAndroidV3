@@ -11,4 +11,4 @@ package com.github.xs93.network.annotation
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
-annotation class BaseUrl(val value: String = "", val key: String = "")
+annotation class BaseUrl(val key: String = "", val value: String = "")
