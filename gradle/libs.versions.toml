@@ -194,7 +194,7 @@ leakcanary = { module = "com.squareup.leakcanary:leakcanary-android", version = 
 
 [bundles]
 kotlinx-coroutines = ["kotlinx-coroutines-core", "kotlinx-coroutines-android"]
-retrofit2 = ["okhttp3", "okhttp3-profiler", "retrofit2", "retrofit2-converter-moshi", "retrofit2-converter-scalars"]
+retrofit2 = ["okhttp3", "retrofit2", "retrofit2-converter-moshi", "retrofit2-converter-scalars"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

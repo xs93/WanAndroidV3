@@ -37,4 +37,5 @@ dependencies {
     api(libs.moshi.kotlin)
 
     implementation(libs.bundles.kotlinx.coroutines)
+    debugImplementation(libs.okhttp3.profiler)
 }

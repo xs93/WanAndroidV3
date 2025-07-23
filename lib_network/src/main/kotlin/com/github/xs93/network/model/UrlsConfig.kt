@@ -8,8 +8,9 @@ package com.github.xs93.network.model
  *
  */
 data class UrlsConfig(
-    val apiBaseUrl: String?,
+    val methodUrl: String?,
     val methodUrlKey: String?,
+    val clazzUrl: String?,
     val clazzUrlKey: String?,
     val urlAnnotationIndex: Int,
 )

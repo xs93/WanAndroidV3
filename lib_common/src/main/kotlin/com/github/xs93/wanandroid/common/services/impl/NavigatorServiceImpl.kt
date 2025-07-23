@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.common.services.impl
 
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.entity.Navigation
 import com.github.xs93.wanandroid.common.network.WanResponse
 import com.github.xs93.wanandroid.common.services.NavigatorService
@@ -17,7 +16,7 @@ import javax.inject.Inject
  */
 class NavigatorServiceImpl @Inject constructor() : NavigatorService {
 
-    private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = NavigatorService::class.java) }
+    private val service by lazy { EasyRetrofit.create(service = NavigatorService::class.java) }
 
     override suspend fun getNavigationList(): Result<WanResponse<List<Navigation>>> {
         return service.getNavigationList()

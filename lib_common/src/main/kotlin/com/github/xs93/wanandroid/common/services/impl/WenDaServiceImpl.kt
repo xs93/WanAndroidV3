@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.common.services.impl
 
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.entity.Article
 import com.github.xs93.wanandroid.common.network.PageResponse
 import com.github.xs93.wanandroid.common.network.WanResponse
@@ -18,9 +17,12 @@ import javax.inject.Inject
  */
 class WenDaServiceImpl @Inject constructor() : WenDaService {
 
-    private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = WenDaService::class.java) }
+    private val service by lazy { EasyRetrofit.create(service = WenDaService::class.java) }
 
-    override suspend fun getWenDaList(page: Int, pageSize: Int?): Result<WanResponse<PageResponse<Article>>> {
+    override suspend fun getWenDaList(
+        page: Int,
+        pageSize: Int?
+    ): Result<WanResponse<PageResponse<Article>>> {
         return service.getWenDaList(page, pageSize)
     }
 }

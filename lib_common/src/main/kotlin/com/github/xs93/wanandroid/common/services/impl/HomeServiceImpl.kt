@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.common.services.impl
 
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.entity.Article
 import com.github.xs93.wanandroid.common.entity.Banner
 import com.github.xs93.wanandroid.common.network.PageResponse
@@ -19,7 +18,7 @@ import javax.inject.Inject
  */
 class HomeServiceImpl @Inject constructor() : HomeService {
 
-    private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = HomeService::class.java) }
+    private val service by lazy { EasyRetrofit.create(service = HomeService::class.java) }
 
     override suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>> {
         return service.getHomeBanner()

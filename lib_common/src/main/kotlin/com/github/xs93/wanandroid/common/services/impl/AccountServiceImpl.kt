@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.common.services.impl
 
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.account.AccountManager
 import com.github.xs93.wanandroid.common.entity.User
 import com.github.xs93.wanandroid.common.entity.UserDetailInfo
@@ -19,11 +18,10 @@ import javax.inject.Inject
  */
 class AccountServiceImpl @Inject constructor() : AccountService {
 
-    private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = AccountService::class.java) }
+    private val service by lazy { EasyRetrofit.create(AccountService::class.java) }
 
     @Inject
     lateinit var accountManager: AccountManager
-
 
     override suspend fun login(username: String, password: String): Result<WanResponse<User>> {
         val result = service.login(username, password)

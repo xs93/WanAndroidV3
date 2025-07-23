@@ -1,7 +1,6 @@
 package com.github.xs93.wanandroid.common.services.impl
 
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.entity.Article
 import com.github.xs93.wanandroid.common.network.PageResponse
 import com.github.xs93.wanandroid.common.network.WanResponse
@@ -19,7 +18,7 @@ import javax.inject.Inject
  */
 class CollectServiceImpl @Inject constructor() : CollectService {
 
-    private val service by lazy { EasyRetrofit.create(AppConstant.BaseUrl, service = CollectService::class.java) }
+    private val service by lazy { EasyRetrofit.create(service = CollectService::class.java) }
 
     override suspend fun getCollectList(page: Int): Result<WanResponse<PageResponse<Article>>> {
         return service.getCollectList(page)

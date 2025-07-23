@@ -60,7 +60,7 @@ class WanAndroidApp : CommonApplication() {
                 ToastManager.showToast(R.string.network_error)
             }
         }
-        EasyRetrofit.addRetrofitClient(AppConstant.BaseUrl, wanRetrofitBuildStrategy)
+        EasyRetrofit.createRetrofit(AppConstant.BaseUrl, wanRetrofitBuildStrategy)
     }
 
     private fun initSmartRefreshLayout() {

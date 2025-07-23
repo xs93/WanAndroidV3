@@ -2,22 +2,25 @@ package com.github.xs93.network.strategy
 
 import android.content.Context
 import com.github.xs93.network.EasyRetrofit
+import com.github.xs93.network.adapter.result.ResultCallAdapterFactory
 import com.github.xs93.network.cookie.CookieJarManager
 import com.github.xs93.network.cookie.SharedPreferencesCookieStore
-import com.github.xs93.network.interceptor.BaseUrlsInterceptor
 import com.github.xs93.network.interceptor.CacheInterceptor
-import com.github.xs93.network.interceptor.DomainInterceptor
+import com.github.xs93.network.interceptor.DynamicBaseUrlInterceptor
 import com.github.xs93.network.interceptor.DynamicTimeoutInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
+import com.github.xs93.network.moshi.adapter.BooleanAdapter
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.crypt.AESCrypt
-import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
+import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.CookieJar
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -29,7 +32,9 @@ import java.util.concurrent.TimeUnit
  * @date   2022/9/2-14:11
  * @email  466911254@qq.com
  */
-interface IRetrofitBuildStrategy {
+open class RetrofitBuildStrategy {
+
+    private val dynamicBaseUrls = hashMapOf<String, String>()
 
     /** 构建Retrofit 的OkHttpClient */
     fun okHttpClient(): OkHttpClient {
@@ -41,11 +46,8 @@ interface IRetrofitBuildStrategy {
             cache(getCache())
             cookieJar(getCookieJar())
             addInterceptor(NetworkInterceptor())
-            addInterceptor(DomainInterceptor())
-            if (isMultipleBaseUrlEnable()) {
-                addInterceptor(BaseUrlsInterceptor(this@IRetrofitBuildStrategy))
-            }
             addInterceptor(DynamicTimeoutInterceptor())
+            addInterceptor(DynamicBaseUrlInterceptor(this@RetrofitBuildStrategy))
             addInterceptor(
                 CacheInterceptor(
                     AppInject.getApp(),
@@ -53,38 +55,42 @@ interface IRetrofitBuildStrategy {
                     getCacheEncryptIv()
                 )
             )
-
             getInterceptors().let {
                 for (interceptor in it) {
                     addInterceptor(interceptor)
                 }
             }
+
             getNetworkInterceptors().let {
                 for (interceptor in it) {
                     addNetworkInterceptor(interceptor)
                 }
             }
-
-            if (openOkHttpProfiler()) {
-                addInterceptor(OkHttpProfilerInterceptor())
+            try {
+                val clazz = Class.forName("com.localebro.okhttpprofiler.OkHttpProfilerInterceptor")
+                if (clazz != null) {
+                    val interceptor = clazz.getDeclaredConstructor().newInstance() as Interceptor
+                    addInterceptor(interceptor)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+            specialOkHttpClient(this)
         }
         return builder.build()
     }
 
-    /** 构建Retrofit 的Converter.Factory */
-    fun converterFactory(): List<Converter.Factory>?
 
-    /** 构建Retrofit 的CallAdapter.Factory */
-    fun callAdapterFactory(): List<CallAdapter.Factory>?
+    fun getTimeout(): Long = 30
 
-    fun openOkHttpProfiler(): Boolean
+    /**
+     * 定制一些okHttpClient的配置
+     */
+    open fun specialOkHttpClient(builder: OkHttpClient.Builder) {
 
-    fun getTimeout(): Long {
-        return 30
     }
 
-    fun getCache(): Cache {
+    open fun getCache(): Cache {
         val context: Context = EasyRetrofit.getApp()
         val cacheFile = File(context.cacheDir, "OkHttpCache")
         if (!cacheFile.exists()) {
@@ -93,20 +99,20 @@ interface IRetrofitBuildStrategy {
         return Cache(cacheFile, 50L * 1024L * 1024L)
     }
 
-    fun getCookieJar(): CookieJar {
+    open fun getCookieJar(): CookieJar {
         val context: Context = EasyRetrofit.getApp()
         return CookieJarManager(SharedPreferencesCookieStore(context))
     }
 
-    fun getInterceptors(): List<Interceptor> {
+    open fun getInterceptors(): List<Interceptor> {
         return emptyList()
     }
 
-    fun getNetworkInterceptors(): List<Interceptor> {
+    open fun getNetworkInterceptors(): List<Interceptor> {
         return emptyList()
     }
 
-    fun getCacheEncryptKey(): String {
+    open fun getCacheEncryptKey(): String {
         val context: Context = EasyRetrofit.getApp()
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
         var encryptKey = sp.getString("key", "")
@@ -117,7 +123,7 @@ interface IRetrofitBuildStrategy {
         return encryptKey
     }
 
-    fun getCacheEncryptIv(): String {
+    open fun getCacheEncryptIv(): String {
         val context: Context = EasyRetrofit.getApp()
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
         var iv = sp.getString("iv", "")
@@ -129,27 +135,40 @@ interface IRetrofitBuildStrategy {
     }
 
     /**
-     * 是否支持多个baseUrl
-     */
-    fun isMultipleBaseUrlEnable(): Boolean
-
-    /**
      * 根据key获取baseUrl
      */
-    fun getDynamicBaseUrlByKey(key: String): String?
+    fun getDynamicBaseUrlByKey(key: String): String? {
+        return dynamicBaseUrls[key]
+    }
 
     /**
      * 设置baseUrl
      */
-    fun setDynamicBaseUrlByKey(key: String, baseUrl: String)
+    fun addDynamicBaseUrlByKey(key: String, baseUrl: String) {
+        dynamicBaseUrls[key] = baseUrl
+    }
 
     /**
-     * 获取全局的baseUrl
+     * 移除对应key的baseUrl
      */
-    fun getGlobalBaseUrl(): String?
+    fun removeDynamicBaseUrlByKey(key: String) {
+        dynamicBaseUrls.remove(key)
+    }
 
-    /**
-     * 设置全局的baseUrl,可以动态修改
-     */
-    fun setGlobalBaseUrl(baseUrl: String)
+
+    /** 构建Retrofit 的Converter.Factory */
+    open fun converterFactories(): List<Converter.Factory>? {
+        val moshi = Moshi.Builder()
+            .add(BooleanAdapter())
+            .build()
+        return arrayListOf(
+            ScalarsConverterFactory.create(),
+            MoshiConverterFactory.create(moshi)
+        )
+    }
+
+    /** 构建Retrofit 的CallAdapter.Factory */
+    open fun callAdapterFactories(): List<CallAdapter.Factory>? {
+        return arrayListOf(ResultCallAdapterFactory())
+    }
 }
