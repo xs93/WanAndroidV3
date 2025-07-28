@@ -5,6 +5,7 @@ import android.content.Context
 import com.github.xs93.network.exception.ExceptionHandler
 import com.github.xs93.network.retorfit.RetrofitClient
 import com.github.xs93.network.strategy.RetrofitBuildStrategy
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  *
@@ -19,6 +20,12 @@ object EasyRetrofit {
 
     private var mApp: Context? = null
     private var retrofitClient: RetrofitClient? = null
+
+    /**
+     * 动态baseUrl
+     * 使用线程安全的 ConcurrentHashMap，防止线程安全问题
+     */
+    private val dynamicBaseUrls = ConcurrentHashMap<String, String>()
 
     fun init(
         context: Context,
@@ -39,6 +46,28 @@ object EasyRetrofit {
     fun <T> create(service: Class<T>): T {
         checkRetrofitClient()
         return retrofitClient!!.create(service)
+    }
+
+
+    /**
+     * 根据key获取baseUrl
+     */
+    fun getDynamicBaseUrl(key: String): String? {
+        return dynamicBaseUrls[key]
+    }
+
+    /**
+     * 设置baseUrl
+     */
+    fun putDynamicBaseUrl(key: String, baseUrl: String) {
+        dynamicBaseUrls[key] = baseUrl
+    }
+
+    /**
+     * 移除对应key的baseUrl
+     */
+    fun removeDynamicBaseUrl(key: String) {
+        dynamicBaseUrls.remove(key)
     }
 
     private fun checkRetrofitClient() {

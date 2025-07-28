@@ -1,8 +1,8 @@
 package com.github.xs93.network.interceptor
 
+import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.annotation.DynamicBaseUrl
 import com.github.xs93.network.model.UrlsConfig
-import com.github.xs93.network.strategy.RetrofitBuildStrategy
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -19,8 +19,9 @@ import java.util.concurrent.ConcurrentHashMap
  * @date 2025/4/27 14:11
  * @description 动态修改接口地址拦截器
  *
+ * 根据 [DynamicBaseUrl] 注解的配置动态修改接口地址
  */
-class DynamicBaseUrlInterceptor(private val strategy: RetrofitBuildStrategy) : Interceptor {
+class DynamicBaseUrlInterceptor() : Interceptor {
 
     private val urlsConfigCache = ConcurrentHashMap<Method, UrlsConfig>()
 
@@ -53,10 +54,10 @@ class DynamicBaseUrlInterceptor(private val strategy: RetrofitBuildStrategy) : I
             ?.run { return chain.proceed(request) }
 
         val methodBaseUrl = methodUrl?.takeIfNotEmpty()
-            ?: methodUrlKey?.let { strategy.getDynamicBaseUrlByKey(it) }?.takeIfValidUrl()
+            ?: methodUrlKey?.let { EasyRetrofit.getDynamicBaseUrlByKey(it) }?.takeIfValidUrl()
 
         val classBaseUrl = classUrl?.takeIfNotEmpty()
-            ?: classUrlKey?.let { strategy.getDynamicBaseUrlByKey(it) }?.takeIfValidUrl()
+            ?: classUrlKey?.let { EasyRetrofit.getDynamicBaseUrlByKey(it) }?.takeIfValidUrl()
 
         val newBaseUrl = (methodBaseUrl ?: classBaseUrl)?.toHttpUrlOrNull()
             ?: return chain.proceed(request)

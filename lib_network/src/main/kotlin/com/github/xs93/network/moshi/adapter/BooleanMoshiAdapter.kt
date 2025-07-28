@@ -5,26 +5,22 @@ import com.squareup.moshi.JsonQualifier
 import com.squareup.moshi.ToJson
 
 /**
- *
- *
  * @author XuShuai
  * @version v1.0
- * @date 2024/2/29 15:13
- * @email 466911254@qq.com
+ * @date 2025/7/28
+ * @description 添加注解，只有添加注解的的字段才使用此adapter
+ *
  */
-
-/**
- * 添加注解，只有添加注解的的字段才使用此adapter
- * @constructor
- */
-
 @Retention(AnnotationRetention.RUNTIME)
 @JsonQualifier
 annotation class BooleanType
 
 /**
- * 将Int 和Boolean 互转的适配器
- * @constructor
+ * @author XuShuai
+ * @version v1.0
+ * @date 2025/7/28
+ * @description 将Int 和Boolean 互转的适配器
+ *
  */
 class BooleanAdapter {
 

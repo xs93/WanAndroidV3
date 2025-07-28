@@ -12,7 +12,10 @@ import retrofit2.Retrofit
  * @date   2022/9/2-14:24
  * @email  466911254@qq.com
  */
-class RetrofitClient(val baseUrl: String, val retrofitBuildStrategy: RetrofitBuildStrategy) {
+internal class RetrofitClient(
+    val baseUrl: String,
+    val retrofitBuildStrategy: RetrofitBuildStrategy
+) {
     private val retrofit by lazy {
         val builder = Retrofit.Builder().apply {
             baseUrl(baseUrl)

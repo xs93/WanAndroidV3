@@ -34,8 +34,6 @@ import java.util.concurrent.TimeUnit
  */
 open class RetrofitBuildStrategy {
 
-    private val dynamicBaseUrls = hashMapOf<String, String>()
-
     /** 构建Retrofit 的OkHttpClient */
     fun okHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder().apply {
@@ -47,7 +45,7 @@ open class RetrofitBuildStrategy {
             cookieJar(getCookieJar())
             addInterceptor(NetworkInterceptor())
             addInterceptor(DynamicTimeoutInterceptor())
-            addInterceptor(DynamicBaseUrlInterceptor(this@RetrofitBuildStrategy))
+            addInterceptor(DynamicBaseUrlInterceptor())
             addInterceptor(
                 CacheInterceptor(
                     AppInject.getApp(),
@@ -75,7 +73,7 @@ open class RetrofitBuildStrategy {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            specialOkHttpClient(this)
+            customOkHttpClient(this)
         }
         return builder.build()
     }
@@ -86,7 +84,7 @@ open class RetrofitBuildStrategy {
     /**
      * 定制一些okHttpClient的配置
      */
-    open fun specialOkHttpClient(builder: OkHttpClient.Builder) {
+    open fun customOkHttpClient(builder: OkHttpClient.Builder) {
 
     }
 
@@ -133,28 +131,6 @@ open class RetrofitBuildStrategy {
         }
         return iv
     }
-
-    /**
-     * 根据key获取baseUrl
-     */
-    fun getDynamicBaseUrlByKey(key: String): String? {
-        return dynamicBaseUrls[key]
-    }
-
-    /**
-     * 设置baseUrl
-     */
-    fun addDynamicBaseUrlByKey(key: String, baseUrl: String) {
-        dynamicBaseUrls[key] = baseUrl
-    }
-
-    /**
-     * 移除对应key的baseUrl
-     */
-    fun removeDynamicBaseUrlByKey(key: String) {
-        dynamicBaseUrls.remove(key)
-    }
-
 
     /** 构建Retrofit 的Converter.Factory */
     open fun converterFactories(): List<Converter.Factory>? {
