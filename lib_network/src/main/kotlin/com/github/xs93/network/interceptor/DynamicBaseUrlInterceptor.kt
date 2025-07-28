@@ -54,10 +54,10 @@ class DynamicBaseUrlInterceptor() : Interceptor {
             ?.run { return chain.proceed(request) }
 
         val methodBaseUrl = methodUrl?.takeIfNotEmpty()
-            ?: methodUrlKey?.let { EasyRetrofit.getDynamicBaseUrlByKey(it) }?.takeIfValidUrl()
+            ?: methodUrlKey?.let { EasyRetrofit.getDynamicBaseUrl(it) }?.takeIfValidUrl()
 
         val classBaseUrl = classUrl?.takeIfNotEmpty()
-            ?: classUrlKey?.let { EasyRetrofit.getDynamicBaseUrlByKey(it) }?.takeIfValidUrl()
+            ?: classUrlKey?.let { EasyRetrofit.getDynamicBaseUrl(it) }?.takeIfValidUrl()
 
         val newBaseUrl = (methodBaseUrl ?: classBaseUrl)?.toHttpUrlOrNull()
             ?: return chain.proceed(request)
