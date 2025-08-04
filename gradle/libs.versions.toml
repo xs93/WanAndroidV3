@@ -16,6 +16,8 @@ androidxAppcompat = "1.7.1"
 #1.1.5有问题,不要升级
 androidxDataStore = "1.1.7"
 
+anroidxMedia3 = "1.7.1"
+
 okHttp = "4.12.0"
 retrofit = "2.11.0"
 moshi = "1.15.2"
@@ -76,6 +78,19 @@ androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensi
 androidx-datastore-datastore = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStore" }
 androidx-datastore-preferencesCore = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "androidxDataStore" }
+
+
+#media3
+androidx-meida3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "anroidxMedia3" }
+androidx-meida3-exoplayer-dash = { module = "androidx.media3:media3-exoplayer-dash", version.ref = "anroidxMedia3" }
+androidx-meida3-exoplayer-hls = { module = "androidx.media3:media3-exoplayer-hls", version.ref = "anroidxMedia3" }
+androidx-meida3-exoplayer-smoothstreaming = { module = "androidx.media3:media3-exoplayer-smoothstreaming", version.ref = "anroidxMedia3" }
+androidx-meida3-ui = { module = "androidx.media3:media3-ui", version.ref = "anroidxMedia3" }
+androidx-meida3-common = { module = "androidx.media3:media3-common", version.ref = "anroidxMedia3" }
+androidx-meida3-commonKtx = { module = "androidx.media3:media3-common-ktx", version.ref = "anroidxMedia3" }
+androidx-meida3-session = { module = "androidx.media3:media3-session", version.ref = "anroidxMedia3" }
+androidx-meida3-transformer = { module = "androidx.media3:media3-transformer", version.ref = "anroidxMedia3" }
+androidx-meida3-datasource-okhttp = { module = "androidx.media3:media3-datasource-okhttp", version.ref = "anroidxMedia3" }
 
 #Compose 组件
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }

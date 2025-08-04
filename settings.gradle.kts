@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":feat_music")
+
+
 pluginManagement {
     repositories {
         maven("https://maven.aliyun.com/repository/public")
