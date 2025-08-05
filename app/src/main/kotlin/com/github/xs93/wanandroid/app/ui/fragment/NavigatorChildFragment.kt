@@ -43,10 +43,11 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
 
     private val viewModel: NavigatorChildViewModel by viewModels()
 
-    private lateinit var chipAdapter: NavigatorChipAdapter
-    private lateinit var chipLayoutManager: CenterLinearLayoutManager
+    private var chipAdapter: NavigatorChipAdapter? = null
+    private var chipLayoutManager: CenterLinearLayoutManager? = null
 
-    private lateinit var chipChildrenAdapter: NavigatorChipChildrenAdapter
+    private var chipChildrenAdapter: NavigatorChipChildrenAdapter? = null
+    private var chipChildrenLayoutManager: LinearLayoutManager? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
         binding.apply {
@@ -62,6 +63,7 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
                             ) {
                                 val item = getItem(position)
                                 item?.let { setSelectedNavigation(it) }
+                                chipChildrenLayoutManager?.scrollToPositionWithOffset(position, 0)
                             }
                         })
                     }
@@ -77,6 +79,7 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
                 adapter = NavigatorChipChildrenAdapter()
                     .also { chipChildrenAdapter = it }
                 layoutManager = LinearLayoutManager(context)
+                    .also { chipChildrenLayoutManager = it }
             }
         }
     }
@@ -88,12 +91,19 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
         }
 
         observerState(viewModel.uiStateFlow.map { it.navigationList }) {
-            chipAdapter.submitList(it)
-            chipChildrenAdapter.submitList(it)
+            chipAdapter?.submitList(it)
+            chipChildrenAdapter?.submitList(it)
+            it.firstOrNull()?.let { navigation -> setSelectedNavigation(navigation) }
         }
     }
 
     override fun onFirstVisible() {
         viewModel.uiAction.send(NavigatorChildUiAction.InitPageData)
+    }
+
+    private fun setSelectedNavigation(navigation: Navigation) {
+        chipAdapter?.setSelectedNavigation(navigation)
+        val position = chipAdapter?.items?.indexOfFirst { it.cid == navigation.cid } ?: 0
+        chipLayoutManager?.scrollToPositionWithOffset(position, 0)
     }
 }

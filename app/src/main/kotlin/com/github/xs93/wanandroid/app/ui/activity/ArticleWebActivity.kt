@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.webkit.DownloadListener
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -99,18 +98,6 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
                     binding.progressIndicator.hide()
                 }
             }
-
-            setDownloadListener(object : DownloadListener {
-                override fun onDownloadStart(
-                    url: String?,
-                    userAgent: String?,
-                    contentDisposition: String?,
-                    mimetype: String?,
-                    contentLength: Long,
-                ) {
-                    Logger.d("$url,$userAgent,$contentDisposition,$mimetype,$contentLength")
-                }
-            })
         }
 
         binding.apply {

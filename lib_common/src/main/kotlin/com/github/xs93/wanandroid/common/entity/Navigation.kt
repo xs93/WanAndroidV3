@@ -16,10 +16,10 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class Navigation(
-    @Json(name = "articles")
+    @param:Json(name = "articles")
     val articles: List<Article>,
-    @Json(name = "cid")
+    @param:Json(name = "cid")
     val cid: Int,
-    @Json(name = "name")
+    @param:Json(name = "name")
     val name: String
 ) : Parcelable
