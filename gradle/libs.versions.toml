@@ -1,7 +1,7 @@
 [versions]
 minSdk = "26"
 targetSdk = "36"
-androidGradlePlugin = "8.11.1"
+androidGradlePlugin = "8.12.0"
 kotlin = "2.2.0"
 kotlinCoroutines = "1.10.2"
 ksp = "2.2.0-2.0.2"
@@ -16,18 +16,18 @@ androidxAppcompat = "1.7.1"
 #1.1.5有问题,不要升级
 androidxDataStore = "1.1.7"
 
-anroidxMedia3 = "1.7.1"
+anroidxMedia3 = "1.8.0"
 
 okHttp = "4.12.0"
 retrofit = "2.11.0"
 moshi = "1.15.2"
 kotlinxSerialization = "1.9.0"
 
-coilVersion = "3.2.0"
+coilVersion = "3.3.0"
 
 junit = "4.13.2"
-androidx-test-ext-junit = "1.2.1"
-espresso-core = "3.6.1"
+androidx-test-ext-junit = "1.3.0"
+espresso-core = "3.7.0"
 
 smartRefreshLayout = "2.1.1"
 agentweb = "v5.0.6-androidx"
