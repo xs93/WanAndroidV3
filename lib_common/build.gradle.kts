@@ -52,6 +52,8 @@ dependencies {
     api(libs.smartRefreshLayout.header.material)
     api(libs.smartRefreshLayout.footer.ball)
 
+    api(libs.androidx.swiperefreshlayout)
+
     api(libs.multiStateLayout)
     api(libs.checkableView)
     api(libs.avLoadingIndicatorView)

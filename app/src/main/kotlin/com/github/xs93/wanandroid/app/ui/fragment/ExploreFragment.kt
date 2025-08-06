@@ -6,6 +6,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.QuickAdapterHelper
+import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
 import com.chad.library.adapter4.util.addOnDebouncedChildClick
 import com.chad.library.adapter4.util.setOnDebouncedItemClick
 import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
@@ -35,8 +37,10 @@ import kotlinx.coroutines.flow.map
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class ExploreFragment :
-    BaseViewBindingFragment<ExploreFragmentBinding>(R.layout.explore_fragment, ExploreFragmentBinding::bind) {
+class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
+    R.layout.explore_fragment,
+    ExploreFragmentBinding::bind
+) {
     companion object {
         fun newInstance(): ExploreFragment {
             val args = Bundle()
@@ -64,11 +68,33 @@ class ExploreFragment :
             addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
                 val article = adapter.getItem(position)
                 article?.let {
-                    viewModel.uiAction.send(ExploreUiAction.CollectArticle(CollectEvent(it.id, it.collect.not())))
+                    viewModel.uiAction.send(
+                        ExploreUiAction.CollectArticle(CollectEvent(it.id, it.collect.not()))
+                    )
                 }
             }
         }
-        adapterHelper = QuickAdapterHelper.Builder(articleAdapter).build().addBeforeAdapter(bannerHeaderAdapter)
+        adapterHelper = QuickAdapterHelper.Builder(articleAdapter)
+            .setTrailingLoadStateAdapter(object : TrailingLoadStateAdapter.OnTrailingListener {
+                override fun onLoad() {
+                    viewModel.uiAction.send(ExploreUiAction.RequestArticleData(false))
+                }
+
+                override fun onFailRetry() {
+                    viewModel.uiAction.send(ExploreUiAction.RequestArticleData(false))
+                }
+
+                override fun isAllowLoading(): Boolean {
+                    return !binding.refreshLayout.isRefreshing
+                }
+            })
+            .build()
+        adapterHelper.trailingLoadStateAdapter?.apply {
+            isAutoLoadMore = true
+            preloadSize = 4
+        }
+        adapterHelper.addBeforeAdapter(bannerHeaderAdapter)
+
 
         binding.apply {
             with(pageLayout) {
@@ -80,10 +106,7 @@ class ExploreFragment :
             with(refreshLayout) {
                 setOnRefreshListener {
                     viewModel.uiAction.send(ExploreUiAction.RequestArticleData(true))
-                }
-
-                setOnLoadMoreListener {
-                    viewModel.uiAction.send(ExploreUiAction.RequestArticleData(false))
+                    adapterHelper.trailingLoadState = LoadState.None
                 }
             }
 
@@ -116,30 +139,24 @@ class ExploreFragment :
         }
 
         observerState(viewModel.uiStateFlow.map { it.articlesListState }) {
-            when (val uiState = it.listUiState) {
+            when (it.listUiState) {
                 ListUiState.IDLE -> {}
                 ListUiState.LoadMore -> {
                     if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        binding.refreshLayout.autoLoadMoreAnimationOnly()
+                        binding.refreshLayout.isRefreshing = false
                     }
                 }
 
                 ListUiState.Refreshing -> {
                     if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        binding.refreshLayout.autoRefreshAnimationOnly()
+                        binding.refreshLayout.isRefreshing = true
                     }
                 }
 
                 is ListUiState.LoadMoreFinished, is ListUiState.RefreshFinished -> {
                     articleAdapter.submitList(it.data) {
-                        if (uiState is ListUiState.RefreshFinished) {
-                            binding.refreshLayout.finishRefresh(uiState.success)
-                            binding.refreshLayout.setNoMoreData(it.noMoreData)
-                        }
-                        if (uiState is ListUiState.LoadMoreFinished) {
-                            binding.refreshLayout.finishLoadMore(uiState.success)
-                            binding.refreshLayout.setNoMoreData(it.noMoreData)
-                        }
+                        binding.refreshLayout.isRefreshing = false
+                        adapterHelper.trailingLoadState = LoadState.NotLoading(it.noMoreData)
                     }
                 }
             }
