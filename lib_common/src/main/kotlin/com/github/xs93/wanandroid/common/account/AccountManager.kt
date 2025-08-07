@@ -6,6 +6,7 @@ import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.common.entity.User
 import com.github.xs93.wanandroid.common.entity.UserDetailInfo
 import com.github.xs93.wanandroid.common.store.AccountStore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,19 +24,24 @@ import javax.inject.Inject
  */
 class AccountManager @Inject constructor(private val cookieJar: CookieJar) {
 
-    private val _accountStateFlow: MutableStateFlow<AccountState> = MutableStateFlow(AccountState.LogOut)
-    private val _userDetailStateFlow: MutableStateFlow<UserDetailInfo> = MutableStateFlow(UserDetailInfo())
+    private val _accountStateFlow: MutableStateFlow<AccountState> =
+        MutableStateFlow(AccountState.LogOut)
+    private val _userDetailStateFlow: MutableStateFlow<UserDetailInfo> =
+        MutableStateFlow(UserDetailInfo())
 
     init {
-        AppInject.mainScope.launch {
+        AppInject.mainScope.launch(Dispatchers.IO) {
             val uri = AppConstant.BaseUrl.toUri()
             val httpUrl = HttpUrl.Builder()
                 .scheme(uri.scheme!!)
                 .host(uri.host!!)
                 .build()
             val cookies = cookieJar.loadForRequest(httpUrl)
+            //必须保证有这2个cookie才能算登录成功
+            val loginCookie = cookies.firstOrNull { it.name == "loginUserName" }
+            val tokenCookie = cookies.firstOrNull { it.name == "token_pass" }
             val userInfo = AccountStore.userInfo
-            if (cookies.isEmpty() || userInfo == null) {
+            if (loginCookie == null || tokenCookie == null || userInfo == null) {
                 _accountStateFlow.emit(AccountState.LogOut)
             } else {
                 _accountStateFlow.emit(AccountState.LogIn(true, userInfo))
@@ -63,14 +69,14 @@ class AccountManager @Inject constructor(private val cookieJar: CookieJar) {
     }
 
     fun logIn(user: User) {
-        AppInject.mainScope.launch {
+        AppInject.mainScope.launch(Dispatchers.IO) {
             AccountStore.userInfo = user
             _accountStateFlow.emit(AccountState.LogIn(false, user))
         }
     }
 
     fun logout() {
-        AppInject.mainScope.launch {
+        AppInject.mainScope.launch(Dispatchers.IO) {
             AccountStore.userInfo = null
             AccountStore.userDetailInfo = null
             _userDetailStateFlow.emit(UserDetailInfo())
@@ -79,7 +85,7 @@ class AccountManager @Inject constructor(private val cookieJar: CookieJar) {
     }
 
     fun cacheUserDetailInfo(userDetailInfo: UserDetailInfo) {
-        AppInject.mainScope.launch {
+        AppInject.mainScope.launch(Dispatchers.IO) {
             AccountStore.userDetailInfo = userDetailInfo
             _userDetailStateFlow.emit(userDetailInfo)
         }

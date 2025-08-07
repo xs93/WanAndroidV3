@@ -15,11 +15,11 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class WanResponse<out T>(
-    @Json(name = "errorCode")
+    @param:Json(name = "errorCode")
     override val errorCode: Int,
-    @Json(name = "errorMsg")
+    @param:Json(name = "errorMsg")
     override val errorMessage: String,
-    @Json(name = "data")
+    @param:Json(name = "data")
     override val data: T? = null,
 ) : ApiResponse<T>(errorCode, errorMessage, data) {
     companion object {

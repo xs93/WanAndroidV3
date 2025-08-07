@@ -9,6 +9,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CookieJar
 import javax.inject.Singleton
 
 /**
@@ -23,6 +24,9 @@ import javax.inject.Singleton
 @Module
 object DataModelModule {
 
+    @Singleton
+    @Provides
+    fun providesAccountManager(cookieJar: CookieJar) = AccountManager(cookieJar)
 
     @Singleton
     @Provides
@@ -31,6 +35,9 @@ object DataModelModule {
 
     @Singleton
     @Provides
-    fun providesAppCollectDataModel(collectService: CollectService, accountDataModule: AccountDataModule) =
+    fun providesAppCollectDataModel(
+        collectService: CollectService,
+        accountDataModule: AccountDataModule
+    ) =
         CollectDataModel(collectService, accountDataModule)
 }
