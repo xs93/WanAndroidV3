@@ -3,15 +3,14 @@ package com.github.xs93.wanandroid.app
 import android.os.Looper
 import androidx.appcompat.app.AppCompatDelegate
 import com.github.xs93.coil.CoilManager
-import com.github.xs93.common.R
 import com.github.xs93.framework.crash.CrashHandler
-import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.network.exception.ServiceApiException
+import com.github.xs93.network.exception.LogErrorHandler
 import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.CommonApplication
+import com.github.xs93.wanandroid.common.network.WanErrorHandler
 import com.github.xs93.wanandroid.common.network.WanRetrofitBuildStrategy
 import com.github.xs93.wanandroid.common.store.AppCommonStore
 import com.github.xs93.wanandroid.common.web.WebViewPool
@@ -22,7 +21,7 @@ import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
 /**
- *
+ * Application 实现
  *
  * @author XuShuai
  * @version v1.0
@@ -53,13 +52,9 @@ class WanAndroidApp : CommonApplication() {
 
     private fun initHttp() {
         NetworkMonitor.init(this)
-        EasyRetrofit.init(this) {
-            if (it is ServiceApiException) {
-                ToastManager.showToast(it.errorMsg)
-            } else {
-                ToastManager.showToast(R.string.network_error)
-            }
-        }
+        EasyRetrofit.init(this)
+        EasyRetrofit.addErrorHandler(LogErrorHandler())
+        EasyRetrofit.addErrorHandler(WanErrorHandler())
         EasyRetrofit.createRetrofit(AppConstant.BaseUrl, wanRetrofitBuildStrategy)
     }
 

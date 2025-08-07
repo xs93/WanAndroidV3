@@ -2,12 +2,12 @@ package com.github.xs93.network.strategy
 
 import android.content.Context
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.network.adapter.result.ResultCallAdapterFactory
 import com.github.xs93.network.cookie.CookieJarManager
 import com.github.xs93.network.cookie.SharedPreferencesCookieStore
 import com.github.xs93.network.interceptor.CacheInterceptor
 import com.github.xs93.network.interceptor.DynamicBaseUrlInterceptor
 import com.github.xs93.network.interceptor.DynamicTimeoutInterceptor
+import com.github.xs93.network.interceptor.HandleErrorInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
 import com.github.xs93.network.moshi.adapter.BooleanAdapter
 import com.github.xs93.utils.AppInject
@@ -43,6 +43,7 @@ open class RetrofitBuildStrategy {
             retryOnConnectionFailure(true)
             cache(getCache())
             cookieJar(getCookieJar())
+            addInterceptor(HandleErrorInterceptor())
             addInterceptor(NetworkInterceptor())
             addInterceptor(DynamicTimeoutInterceptor())
             addInterceptor(DynamicBaseUrlInterceptor())
@@ -145,6 +146,6 @@ open class RetrofitBuildStrategy {
 
     /** 构建Retrofit 的CallAdapter.Factory */
     open fun callAdapterFactories(): List<CallAdapter.Factory>? {
-        return arrayListOf(ResultCallAdapterFactory())
+        return null
     }
 }

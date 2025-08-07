@@ -2,10 +2,11 @@ package com.github.xs93.network
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.github.xs93.network.exception.ExceptionHandler
+import com.github.xs93.network.exception.IErrorHandler
 import com.github.xs93.network.retorfit.RetrofitClient
 import com.github.xs93.network.strategy.RetrofitBuildStrategy
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  *
@@ -27,12 +28,13 @@ object EasyRetrofit {
      */
     private val dynamicBaseUrls = ConcurrentHashMap<String, String>()
 
-    fun init(
-        context: Context,
-        safeRequestApiErrorHandler: ((Throwable) -> Unit)? = null
-    ) {
+    /**
+     * 全局错误处理器
+     */
+    val errorHandlers = CopyOnWriteArrayList<IErrorHandler>()
+
+    fun init(context: Context) {
         mApp = context.applicationContext
-        ExceptionHandler.safeRequestApiErrorHandler = safeRequestApiErrorHandler
     }
 
     fun getApp(): Context {
@@ -68,6 +70,20 @@ object EasyRetrofit {
      */
     fun removeDynamicBaseUrl(key: String) {
         dynamicBaseUrls.remove(key)
+    }
+
+    /**
+     * 添加错误处理
+     */
+    fun addErrorHandler(handler: IErrorHandler) {
+        errorHandlers.add(handler)
+    }
+
+    /**
+     * 移除错误处理
+     */
+    fun removeErrorHandler(handler: IErrorHandler) {
+        errorHandlers.remove(handler)
     }
 
     private fun checkRetrofitClient() {

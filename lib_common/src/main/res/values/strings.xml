@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">WanAndroid</string>
     <string name="network_error">网络异常</string>
+    <string name="parse_error">数据解析异常</string>
+    <string name="server_error">服务器异常</string>
 </resources>

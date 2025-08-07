@@ -1,7 +1,7 @@
 package com.github.xs93.network.interceptor
 
 import com.github.xs93.network.exception.ERROR
-import com.github.xs93.network.exception.NoNetworkException
+import com.github.xs93.network.exception.NetworkException
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
 import okhttp3.Interceptor
@@ -22,7 +22,7 @@ class NetworkInterceptor : Interceptor {
         if (app.isNetworkConnected()) {
             return chain.proceed(chain.request())
         } else {
-            throw NoNetworkException(ERROR.NETWORK_ERROR)
+            throw NetworkException(ERROR.NETWORK_ERROR_NOT)
         }
     }
 }

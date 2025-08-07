@@ -133,6 +133,7 @@ okhttp3-profiler = { group = "com.localebro", name = "okhttpprofiler", version =
 #retrofit(https://github.com/square/retrofit)
 retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit2-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+retrofit2-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 #primitives, boxed, and String
 retrofit2-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
 #retrofit kotlinx.serialization Converter

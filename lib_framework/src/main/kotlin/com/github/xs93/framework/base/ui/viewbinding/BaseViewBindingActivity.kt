@@ -14,7 +14,7 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionActivity
  * @email 466911254@qq.com
  */
 abstract class BaseViewBindingActivity<VB : ViewBinding>(
-    @LayoutRes val layoutId: Int,
+    @param:LayoutRes val layoutId: Int,
     val bind: (View) -> VB
 ) : BaseFunctionActivity() {
 

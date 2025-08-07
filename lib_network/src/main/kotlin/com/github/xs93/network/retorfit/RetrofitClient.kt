@@ -1,5 +1,7 @@
 package com.github.xs93.network.retorfit
 
+import com.github.xs93.network.adapter.result.ResultCallAdapterFactory
+import com.github.xs93.network.converter.HandleErrorConverterFactory
 import com.github.xs93.network.strategy.RetrofitBuildStrategy
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -20,9 +22,13 @@ internal class RetrofitClient(
         val builder = Retrofit.Builder().apply {
             baseUrl(baseUrl)
             client(mOkHttpClient)
+
+            addConverterFactory(HandleErrorConverterFactory.create())
             retrofitBuildStrategy.converterFactories()?.onEach {
                 addConverterFactory(it)
             }
+
+            addCallAdapterFactory(ResultCallAdapterFactory())
             retrofitBuildStrategy.callAdapterFactories()?.onEach {
                 addCallAdapterFactory(it)
             }

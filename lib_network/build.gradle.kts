@@ -38,4 +38,7 @@ dependencies {
 
     implementation(libs.bundles.kotlinx.coroutines)
     debugImplementation(libs.okhttp3.profiler)
+
+    compileOnly(libs.gson)
+    compileOnly(libs.retrofit2.converter.gson)
 }

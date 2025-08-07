@@ -28,11 +28,10 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class LoginActivity :
-    BaseViewBindingActivity<LoginActivityBinding>(
-        R.layout.login_activity,
-        LoginActivityBinding::bind
-    ) {
+class LoginActivity : BaseViewBindingActivity<LoginActivityBinding>(
+    R.layout.login_activity,
+    LoginActivityBinding::bind
+) {
 
 
     private val loginViewModel: LoginViewModel by viewModels()

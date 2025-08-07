@@ -1,12 +1,11 @@
 package com.github.xs93.network.exception
 
-import org.json.JSONException
-import retrofit2.HttpException
+import com.github.xs93.network.EasyRetrofit
+import okhttp3.Response
+import java.io.IOException
 import java.net.ConnectException
-import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.text.ParseException
 import javax.net.ssl.SSLException
 
 /**
@@ -18,67 +17,120 @@ import javax.net.ssl.SSLException
  * @email  466911254@qq.com
  */
 object ExceptionHandler {
-
-    var safeRequestApiErrorHandler: ((Throwable) -> Unit)? = null
-
+    /**
+     * 网络连接异常处理错误
+     */
     @JvmStatic
-    fun handleException(e: Throwable): ApiException {
-        val ex: ApiException
-        // HTTP错误
+    fun handleNetworkException(e: IOException): NetworkException {
+        val ex: NetworkException
         when (e) {
-            is ApiException -> {
-                ex = e
-            }
-
-            is NoNetworkException -> {
-                ex = ApiException(ERROR.NETWORK_ERROR, e)
-            }
-
-            is HttpException -> {
-                // 均视为网络错误
-                ex = when (e.code()) {
-                    ERROR.UNAUTHORIZED.code -> ApiException(ERROR.UNAUTHORIZED, e)
-                    ERROR.FORBIDDEN.code -> ApiException(ERROR.FORBIDDEN, e)
-                    ERROR.NOT_FOUND.code -> ApiException(ERROR.NOT_FOUND, e)
-                    ERROR.REQUEST_TIMEOUT.code -> ApiException(ERROR.REQUEST_TIMEOUT, e)
-                    ERROR.GATEWAY_TIMEOUT.code -> ApiException(ERROR.GATEWAY_TIMEOUT, e)
-                    ERROR.INTERNAL_SERVER_ERROR.code -> ApiException(ERROR.INTERNAL_SERVER_ERROR, e)
-                    ERROR.BAD_GATEWAY.code -> ApiException(ERROR.BAD_GATEWAY, e)
-                    ERROR.SERVICE_UNAVAILABLE.code -> ApiException(ERROR.SERVICE_UNAVAILABLE, e)
-                    else -> ApiException(e.code(), e.message(), e)
-                }
-            }
-
-            is JSONException,
-            is ParseException -> {
-                ex = ApiException(ERROR.PARSE_ERROR, e)
-            }
-
             is ConnectException -> {
-                ex = ApiException(ERROR.NETWORK_ERROR, e)
+                ex = NetworkException(ERROR.NETWORK_ERROR_CONNECT, e)
             }
 
             is SSLException -> {
-                ex = ApiException(ERROR.SSL_ERROR, e)
+                ex = NetworkException(ERROR.NETWORK_ERROR_SSL, e)
             }
 
-            is SocketException,
             is SocketTimeoutException -> {
-                ex = ApiException(ERROR.TIMEOUT_ERROR, e)
+                ex = NetworkException(ERROR.NETWORK_ERROR_TIMEOUT, e)
             }
 
             is UnknownHostException -> {
-                ex = ApiException(ERROR.UNKNOWN_HOST, e)
+                ex = NetworkException(ERROR.NETWORK_ERROR_UNKNOWN_HOST, e)
+            }
+
+            is NetworkException -> {
+                ex = e
             }
 
             else -> {
-                ex = if (!e.message.isNullOrBlank()) {
-                    ApiException(ERROR.UNKNOWN.code, e.message!!, e)
-                } else {
-                    ApiException(ERROR.UNKNOWN, e)
-                }
+                ex = NetworkException(ERROR.NETWORK_ERROR_UNKNOWN, e)
             }
         }
+        callErrorHandler { handleError(ex) }
+        callErrorHandler { handleNetworkError(ex) }
         return ex
+    }
+
+    /**
+     * 响应错误处理错误
+     */
+    @JvmStatic
+    fun handleErrorResponse(response: Response): ResponseException {
+        val ex: ResponseException
+        val errorCode = response.code
+        when (errorCode) {
+            400 -> {
+                ex = ResponseException(ERROR.HTTP_BAD_REQUEST)
+            }
+
+            401 -> {
+                ex = ResponseException(ERROR.HTTP_UNAUTHORIZED)
+            }
+
+            403 -> {
+                ex = ResponseException(ERROR.HTTP_FORBIDDEN)
+            }
+
+            404 -> {
+                ex = ResponseException(ERROR.HTTP_NOT_FOUND)
+            }
+
+            408 -> {
+                ex = ResponseException(ERROR.HTTP_REQUEST_TIMEOUT)
+            }
+
+            500 -> {
+                ex = ResponseException(ERROR.HTTP_INTERNAL_SERVER_ERROR)
+            }
+
+            502 -> {
+                ex = ResponseException(ERROR.HTTP_BAD_GATEWAY)
+            }
+
+            503 -> {
+                ex = ResponseException(ERROR.HTTP_SERVICE_UNAVAILABLE)
+            }
+
+            504 -> {
+                ex = ResponseException(ERROR.HTTP_GATEWAY_TIMEOUT)
+            }
+
+            else -> {
+                ex = ResponseException(response.code, response.message)
+            }
+        }
+        callErrorHandler { handleError(ex) }
+        callErrorHandler { handleResponseError(ex) }
+        return ex
+    }
+
+    /**
+     * 转换错误处理错误
+     */
+    @JvmStatic
+    fun handleConversionException(e: Throwable): ConversionException {
+        val ex = ConversionException(ERROR.PARSE_ERROR, e)
+        callErrorHandler { handleError(ex) }
+        callErrorHandler { handleConversionError(ex) }
+        return ex
+    }
+
+    /**
+     * api服务错误处理错误
+     */
+    @JvmStatic
+    fun handleApiServiceError(e: ApiException): ApiException {
+        callErrorHandler { handleError(e) }
+        callErrorHandler { handleApiServiceError(e) }
+        return e
+    }
+
+
+    private fun callErrorHandler(block: IErrorHandler.() -> Unit) {
+        EasyRetrofit.errorHandlers.forEach {
+            it.block()
+        }
     }
 }

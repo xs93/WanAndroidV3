@@ -1,7 +1,6 @@
 package com.github.xs93.network.base.repository
 
 
-import com.github.xs93.network.exception.ExceptionHandler
 import kotlin.coroutines.cancellation.CancellationException
 
 /**
@@ -19,8 +18,7 @@ open class BaseRepository {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            val apiException = ExceptionHandler.handleException(e)
-            Result.failure(apiException)
+            Result.failure(e)
         }
     }
 }

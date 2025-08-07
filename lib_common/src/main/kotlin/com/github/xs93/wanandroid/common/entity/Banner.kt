@@ -19,20 +19,20 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class Banner(
-    @Json(name = "id")
+    @param:Json(name = "id")
     val id: Long,
-    @Json(name = "title")
+    @param:Json(name = "title")
     val title: String,
-    @Json(name = "imagePath")
+    @param:Json(name = "imagePath")
     val imagePath: String,
-    @Json(name = "desc")
+    @param:Json(name = "desc")
     val desc: String,
-    @Json(name = "isVisible")
+    @param:Json(name = "isVisible")
     val isVisible: Int,
-    @Json(name = "order")
+    @param:Json(name = "order")
     val order: Int,
-    @Json(name = "type")
+    @param:Json(name = "type")
     val type: Int,
-    @Json(name = "url")
+    @param:Json(name = "url")
     val url: String
 ) : Parcelable
