@@ -2,8 +2,7 @@ package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
-import com.github.xs93.wanandroid.app.R
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.wanandroid.app.databinding.FragmentClassifyBinding
 
 /**
@@ -15,7 +14,7 @@ import com.github.xs93.wanandroid.app.databinding.FragmentClassifyBinding
  * @email 466911254@qq.com
  */
 class ClassifyFragment :
-    BaseViewBindingFragment<FragmentClassifyBinding>(R.layout.fragment_classify, FragmentClassifyBinding::bind) {
+    BaseVBFragment<FragmentClassifyBinding>(FragmentClassifyBinding::inflate) {
 
     companion object {
         fun newInstance(): ClassifyFragment {

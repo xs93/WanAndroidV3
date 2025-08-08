@@ -14,18 +14,21 @@ import androidx.annotation.LayoutRes
  */
 interface IBaseActivity {
 
+
+    /**布局Layout*/
+    @get:LayoutRes
+    val contentLayoutId: Int
+
     /**执行在super.onCreate(savedInstanceState)之前*/
     fun beforeSuperOnCreate(savedInstanceState: Bundle?) {}
 
     /**在setContentView之前执行*/
     fun beforeSetContentView(savedInstanceState: Bundle?) {}
 
-    /**返回布局Layout*/
-    @LayoutRes
-    fun getContentLayoutId(): Int
-
     /**返回ContentView*/
-    fun getContentView(): View?
+    fun getContentView(): View? {
+        return null
+    }
 
     /** 自定义如何去调用SetContentView方法，调用此方法前提是 getContentLayoutId ==0 并且 getContentView ==null */
     fun customSetContentView() {}

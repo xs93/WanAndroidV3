@@ -2,7 +2,7 @@ package com.github.xs93.demo
 
 import android.os.Bundle
 import com.github.xs93.demo.databinding.ActivityCornerLayoutTestBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.utils.ktx.dp
 
 /**
@@ -12,12 +12,10 @@ import com.github.xs93.utils.ktx.dp
  * @description
  *
  */
-class CornerConstraintLayoutTestActivity :
-    BaseViewBindingActivity<ActivityCornerLayoutTestBinding>(
-        R.layout.activity_corner_layout_test,
-        ActivityCornerLayoutTestBinding::bind
-    ) {
+class CornerConstraintLayoutTestActivity : BaseVBActivity<ActivityCornerLayoutTestBinding>(
+    ActivityCornerLayoutTestBinding::inflate
+) {
     override fun initView(savedInstanceState: Bundle?) {
-        binding.cclLayout.setRadius(10.dp(), 20.dp(), 30.dp(), 40.dp())
+        viewBinding.cclLayout.setRadius(10.dp(), 20.dp(), 30.dp(), 40.dp())
     }
 }

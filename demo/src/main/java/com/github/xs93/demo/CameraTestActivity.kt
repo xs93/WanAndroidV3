@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import com.github.xs93.camera.CameraHelper
 import com.github.xs93.demo.databinding.ActivityCameraTestBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 
 /**
  * @author XuShuai
@@ -13,9 +13,8 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
  * @description 相机测试Activity
  *
  */
-class CameraTestActivity : BaseViewBindingActivity<ActivityCameraTestBinding>(
-    R.layout.activity_camera_test,
-    ActivityCameraTestBinding::bind
+class CameraTestActivity : BaseVBActivity<ActivityCameraTestBinding>(
+    ActivityCameraTestBinding::inflate
 ) {
     companion object {
         private const val TAG = "CameraTestActivity"
@@ -24,7 +23,7 @@ class CameraTestActivity : BaseViewBindingActivity<ActivityCameraTestBinding>(
     private lateinit var mCameraHelper: CameraHelper
 
     override fun initView(savedInstanceState: Bundle?) {
-        mCameraHelper = CameraHelper(this, binding.previewView, this)
+        mCameraHelper = CameraHelper(this, viewBinding.previewView, this)
         mCameraHelper.apply {
             cameraChange = {
 

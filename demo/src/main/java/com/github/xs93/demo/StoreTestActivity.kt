@@ -11,7 +11,7 @@ import com.github.xs93.demo.entity.Teacher
 import com.github.xs93.demo.entity.TestResponse
 import com.github.xs93.demo.store.MyMMKVOwner
 import com.github.xs93.demo.store.MySharedPrefsOwner
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import kotlinx.coroutines.launch
 
 /**
@@ -21,9 +21,8 @@ import kotlinx.coroutines.launch
  * @description
  *
  */
-class StoreTestActivity : BaseViewBindingActivity<ActivityStoreTestBinding>(
-    R.layout.activity_store_test,
-    ActivityStoreTestBinding::bind
+class StoreTestActivity : BaseVBActivity<ActivityStoreTestBinding>(
+    ActivityStoreTestBinding::inflate
 ) {
 
 
@@ -95,45 +94,45 @@ class StoreTestActivity : BaseViewBindingActivity<ActivityStoreTestBinding>(
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        binding.tvContent.movementMethod = ScrollingMovementMethod.getInstance()
-        binding.btnTestSp.setOnClickListener {
+        viewBinding.tvContent.movementMethod = ScrollingMovementMethod.getInstance()
+        viewBinding.btnTestSp.setOnClickListener {
         }
 
-        binding.btnClear.setOnClickListener {
+        viewBinding.btnClear.setOnClickListener {
             MySharedPrefsOwner.clear()
             MyMMKVOwner.clear()
-            binding.tvContent.text = "clear success"
+            viewBinding.tvContent.text = "clear success"
         }
 
-        binding.btnSaveSerializable.setOnClickListener {
+        viewBinding.btnSaveSerializable.setOnClickListener {
 //            MySharedPrefsOwner.teacher = null
             MyMMKVOwner.teacher = teacher
         }
 
-        binding.btnGetSerializable.setOnClickListener {
-            binding.tvContent.text = MyMMKVOwner.teacher.toString()
+        viewBinding.btnGetSerializable.setOnClickListener {
+            viewBinding.tvContent.text = MyMMKVOwner.teacher.toString()
         }
-        binding.btnSaveSet.setOnClickListener {
+        viewBinding.btnSaveSet.setOnClickListener {
             MyMMKVOwner.testStringSet = setOf("a", "b", "c")
         }
 
-        binding.btnGetSet.setOnClickListener {
-            binding.tvContent.text = MyMMKVOwner.testStringSet.toString()
+        viewBinding.btnGetSet.setOnClickListener {
+            viewBinding.tvContent.text = MyMMKVOwner.testStringSet.toString()
         }
 
         lifecycleScope.launch {
             MySharedPrefsOwner.num2Flow.collect {
-                binding.tvContent.text = it.toString()
+                viewBinding.tvContent.text = it.toString()
             }
         }
 
-        binding.btnSaveFlow.setOnClickListener {
+        viewBinding.btnSaveFlow.setOnClickListener {
             MySharedPrefsOwner.num2Flow.value = MySharedPrefsOwner.num2Flow.value + 1
         }
     }
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        binding.root.updatePadding(top = insets.top, bottom = insets.bottom)
+        viewBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }

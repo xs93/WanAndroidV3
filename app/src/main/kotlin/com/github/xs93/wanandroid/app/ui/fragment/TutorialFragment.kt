@@ -2,8 +2,7 @@ package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
-import com.github.xs93.wanandroid.app.R
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorChildTutorialBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,9 +15,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class TutorialFragment : BaseViewBindingFragment<FragmentNavigatorChildTutorialBinding>(
-    R.layout.fragment_navigator_child_tutorial,
-    FragmentNavigatorChildTutorialBinding::bind
+class TutorialFragment : BaseVBFragment<FragmentNavigatorChildTutorialBinding>(
+    FragmentNavigatorChildTutorialBinding::inflate
 ) {
 
     companion object {

@@ -10,7 +10,7 @@ import com.chad.library.adapter4.loadState.LoadState
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
 import com.chad.library.adapter4.util.addOnDebouncedChildClick
 import com.chad.library.adapter4.util.setOnDebouncedItemClick
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.statuslayout.MultiStatusLayout
@@ -37,9 +37,8 @@ import kotlinx.coroutines.flow.map
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
-    R.layout.explore_fragment,
-    ExploreFragmentBinding::bind
+class ExploreFragment : BaseVBFragment<ExploreFragmentBinding>(
+    ExploreFragmentBinding::inflate
 ) {
     companion object {
         fun newInstance(): ExploreFragment {
@@ -85,7 +84,7 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
                 }
 
                 override fun isAllowLoading(): Boolean {
-                    return !binding.refreshLayout.isRefreshing
+                    return !viewBinding.refreshLayout.isRefreshing
                 }
             })
             .build()
@@ -96,7 +95,7 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
         adapterHelper.addBeforeAdapter(bannerHeaderAdapter)
 
 
-        binding.apply {
+        viewBinding.apply {
             with(pageLayout) {
                 setRetryClickListener {
                     viewModel.uiAction.send(ExploreUiAction.InitPageData)
@@ -119,7 +118,7 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
         }
 
         NetworkMonitor.observer(viewLifecycleOwner.lifecycle) { isConnected, _ ->
-            if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
+            if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
                 viewModel.uiAction.send(ExploreUiAction.InitPageData)
             }
         }
@@ -131,7 +130,7 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
         viewModel.registerCommonEvent(this)
 
         observerState(viewModel.uiStateFlow.map { it.pageStatus }) {
-            binding.pageLayout.showViewByStatus(it.status)
+            viewBinding.pageLayout.showViewByStatus(it.status)
         }
 
         observerState(viewModel.uiStateFlow.map { it.banners }) {
@@ -142,20 +141,20 @@ class ExploreFragment : BaseViewBindingFragment<ExploreFragmentBinding>(
             when (it.listUiState) {
                 ListUiState.IDLE -> {}
                 ListUiState.LoadMore -> {
-                    if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        binding.refreshLayout.isRefreshing = false
+                    if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
+                        viewBinding.refreshLayout.isRefreshing = false
                     }
                 }
 
                 ListUiState.Refreshing -> {
-                    if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        binding.refreshLayout.isRefreshing = true
+                    if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
+                        viewBinding.refreshLayout.isRefreshing = true
                     }
                 }
 
                 is ListUiState.LoadMoreFinished, is ListUiState.RefreshFinished -> {
                     articleAdapter.submitList(it.data) {
-                        binding.refreshLayout.isRefreshing = false
+                        viewBinding.refreshLayout.isRefreshing = false
                         adapterHelper.trailingLoadState = LoadState.NotLoading(it.noMoreData)
                     }
                 }

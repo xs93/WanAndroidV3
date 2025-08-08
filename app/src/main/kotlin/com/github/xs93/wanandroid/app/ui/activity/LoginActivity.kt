@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import androidx.core.widget.doOnTextChanged
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
@@ -28,16 +28,13 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 
 @AndroidEntryPoint
-class LoginActivity : BaseViewBindingActivity<LoginActivityBinding>(
-    R.layout.login_activity,
-    LoginActivityBinding::bind
-) {
+class LoginActivity : BaseVBActivity<LoginActivityBinding>(LoginActivityBinding::inflate) {
 
 
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun initView(savedInstanceState: Bundle?) {
-        binding.apply {
+        viewBinding.apply {
             with(toolbar) {
                 setNavigationOnClickListener {
                     finish()
@@ -104,6 +101,6 @@ class LoginActivity : BaseViewBindingActivity<LoginActivityBinding>(
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        binding.toolbar.updatePadding(top = insets.top)
+        viewBinding.toolbar.updatePadding(top = insets.top)
     }
 }

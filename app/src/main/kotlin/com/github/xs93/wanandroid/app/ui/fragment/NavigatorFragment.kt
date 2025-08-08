@@ -5,7 +5,7 @@ import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
@@ -25,9 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class NavigatorFragment : BaseViewBindingFragment<FragmentNavigatorBinding>(
-    R.layout.fragment_navigator,
-    FragmentNavigatorBinding::bind
+class NavigatorFragment : BaseVBFragment<FragmentNavigatorBinding>(
+    FragmentNavigatorBinding::inflate
 ) {
     companion object {
         fun newInstance(): NavigatorFragment {
@@ -52,7 +51,7 @@ class NavigatorFragment : BaseViewBindingFragment<FragmentNavigatorBinding>(
             }
         }
 
-        binding.apply {
+        viewBinding.apply {
             with(vpContent) {
                 offscreenPageLimit = tabs.size - 1
                 adapter = childFragmentAdapter
@@ -69,7 +68,7 @@ class NavigatorFragment : BaseViewBindingFragment<FragmentNavigatorBinding>(
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        binding.tabLayout.updatePadding(top = insets.top)
+        viewBinding.tabLayout.updatePadding(top = insets.top)
     }
 
     private fun generateTabs() = listOf(

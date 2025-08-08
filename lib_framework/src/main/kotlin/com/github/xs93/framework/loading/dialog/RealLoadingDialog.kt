@@ -3,8 +3,7 @@ package com.github.xs93.framework.loading.dialog
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.R
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingDialogFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBDialogFragment
 import com.github.xs93.framework.databinding.BaseLayoutLoadingBinding
 
 /**
@@ -15,10 +14,8 @@ import com.github.xs93.framework.databinding.BaseLayoutLoadingBinding
  * @date 2022/7/26 17:27
  * @email 466911254@qq.com
  */
-class RealLoadingDialog : BaseViewBindingDialogFragment<BaseLayoutLoadingBinding>(
-    R.layout.base_layout_loading,
-    BaseLayoutLoadingBinding::bind
-) {
+class RealLoadingDialog :
+    BaseVBDialogFragment<BaseLayoutLoadingBinding>(BaseLayoutLoadingBinding::inflate) {
 
     companion object {
         fun newInstance(): RealLoadingDialog {

@@ -6,9 +6,8 @@ import android.view.View
 import androidx.media3.common.MediaItem
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.utils.ktx.setSingleClickListener
-import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentMineBinding
 import com.github.xs93.wanandroid.music.service.MusicPlayService
 import com.google.common.util.concurrent.ListenableFuture
@@ -22,9 +21,8 @@ import com.google.common.util.concurrent.MoreExecutors
  * @date 2023/5/22 14:25
  * @email 466911254@qq.com
  */
-class MineFragment : BaseViewBindingFragment<FragmentMineBinding>(
-    R.layout.fragment_mine,
-    FragmentMineBinding::bind
+class MineFragment : BaseVBFragment<FragmentMineBinding>(
+    FragmentMineBinding::inflate
 ) {
 
     companion object {
@@ -52,10 +50,10 @@ class MineFragment : BaseViewBindingFragment<FragmentMineBinding>(
             }, MoreExecutors.directExecutor())
         }
 
-        binding.btnStart.setSingleClickListener {
+        viewBinding.btnStart.setSingleClickListener {
             mController?.play()
         }
-        binding.btnPause.setSingleClickListener {
+        viewBinding.btnPause.setSingleClickListener {
             mController?.pause()
         }
     }

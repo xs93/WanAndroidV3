@@ -14,9 +14,9 @@ import androidx.annotation.LayoutRes
  */
 interface IBaseFragment {
 
-    /**返回布局Layout*/
-    @LayoutRes
-    fun getContentLayoutId(): Int
+
+    @get:LayoutRes
+    val contentLayoutId: Int
 
     /** 初始化View */
     fun initView(view: View, savedInstanceState: Bundle?)

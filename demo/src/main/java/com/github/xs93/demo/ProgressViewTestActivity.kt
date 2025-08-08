@@ -3,7 +3,7 @@ package com.github.xs93.demo
 import android.os.Bundle
 import android.util.Log
 import com.github.xs93.demo.databinding.ActivityProgressBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 
 /**
  * @author XuShuai
@@ -12,9 +12,8 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
  * @description
  *
  */
-class ProgressViewTestActivity : BaseViewBindingActivity<ActivityProgressBinding>(
-    R.layout.activity_progress,
-    ActivityProgressBinding::bind
+class ProgressViewTestActivity : BaseVBActivity<ActivityProgressBinding>(
+    ActivityProgressBinding::inflate
 ) {
 
     override fun initView(savedInstanceState: Bundle?) {

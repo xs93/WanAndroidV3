@@ -5,10 +5,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter4.BaseQuickAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.framework.ui.layoutManager.CenterLinearLayoutManager
-import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorChildNavigatorBinding
 import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipAdapter
 import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipChildrenAdapter
@@ -27,9 +26,8 @@ import kotlinx.coroutines.flow.map
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNavigatorBinding>(
-    R.layout.fragment_navigator_child_navigator,
-    FragmentNavigatorChildNavigatorBinding::bind
+class NavigatorChildFragment : BaseVBFragment<FragmentNavigatorChildNavigatorBinding>(
+    FragmentNavigatorChildNavigatorBinding::inflate
 ) {
 
     companion object {
@@ -50,7 +48,7 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
     private var chipChildrenLayoutManager: LinearLayoutManager? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        binding.apply {
+        viewBinding.apply {
             with(rvChipList) {
                 adapter = NavigatorChipAdapter()
                     .apply {
@@ -87,7 +85,7 @@ class NavigatorChildFragment : BaseViewBindingFragment<FragmentNavigatorChildNav
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
         observerState(viewModel.uiStateFlow.map { it.pageStatus }) {
-            binding.pageLayout.showViewByStatus(it.status)
+            viewBinding.pageLayout.showViewByStatus(it.status)
         }
 
         observerState(viewModel.uiStateFlow.map { it.navigationList }) {

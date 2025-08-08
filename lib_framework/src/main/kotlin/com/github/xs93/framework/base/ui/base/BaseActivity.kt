@@ -41,9 +41,8 @@ abstract class BaseActivity : AppCompatActivity(), IBaseActivity, IToast by UiTo
         super.onCreate(savedInstanceState)
         setupEnableEdgeToEdge(this)
         beforeSetContentView(savedInstanceState)
-        val layoutId = getContentLayoutId()
-        if (layoutId != 0) {
-            setContentView(layoutId)
+        if (contentLayoutId != 0) {
+            setContentView(contentLayoutId)
         } else {
             val contentView = getContentView()
             if (contentView != null) {

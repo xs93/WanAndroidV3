@@ -8,7 +8,7 @@ import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import androidx.fragment.app.activityViewModels
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
@@ -28,10 +28,7 @@ import kotlinx.parcelize.Parcelize
  * @date 2023/8/18 13:47
  * @email 466911254@qq.com
  */
-class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(
-    R.layout.home_fragment,
-    HomeFragmentBinding::bind
-) {
+class HomeFragment : BaseVBFragment<HomeFragmentBinding>(HomeFragmentBinding::inflate) {
 
     companion object {
         fun newInstance(): HomeFragment {
@@ -59,7 +56,7 @@ class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(
             }
         }
 
-        binding.apply {
+        viewBinding.apply {
             with(vpContent) {
                 offscreenPageLimit = homeTabs.size
                 adapter = childFragmentAdapter
@@ -81,7 +78,7 @@ class HomeFragment : BaseViewBindingFragment<HomeFragmentBinding>(
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        binding.clToolbar.updatePadding(top = insets.top)
+        viewBinding.clToolbar.updatePadding(top = insets.top)
     }
 
 

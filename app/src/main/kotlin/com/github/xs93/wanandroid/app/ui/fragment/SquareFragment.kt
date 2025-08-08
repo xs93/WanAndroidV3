@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.util.addOnDebouncedChildClick
 import com.chad.library.adapter4.util.setOnDebouncedItemClick
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.statuslayout.MultiStatusLayout
@@ -32,9 +32,8 @@ import kotlinx.coroutines.flow.map
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
-    R.layout.square_fragment,
-    SquareFragmentBinding::bind
+class SquareFragment : BaseVBFragment<SquareFragmentBinding>(
+    SquareFragmentBinding::inflate
 ) {
 
     companion object {
@@ -62,12 +61,19 @@ class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
             addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
                 val article = adapter.getItem(position)
                 article?.let {
-                    viewModel.uiAction.send(SquareUiAction.CollectArticle(CollectEvent(it.id, it.collect.not())))
+                    viewModel.uiAction.send(
+                        SquareUiAction.CollectArticle(
+                            CollectEvent(
+                                it.id,
+                                it.collect.not()
+                            )
+                        )
+                    )
                 }
             }
         }
 
-        binding.apply {
+        viewBinding.apply {
             with(pageLayout) {
                 setRetryClickListener {
                     viewModel.uiAction.send(SquareUiAction.InitPageData)
@@ -93,7 +99,7 @@ class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
         }
 
         NetworkMonitor.observer(viewLifecycleOwner.lifecycle) { isConnected, _ ->
-            if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
+            if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
                 viewModel.uiAction.send(SquareUiAction.InitPageData)
             }
         }
@@ -105,33 +111,33 @@ class SquareFragment : BaseViewBindingFragment<SquareFragmentBinding>(
         viewModel.registerCommonEvent(this)
 
         observerState(viewModel.uiStateFlow.map { it.pageStatus }) {
-            binding.pageLayout.showViewByStatus(it.status)
+            viewBinding.pageLayout.showViewByStatus(it.status)
         }
 
         observerState(viewModel.uiStateFlow.map { it.articlesListState }) {
             when (val uiState = it.listUiState) {
                 ListUiState.IDLE -> {}
                 ListUiState.LoadMore -> {
-                    if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        binding.refreshLayout.autoLoadMoreAnimationOnly()
+                    if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
+                        viewBinding.refreshLayout.autoLoadMoreAnimationOnly()
                     }
                 }
 
                 ListUiState.Refreshing -> {
-                    if (binding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        binding.refreshLayout.autoRefreshAnimationOnly()
+                    if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
+                        viewBinding.refreshLayout.autoRefreshAnimationOnly()
                     }
                 }
 
                 is ListUiState.LoadMoreFinished, is ListUiState.RefreshFinished -> {
                     articleAdapter.submitList(it.data) {
                         if (uiState is ListUiState.RefreshFinished) {
-                            binding.refreshLayout.finishRefresh(uiState.success)
-                            binding.refreshLayout.setNoMoreData(it.noMoreData)
+                            viewBinding.refreshLayout.finishRefresh(uiState.success)
+                            viewBinding.refreshLayout.setNoMoreData(it.noMoreData)
                         }
                         if (uiState is ListUiState.LoadMoreFinished) {
-                            binding.refreshLayout.finishLoadMore(uiState.success)
-                            binding.refreshLayout.setNoMoreData(it.noMoreData)
+                            viewBinding.refreshLayout.finishLoadMore(uiState.success)
+                            viewBinding.refreshLayout.setNoMoreData(it.noMoreData)
                         }
                     }
                 }

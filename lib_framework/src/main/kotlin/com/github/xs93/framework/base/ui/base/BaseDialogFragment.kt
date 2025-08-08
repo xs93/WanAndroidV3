@@ -69,8 +69,8 @@ abstract class BaseDialogFragment : AppCompatDialogFragment(), IBaseFragment,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        if (getContentLayoutId() != 0) {
-            return inflater.inflate(getContentLayoutId(), container, false)
+        if (contentLayoutId != 0) {
+            return inflater.inflate(contentLayoutId, container, false)
         }
         return super.onCreateView(inflater, container, savedInstanceState)
     }

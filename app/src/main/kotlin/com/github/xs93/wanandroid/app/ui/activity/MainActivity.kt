@@ -12,7 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import coil3.load
 import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
 import com.github.xs93.framework.ktx.observerEvent
@@ -48,10 +48,7 @@ import javax.inject.Inject
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
-class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
-    R.layout.main_activity,
-    MainActivityBinding::bind
-) {
+class MainActivity : BaseVBActivity<MainActivityBinding>(MainActivityBinding::inflate) {
 
     private val mainViewModel: MainViewModel by viewModels()
 
@@ -61,10 +58,9 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
     private var windowController: WindowInsetsControllerCompat? = null
 
     override fun initView(savedInstanceState: Bundle?) {
-
         windowController = WindowCompat.getInsetsController(window, window.decorView)
 
-        binding.apply {
+        viewBinding.apply {
             with(drawerRoot) {
                 addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
                     override fun onDrawerOpened(drawerView: View) {
@@ -82,7 +78,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
             }
         }
 
-        binding.mainContentLayout.apply {
+        viewBinding.mainContentLayout.apply {
             with(vpContent) {
                 offscreenPageLimit = 3
                 setTouchSlopMultiple(2f)
@@ -114,7 +110,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
         }
 
 
-        binding.mainDrawerLayout.apply {
+        viewBinding.mainDrawerLayout.apply {
             with(btnLogin) {
                 setSingleClickListener {
                     startActivitySafe<LoginActivity>()
@@ -165,7 +161,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
         observerEvent(mainViewModel.mainEventFlow) {
             when (it) {
                 MainEvent.OpenDrawerEvent -> {
-                    binding.drawerRoot.openDrawer(GravityCompat.START)
+                    viewBinding.drawerRoot.openDrawer(GravityCompat.START)
                 }
             }
         }
@@ -173,7 +169,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
         observerState(accountDataManager.accountStateFlow) {
             when (it) {
                 AccountState.LogOut -> {
-                    with(binding.mainDrawerLayout) {
+                    with(viewBinding.mainDrawerLayout) {
                         btnLogin.visible()
                         btnLogout.gone()
                         groupUserInfo.gone()
@@ -182,7 +178,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
                 }
 
                 is AccountState.LogIn -> {
-                    with(binding.mainDrawerLayout) {
+                    with(viewBinding.mainDrawerLayout) {
                         btnLogin.gone()
                         btnLogout.visible()
                         groupUserInfo.visible()
@@ -193,7 +189,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
         }
 
         observerState(accountDataManager.userDetailFlow) {
-            with(binding.mainDrawerLayout) {
+            with(viewBinding.mainDrawerLayout) {
                 txtNickname.text = it.userInfo.nickname
                 txtUserId.text = string(R.string.main_drawer_user_id, it.userInfo.id)
                 txtCoinInfo.text = string(
@@ -208,7 +204,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        if (binding.drawerRoot.isDrawerOpen(GravityCompat.START)) {
+        if (viewBinding.drawerRoot.isDrawerOpen(GravityCompat.START)) {
             windowController?.isAppearanceLightStatusBars = false
         }
     }

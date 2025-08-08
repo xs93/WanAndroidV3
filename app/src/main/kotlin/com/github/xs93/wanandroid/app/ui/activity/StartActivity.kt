@@ -4,10 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.utils.ktx.startActivitySafe
-import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.StartActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -22,7 +21,7 @@ import kotlinx.coroutines.delay
  */
 @AndroidEntryPoint
 class StartActivity :
-    BaseViewBindingActivity<StartActivityBinding>(R.layout.start_activity, StartActivityBinding::bind) {
+    BaseVBActivity<StartActivityBinding>(StartActivityBinding::inflate) {
 
     private lateinit var splashScreen: SplashScreen
     private var keepOnScreenCondition = true

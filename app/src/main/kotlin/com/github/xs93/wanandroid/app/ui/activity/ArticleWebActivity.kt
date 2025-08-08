@@ -13,9 +13,8 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
-import com.github.xs93.framework.base.ui.viewbinding.BaseViewBindingActivity
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
-import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.ArticleWebActivityBinding
 import com.github.xs93.wanandroid.common.web.WebViewPool
 import com.orhanobut.logger.Logger
@@ -32,10 +31,8 @@ import javax.inject.Inject
  */
 
 @AndroidEntryPoint
-class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
-    R.layout.article_web_activity,
-    ArticleWebActivityBinding::bind
-) {
+class ArticleWebActivity :
+    BaseVBActivity<ArticleWebActivityBinding>(ArticleWebActivityBinding::inflate) {
 
     companion object {
 
@@ -64,7 +61,7 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
-                    binding.progressIndicator.progress = newProgress
+                    viewBinding.progressIndicator.progress = newProgress
                 }
             }
 
@@ -90,17 +87,17 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
-                    binding.progressIndicator.show()
+                    viewBinding.progressIndicator.show()
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    binding.progressIndicator.hide()
+                    viewBinding.progressIndicator.hide()
                 }
             }
         }
 
-        binding.apply {
+        viewBinding.apply {
             with(flWebContainer) {
                 val layoutParams = FrameLayout.LayoutParams(-1, -1)
                 addView(mWebView, layoutParams)
@@ -120,8 +117,8 @@ class ArticleWebActivity : BaseViewBindingActivity<ArticleWebActivityBinding>(
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        binding.flWebContainer.updatePadding(bottom = insets.bottom)
-        binding.toolbar.updatePadding(top = insets.top)
+        viewBinding.flWebContainer.updatePadding(bottom = insets.bottom)
+        viewBinding.toolbar.updatePadding(top = insets.top)
     }
 
     override fun initData(savedInstanceState: Bundle?) {
