@@ -1,5 +1,6 @@
 package com.github.xs93.network.converter
 
+import android.util.Log
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.ApiException
 import com.github.xs93.network.exception.ExceptionHandler
@@ -28,6 +29,7 @@ class HandleErrorConverterFactory private constructor() : Converter.Factory() {
         annotations: Array<out Annotation?>,
         retrofit: Retrofit
     ): Converter<ResponseBody, *>? {
+        Log.d("AAA", "responseBodyConverter")
         val delegate = retrofit.nextResponseBodyConverter<Any>(this, type, annotations)
         return Converter<ResponseBody, Any> { value ->
             val result = try {

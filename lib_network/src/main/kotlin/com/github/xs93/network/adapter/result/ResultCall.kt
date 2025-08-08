@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.IOException
 
 /**
  * Call转为ResultCall
@@ -20,26 +21,45 @@ class ResultCall<T>(private val delegate: Call<T>) : Call<Result<T>> {
     override fun enqueue(callback: Callback<Result<T>>) {
         delegate.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
+                val result: Result<T>
                 if (response.isSuccessful) {
-                    callback.onResponse(
-                        this@ResultCall, Response.success(response.code(), Result.success(response.body()!!))
-                    )
+                    val body = response.body()
+                    result = if (body == null) {
+                        Result.failure(NullPointerException("response body is null"))
+                    } else {
+                        Result.success(body)
+                    }
                 } else {
-                    callback.onResponse(this@ResultCall, Response.success(Result.failure(HttpException(response))))
+                    result = Result.failure(HttpException(response))
                 }
+                callback.onResponse(
+                    this@ResultCall, Response.success(response.code(), result)
+                )
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                if (call.isCanceled) { // 忽略请求被canceled的情况
-                    return
-                }
                 callback.onResponse(this@ResultCall, Response.success(Result.failure(t)))
             }
         })
     }
 
     override fun execute(): Response<Result<T>> {
-        return Response.success(Result.success(delegate.execute().body()!!))
+        val result = try {
+            val executeResponse = delegate.execute()
+            if (executeResponse.isSuccessful) {
+                val body = executeResponse.body()
+                if (body == null) {
+                    Result.failure(NullPointerException("response body is null"))
+                } else {
+                    Result.success(body)
+                }
+            } else {
+                Result.failure(HttpException(executeResponse))
+            }
+        } catch (e: IOException) {
+            Result.failure(e)
+        }
+        return Response.success(result)
     }
 
     override fun clone(): Call<Result<T>> = ResultCall(delegate.clone())

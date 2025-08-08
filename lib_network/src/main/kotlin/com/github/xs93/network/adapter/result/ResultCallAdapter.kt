@@ -12,7 +12,8 @@ import java.lang.reflect.Type
  * @date 2024/4/7 9:35
  * @email 466911254@qq.com
  */
-internal class BodyCallAdapter(private val successType: Type) : CallAdapter<Any, Call<Result<*>>> {
+internal class ResultCallAdapter(private val successType: Type) :
+    CallAdapter<Any, Call<Result<*>>> {
     override fun responseType(): Type {
         return successType
     }

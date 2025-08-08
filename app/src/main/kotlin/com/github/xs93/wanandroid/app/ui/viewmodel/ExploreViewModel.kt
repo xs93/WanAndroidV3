@@ -16,7 +16,6 @@ import com.github.xs93.wanandroid.common.entity.Banner
 import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListState
 import com.github.xs93.wanandroid.common.model.ListUiState
-import com.github.xs93.wanandroid.common.model.ListUpdateDataMethod
 import com.github.xs93.wanandroid.common.model.PageStatus
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -95,10 +94,7 @@ class ExploreViewModel @Inject constructor(
                         it
                     }
                 }
-                val newListState = listState.copy(
-                    data = newList,
-                    updateDataMethod = ListUpdateDataMethod.Update(false)
-                )
+                val newListState = listState.copy(data = newList)
                 uiState.update {
                     copy(articlesListState = newListState)
                 }
@@ -125,10 +121,7 @@ class ExploreViewModel @Inject constructor(
                             }
                         }
                     }
-                    val newListState = listState.copy(
-                        data = newList,
-                        updateDataMethod = ListUpdateDataMethod.Update(false)
-                    )
+                    val newListState = listState.copy(data = newList)
                     uiState.update {
                         copy(articlesListState = newListState)
                     }
@@ -193,59 +186,47 @@ class ExploreViewModel @Inject constructor(
         return withContext(Dispatchers.IO) {
             val listState = uiStateFlow.value.articlesListState
 
-            var tempListState =
-                listState.copy(listUiState = if (refresh) ListUiState.Refreshing else ListUiState.LoadMore)
+            var tempListState = listState.copy(listUiState = ListUiState.RequestStart(refresh))
             uiState.update { copy(articlesListState = tempListState) }
 
-            val articlesResponse = homeRepository.getHomeArticle(page).getOrElse {
-                tempListState = tempListState.copy(
-                    listUiState = if (refresh) {
-                        ListUiState.RefreshFinished(false, it)
-                    } else {
-                        ListUiState.LoadMoreFinished(false, it)
-                    }
-                )
-                uiState.update { copy(articlesListState = tempListState) }
-                Logger.e(it, "请求接口失败")
-                return@withContext false
-            }
-            val pageResp = articlesResponse.data
-            if (pageResp == null) {
-                tempListState = tempListState.copy(
-                    listUiState = if (refresh) {
-                        ListUiState.RefreshFinished(false, Throwable(articlesResponse.errorMessage))
-                    } else {
-                        ListUiState.LoadMoreFinished(
-                            false,
-                            Throwable(articlesResponse.errorMessage)
+            var requestSuccess = false
+
+            homeRepository.getHomeArticle(page)
+                .onSuccess {
+                    val pageResp = it.data
+                    if (pageResp == null) {
+                        tempListState = tempListState.copy(
+                            listUiState = ListUiState.RequestFinishFailed(
+                                refresh,
+                                Throwable(it.errorMessage)
+                            )
                         )
+                        uiState.update { copy(articlesListState = tempListState) }
+                        requestSuccess = false
+                    } else {
+                        val newData = pageResp.datas.toMutableList().apply {
+                            if (!refresh) {
+                                addAll(0, listState.data)
+                            }
+                        }
+
+                        tempListState = tempListState.copy(
+                            listUiState = ListUiState.RequestFinish(refresh, pageResp.noMoreData),
+                            data = newData,
+                            curPage = page
+                        )
+                        uiState.update { copy(articlesListState = tempListState) }
+                        requestSuccess = true
                     }
-                )
-                uiState.update { copy(articlesListState = tempListState) }
-                return@withContext false
-            }
-
-            val newData = pageResp.datas.toMutableList().apply {
-                if (!refresh) {
-                    addAll(0, listState.data)
                 }
-            }
-
-            val resetMethod =
-                if (refresh) ListUpdateDataMethod.Reset else ListUpdateDataMethod.Update()
-            tempListState = tempListState.copy(
-                listUiState = if (refresh) {
-                    ListUiState.RefreshFinished(false, null)
-                } else {
-                    ListUiState.LoadMoreFinished(false, null)
-                },
-                data = newData,
-                updateDataMethod = resetMethod,
-                curPage = page,
-                noMoreData = pageResp.noMoreData
-            )
-            uiState.update { copy(articlesListState = tempListState) }
-            return@withContext true
+                .onFailure {
+                    tempListState = tempListState.copy(
+                        listUiState = ListUiState.RequestFinishFailed(refresh, Throwable(it))
+                    )
+                    uiState.update { copy(articlesListState = tempListState) }
+                    requestSuccess = false
+                }
+            return@withContext requestSuccess
         }
     }
 

@@ -26,7 +26,7 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
         }
         val upperBound = getParameterUpperBound(0, returnType)
         if (upperBound is ParameterizedType && upperBound.rawType == Result::class.java) {
-            return BodyCallAdapter(getParameterUpperBound(0, upperBound))
+            return ResultCallAdapter(getParameterUpperBound(0, upperBound))
         }
         return null
     }

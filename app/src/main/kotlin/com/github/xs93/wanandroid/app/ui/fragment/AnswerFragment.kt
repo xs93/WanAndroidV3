@@ -5,6 +5,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter4.QuickAdapterHelper
+import com.chad.library.adapter4.loadState.LoadState
+import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
 import com.chad.library.adapter4.util.addOnDebouncedChildClick
 import com.chad.library.adapter4.util.setOnDebouncedItemClick
 import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
@@ -45,31 +48,10 @@ class AnswerFragment : BaseVBFragment<AnswerFragmentBinding>(AnswerFragmentBindi
 
     private val viewModel: AnswerViewModel by viewModels()
 
-    private lateinit var articleAdapter: HomeArticleAdapter
+    private var articleAdapter: HomeArticleAdapter? = null
+    private var quickAdapterHelper: QuickAdapterHelper? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        articleAdapter = HomeArticleAdapter().apply {
-            // 用于异步恢复状态
-            stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-            setOnDebouncedItemClick { _, _, position ->
-                val article = items[position]
-                ArticleWebActivity.start(requireContext(), article.link)
-            }
-            addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
-                val article = adapter.getItem(position)
-                article?.let {
-                    viewModel.uiAction.send(
-                        AnswerUiAction.CollectArticle(
-                            CollectEvent(
-                                it.id,
-                                it.collect.not()
-                            )
-                        )
-                    )
-                }
-            }
-        }
-
         viewBinding.apply {
             with(pageLayout) {
                 setRetryClickListener {
@@ -81,17 +63,55 @@ class AnswerFragment : BaseVBFragment<AnswerFragmentBinding>(AnswerFragmentBindi
                 setOnRefreshListener {
                     viewModel.uiAction.send(AnswerUiAction.RequestArticleData(true))
                 }
-
-                setOnLoadMoreListener {
-                    viewModel.uiAction.send(AnswerUiAction.RequestArticleData(false))
-                }
             }
 
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                // 移除动画,优化黑夜模式切换时，界面恢复导致的列表动画闪烁
-                itemAnimator = null
-                adapter = articleAdapter
+
+                val homeArticleAdapter = HomeArticleAdapter().apply {
+                    // 用于异步恢复状态
+                    stateRestorationPolicy =
+                        RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+                    setOnDebouncedItemClick { _, _, position ->
+                        val article = items[position]
+                        ArticleWebActivity.start(requireContext(), article.link)
+                    }
+                    addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
+                        val article = adapter.getItem(position)
+                        article?.let {
+                            viewModel.uiAction.send(
+                                AnswerUiAction.CollectArticle(
+                                    CollectEvent(
+                                        it.id,
+                                        it.collect.not()
+                                    )
+                                )
+                            )
+                        }
+                    }
+                }.also { articleAdapter = it }
+                val adapterHelper = QuickAdapterHelper.Builder(homeArticleAdapter)
+                    .setTrailingLoadStateAdapter(object :
+                        TrailingLoadStateAdapter.OnTrailingListener {
+                        override fun onLoad() {
+                            viewModel.uiAction.send(AnswerUiAction.RequestArticleData(false))
+                        }
+
+                        override fun onFailRetry() {
+                            viewModel.uiAction.send(AnswerUiAction.RequestArticleData(false))
+                        }
+
+                        override fun isAllowLoading(): Boolean {
+                            return !viewBinding.refreshLayout.isRefreshing
+                        }
+                    })
+                    .build()
+                    .also { quickAdapterHelper = it }
+                adapterHelper.trailingLoadStateAdapter?.apply {
+                    isAutoLoadMore = true
+                    preloadSize = 4
+                }
+                adapter = adapterHelper.adapter
             }
         }
 
@@ -114,29 +134,21 @@ class AnswerFragment : BaseVBFragment<AnswerFragmentBinding>(AnswerFragmentBindi
         observerState(viewModel.uiStateFlow.map { it.articlesListState }) {
             when (val uiState = it.listUiState) {
                 ListUiState.IDLE -> {}
-                ListUiState.LoadMore -> {
-                    if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        viewBinding.refreshLayout.autoLoadMoreAnimationOnly()
+                is ListUiState.RequestStart -> {
+                    viewBinding.refreshLayout.isRefreshing = uiState.refreshing
+                }
+
+                is ListUiState.RequestFinish -> {
+                    viewBinding.refreshLayout.isRefreshing = false
+                    articleAdapter?.submitList(it.data) {
+                        quickAdapterHelper?.trailingLoadState =
+                            LoadState.NotLoading(uiState.noMoreData)
                     }
                 }
 
-                ListUiState.Refreshing -> {
-                    if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_CONTENT) {
-                        viewBinding.refreshLayout.autoRefreshAnimationOnly()
-                    }
-                }
-
-                is ListUiState.LoadMoreFinished, is ListUiState.RefreshFinished -> {
-                    articleAdapter.submitList(it.data) {
-                        if (uiState is ListUiState.RefreshFinished) {
-                            viewBinding.refreshLayout.finishRefresh(uiState.success)
-                            viewBinding.refreshLayout.setNoMoreData(it.noMoreData)
-                        }
-                        if (uiState is ListUiState.LoadMoreFinished) {
-                            viewBinding.refreshLayout.finishLoadMore(uiState.success)
-                            viewBinding.refreshLayout.setNoMoreData(it.noMoreData)
-                        }
-                    }
+                is ListUiState.RequestFinishFailed -> {
+                    viewBinding.refreshLayout.isRefreshing = false
+                    quickAdapterHelper?.trailingLoadState = LoadState.Error(uiState.error)
                 }
             }
         }

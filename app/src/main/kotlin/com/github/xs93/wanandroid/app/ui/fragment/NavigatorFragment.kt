@@ -38,23 +38,20 @@ class NavigatorFragment : BaseVBFragment<FragmentNavigatorBinding>(
     }
 
     private val tabs = generateTabs()
-    private lateinit var childFragmentAdapter: SimpleViewPagerAdapter
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        childFragmentAdapter = SimpleViewPagerAdapter(childFragmentManager, viewLifecycle).apply {
-            tabs.forEach {
-                when (it.titleResId) {
-                    R.string.navigator_tab_navigator -> add { NavigatorChildFragment.newInstance() }
-                    R.string.navigator_tab_series -> add { SeriesFragment.newInstance() }
-                    R.string.navigator_tab_tutorial -> add { TutorialFragment.newInstance() }
-                }
-            }
-        }
-
         viewBinding.apply {
             with(vpContent) {
                 offscreenPageLimit = tabs.size - 1
-                adapter = childFragmentAdapter
+                adapter = SimpleViewPagerAdapter(childFragmentManager, viewLifecycle).apply {
+                    tabs.forEach {
+                        when (it.titleResId) {
+                            R.string.navigator_tab_navigator -> add { NavigatorChildFragment.newInstance() }
+                            R.string.navigator_tab_series -> add { SeriesFragment.newInstance() }
+                            R.string.navigator_tab_tutorial -> add { TutorialFragment.newInstance() }
+                        }
+                    }
+                }
                 setTouchSlopMultiple(2.5f)
             }
 
