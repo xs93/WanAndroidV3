@@ -18,30 +18,30 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class User(
-    @Json(name = "admin")
+    @param:Json(name = "admin")
     val admin: Boolean = false,
-    @Json(name = "chapterTops")
+    @param:Json(name = "chapterTops")
     val chapterTops: List<String> = listOf(),
-    @Json(name = "coinCount")
+    @param:Json(name = "coinCount")
     val coinCount: Int = 0,
-    @Json(name = "collectIds")
+    @param:Json(name = "collectIds")
     val collectIds: List<Int> = listOf(),
-    @Json(name = "email")
+    @param:Json(name = "email")
     val email: String = "",
-    @Json(name = "icon")
+    @param:Json(name = "icon")
     val icon: String = "",
-    @Json(name = "id")
+    @param:Json(name = "id")
     val id: Int = 0,
-    @Json(name = "nickname")
+    @param:Json(name = "nickname")
     val nickname: String = "",
-    @Json(name = "password")
+    @param:Json(name = "password")
     val password: String = "",
-    @Json(name = "publicName")
+    @param:Json(name = "publicName")
     val publicName: String = "",
-    @Json(name = "token")
+    @param:Json(name = "token")
     val token: String = "",
-    @Json(name = "type")
+    @param:Json(name = "type")
     val type: Int = 0,
-    @Json(name = "username")
+    @param:Json(name = "username")
     val username: String = "",
 ) : Parcelable

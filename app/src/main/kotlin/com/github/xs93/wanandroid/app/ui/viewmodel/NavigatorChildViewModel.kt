@@ -8,9 +8,9 @@ import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcherIO
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
+import com.github.xs93.wanandroid.common.data.respotory.NavigatorRepository
 import com.github.xs93.wanandroid.common.entity.Navigation
 import com.github.xs93.wanandroid.common.model.PageStatus
-import com.github.xs93.wanandroid.common.services.NavigatorService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -38,9 +38,8 @@ sealed class NavigatorChildUiAction : IUiAction {
 }
 
 @HiltViewModel
-class NavigatorChildViewModel @Inject constructor(
-    private val navigatorService: NavigatorService
-) : BaseViewModel() {
+class NavigatorChildViewModel @Inject constructor(private val navigatorRepository: NavigatorRepository) :
+    BaseViewModel() {
 
     private val uiState by mviStates(NavigatorChildUiState())
     val uiStateFlow by lazy { uiState.flow }
@@ -62,7 +61,7 @@ class NavigatorChildViewModel @Inject constructor(
                 return@launcherIO
             }
 
-            val remoteData = navigatorService.getNavigationList()
+            val remoteData = navigatorRepository.getNavigationList()
             remoteData
                 .onSuccess {
                     if (it.isSuccess()) {

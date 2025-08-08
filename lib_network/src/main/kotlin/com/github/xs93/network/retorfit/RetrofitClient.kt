@@ -18,10 +18,11 @@ internal class RetrofitClient(
     val baseUrl: String,
     val retrofitBuildStrategy: RetrofitBuildStrategy
 ) {
-    private val retrofit by lazy {
+
+    val retrofit: Retrofit by lazy {
         val builder = Retrofit.Builder().apply {
             baseUrl(baseUrl)
-            client(mOkHttpClient)
+            client(okHttpClient)
 
             addConverterFactory(HandleErrorConverterFactory.create())
             retrofitBuildStrategy.converterFactories()?.onEach {
@@ -36,15 +37,11 @@ internal class RetrofitClient(
         builder.build()
     }
 
-    private val mOkHttpClient by lazy {
+    val okHttpClient: OkHttpClient by lazy {
         retrofitBuildStrategy.okHttpClient()
     }
 
     fun <T> create(service: Class<T>): T {
         return retrofit.create(service)
-    }
-
-    fun getOkHttpClient(): OkHttpClient {
-        return mOkHttpClient
     }
 }

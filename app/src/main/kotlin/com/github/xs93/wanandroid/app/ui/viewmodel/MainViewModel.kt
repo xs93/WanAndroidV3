@@ -6,7 +6,7 @@ import com.github.xs93.framework.base.viewmodel.IUiEvent
 import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.ktx.launcher
-import com.github.xs93.wanandroid.common.data.AccountDataModule
+import com.github.xs93.wanandroid.common.data.respotory.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -30,7 +30,8 @@ sealed class MainAction : IUiAction {
 }
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val accountDataModule: AccountDataModule) : BaseViewModel() {
+class MainViewModel @Inject constructor(private val accountRepository: AccountRepository) :
+    BaseViewModel() {
 
     private val mainEvents by mviEvents<MainEvent>()
     val mainEventFlow = mainEvents.flow
@@ -49,7 +50,7 @@ class MainViewModel @Inject constructor(private val accountDataModule: AccountDa
 
     private fun logout() {
         launcher {
-            accountDataModule.logout()
+            accountRepository.logout()
         }
     }
 }

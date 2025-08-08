@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import coil3.load
@@ -32,9 +33,8 @@ import com.github.xs93.wanandroid.app.ui.fragment.NavigatorFragment
 import com.github.xs93.wanandroid.app.ui.viewmodel.MainAction
 import com.github.xs93.wanandroid.app.ui.viewmodel.MainEvent
 import com.github.xs93.wanandroid.app.ui.viewmodel.MainViewModel
+import com.github.xs93.wanandroid.common.account.AccountDataManager
 import com.github.xs93.wanandroid.common.account.AccountState
-import com.github.xs93.wanandroid.common.data.AccountDataModule
-import com.github.xs93.wanandroid.common.data.CollectDataModel
 import com.github.xs93.wanandroid.common.store.AppCommonStore
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -53,30 +53,16 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
     MainActivityBinding::bind
 ) {
 
-
-    private lateinit var mContentAdapter: SimpleViewPagerAdapter
-
     private val mainViewModel: MainViewModel by viewModels()
 
     @Inject
-    lateinit var collectDataModel: CollectDataModel
-
-    @Inject
-    lateinit var accountDataModule: AccountDataModule
+    lateinit var accountDataManager: AccountDataManager
 
     private var windowController: WindowInsetsControllerCompat? = null
 
     override fun initView(savedInstanceState: Bundle?) {
 
         windowController = WindowCompat.getInsetsController(window, window.decorView)
-
-
-        mContentAdapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
-            add { HomeFragment.newInstance() }
-            add { NavigatorFragment.newInstance() }
-            add { ClassifyFragment.newInstance() }
-            add { MineFragment.newInstance() }
-        }
 
         binding.apply {
             with(drawerRoot) {
@@ -98,13 +84,18 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
 
         binding.mainContentLayout.apply {
             with(vpContent) {
-                offscreenPageLimit = mContentAdapter.itemCount
-                adapter = mContentAdapter
+                offscreenPageLimit = 3
                 setTouchSlopMultiple(2f)
+                adapter = SimpleViewPagerAdapter(supportFragmentManager, lifecycle).apply {
+                    add { HomeFragment.newInstance() }
+                    add { NavigatorFragment.newInstance() }
+                    add { ClassifyFragment.newInstance() }
+                    add { MineFragment.newInstance() }
+                }
                 registerOnPageChangeCallback(object : OnPageChangeCallback() {
                     override fun onPageSelected(position: Int) {
                         super.onPageSelected(position)
-                        bottomNavView.menu.getItem(position).isChecked = true
+                        bottomNavView.menu[position].isChecked = true
                     }
                 })
             }
@@ -179,7 +170,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
             }
         }
 
-        observerState(accountDataModule.accountState) {
+        observerState(accountDataManager.accountStateFlow) {
             when (it) {
                 AccountState.LogOut -> {
                     with(binding.mainDrawerLayout) {
@@ -201,7 +192,7 @@ class MainActivity : BaseViewBindingActivity<MainActivityBinding>(
             }
         }
 
-        observerState(accountDataModule.userDetailFlow) {
+        observerState(accountDataManager.userDetailFlow) {
             with(binding.mainDrawerLayout) {
                 txtNickname.text = it.userInfo.nickname
                 txtUserId.text = string(R.string.main_drawer_user_id, it.userInfo.id)

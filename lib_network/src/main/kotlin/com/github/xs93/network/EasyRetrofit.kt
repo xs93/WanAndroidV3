@@ -5,6 +5,8 @@ import android.content.Context
 import com.github.xs93.network.exception.IErrorHandler
 import com.github.xs93.network.retorfit.RetrofitClient
 import com.github.xs93.network.strategy.RetrofitBuildStrategy
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -20,6 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 object EasyRetrofit {
 
     private var mApp: Context? = null
+
     private var retrofitClient: RetrofitClient? = null
 
     /**
@@ -41,15 +44,14 @@ object EasyRetrofit {
         return mApp ?: throw IllegalStateException("please call EasyRetrofit.init() method")
     }
 
-    fun createRetrofit(baseUrl: String, strategy: RetrofitBuildStrategy) {
-        retrofitClient = RetrofitClient(baseUrl, strategy)
+    fun createRetrofit(baseUrl: String, strategy: RetrofitBuildStrategy? = null) {
+        retrofitClient = RetrofitClient(baseUrl, strategy ?: RetrofitBuildStrategy())
     }
 
     fun <T> create(service: Class<T>): T {
         checkRetrofitClient()
         return retrofitClient!!.create(service)
     }
-
 
     /**
      * 根据key获取baseUrl
@@ -84,6 +86,14 @@ object EasyRetrofit {
      */
     fun removeErrorHandler(handler: IErrorHandler) {
         errorHandlers.remove(handler)
+    }
+
+    fun getRetrofit(): Retrofit? {
+        return retrofitClient?.retrofit
+    }
+
+    fun getOkHttpClient(): OkHttpClient? {
+        return retrofitClient?.okHttpClient
     }
 
     private fun checkRetrofitClient() {

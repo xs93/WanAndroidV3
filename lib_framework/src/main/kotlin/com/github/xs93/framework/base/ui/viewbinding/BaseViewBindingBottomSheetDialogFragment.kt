@@ -17,7 +17,7 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionBottomSheetDialogF
  * @email 466911254@qq.com
  */
 abstract class BaseViewBindingBottomSheetDialogFragment<VB : ViewBinding>(
-    @LayoutRes val layoutId: Int,
+    @param:LayoutRes val layoutId: Int,
     val bind: (View) -> VB
 ) : BaseFunctionBottomSheetDialogFragment() {
 

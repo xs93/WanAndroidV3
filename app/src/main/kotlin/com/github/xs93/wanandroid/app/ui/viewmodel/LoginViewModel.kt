@@ -9,7 +9,7 @@ import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.common.data.AccountDataModule
+import com.github.xs93.wanandroid.common.data.respotory.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -42,7 +42,8 @@ sealed class LoginAction : IUiAction {
 }
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val accountDataModule: AccountDataModule) : BaseViewModel() {
+class LoginViewModel @Inject constructor(private val accountRepository: AccountRepository) :
+    BaseViewModel() {
 
 
     private val loginState by mviStates(LoginState())
@@ -72,11 +73,11 @@ class LoginViewModel @Inject constructor(private val accountDataModule: AccountD
                 return@launcher
             }
             showLoadingDialog()
-            val loginResult = accountDataModule.login(username, password)
+            val loginResult = accountRepository.login(username, password)
             loginResult.onSuccess {
                 if (it.isSuccess()) {
                     // 更新用户详细信息
-                    accountDataModule.fetchUserInfo()
+                    accountRepository.fetchUserInfo()
                     hideLoadingDialog()
                     loginEvent.send(LoginEvent.LoginResultEvent(true, null))
                 } else {

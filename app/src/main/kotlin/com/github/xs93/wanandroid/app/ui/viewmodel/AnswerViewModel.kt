@@ -8,15 +8,15 @@ import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcherIO
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
-import com.github.xs93.wanandroid.common.data.AccountDataModule
-import com.github.xs93.wanandroid.common.data.CollectDataModel
+import com.github.xs93.wanandroid.common.account.AccountDataManager
+import com.github.xs93.wanandroid.common.data.services.WenDaService
+import com.github.xs93.wanandroid.common.data.usercase.CollectUserCase
 import com.github.xs93.wanandroid.common.entity.Article
 import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListState
 import com.github.xs93.wanandroid.common.model.ListUiState
 import com.github.xs93.wanandroid.common.model.ListUpdateDataMethod
 import com.github.xs93.wanandroid.common.model.PageStatus
-import com.github.xs93.wanandroid.common.services.WenDaService
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -65,8 +65,8 @@ sealed class AnswerUiAction : IUiAction {
 @HiltViewModel
 class AnswerViewModel @Inject constructor(
     private val wenDaService: WenDaService,
-    private val collectDataModel: CollectDataModel,
-    private val accountDataModule: AccountDataModule
+    private val collectUserCase: CollectUserCase,
+    private val accountDataManager: AccountDataManager
 ) : BaseViewModel() {
 
 
@@ -84,7 +84,7 @@ class AnswerViewModel @Inject constructor(
 
     init {
         launcherIO {
-            collectDataModel.collectArticleEventFlow.collect { event ->
+            collectUserCase.collectArticleEventFlow.collect { event ->
                 val listState = uiStateFlow.value.articlesListState
                 val articleList = listState.data
                 val newList = articleList.map {
@@ -103,8 +103,9 @@ class AnswerViewModel @Inject constructor(
                 }
             }
         }
+
         launcherIO {
-            accountDataModule.userDetailFlow.map { it.userInfo.collectIds }
+            accountDataManager.userDetailFlow.map { it.userInfo.collectIds }
                 .distinctUntilChanged()
                 .collect { collectIds ->
                     val listState = uiStateFlow.value.articlesListState
@@ -198,7 +199,10 @@ class AnswerViewModel @Inject constructor(
                     listUiState = if (refresh) {
                         ListUiState.RefreshFinished(false, Throwable(articlesResponse.errorMessage))
                     } else {
-                        ListUiState.LoadMoreFinished(false, Throwable(articlesResponse.errorMessage))
+                        ListUiState.LoadMoreFinished(
+                            false,
+                            Throwable(articlesResponse.errorMessage)
+                        )
                     }
                 )
                 uiState.update { copy(articlesListState = tempListState) }
@@ -211,13 +215,18 @@ class AnswerViewModel @Inject constructor(
                 }
             }
 
-            val resetMethod = if (refresh) ListUpdateDataMethod.Reset else ListUpdateDataMethod.Update()
+            val resetMethod =
+                if (refresh) ListUpdateDataMethod.Reset else ListUpdateDataMethod.Update()
             tempListState = tempListState.copy(
                 listUiState = if (refresh) {
                     ListUiState.RefreshFinished(false, null)
                 } else {
                     ListUiState.LoadMoreFinished(false, null)
-                }, data = newData, updateDataMethod = resetMethod, curPage = page, noMoreData = pageResp.noMoreData
+                },
+                data = newData,
+                updateDataMethod = resetMethod,
+                curPage = page,
+                noMoreData = pageResp.noMoreData
             )
             uiState.update { copy(articlesListState = tempListState) }
             return@withContext true
@@ -226,7 +235,7 @@ class AnswerViewModel @Inject constructor(
 
     private fun collectArticle(collectEvent: CollectEvent) {
         launcherIO {
-            collectDataModel.articleCollectAction(collectEvent)
+            collectUserCase.articleCollectAction(collectEvent)
         }
     }
 }

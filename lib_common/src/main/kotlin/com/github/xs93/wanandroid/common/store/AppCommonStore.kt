@@ -14,7 +14,7 @@ import com.tencent.mmkv.MMKV
  * @date 2023/9/14 19:58
  * @email 466911254@qq.com
  */
-object AppCommonStore : MMKVOwner("app_common_store", MMKV.MULTI_PROCESS_MODE) {
+object AppCommonStore : MMKVOwner("app_common_store", MMKV.SINGLE_PROCESS_MODE) {
 
     // app安装版本信息
     var appInstallVersionCode by long("appInstallVersionCode", -1)

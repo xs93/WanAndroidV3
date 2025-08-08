@@ -11,7 +11,6 @@ import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.AppConstant
 import com.github.xs93.wanandroid.CommonApplication
 import com.github.xs93.wanandroid.common.network.WanErrorHandler
-import com.github.xs93.wanandroid.common.network.WanRetrofitBuildStrategy
 import com.github.xs93.wanandroid.common.store.AppCommonStore
 import com.github.xs93.wanandroid.common.web.WebViewPool
 import com.scwang.smart.refresh.footer.BallPulseFooter
@@ -30,9 +29,6 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class WanAndroidApp : CommonApplication() {
-
-    @Inject
-    lateinit var wanRetrofitBuildStrategy: WanRetrofitBuildStrategy
 
     @Inject
     lateinit var webViewPool: WebViewPool
@@ -55,7 +51,7 @@ class WanAndroidApp : CommonApplication() {
         EasyRetrofit.init(this)
         EasyRetrofit.addErrorHandler(LogErrorHandler())
         EasyRetrofit.addErrorHandler(WanErrorHandler())
-        EasyRetrofit.createRetrofit(AppConstant.BaseUrl, wanRetrofitBuildStrategy)
+        EasyRetrofit.createRetrofit(AppConstant.BaseUrl)
     }
 
     private fun initSmartRefreshLayout() {

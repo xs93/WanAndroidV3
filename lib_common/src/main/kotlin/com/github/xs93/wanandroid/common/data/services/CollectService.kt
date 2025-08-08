@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.common.services
+package com.github.xs93.wanandroid.common.data.services
 
 import com.github.xs93.wanandroid.common.entity.Article
 import com.github.xs93.wanandroid.common.network.PageResponse

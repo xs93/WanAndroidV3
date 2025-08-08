@@ -8,15 +8,15 @@ import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcherIO
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.net.isNetworkConnected
-import com.github.xs93.wanandroid.common.data.AccountDataModule
-import com.github.xs93.wanandroid.common.data.CollectDataModel
+import com.github.xs93.wanandroid.common.account.AccountDataManager
+import com.github.xs93.wanandroid.common.data.respotory.SquareRepository
+import com.github.xs93.wanandroid.common.data.usercase.CollectUserCase
 import com.github.xs93.wanandroid.common.entity.Article
 import com.github.xs93.wanandroid.common.model.CollectEvent
 import com.github.xs93.wanandroid.common.model.ListState
 import com.github.xs93.wanandroid.common.model.ListUiState
 import com.github.xs93.wanandroid.common.model.ListUpdateDataMethod
 import com.github.xs93.wanandroid.common.model.PageStatus
-import com.github.xs93.wanandroid.common.services.SquareService
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -64,11 +64,10 @@ sealed class SquareUiAction : IUiAction {
 
 @HiltViewModel
 class SquareViewModel @Inject constructor(
-    private val squareService: SquareService,
-    private val collectDataModel: CollectDataModel,
-    private val accountDataModule: AccountDataModule
+    private val squareRepository: SquareRepository,
+    private val collectUserCase: CollectUserCase,
+    private val accountDataManager: AccountDataManager
 ) : BaseViewModel() {
-
 
     private val uiState by mviStates(SquareUiState())
     val uiStateFlow by lazy { uiState.flow }
@@ -84,7 +83,7 @@ class SquareViewModel @Inject constructor(
 
     init {
         launcherIO {
-            collectDataModel.collectArticleEventFlow.collect { event ->
+            collectUserCase.collectArticleEventFlow.collect { event ->
                 val listState = uiStateFlow.value.articlesListState
                 val articleList = listState.data
                 val newList = articleList.map {
@@ -104,7 +103,7 @@ class SquareViewModel @Inject constructor(
             }
         }
         launcherIO {
-            accountDataModule.userDetailFlow.map { it.userInfo.collectIds }
+            accountDataManager.userDetailFlow.map { it.userInfo.collectIds }
                 .distinctUntilChanged()
                 .collect { collectIds ->
                     val listState = uiStateFlow.value.articlesListState
@@ -180,7 +179,7 @@ class SquareViewModel @Inject constructor(
                 listState.copy(listUiState = if (refresh) ListUiState.Refreshing else ListUiState.LoadMore)
             uiState.update { copy(articlesListState = tempListState) }
 
-            val articlesResponse = squareService.getSquareArticleList(page, null).getOrElse {
+            val articlesResponse = squareRepository.getSquareArticleList(page, null).getOrElse {
                 tempListState = tempListState.copy(
                     listUiState = if (refresh) {
                         ListUiState.RefreshFinished(false, it)
@@ -198,7 +197,10 @@ class SquareViewModel @Inject constructor(
                     listUiState = if (refresh) {
                         ListUiState.RefreshFinished(false, Throwable(articlesResponse.errorMessage))
                     } else {
-                        ListUiState.LoadMoreFinished(false, Throwable(articlesResponse.errorMessage))
+                        ListUiState.LoadMoreFinished(
+                            false,
+                            Throwable(articlesResponse.errorMessage)
+                        )
                     }
                 )
                 uiState.update { copy(articlesListState = tempListState) }
@@ -211,13 +213,18 @@ class SquareViewModel @Inject constructor(
                 }
             }
 
-            val resetMethod = if (refresh) ListUpdateDataMethod.Reset else ListUpdateDataMethod.Update()
+            val resetMethod =
+                if (refresh) ListUpdateDataMethod.Reset else ListUpdateDataMethod.Update()
             tempListState = tempListState.copy(
                 listUiState = if (refresh) {
                     ListUiState.RefreshFinished(false, null)
                 } else {
                     ListUiState.LoadMoreFinished(false, null)
-                }, data = newData, updateDataMethod = resetMethod, curPage = page, noMoreData = pageResp.noMoreData
+                },
+                data = newData,
+                updateDataMethod = resetMethod,
+                curPage = page,
+                noMoreData = pageResp.noMoreData
             )
             uiState.update { copy(articlesListState = tempListState) }
             return@withContext true
@@ -226,7 +233,7 @@ class SquareViewModel @Inject constructor(
 
     private fun collectArticle(collectEvent: CollectEvent) {
         launcherIO {
-            collectDataModel.articleCollectAction(collectEvent)
+            collectUserCase.articleCollectAction(collectEvent)
         }
     }
 }

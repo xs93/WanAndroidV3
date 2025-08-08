@@ -19,10 +19,10 @@ import kotlinx.parcelize.Parcelize
 @JsonClass(generateAdapter = true)
 @Parcelize
 data class UserDetailInfo(
-    @Json(name = "coinInfo")
+    @param:Json(name = "coinInfo")
     val coinInfo: UserCoinInfo = UserCoinInfo(),
-    @Json(name = "collectArticleInfo")
+    @param:Json(name = "collectArticleInfo")
     val collectArticleInfo: UserCollectArticleInfo = UserCollectArticleInfo(),
-    @Json(name = "userInfo")
+    @param:Json(name = "userInfo")
     val userInfo: User = User()
 ) : Parcelable
