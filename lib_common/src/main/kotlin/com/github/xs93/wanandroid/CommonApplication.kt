@@ -12,7 +12,7 @@ import com.github.xs93.framework.base.application.BaseApplication
  */
 open class CommonApplication : BaseApplication() {
 
-    private val appComponent = CommonAppComponent()
+    private val appComponent = CommonAppLifecycle()
     override fun onCreate() {
         super.onCreate()
         appComponent.onCreate(this)

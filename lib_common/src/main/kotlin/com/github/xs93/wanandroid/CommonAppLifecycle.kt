@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid
 
 import android.app.Application
 import android.content.Context
-import com.github.xs93.framework.base.application.IAppComponent
+import com.github.xs93.framework.base.application.IAppLifecycle
 import com.github.xs93.framework.base.ui.function.FunctionsManager
 import com.github.xs93.framework.toast.ToastManager
 import com.github.xs93.framework.toast.impl.SystemToast
@@ -25,7 +25,7 @@ import me.jessyan.autosize.AutoSizeConfig
  * @date 2024/1/19 14:13
  * @email 466911254@qq.com
  */
-class CommonAppComponent : IAppComponent {
+class CommonAppLifecycle : IAppLifecycle {
     override fun onCreate(application: Application) {
         MMKV.initialize(application)
         initLogger(application)

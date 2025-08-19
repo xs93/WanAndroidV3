@@ -20,10 +20,10 @@ import com.github.xs93.utils.AppInject
  * @date 2023/10/18 11:06
  * @email 466911254@qq.com
  */
-abstract class BaseApplicationComponent : IAppComponent {
+abstract class BaseApplicationLifecycle : IAppLifecycle {
 
     private val mComponentAppClassNameList = mutableListOf<String>()
-    private val mHelper = AppComponentHelper()
+    private val mHelper = AppLifecycleHelper()
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(context)

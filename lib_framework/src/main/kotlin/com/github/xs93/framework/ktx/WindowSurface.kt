@@ -2,9 +2,6 @@ package com.github.xs93.framework.ktx
 
 import android.view.View
 import android.view.View.OnAttachStateChangeListener
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.github.xs93.framework.ui.ContentPadding
 
 /**
  *
@@ -28,14 +25,4 @@ fun View.requestApplyInsetsWhenAttached() {
             override fun onViewDetachedFromWindow(v: View) = Unit
         })
     }
-}
-
-fun View.setOnInsertsChangedListener(listener: (ContentPadding) -> Unit) {
-    ViewCompat.setOnApplyWindowInsetsListener(this) { _, insCompat ->
-        val insets = insCompat.getInsets(WindowInsetsCompat.Type.systemBars())
-        val rContentPadding = ContentPadding(insets.left, insets.top, insets.right, insets.bottom)
-        listener(rContentPadding)
-        insCompat
-    }
-    requestApplyInsetsWhenAttached()
 }

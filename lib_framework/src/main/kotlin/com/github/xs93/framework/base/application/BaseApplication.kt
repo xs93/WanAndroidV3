@@ -21,15 +21,15 @@ import com.github.xs93.utils.AppInject
  */
 abstract class BaseApplication : Application() {
 
-    private val mComponentAppClassNameList = mutableListOf<String>()
-    private val mHelper = AppComponentHelper()
+    private val mAppLifecycleClassNameList = mutableListOf<String>()
+    private val mHelper = AppLifecycleHelper()
 
     override fun attachBaseContext(base: Context) {
         super.attachBaseContext(base)
         // 初始化AppInject，在这里就初始化,保证SP在attachBaseContext里面使用sp没有初始化问题
         AppInject.init(this)
-        addComponentApplication(mComponentAppClassNameList)
-        mHelper.initAppObjects(mComponentAppClassNameList)
+        addAppLifecycle(mAppLifecycleClassNameList)
+        mHelper.initAppObjects(mAppLifecycleClassNameList)
         mHelper.attachBaseContext(base)
     }
 
@@ -63,7 +63,7 @@ abstract class BaseApplication : Application() {
         mHelper.onConfigurationChanged(this, newConfig)
     }
 
-    open fun addComponentApplication(classNames: MutableList<String>) {
+    open fun addAppLifecycle(classNames: MutableList<String>) {
 
     }
 

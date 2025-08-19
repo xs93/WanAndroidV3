@@ -12,7 +12,7 @@ import android.content.res.Configuration
  * @date   2022/3/6-9:47
  * @email  466911254@qq.com
  */
-interface IAppComponent {
+interface IAppLifecycle {
 
     fun attachBaseContext(context: Context) {
 
