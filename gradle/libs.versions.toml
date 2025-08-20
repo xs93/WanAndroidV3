@@ -1,14 +1,14 @@
 [versions]
 minSdk = "26"
 targetSdk = "36"
-androidGradlePlugin = "8.12.0"
+androidGradlePlugin = "8.12.1"
 kotlin = "2.2.0"
 kotlinCoroutines = "1.10.2"
 ksp = "2.2.0-2.0.2"
 androidxLifecycle = "2.9.2"
 androidxRoom = "2.7.2"
 androixHint = "2.57"
-androidxComposeBom = "2025.07.00"
+androidxComposeBom = "2025.08.00"
 androidxComposeCompiler = "1.5.4"
 androidxCamera = "1.4.2"
 androidxActivity = "1.10.1"
@@ -35,7 +35,7 @@ material3Android = "1.3.2"
 
 [libraries]
 material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
-androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.16.0" }
+androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
 
 # Startup
@@ -44,7 +44,7 @@ androidx-startup = { group = "androidx.startup", name = "startup-runtime", versi
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppcompat" }
 androidx-activity-ktx = { group = "androidx.activity", name = "activity-ktx", version.ref = "androidxActivity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
-androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.8" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.9" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.1" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
