@@ -6,6 +6,7 @@ import com.github.xs93.coil.CoilManager
 import com.github.xs93.framework.crash.CrashHandler
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.LogErrorHandler
+import com.github.xs93.network.okhttp.OkHttpClientManager
 import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wanandroid.AppConstant
@@ -38,8 +39,7 @@ class WanAndroidApp : CommonApplication() {
     override fun onCreate() {
         super.onCreate()
         crashHandler.init(this)
-
-        CoilManager.init(this)
+        CoilManager.init(this, OkHttpClientManager.getBaseClient())
         initHttp()
         initSmartRefreshLayout()
         initThemeMode()

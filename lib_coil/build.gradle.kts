@@ -24,5 +24,7 @@ android {
 
 dependencies {
     api(libs.coil3.core)
+    api(libs.coil3.gif)
+    api(libs.coil3.svg)
     api(libs.coil3.network.okhttp)
 }

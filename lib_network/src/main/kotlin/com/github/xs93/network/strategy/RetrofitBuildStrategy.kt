@@ -10,6 +10,7 @@ import com.github.xs93.network.interceptor.DynamicTimeoutInterceptor
 import com.github.xs93.network.interceptor.HandleErrorInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
 import com.github.xs93.network.moshi.adapter.BooleanAdapter
+import com.github.xs93.network.okhttp.OkHttpClientManager
 import com.github.xs93.utils.AppInject
 import com.github.xs93.utils.crypt.AESCrypt
 import com.squareup.moshi.Moshi
@@ -36,7 +37,8 @@ open class RetrofitBuildStrategy {
 
     /** 构建Retrofit 的OkHttpClient */
     fun okHttpClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder().apply {
+        val baseClient = OkHttpClientManager.getBaseClient()
+        val builder = baseClient.newBuilder().apply {
             connectTimeout(getTimeout(), TimeUnit.SECONDS)
             writeTimeout(getTimeout(), TimeUnit.SECONDS)
             readTimeout(getTimeout(), TimeUnit.SECONDS)
