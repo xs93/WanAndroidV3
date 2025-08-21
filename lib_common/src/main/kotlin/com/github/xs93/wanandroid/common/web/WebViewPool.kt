@@ -56,6 +56,8 @@ class WebViewPool @Inject constructor(private val poolSize: Int) {
             webViewContext.baseContext = context
         }
         mInUseWebViews.add(targetWebView)
+        targetWebView.clearHistory()
+        targetWebView.resumeTimers()
         return targetWebView
     }
 

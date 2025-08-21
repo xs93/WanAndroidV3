@@ -27,7 +27,7 @@ class LogErrorHandler : IErrorHandler {
     }
 
     override fun checkApiServiceError(any: Any?) {
-        Log.i("LogErrorHandler", "checkApiServiceError: $any")
+        Log.i("LogErrorHandler", "checkApiServiceError")
     }
 
     override fun handleApiServiceError(e: ApiException) {
