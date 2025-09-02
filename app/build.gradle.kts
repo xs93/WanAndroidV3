@@ -64,8 +64,8 @@ hilt {
 }
 
 dependencies {
-    implementation(project(":lib_common"))
-    implementation(project(":feat_music"))
+    implementation(project(":core:lib_common"))
+    implementation(project(":feature:feat_music"))
 
     ksp(libs.androidx.lifecycle.compiler)
 

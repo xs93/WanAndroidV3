@@ -1,8 +1,4 @@
 @file:Suppress("UnstableApiUsage")
-
-include(":feat_music")
-
-
 pluginManagement {
     repositories {
         maven("https://maven.aliyun.com/repository/public")
@@ -28,12 +24,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "WanAndroidV3"
 include(":app")
-include(":demo")
-include(":lib_common")
-include(":lib_framework")
-include(":lib_coil")
-include(":lib_network")
-include(":lib_utils")
-include(":lib_gdview")
-include(":lib_camera")
-include(":lib_kv")
+include(":app-demo")
+include(":core:lib_common")
+include(":core:lib_framework")
+include(":core:lib_coil")
+include(":core:lib_network")
+include(":core:lib_utils")
+include(":core:lib_gdview")
+include(":core:lib_camera")
+include(":core:lib_kv")
+
+include(":feature:feat_music")
