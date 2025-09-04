@@ -1,4 +1,21 @@
 @file:Suppress("UnstableApiUsage")
+
+rootProject.name = "WanAndroidV3"
+include(":app")
+include(":app-demo")
+include(":core:lib_common")
+include(":core:lib_framework")
+include(":core:lib_coil")
+include(":core:lib_network")
+include(":core:lib_utils")
+include(":core:lib_gdview")
+include(":core:lib_camera")
+include(":core:lib_kv")
+
+include(":feature:module_main")
+include(":feature:module_music")
+include(":feature:module_home")
+
 pluginManagement {
     repositories {
         maven("https://maven.aliyun.com/repository/public")
@@ -21,17 +38,3 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "WanAndroidV3"
-include(":app")
-include(":app-demo")
-include(":core:lib_common")
-include(":core:lib_framework")
-include(":core:lib_coil")
-include(":core:lib_network")
-include(":core:lib_utils")
-include(":core:lib_gdview")
-include(":core:lib_camera")
-include(":core:lib_kv")
-
-include(":feature:feat_music")

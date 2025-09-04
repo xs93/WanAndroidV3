@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.hilt)
+    id("therouter")
 }
 
 android {
@@ -61,11 +62,14 @@ android {
 
 hilt {
     enableAggregatingTask = true
+    enableExperimentalClasspathAggregation = true
 }
 
 dependencies {
+    implementation(project(":feature:module_main"))
+    implementation(project(":feature:module_music"))
+    implementation(project(":feature:module_home"))
     implementation(project(":core:lib_common"))
-    implementation(project(":feature:feat_music"))
 
     ksp(libs.androidx.lifecycle.compiler)
 
@@ -81,4 +85,7 @@ dependencies {
     ksp(libs.androidx.hilt.compiler)
 
     debugImplementation(libs.leakcanary)
+
+    implementation(libs.therouter.router)
+    ksp(libs.therouter.ksp)
 }

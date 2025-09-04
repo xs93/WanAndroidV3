@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--region main content page -->
+    <string name="main_content_bottom_menu_home">首页</string>
+    <string name="main_content_bottom_menu_classify">分类</string>
+    <string name="main_content_bottom_menu_system">体系</string>
+    <string name="main_content_bottom_menu_mine">我的</string>
+    <string name="main_content_bottom_menu_navigator">导航</string>
+    <!--endregion -->
+
+    <string name="main_title_official_accounts">公众号</string>
+    <string name="main_title_project">项目</string>
+
+    <!--region main drawer page -->
+    <string name="main_drawer_click_login">点击登录</string>
+    <string name="main_drawer_user_id">ID:%d</string>
+    <string name="main_drawer_user_coin_info">积分:%1$d 等级:%2$d 排名:%3$s</string>
+    <string name="main_drawer_group_other">其他</string>
+    <string name="main_drawer_logout">退出登录</string>
+    <string name="main_drawer_menu_collect">收藏</string>
+    <string name="main_drawer_menu_theme_dark">深色模式</string>
+    <!--endregion -->
+</resources>

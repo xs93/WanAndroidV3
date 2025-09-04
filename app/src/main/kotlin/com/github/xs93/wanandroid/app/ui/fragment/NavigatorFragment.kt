@@ -9,10 +9,12 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
+import com.github.xs93.wan.common.model.SimpleTabBean
+import com.github.xs93.wan.common.router.PageRouterPath
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorBinding
-import com.github.xs93.wanandroid.common.model.SimpleTabBean
 import com.google.android.material.tabs.TabLayoutMediator
+import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -25,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @email 466911254@qq.com
  */
 @AndroidEntryPoint
+@Route(path = PageRouterPath.FRAGMENT_NAVIGATOR)
 class NavigatorFragment : BaseVBFragment<FragmentNavigatorBinding>(
     FragmentNavigatorBinding::inflate
 ) {

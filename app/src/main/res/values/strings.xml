@@ -21,24 +21,11 @@
     <string name="main_drawer_menu_theme_dark">深色模式</string>
     <!--endregion -->
 
-    <!--region home page -->
-    <string name="home_tab_explore">首页</string>
-    <string name="home_tab_square">广场</string>
-    <string name="home_tab_answer">问答</string>
-    <!--endregion -->
-
-
-    <string name="article_tag_top">置顶</string>
-    <string name="article_tag_new">新</string>
-    <string name="article_chapter_name">%1$s • %2$s</string>
-
     <!--region Login page -->
     <string name="login_title">登录</string>
     <string name="login_account">账号</string>
     <string name="login_password">密码</string>
     <string name="login_register_label">注册账号？</string>
-    <string name="login_error_input_account">请输入账号</string>
-    <string name="login_error_input_password">请输入密码</string>
     <string name="login_btn_login">登录</string>
     <string name="login_success">Login Success</string>
     <string name="login_failed">Login Failed</string>

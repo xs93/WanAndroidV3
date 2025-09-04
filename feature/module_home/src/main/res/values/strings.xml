@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_tab_explore">首页</string>
+    <string name="home_tab_square">广场</string>
+    <string name="home_tab_answer">问答</string>
+</resources>

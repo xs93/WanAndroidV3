@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.ViewGroup
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.utils.ktx.layoutInflater
+import com.github.xs93.wan.common.entity.Navigation
+import com.github.xs93.wan.common.ui.viewbinding.BaseVBViewHolder
 import com.github.xs93.wanandroid.app.databinding.ItemNavigatorChipChildrenBinding
-import com.github.xs93.wanandroid.common.entity.Navigation
-import com.github.xs93.wanandroid.common.ui.viewbinding.BaseViewBindingViewHolder
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -22,12 +22,12 @@ import com.google.android.flexbox.JustifyContent
  * @email 466911254@qq.com
  */
 class NavigatorChipChildrenAdapter :
-    BaseQuickAdapter<Navigation, BaseViewBindingViewHolder<ItemNavigatorChipChildrenBinding>>() {
+    BaseQuickAdapter<Navigation, BaseVBViewHolder<ItemNavigatorChipChildrenBinding>>() {
     override fun onCreateViewHolder(
         context: Context,
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewBindingViewHolder<ItemNavigatorChipChildrenBinding> {
+    ): BaseVBViewHolder<ItemNavigatorChipChildrenBinding> {
         val binding =
             ItemNavigatorChipChildrenBinding.inflate(context.layoutInflater, parent, false)
         // 解决嵌套滚动问题
@@ -40,11 +40,11 @@ class NavigatorChipChildrenAdapter :
         }
         binding.rvChipChildrenList.layoutManager = flexboxLayoutManager
         binding.rvChipChildrenList.adapter = NavigatorChipChildAdapter()
-        return BaseViewBindingViewHolder(binding)
+        return BaseVBViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewBindingViewHolder<ItemNavigatorChipChildrenBinding>,
+        holder: BaseVBViewHolder<ItemNavigatorChipChildrenBinding>,
         position: Int,
         item: Navigation?,
     ) {

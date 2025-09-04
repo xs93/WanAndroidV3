@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.ViewGroup
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.utils.ktx.layoutInflater
+import com.github.xs93.wan.common.entity.Navigation
+import com.github.xs93.wan.common.ui.viewbinding.BaseVBViewHolder
 import com.github.xs93.wanandroid.app.databinding.ItemNavigatorChipBinding
-import com.github.xs93.wanandroid.common.entity.Navigation
-import com.github.xs93.wanandroid.common.ui.viewbinding.BaseViewBindingViewHolder
 
 /**
  * 导航chipAdapter
@@ -17,7 +17,7 @@ import com.github.xs93.wanandroid.common.ui.viewbinding.BaseViewBindingViewHolde
  * @email 466911254@qq.com
  */
 class NavigatorChipAdapter :
-    BaseQuickAdapter<Navigation, BaseViewBindingViewHolder<ItemNavigatorChipBinding>>() {
+    BaseQuickAdapter<Navigation, BaseVBViewHolder<ItemNavigatorChipBinding>>() {
 
     companion object {
         private const val SELECT_STATE_CHANGED = "select_state_changed"
@@ -29,14 +29,14 @@ class NavigatorChipAdapter :
         context: Context,
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewBindingViewHolder<ItemNavigatorChipBinding> {
-        return BaseViewBindingViewHolder(
+    ): BaseVBViewHolder<ItemNavigatorChipBinding> {
+        return BaseVBViewHolder(
             ItemNavigatorChipBinding.inflate(context.layoutInflater, parent, false)
         )
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewBindingViewHolder<ItemNavigatorChipBinding>,
+        holder: BaseVBViewHolder<ItemNavigatorChipBinding>,
         position: Int,
         item: Navigation?
     ) {
@@ -47,7 +47,7 @@ class NavigatorChipAdapter :
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewBindingViewHolder<ItemNavigatorChipBinding>,
+        holder: BaseVBViewHolder<ItemNavigatorChipBinding>,
         position: Int,
         item: Navigation?,
         payloads: List<Any>

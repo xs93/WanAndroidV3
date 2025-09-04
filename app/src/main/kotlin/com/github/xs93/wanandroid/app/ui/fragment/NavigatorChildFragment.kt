@@ -8,12 +8,12 @@ import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.framework.ui.layoutManager.CenterLinearLayoutManager
+import com.github.xs93.wan.common.entity.Navigation
+import com.github.xs93.wan.common.viewmodel.NavigatorChildUiAction
+import com.github.xs93.wan.common.viewmodel.NavigatorChildViewModel
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorChildNavigatorBinding
 import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipAdapter
 import com.github.xs93.wanandroid.app.ui.adapter.NavigatorChipChildrenAdapter
-import com.github.xs93.wanandroid.app.ui.viewmodel.NavigatorChildUiAction
-import com.github.xs93.wanandroid.app.ui.viewmodel.NavigatorChildViewModel
-import com.github.xs93.wanandroid.common.entity.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
 

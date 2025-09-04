@@ -8,10 +8,12 @@ import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.utils.ktx.setSingleClickListener
+import com.github.xs93.wan.common.router.PageRouterPath
 import com.github.xs93.wanandroid.app.databinding.FragmentMineBinding
 import com.github.xs93.wanandroid.music.service.MusicPlayService
 import com.google.common.util.concurrent.ListenableFuture
 import com.google.common.util.concurrent.MoreExecutors
+import com.therouter.router.Route
 
 /**
  *
@@ -21,6 +23,7 @@ import com.google.common.util.concurrent.MoreExecutors
  * @date 2023/5/22 14:25
  * @email 466911254@qq.com
  */
+@Route(path = PageRouterPath.FRAGMENT_MINE)
 class MineFragment : BaseVBFragment<FragmentMineBinding>(
     FragmentMineBinding::inflate
 ) {

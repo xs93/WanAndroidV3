@@ -4,4 +4,10 @@
     <string name="network_error">网络异常</string>
     <string name="parse_error">数据解析异常</string>
     <string name="server_error">服务器异常</string>
+    <string name="login_error_input_account">请输入账号</string>
+    <string name="login_error_input_password">请输入密码</string>
+
+    <string name="common_article_tag_top">置顶</string>
+    <string name="common_article_tag_new">新</string>
+    <string name="common_article_chapter_name">%1$s • %2$s</string>
 </resources>

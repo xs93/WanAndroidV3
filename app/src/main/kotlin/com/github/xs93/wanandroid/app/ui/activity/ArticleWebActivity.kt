@@ -15,11 +15,10 @@ import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.framework.ktx.addOnBackPressedCallback
+import com.github.xs93.wan.common.web.WebViewPool
 import com.github.xs93.wanandroid.app.databinding.ArticleWebActivityBinding
-import com.github.xs93.wanandroid.common.web.WebViewPool
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * 文章web界面
@@ -46,15 +45,12 @@ class ArticleWebActivity :
         }
     }
 
-    @Inject
-    lateinit var mWebViewPool: WebViewPool
-
     private lateinit var mWebView: WebView
 
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView(savedInstanceState: Bundle?) {
-        mWebView = mWebViewPool.acquireWebView(this)
+        mWebView = WebViewPool.acquireWebView(this)
         with(mWebView) {
             isNestedScrollingEnabled = true
 
@@ -141,7 +137,7 @@ class ArticleWebActivity :
 
     override fun onDestroy() {
         super.onDestroy()
-        mWebViewPool.releaseWebView(mWebView)
+        WebViewPool.releaseWebView(mWebView)
     }
 
     private fun clickBack() {

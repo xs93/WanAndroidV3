@@ -1,4 +1,5 @@
 @file:Suppress("UnstableApiUsage")
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
@@ -8,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.xs93.common"
+    namespace = "com.github.xs93.wan.common"
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
@@ -30,11 +31,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-}
-
-hilt {
-    enableAggregatingTask = true
-    enableExperimentalClasspathAggregation = true
 }
 
 dependencies {

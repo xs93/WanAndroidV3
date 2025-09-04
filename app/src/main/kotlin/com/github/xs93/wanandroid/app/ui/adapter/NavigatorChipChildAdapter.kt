@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.utils.ktx.layoutInflater
 import com.github.xs93.utils.ktx.toHtml
+import com.github.xs93.wan.common.entity.Article
+import com.github.xs93.wan.common.ui.viewbinding.BaseVBViewHolder
 import com.github.xs93.wanandroid.app.databinding.ItemNavigationChipChildBinding
-import com.github.xs93.wanandroid.common.entity.Article
-import com.github.xs93.wanandroid.common.ui.viewbinding.BaseViewBindingViewHolder
 
 /**
  * chip 列表适配器
@@ -18,18 +18,18 @@ import com.github.xs93.wanandroid.common.ui.viewbinding.BaseViewBindingViewHolde
  * @email 466911254@qq.com
  */
 class NavigatorChipChildAdapter :
-    BaseQuickAdapter<Article, BaseViewBindingViewHolder<ItemNavigationChipChildBinding>>() {
+    BaseQuickAdapter<Article, BaseVBViewHolder<ItemNavigationChipChildBinding>>() {
     override fun onCreateViewHolder(
         context: Context,
         parent: ViewGroup,
         viewType: Int,
-    ): BaseViewBindingViewHolder<ItemNavigationChipChildBinding> {
+    ): BaseVBViewHolder<ItemNavigationChipChildBinding> {
         val binding = ItemNavigationChipChildBinding.inflate(context.layoutInflater, parent, false)
-        return BaseViewBindingViewHolder(binding)
+        return BaseVBViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewBindingViewHolder<ItemNavigationChipChildBinding>,
+        holder: BaseVBViewHolder<ItemNavigationChipChildBinding>,
         position: Int,
         item: Article?,
     ) {
