@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.Material3.DayNight" />
-
 
     <style name="BaseTheme.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
+        <item name="bottomSheetStyle">@style/BaseBottomSheetStyle</item>
     </style>
 
     <style name="BaseDialogTheme" parent="ThemeOverlay.Material3.Dialog">
@@ -16,12 +16,10 @@
         <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
         <!-- 设置弹窗是否浮在Activity上，如果为true，则默认window 宽高为wrap_content,左右会有边距-->
         <item name="android:windowIsFloating">true</item>
-
         <!--窗口背景透明-->
-        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowSoftInputMode">stateUnchanged|adjustResize</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateAlwaysHidden</item>
     </style>
 
     <style name="BaseDialogTheme.FullScreen" parent="BaseDialogTheme">
@@ -32,18 +30,35 @@
     <style name="BaseDialogTheme.Immersive" parent="BaseDialogTheme">
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowIsFloating">false</item>
-
-        <!--沉浸式透明导航栏和状态栏-->
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-
-        <item name="android:enforceNavigationBarContrast" tools:ignore="NewApi">false</item>
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
     </style>
 
+    <!--底部弹窗动画-->
     <style name="BaseBottomDialogWindowAnim" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/base_bottom_slide_in</item>
         <item name="android:windowExitAnimation">@anim/base_bottom_slide_out</item>
+    </style>
+
+    <!--沉浸式BottomSheet样式,默认内容绘制在导航栏下面-->
+    <style name="BaseBottomSheetDialogTheme" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <!-- 不能为true-->
+        <item name="android:windowIsFloating">false</item>
+        <!-- 默认Material3 按钮会设置为白底，颜色为主题色,一般不适应自定义界面,改为普通按钮样式-->
+        <item name="materialButtonStyle">@style/Widget.Material3.Button</item>
+        <!--窗口背景透明-->
+        <item name="android:windowSoftInputMode">adjustResize|stateAlwaysHidden</item>
+        <item name="android:windowAnimationStyle">@style/BaseBottomDialogWindowAnim</item>
+        <item name="bottomSheetStyle">@style/BaseBottomSheetStyle</item>
+    </style>
+
+    <style name="BaseBottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="marginLeftSystemWindowInsets">false</item>
+        <item name="marginRightSystemWindowInsets">false</item>
+        <item name="paddingBottomSystemWindowInsets">false</item>
+        <item name="paddingTopSystemWindowInsets">false</item>
+        <item name="paddingLeftSystemWindowInsets">false</item>
+        <item name="paddingRightSystemWindowInsets">false</item>
+        <item name="paddingStartSystemWindowInsets">false</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:elevation">0dp</item>
     </style>
 </resources>

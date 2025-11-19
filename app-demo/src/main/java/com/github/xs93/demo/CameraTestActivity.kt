@@ -23,7 +23,7 @@ class CameraTestActivity : BaseVBActivity<ActivityCameraTestBinding>(
     private lateinit var mCameraHelper: CameraHelper
 
     override fun initView(savedInstanceState: Bundle?) {
-        mCameraHelper = CameraHelper(this, viewBinding.previewView, this)
+        mCameraHelper = CameraHelper(this, vBinding.previewView, this)
         mCameraHelper.apply {
             cameraChange = {
 

@@ -5,18 +5,34 @@ import android.view.View
 import androidx.annotation.LayoutRes
 
 /**
- * Fragment基类封装方法
- *
  * @author XuShuai
  * @version v1.0
- * @date 2024/2/27 15:49
- * @email 466911254@qq.com
+ * @date 2025/11/19 10:53
+ * @description
+ *
  */
-interface IBaseFragment {
-
+interface IDialogFragment {
 
     @get:LayoutRes
     val contentLayoutId: Int
+
+    /** 是否沉浸式 */
+    fun isImmersive(): Boolean
+
+    /** 设置全屏 */
+    fun setFullScreen()
+
+    /** 设置底部弹窗 */
+    fun setBottomDialog(isBottomDialog: Boolean)
+
+    /** 是否是底部弹窗 */
+    fun isBottomDialog(): Boolean
+
+    /** 设置弹窗宽度 */
+    fun setWindowWidth(width: Int)
+
+    /** 弹窗高度 */
+    fun setWindowHeight(height: Int)
 
     /** 初始化View */
     fun initView(view: View, savedInstanceState: Bundle?)

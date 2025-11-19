@@ -15,7 +15,7 @@ import com.github.xs93.framework.base.ui.base.BaseDialogFragment
  */
 abstract class BaseFunctionDialogFragment : BaseDialogFragment() {
 
-    private val functions: MutableList<BaseFragmentFunction> = FunctionsManager.createFragmentFunctions()
+    private val functions = FunctionsManager.createFragmentFunctions()
 
     override fun onAttach(context: Context) {
         addFunctions()

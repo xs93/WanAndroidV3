@@ -53,10 +53,10 @@ class MineFragment : BaseVBFragment<FragmentMineBinding>(
             }, MoreExecutors.directExecutor())
         }
 
-        viewBinding.btnStart.setSingleClickListener {
+        vBinding.btnStart.setSingleClickListener {
             mController?.play()
         }
-        viewBinding.btnPause.setSingleClickListener {
+        vBinding.btnPause.setSingleClickListener {
             mController?.pause()
         }
     }

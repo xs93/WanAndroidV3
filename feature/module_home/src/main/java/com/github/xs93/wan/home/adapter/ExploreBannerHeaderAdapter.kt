@@ -57,7 +57,7 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
             setOffScreenPageLimit(2)
             disallowParentInterceptDownEvent(true)
             setPageStyle(PageStyle.NORMAL, 1.0f)
-            interval = 3000
+            setInterval(3000)
             adapter = BannerAdapter()
             setOnPageClickListener { _, position ->
                 data[position]

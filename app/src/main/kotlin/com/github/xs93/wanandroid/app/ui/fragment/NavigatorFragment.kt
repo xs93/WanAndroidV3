@@ -43,7 +43,7 @@ class NavigatorFragment : BaseVBFragment<FragmentNavigatorBinding>(
     private val tabs = generateTabs()
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        viewBinding.apply {
+        vBinding.apply {
             with(vpContent) {
                 offscreenPageLimit = tabs.size - 1
                 adapter = SimpleViewPagerAdapter(childFragmentManager, viewLifecycle).apply {
@@ -68,7 +68,7 @@ class NavigatorFragment : BaseVBFragment<FragmentNavigatorBinding>(
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.tabLayout.updatePadding(top = insets.top)
+        vBinding.tabLayout.updatePadding(top = insets.top)
     }
 
     private fun generateTabs() = listOf(

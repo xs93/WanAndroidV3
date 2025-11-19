@@ -1,7 +1,7 @@
 package com.github.xs93.framework.base.ui.base
 
+import android.app.Dialog
 import android.content.DialogInterface
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +10,8 @@ import android.widget.FrameLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
+import com.github.xs93.framework.R
+import com.github.xs93.framework.base.ui.interfaces.IBottomSheetDialogFragment
 import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -23,7 +22,6 @@ import com.github.xs93.framework.toast.UiToastProxy
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.lang.reflect.Field
 
 /**
  * 底部弹出弹窗dialog
@@ -33,8 +31,9 @@ import java.lang.reflect.Field
  * @date 2023/6/16 14:17
  * @email 466911254@qq.com
  */
-abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBaseFragment,
-    IToast by UiToastProxy(), ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
+abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
+    IBottomSheetDialogFragment, IToast by UiToastProxy(), ICreateLoadingDialog,
+    ILoadingDialogControl, IWindowInsetsListener {
 
     private val mIUiLoadingDialog by lazy {
         ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
@@ -52,6 +51,14 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         }
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        val window = dialog.window
+        window?.let {
+            WindowCompat.enableEdgeToEdge(it)
+        }
+        return dialog
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,18 +73,13 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        windowInsetsHelper.attach(view, this)
-        val window = dialog?.window
-        window?.let {
-            val controllerCompat = WindowCompat.getInsetsController(it, it.decorView)
-            controllerCompat.isAppearanceLightStatusBars = isAppearanceLightStatusBars()
-            controllerCompat.isAppearanceLightNavigationBars = isAppearanceLightNavigationBars()
+        val decorView = dialog?.window?.decorView
+        decorView?.let {
+            windowInsetsHelper.attach(it, this)
         }
-
         initView(view, savedInstanceState)
-        initObserver(savedInstanceState)
         initData(savedInstanceState)
+        initObserver(savedInstanceState)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -88,30 +90,14 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         }
     }
 
+
     protected open fun getCustomStyle(): Int {
-        return 0
+        return R.style.BaseBottomSheetDialogTheme
     }
 
-
-    //region 样式设置
-    /**
-     * 修改导航栏图标是否是浅色
-     */
-    protected open fun isAppearanceLightNavigationBars(): Boolean {
-        val nightMode =
-            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        return !nightMode
+    fun addOnDismissListener(listener: () -> Unit) {
+        dismissListeners.add(listener)
     }
-
-    /**
-     * 修改状态栏图标是否是浅色
-     */
-    protected open fun isAppearanceLightStatusBars(): Boolean {
-        val nightMode =
-            (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-        return !nightMode
-    }
-    //endregion
 
     //region loading 弹窗
     override fun createLoadingDialog(): DialogFragment {
@@ -127,10 +113,6 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
     }
     //endregion
 
-    fun addOnDismissListener(listener: () -> Unit) {
-        dismissListeners.add(listener)
-    }
-
     //region 定制BottomSheetDialog
     fun getSheetBehavior(): BottomSheetBehavior<*>? {
         val dialog = dialog ?: return null
@@ -138,18 +120,22 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         return dialog.behavior
     }
 
+    fun withSheetBehavior(block: BottomSheetBehavior<*>.() -> Unit) {
+        val behavior = getSheetBehavior()
+        behavior?.block()
+    }
+
     /**
      * 内容高度,可以设置最大高度
      * @param maxHeight Int dialog最大高度
      */
     fun warpContentHeight(maxHeight: Int = -1) {
-        val dialog = dialog ?: return
-        if (dialog !is BottomSheetDialog) return
-        val behavior = dialog.behavior
-        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        behavior.skipCollapsed = true
-        if (maxHeight != -1) {
-            behavior.maxHeight = maxHeight
+        withSheetBehavior {
+            state = BottomSheetBehavior.STATE_EXPANDED
+            skipCollapsed = true
+            if (maxHeight != -1) {
+                this.maxHeight = maxHeight
+            }
         }
     }
 
@@ -171,30 +157,4 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(), IBas
         behavior.skipCollapsed = true
     }
     //endregion
-
-    /**
-     * 使用此方法显示弹出框，可以避免生命周期状态错误导致的异常(Can not perform this action after onSaveInstanceState)
-     * @param manager FragmentManager
-     * @param tag String?
-     */
-    fun showAllowingStateLoss(
-        manager: FragmentManager,
-        tag: String? = this::class.java.simpleName
-    ) {
-        try {
-            val dismissed: Field = DialogFragment::class.java.getDeclaredField("mDismissed")
-            dismissed.isAccessible = true
-            dismissed.set(this, false)
-            val shown: Field = DialogFragment::class.java.getDeclaredField("mShownByMe")
-            shown.isAccessible = true
-            shown.set(this, true)
-            val ft: FragmentTransaction = manager.beginTransaction()
-            ft.add(this, tag)
-            ft.commitAllowingStateLoss()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-
 }

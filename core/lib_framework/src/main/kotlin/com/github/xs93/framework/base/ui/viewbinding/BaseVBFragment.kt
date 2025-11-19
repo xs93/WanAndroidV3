@@ -19,8 +19,8 @@ abstract class BaseVBFragment<VB : ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB
 ) : BaseFunctionFragment() {
 
-    private var _viewBinding: VB? = null
-    protected val viewBinding: VB get() = _viewBinding!!
+    private var _vBinding: VB? = null
+    protected val vBinding: VB get() = _vBinding!!
 
     final override val contentLayoutId: Int = 0
 
@@ -29,12 +29,16 @@ abstract class BaseVBFragment<VB : ViewBinding>(
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _viewBinding = inflate.invoke(inflater, container, false)
-        return _viewBinding?.root
+        _vBinding = inflate.invoke(inflater, container, false)
+        return _vBinding?.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _viewBinding = null
+        _vBinding = null
+    }
+
+    fun withVBinding(block: VB.() -> Unit) {
+        _vBinding?.block()
     }
 }

@@ -48,7 +48,7 @@ class HomeFragment : BaseVBFragment<HomeFragmentHomeBinding>(HomeFragmentHomeBin
             }
         }
 
-        viewBinding.apply {
+        vBinding.apply {
             with(vpContent) {
                 offscreenPageLimit = homeTabs.size
                 adapter = childFragmentAdapter
@@ -70,7 +70,7 @@ class HomeFragment : BaseVBFragment<HomeFragmentHomeBinding>(HomeFragmentHomeBin
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.clToolbar.updatePadding(top = insets.top)
+        vBinding.clToolbar.updatePadding(top = insets.top)
     }
 
 

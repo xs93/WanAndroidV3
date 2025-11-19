@@ -94,45 +94,45 @@ class StoreTestActivity : BaseVBActivity<ActivityStoreTestBinding>(
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        viewBinding.tvContent.movementMethod = ScrollingMovementMethod.getInstance()
-        viewBinding.btnTestSp.setOnClickListener {
+        vBinding.tvContent.movementMethod = ScrollingMovementMethod.getInstance()
+        vBinding.btnTestSp.setOnClickListener {
         }
 
-        viewBinding.btnClear.setOnClickListener {
+        vBinding.btnClear.setOnClickListener {
             MySharedPrefsOwner.clear()
             MyMMKVOwner.clear()
-            viewBinding.tvContent.text = "clear success"
+            vBinding.tvContent.text = "clear success"
         }
 
-        viewBinding.btnSaveSerializable.setOnClickListener {
+        vBinding.btnSaveSerializable.setOnClickListener {
 //            MySharedPrefsOwner.teacher = null
             MyMMKVOwner.teacher = teacher
         }
 
-        viewBinding.btnGetSerializable.setOnClickListener {
-            viewBinding.tvContent.text = MyMMKVOwner.teacher.toString()
+        vBinding.btnGetSerializable.setOnClickListener {
+            vBinding.tvContent.text = MyMMKVOwner.teacher.toString()
         }
-        viewBinding.btnSaveSet.setOnClickListener {
+        vBinding.btnSaveSet.setOnClickListener {
             MyMMKVOwner.testStringSet = setOf("a", "b", "c")
         }
 
-        viewBinding.btnGetSet.setOnClickListener {
-            viewBinding.tvContent.text = MyMMKVOwner.testStringSet.toString()
+        vBinding.btnGetSet.setOnClickListener {
+            vBinding.tvContent.text = MyMMKVOwner.testStringSet.toString()
         }
 
         lifecycleScope.launch {
             MySharedPrefsOwner.num2Flow.collect {
-                viewBinding.tvContent.text = it.toString()
+                vBinding.tvContent.text = it.toString()
             }
         }
 
-        viewBinding.btnSaveFlow.setOnClickListener {
+        vBinding.btnSaveFlow.setOnClickListener {
             MySharedPrefsOwner.num2Flow.value = MySharedPrefsOwner.num2Flow.value + 1
         }
     }
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
+        vBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }

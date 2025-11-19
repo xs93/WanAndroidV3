@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.github.xs93.framework.base.ui.interfaces.IBaseFragment
+import com.github.xs93.framework.base.ui.interfaces.IFragment
 import com.github.xs93.framework.base.ui.interfaces.IWindowInsetsListener
 import com.github.xs93.framework.loading.ICreateLoadingDialog
 import com.github.xs93.framework.loading.ILoadingDialogControl
@@ -22,7 +22,7 @@ import com.github.xs93.framework.toast.UiToastProxy
  * @version v1.0
  * @date 2021/11/4 11:25
  */
-abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(),
+abstract class BaseFragment : Fragment(), IFragment, IToast by UiToastProxy(),
     ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
 
 
@@ -47,9 +47,7 @@ abstract class BaseFragment : Fragment(), IBaseFragment, IToast by UiToastProxy(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         windowInsetsHelper.attach(view, this)
-
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)

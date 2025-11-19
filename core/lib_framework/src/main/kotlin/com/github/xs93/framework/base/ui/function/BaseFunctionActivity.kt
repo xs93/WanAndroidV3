@@ -1,5 +1,6 @@
 package com.github.xs93.framework.base.ui.function
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -15,7 +16,15 @@ import com.github.xs93.framework.base.ui.base.BaseActivity
  */
 abstract class BaseFunctionActivity : BaseActivity() {
 
-    private val functions: MutableList<BaseActivityFunction> = FunctionsManager.createActivityFunctions()
+    private val functions = FunctionsManager.createActivityFunctions()
+
+    override fun attachBaseContext(newBase: Context) {
+        var base = newBase
+        functions.forEach {
+            base = it.attacheBaseContext(base)
+        }
+        super.attachBaseContext(base)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         addFunctions()

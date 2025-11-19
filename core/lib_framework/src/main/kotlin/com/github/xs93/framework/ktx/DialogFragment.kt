@@ -1,4 +1,4 @@
-package com.github.xs93.utils.ktx
+package com.github.xs93.framework.ktx
 
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager

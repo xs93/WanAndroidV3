@@ -34,7 +34,7 @@ class LoginActivity : BaseVBActivity<LoginActivityBinding>(LoginActivityBinding:
     private val loginViewModel: LoginViewModel by viewModels()
 
     override fun initView(savedInstanceState: Bundle?) {
-        viewBinding.apply {
+        vBinding.apply {
             with(toolbar) {
                 setNavigationOnClickListener {
                     finish()
@@ -101,6 +101,6 @@ class LoginActivity : BaseVBActivity<LoginActivityBinding>(LoginActivityBinding:
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.toolbar.updatePadding(top = insets.top)
+        vBinding.toolbar.updatePadding(top = insets.top)
     }
 }

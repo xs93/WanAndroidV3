@@ -16,6 +16,6 @@ class CornerConstraintLayoutTestActivity : BaseVBActivity<ActivityCornerLayoutTe
     ActivityCornerLayoutTestBinding::inflate
 ) {
     override fun initView(savedInstanceState: Bundle?) {
-        viewBinding.cclLayout.setRadius(10.dp(), 20.dp(), 30.dp(), 40.dp())
+        vBinding.cclLayout.setRadius(10.dp(), 20.dp(), 30.dp(), 40.dp())
     }
 }

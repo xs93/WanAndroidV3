@@ -59,7 +59,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
     override fun initView(savedInstanceState: Bundle?) {
         windowController = WindowCompat.getInsetsController(window, window.decorView)
 
-        viewBinding.apply {
+        vBinding.apply {
             with(drawerRoot) {
                 addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
                     override fun onDrawerOpened(drawerView: View) {
@@ -77,7 +77,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
             }
         }
 
-        viewBinding.mainContentLayout.apply {
+        vBinding.mainContentLayout.apply {
             with(vpContent) {
                 offscreenPageLimit = 3
                 setTouchSlopMultiple(2f)
@@ -109,7 +109,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
         }
 
 
-        viewBinding.mainDrawerLayout.apply {
+        vBinding.mainDrawerLayout.apply {
             with(btnLogin) {
                 setSingleClickListener {
 //                    startActivitySafe<LoginActivity>()
@@ -160,7 +160,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
         observerEvent(mainViewModel.mainEventFlow) {
             when (it) {
                 MainEvent.OpenDrawerEvent -> {
-                    viewBinding.drawerRoot.openDrawer(GravityCompat.START)
+                    vBinding.drawerRoot.openDrawer(GravityCompat.START)
                 }
             }
         }
@@ -168,7 +168,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
         observerState(accountDataManager.accountStateFlow) {
             when (it) {
                 AccountState.LogOut -> {
-                    with(viewBinding.mainDrawerLayout) {
+                    with(vBinding.mainDrawerLayout) {
                         btnLogin.visible()
                         btnLogout.gone()
                         groupUserInfo.gone()
@@ -177,7 +177,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
                 }
 
                 is AccountState.LogIn -> {
-                    with(viewBinding.mainDrawerLayout) {
+                    with(vBinding.mainDrawerLayout) {
                         btnLogin.gone()
                         btnLogout.visible()
                         groupUserInfo.visible()
@@ -188,7 +188,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
         }
 
         observerState(accountDataManager.userDetailFlow) {
-            with(viewBinding.mainDrawerLayout) {
+            with(vBinding.mainDrawerLayout) {
                 txtNickname.text = it.userInfo.nickname
                 txtUserId.text = string(R.string.main_drawer_user_id, it.userInfo.id)
                 txtCoinInfo.text = string(
@@ -203,7 +203,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        if (viewBinding.drawerRoot.isDrawerOpen(GravityCompat.START)) {
+        if (vBinding.drawerRoot.isDrawerOpen(GravityCompat.START)) {
             windowController?.isAppearanceLightStatusBars = false
         }
     }

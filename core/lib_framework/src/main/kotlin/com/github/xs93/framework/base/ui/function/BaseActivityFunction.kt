@@ -1,6 +1,7 @@
 package com.github.xs93.framework.base.ui.function
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
@@ -14,6 +15,10 @@ import androidx.activity.ComponentActivity
  * @date 2021/11/5 10:03
  */
 open class BaseActivityFunction {
+
+    open fun attacheBaseContext(newBase: Context): Context {
+        return newBase
+    }
 
     open fun onNewIntent(activity: Activity, intent: Intent?) {
 
@@ -40,7 +45,12 @@ open class BaseActivityFunction {
 
     }
 
-    open fun onActivityResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
+    open fun onActivityResult(
+        activity: Activity,
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?
+    ) {
 
     }
 

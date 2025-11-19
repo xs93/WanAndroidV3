@@ -1,7 +1,6 @@
 package com.github.xs93.framework.base.ui.viewbinding
 
 import android.view.LayoutInflater
-import android.view.View
 import androidx.viewbinding.ViewBinding
 import com.github.xs93.framework.base.ui.function.BaseFunctionActivity
 
@@ -16,12 +15,16 @@ import com.github.xs93.framework.base.ui.function.BaseFunctionActivity
 abstract class BaseVBActivity<VB : ViewBinding>(private val inflate: (inflater: LayoutInflater) -> VB) :
     BaseFunctionActivity() {
 
-    protected lateinit var viewBinding: VB
+    protected lateinit var vBinding: VB
 
     final override val contentLayoutId: Int = 0
 
-    final override fun getContentView(): View? {
-        viewBinding = inflate(layoutInflater)
-        return viewBinding.root
+    override fun customSetContentView() {
+        vBinding = inflate(layoutInflater)
+        setContentView(vBinding.root)
+    }
+
+    fun withVBinding(block: VB.() -> Unit) {
+        block.invoke(vBinding)
     }
 }

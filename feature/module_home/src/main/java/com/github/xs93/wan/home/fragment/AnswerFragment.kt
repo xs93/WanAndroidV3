@@ -52,7 +52,7 @@ class AnswerFragment :
     private var quickAdapterHelper: QuickAdapterHelper? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        viewBinding.apply {
+        vBinding.apply {
             with(pageLayout) {
                 setRetryClickListener {
                     viewModel.uiAction.send(AnswerUiAction.InitPageData)
@@ -102,7 +102,7 @@ class AnswerFragment :
                         }
 
                         override fun isAllowLoading(): Boolean {
-                            return !viewBinding.refreshLayout.isRefreshing
+                            return !vBinding.refreshLayout.isRefreshing
                         }
                     })
                     .build()
@@ -116,7 +116,7 @@ class AnswerFragment :
         }
 
         NetworkMonitor.observer(viewLifecycleOwner.lifecycle) { isConnected, _ ->
-            if (viewBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
+            if (vBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
                 viewModel.uiAction.send(AnswerUiAction.InitPageData)
             }
         }
@@ -128,18 +128,18 @@ class AnswerFragment :
         viewModel.registerCommonEvent(this)
 
         observerState(viewModel.uiStateFlow.map { it.pageStatus }) {
-            viewBinding.pageLayout.showViewByStatus(it.status)
+            vBinding.pageLayout.showViewByStatus(it.status)
         }
 
         observerState(viewModel.uiStateFlow.map { it.articlesListState }) {
             when (val uiState = it.listUiState) {
                 ListUiState.IDLE -> {}
                 is ListUiState.RequestStart -> {
-                    viewBinding.refreshLayout.isRefreshing = uiState.refreshing
+                    vBinding.refreshLayout.isRefreshing = uiState.refreshing
                 }
 
                 is ListUiState.RequestFinish -> {
-                    viewBinding.refreshLayout.isRefreshing = false
+                    vBinding.refreshLayout.isRefreshing = false
                     articleAdapter?.submitList(it.data) {
                         quickAdapterHelper?.trailingLoadState =
                             LoadState.NotLoading(uiState.noMoreData)
@@ -147,7 +147,7 @@ class AnswerFragment :
                 }
 
                 is ListUiState.RequestFinishFailed -> {
-                    viewBinding.refreshLayout.isRefreshing = false
+                    vBinding.refreshLayout.isRefreshing = false
                     quickAdapterHelper?.trailingLoadState = LoadState.Error(uiState.error)
                 }
             }

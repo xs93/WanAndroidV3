@@ -48,7 +48,7 @@ class NavigatorChildFragment : BaseVBFragment<FragmentNavigatorChildNavigatorBin
     private var chipChildrenLayoutManager: LinearLayoutManager? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        viewBinding.apply {
+        vBinding.apply {
             with(rvChipList) {
                 adapter = NavigatorChipAdapter()
                     .apply {
@@ -85,7 +85,7 @@ class NavigatorChildFragment : BaseVBFragment<FragmentNavigatorChildNavigatorBin
     override fun initObserver(savedInstanceState: Bundle?) {
         super.initObserver(savedInstanceState)
         observerState(viewModel.uiStateFlow.map { it.pageStatus }) {
-            viewBinding.pageLayout.showViewByStatus(it.status)
+            vBinding.pageLayout.showViewByStatus(it.status)
         }
 
         observerState(viewModel.uiStateFlow.map { it.navigationList }) {

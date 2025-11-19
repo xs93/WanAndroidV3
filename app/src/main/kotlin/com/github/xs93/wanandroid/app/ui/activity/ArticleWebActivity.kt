@@ -57,7 +57,7 @@ class ArticleWebActivity :
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
-                    viewBinding.progressIndicator.progress = newProgress
+                    vBinding.progressIndicator.progress = newProgress
                 }
             }
 
@@ -83,17 +83,17 @@ class ArticleWebActivity :
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
-                    viewBinding.progressIndicator.show()
+                    vBinding.progressIndicator.show()
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
-                    viewBinding.progressIndicator.hide()
+                    vBinding.progressIndicator.hide()
                 }
             }
         }
 
-        viewBinding.apply {
+        vBinding.apply {
             with(flWebContainer) {
                 val layoutParams = FrameLayout.LayoutParams(-1, -1)
                 addView(mWebView, layoutParams)
@@ -113,8 +113,8 @@ class ArticleWebActivity :
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.flWebContainer.updatePadding(bottom = insets.bottom)
-        viewBinding.toolbar.updatePadding(top = insets.top)
+        vBinding.flWebContainer.updatePadding(bottom = insets.bottom)
+        vBinding.toolbar.updatePadding(top = insets.top)
     }
 
     override fun initData(savedInstanceState: Bundle?) {

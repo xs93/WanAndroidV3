@@ -1,13 +1,13 @@
 package com.github.xs93.demo.dialog
 
 import android.os.Bundle
-import android.view.Gravity
+import android.util.Log
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePaddingRelative
 import com.github.xs93.demo.databinding.DialogSoftKeyboardTestBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBDialogFragment
+import com.github.xs93.framework.base.ui.viewbinding.BaseVBBottomSheetDialogFragment
 
 /**
  *
@@ -17,7 +17,7 @@ import com.github.xs93.framework.base.ui.viewbinding.BaseVBDialogFragment
  * @date 2025/1/27 9:27
  * @email 466911254@qq.com
  */
-class SoftKeyboardTestDialog : BaseVBDialogFragment<DialogSoftKeyboardTestBinding>(
+class SoftKeyboardTestDialog : BaseVBBottomSheetDialogFragment<DialogSoftKeyboardTestBinding>(
     DialogSoftKeyboardTestBinding::inflate
 ) {
 
@@ -32,22 +32,17 @@ class SoftKeyboardTestDialog : BaseVBDialogFragment<DialogSoftKeyboardTestBindin
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        val gravity = dialog?.window?.attributes?.gravity ?: 0
-        if (isImmersive() && (isFullScreen() || (gravity and Gravity.BOTTOM) == Gravity.BOTTOM)) {
-            viewBinding.layoutBottom.updatePaddingRelative(bottom = insets.bottom)
-        }
+        Log.d("aaaaaa", "onSystemBarInsetsChanged: $insets")
+        vBinding.root.updatePaddingRelative(bottom = insets.bottom)
     }
 
     override fun onSoftKeyboardHeightChanged(imeVisible: Boolean, height: Int) {
         super.onSoftKeyboardHeightChanged(imeVisible, height)
-        viewBinding.spaceKeyboard.updateLayoutParams {
+        Log.d("aaaaaa", "onSoftKeyboardHeightChanged: $imeVisible,$height")
+        vBinding.spaceKeyboard.updateLayoutParams {
             this.height = height
         }
     }
-
-    override fun isImmersive() = true
-    override fun isFullScreen() = true
-    override fun isBottomDialog() = false
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 

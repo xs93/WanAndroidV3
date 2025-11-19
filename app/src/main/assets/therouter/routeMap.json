@@ -1,0 +1,37 @@
+[
+  {
+    "path": "app://fragment/navigator",
+    "className": "com.github.xs93.wanandroid.app.ui.fragment.NavigatorFragment",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
+    "path": "app://fragment/mine",
+    "className": "com.github.xs93.wanandroid.app.ui.fragment.MineFragment",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
+    "path": "app://fragment/classify",
+    "className": "com.github.xs93.wanandroid.app.ui.fragment.ClassifyFragment",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
+    "path": "app://activity/main",
+    "className": "com.github.xs93.wan.main.activity.MainActivity",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
+    "path": "app://fragment/home",
+    "className": "com.github.xs93.wan.home.fragment.HomeFragment",
+    "action": "",
+    "description": "",
+    "params": {}
+  }
+]

@@ -14,35 +14,35 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(
 ) {
     override fun initView(savedInstanceState: Bundle?) {
         AppInject.init(this.application)
-        viewBinding.btnSoftInput.setSingleClickListener {
+        vBinding.btnSoftInput.setSingleClickListener {
             startActivitySafe<SoftKeyboardTestActivity>()
         }
 
-        viewBinding.btnInterval.setSingleClickListener {
+        vBinding.btnInterval.setSingleClickListener {
             startActivitySafe<IntervalTestActivity>()
         }
-        viewBinding.btnCamera.setSingleClickListener {
+        vBinding.btnCamera.setSingleClickListener {
             startActivitySafe<CameraTestActivity>()
         }
-        viewBinding.btnBorderDrawable.setSingleClickListener {
+        vBinding.btnBorderDrawable.setSingleClickListener {
             startActivitySafe<BorderDrawableActivity>()
         }
-        viewBinding.btnStore.setSingleClickListener {
+        vBinding.btnStore.setSingleClickListener {
             startActivitySafe<StoreTestActivity>()
         }
-        viewBinding.btnProgress.setSingleClickListener {
+        vBinding.btnProgress.setSingleClickListener {
             startActivitySafe<ProgressViewTestActivity>()
         }
-        viewBinding.btnCornerLayout.setSingleClickListener {
+        vBinding.btnCornerLayout.setSingleClickListener {
             startActivitySafe<CornerConstraintLayoutTestActivity>()
         }
-        viewBinding.btnCrash.setSingleClickListener {
+        vBinding.btnCrash.setSingleClickListener {
             throw RuntimeException("测试崩溃")
         }
     }
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
+        vBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }

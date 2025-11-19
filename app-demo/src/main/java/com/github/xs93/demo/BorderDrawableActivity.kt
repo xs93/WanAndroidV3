@@ -22,6 +22,6 @@ class BorderDrawableActivity : BaseVBActivity<ActivityBorderDrawableBinding>(
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
+        vBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }

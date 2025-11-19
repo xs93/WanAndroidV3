@@ -1,7 +1,6 @@
 package com.github.xs93.framework.base.ui.interfaces
 
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.LayoutRes
 
 /**
@@ -12,8 +11,7 @@ import androidx.annotation.LayoutRes
  * @date 2024/2/27 15:41
  * @email 466911254@qq.com
  */
-interface IBaseActivity {
-
+interface IActivity {
 
     /**布局Layout*/
     @get:LayoutRes
@@ -25,12 +23,7 @@ interface IBaseActivity {
     /**在setContentView之前执行*/
     fun beforeSetContentView(savedInstanceState: Bundle?) {}
 
-    /**返回ContentView*/
-    fun getContentView(): View? {
-        return null
-    }
-
-    /** 自定义如何去调用SetContentView方法，调用此方法前提是 getContentLayoutId ==0 并且 getContentView ==null */
+    /** contentLayoutId==0 则执行此方法 */
     fun customSetContentView() {}
 
     /**初始化View*/

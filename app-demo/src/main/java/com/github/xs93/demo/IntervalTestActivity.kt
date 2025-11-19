@@ -24,26 +24,26 @@ class IntervalTestActivity : BaseVBActivity<ActivityIntervalTestBinding>(
     private var interval: Interval? = null
 
     override fun initView(savedInstanceState: Bundle?) {
-        viewBinding.btnStart.setSingleClickListener {
+        vBinding.btnStart.setSingleClickListener {
             if (interval == null) {
                 interval = Interval(0, 1, TimeUnit.SECONDS, 50)
             }
             interval?.subscribe {
-                viewBinding.tvTime.text = it.toString()
+                vBinding.tvTime.text = it.toString()
             }?.finish {
-                viewBinding.tvTime.text = "finish"
+                vBinding.tvTime.text = "finish"
             }?.life(this)
                 ?.onlyResumed(this)
                 ?.start()
         }
 
-        viewBinding.btnStop.setSingleClickListener {
+        vBinding.btnStop.setSingleClickListener {
             interval?.cancel()
         }
     }
 
     override fun onSystemBarInsetsChanged(insets: Insets) {
         super.onSystemBarInsetsChanged(insets)
-        viewBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
+        vBinding.root.updatePadding(top = insets.top, bottom = insets.bottom)
     }
 }
