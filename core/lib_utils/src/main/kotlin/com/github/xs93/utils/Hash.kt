@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.github.xs93.utils
 
 import java.math.BigInteger

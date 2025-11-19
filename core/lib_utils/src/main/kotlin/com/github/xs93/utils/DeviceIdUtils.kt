@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.provider.Settings
 import android.telephony.TelephonyManager
+import androidx.core.content.edit
 import java.security.MessageDigest
 import java.util.Locale
 import java.util.Random
@@ -29,7 +30,8 @@ class DeviceIdUtils {
         private const val KEY_RANDOM = "ID_RANDOM"
         private const val DEFAULT_RANDOM = "564289"
 
-        private val INVALID_ANDROID_ID = listOf("00000000000000", "000000000000000", "9774d56d682e549c")
+        private val INVALID_ANDROID_ID =
+            listOf("00000000000000", "000000000000000", "9774d56d682e549c")
 
         @JvmStatic
         fun getDeviceId(context: Context): String {
@@ -54,7 +56,8 @@ class DeviceIdUtils {
 
                 val imei = getImei(context)
                 val serial = getSerial()
-                val random = sharedPreferences.getString(KEY_RANDOM, DEFAULT_RANDOM) ?: DEFAULT_RANDOM
+                val random =
+                    sharedPreferences.getString(KEY_RANDOM, DEFAULT_RANDOM) ?: DEFAULT_RANDOM
                 val deviceId = getDeviceUUID(random).replace("-", "")
 
                 val builder = StringBuilder()
@@ -87,23 +90,27 @@ class DeviceIdUtils {
 
         @SuppressLint("ApplySharedPref")
         fun changeDeviceId(context: Context) {
-            val sharedPreferences = context.getSharedPreferences("UniqueIdentificationCode", Context.MODE_PRIVATE)
+            val sharedPreferences =
+                context.getSharedPreferences("UniqueIdentificationCode", Context.MODE_PRIVATE)
             val newRandom = "$DEFAULT_RANDOM${Random().nextInt(10000)}"
-            sharedPreferences.edit().remove(KEY_UNIQUE_IDENTIFICATION_CODE)
-                .remove(KEY_UUID)
-                .remove(KEY_ANDROID)
-                .putString(KEY_RANDOM, newRandom)
-                .commit()
+            sharedPreferences.edit(commit = true) {
+                remove(KEY_UNIQUE_IDENTIFICATION_CODE)
+                remove(KEY_UUID)
+                remove(KEY_ANDROID)
+                putString(KEY_RANDOM, newRandom)
+            }
         }
 
         @SuppressLint("ApplySharedPref")
         fun resetDeviceId(context: Context) {
-            val sharedPreferences = context.getSharedPreferences("UniqueIdentificationCode", Context.MODE_PRIVATE)
-            sharedPreferences.edit().remove(KEY_UNIQUE_IDENTIFICATION_CODE)
-                .remove(KEY_UUID)
-                .remove(KEY_ANDROID)
-                .remove(KEY_RANDOM)
-                .commit()
+            val sharedPreferences =
+                context.getSharedPreferences("UniqueIdentificationCode", Context.MODE_PRIVATE)
+            sharedPreferences.edit(commit = true) {
+                remove(KEY_UNIQUE_IDENTIFICATION_CODE)
+                remove(KEY_UUID)
+                remove(KEY_ANDROID)
+                remove(KEY_RANDOM)
+            }
         }
 
         fun getAndroidId(context: Context): String? {
@@ -156,7 +163,10 @@ class DeviceIdUtils {
                 builder.append("${Build.ID}|")
                 builder.append("${Build.MODEL}|")
                 builder.append("${Build.PRODUCT}|")
-                return UUID(builder.toString().hashCode().toLong(), Build.TAGS.hashCode().toLong()).toString()
+                return UUID(
+                    builder.toString().hashCode().toLong(),
+                    Build.TAGS.hashCode().toLong()
+                ).toString()
             } catch (ex: Exception) {
                 ex.printStackTrace()
                 ""

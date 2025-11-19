@@ -111,7 +111,7 @@ object DeviceInfoUtils {
         }
     }
 
-    @SuppressLint("HardwareIds")
+    @SuppressLint("HardwareIds", "ObsoleteSdkInt")
     private fun initMacAddress(vm: WifiManager) {
         try {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {

@@ -17,9 +17,10 @@ import com.github.xs93.utils.AppInject
 
 // region dp 和 sp 与px单位换算
 
-fun Float.dp(context: Context? = null): Float {
+fun Float.dp(context: Context? = null): Int {
     val resources = context?.resources ?: AppInject.getApp().resources
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+        .toInt()
 }
 
 fun Float.toDp(context: Context? = null): Float {
@@ -33,9 +34,10 @@ fun Float.toDp(context: Context? = null): Float {
     return convertValue
 }
 
-fun Float.sp(context: Context? = null): Float {
+fun Float.sp(context: Context? = null): Int {
     val resources = context?.resources ?: AppInject.getApp().resources
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
+        .toInt()
 }
 
 fun Float.toSp(context: Context? = null): Float {
@@ -50,9 +52,10 @@ fun Float.toSp(context: Context? = null): Float {
     return convertValue
 }
 
-fun Float.mm(context: Context? = null): Float {
+fun Float.mm(context: Context? = null): Int {
     val resources = context?.resources ?: AppInject.getApp().resources
     return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_MM, this, resources.displayMetrics)
+        .toInt()
 }
 
 fun Float.toMM(context: Context? = null): Float {
@@ -70,7 +73,7 @@ fun Float.toMM(context: Context? = null): Float {
     return convertValue
 }
 
-fun Int.dp(context: Context? = null): Float {
+fun Int.dp(context: Context? = null): Int {
     return this.toFloat().dp(context)
 }
 
@@ -78,7 +81,7 @@ fun Int.toDp(context: Context? = null): Float {
     return this.toFloat().toDp(context)
 }
 
-fun Int.sp(context: Context? = null): Float {
+fun Int.sp(context: Context? = null): Int {
     return this.toFloat().sp(context)
 }
 
@@ -86,7 +89,7 @@ fun Int.toSp(context: Context? = null): Float {
     return this.toFloat().toSp(context)
 }
 
-fun Int.mm(context: Context? = null): Float {
+fun Int.mm(context: Context? = null): Int {
     return this.toFloat().mm(context)
 }
 
@@ -94,7 +97,7 @@ fun Int.toMM(context: Context? = null): Float {
     return this.toFloat().toMM(context)
 }
 
-fun Context.dp(value: Float): Float {
+fun Context.dp(value: Float): Int {
     return value.dp(this)
 }
 
@@ -102,7 +105,7 @@ fun Context.toDp(value: Float): Float {
     return value.toDp(this)
 }
 
-fun Context.sp(value: Float): Float {
+fun Context.sp(value: Float): Int {
     return value.sp(this)
 }
 
@@ -113,7 +116,7 @@ fun Context.toSp(value: Float): Float {
 private val Fragment.compatContext: Context
     get() = context ?: AppInject.getApp()
 
-fun Fragment.dp(value: Float): Float {
+fun Fragment.dp(value: Float): Int {
     return compatContext.dp(value)
 }
 
@@ -121,7 +124,7 @@ fun Fragment.toDp(value: Float): Float {
     return compatContext.toDp(value)
 }
 
-fun Fragment.sp(value: Float): Float {
+fun Fragment.sp(value: Float): Int {
     return compatContext.sp(value)
 }
 
@@ -131,7 +134,7 @@ fun Fragment.toSp(value: Float): Float {
 // endregion
 
 // region mm和px转换
-fun Context.mm(value: Float): Float {
+fun Context.mm(value: Float): Int {
     return value.mm(this)
 }
 
@@ -139,7 +142,7 @@ fun Context.toMm(value: Float): Float {
     return value.toMM(this)
 }
 
-fun Fragment.mm(value: Float): Float {
+fun Fragment.mm(value: Float): Int {
     return compatContext.mm(value)
 }
 
