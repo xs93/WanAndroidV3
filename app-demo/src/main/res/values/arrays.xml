@@ -4,12 +4,14 @@
         <item>@color/color_ff0000</item>
         <item>#fbb</item>
         <item>#FFFF00</item>
-        <item>@color/color_ff0000</item>
+        <item>#0000FF</item>
+        <item>#FF00FFFF</item>
     </array>
     <array name="gradient_colors_position">
         <item>0.2</item>
-        <item>0.5</item>
+        <item>0.4</item>
         <item>0.75</item>
-        <item>1</item>
+        <item>0.8</item>
+        <item>0.9</item>
     </array>
 </resources>

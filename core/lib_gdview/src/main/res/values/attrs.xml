@@ -1,99 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="roundViewClip" format="boolean" />
-    <attr name="roundViewIsCircle" format="boolean" />
-    <attr name="roundViewRadius" format="dimension" />
-    <attr name="roundViewLeftTopRadius" format="dimension" />
-    <attr name="roundViewRightTopRadius" format="dimension" />
-    <attr name="roundViewLeftBottomRadius" format="dimension" />
-    <attr name="roundViewRightBottomRadius" format="dimension" />
-    <attr name="roundViewStrokeWidth" format="dimension" />
-    <attr name="roundViewStrokeColor" format="color" />
-    <attr name="roundViewBgColor" format="color" />
-    <attr name="roundViewBgDrawable" format="reference" />
-    <attr name="roundViewBgStartColor" format="color" />
-    <attr name="roundViewBgCenterColor" format="color" />
-    <attr name="roundViewBgEndColor" format="color" />
-    <attr name="roundViewGradientOrientation">
-        <enum name="TOP_BOTTOM" value="0" />
-        <enum name="TR_BL" value="1" />
-        <enum name="RIGHT_LEFT" value="2" />
-        <enum name="BR_TL" value="3" />
-        <enum name="BOTTOM_TOP" value="4" />
-        <enum name="BL_TR" value="5" />
-        <enum name="LEFT_RIGHT" value="6" />
-        <enum name="TL_BR" value="7" />
+    <attr name="rc_topStartRadius" format="dimension" />
+    <attr name="rc_topEndRadius" format="dimension" />
+    <attr name="rc_bottomStartRadius" format="dimension" />
+    <attr name="rc_bottomEndRadius" format="dimension" />
+    <attr name="rc_radius" format="dimension" />
+    <attr name="rc_strokeWidth" format="dimension" />
+    <attr name="rc_strokeColor" format="color" />
+    <attr name="rc_strokeColors" format="string|reference" />
+    <attr name="rc_strokeColorsPositions" format="string|reference" />
+    <attr name="rc_strokeColorsOrientation" format="enum">
+        <enum name="LEFT_RIGHT" value="0" />
+        <enum name="TL_BR" value="1" />
+        <enum name="TOP_BOTTOM" value="2" />
+        <enum name="TR_BL" value="3" />
+        <enum name="RIGHT_LEFT" value="4" />
+        <enum name="BR_TL" value="5" />
+        <enum name="BOTTOM_TOP" value="6" />
+        <enum name="BL_TR" value="7" />
     </attr>
-
-    <declare-styleable name="RoundCornerFrameLayout">
-        <attr name="roundViewClip" />
-        <attr name="roundViewIsCircle" />
-        <attr name="roundViewRadius" />
-        <attr name="roundViewLeftTopRadius" />
-        <attr name="roundViewRightTopRadius" />
-        <attr name="roundViewRightBottomRadius" />
-        <attr name="roundViewLeftBottomRadius" />
-        <attr name="roundViewStrokeWidth" />
-        <attr name="roundViewStrokeColor" />
-        <attr name="roundViewBgColor" />
-        <attr name="roundViewBgDrawable" />
-        <attr name="roundViewBgStartColor" />
-        <attr name="roundViewBgCenterColor" />
-        <attr name="roundViewBgEndColor" />
-        <attr name="roundViewGradientOrientation" />
+    <declare-styleable name="RoundCornerAttr">
+        <attr name="rc_topStartRadius" />
+        <attr name="rc_topEndRadius" />
+        <attr name="rc_bottomStartRadius" />
+        <attr name="rc_bottomEndRadius" />
+        <attr name="rc_radius" />
+        <attr name="rc_strokeWidth" />
+        <attr name="rc_strokeColor" />
+        <attr name="rc_strokeColors" />
+        <attr name="rc_strokeColorsPositions" />
+        <attr name="rc_strokeColorsOrientation" />
     </declare-styleable>
 
-    <declare-styleable name="RoundCornerLinearLayout">
-        <attr name="roundViewClip" />
-        <attr name="roundViewIsCircle" />
-        <attr name="roundViewRadius" />
-        <attr name="roundViewLeftTopRadius" />
-        <attr name="roundViewRightTopRadius" />
-        <attr name="roundViewRightBottomRadius" />
-        <attr name="roundViewLeftBottomRadius" />
-        <attr name="roundViewStrokeWidth" />
-        <attr name="roundViewStrokeColor" />
-        <attr name="roundViewBgColor" />
-        <attr name="roundViewBgDrawable" />
-        <attr name="roundViewBgStartColor" />
-        <attr name="roundViewBgCenterColor" />
-        <attr name="roundViewBgEndColor" />
-        <attr name="roundViewGradientOrientation" />
+    <declare-styleable name="RoundCornerFrameLayout">
+        <attr name="rc_topStartRadius" />
+        <attr name="rc_topEndRadius" />
+        <attr name="rc_bottomStartRadius" />
+        <attr name="rc_bottomEndRadius" />
+        <attr name="rc_radius" />
+        <attr name="rc_strokeWidth" />
+        <attr name="rc_strokeColor" />
+        <attr name="rc_strokeColors" />
+        <attr name="rc_strokeColorsPositions" />
+        <attr name="rc_strokeColorsOrientation" />
     </declare-styleable>
 
     <declare-styleable name="RoundCornerConstraintLayout">
-        <attr name="roundViewClip" />
-        <attr name="roundViewIsCircle" />
-        <attr name="roundViewRadius" />
-        <attr name="roundViewLeftTopRadius" />
-        <attr name="roundViewRightTopRadius" />
-        <attr name="roundViewRightBottomRadius" />
-        <attr name="roundViewLeftBottomRadius" />
-        <attr name="roundViewStrokeWidth" />
-        <attr name="roundViewStrokeColor" />
-        <attr name="roundViewBgColor" />
-        <attr name="roundViewBgDrawable" />
-        <attr name="roundViewBgStartColor" />
-        <attr name="roundViewBgCenterColor" />
-        <attr name="roundViewBgEndColor" />
-        <attr name="roundViewGradientOrientation" />
+        <attr name="rc_topStartRadius" />
+        <attr name="rc_topEndRadius" />
+        <attr name="rc_bottomStartRadius" />
+        <attr name="rc_bottomEndRadius" />
+        <attr name="rc_radius" />
+        <attr name="rc_strokeWidth" />
+        <attr name="rc_strokeColor" />
+        <attr name="rc_strokeColors" />
+        <attr name="rc_strokeColorsPositions" />
+        <attr name="rc_strokeColorsOrientation" />
     </declare-styleable>
 
-    <declare-styleable name="RoundCornerTextView">
-        <attr name="roundViewClip" />
-        <attr name="roundViewIsCircle" />
-        <attr name="roundViewRadius" />
-        <attr name="roundViewLeftTopRadius" />
-        <attr name="roundViewRightTopRadius" />
-        <attr name="roundViewRightBottomRadius" />
-        <attr name="roundViewLeftBottomRadius" />
-        <attr name="roundViewStrokeWidth" />
-        <attr name="roundViewStrokeColor" />
-        <attr name="roundViewBgColor" />
-        <attr name="roundViewBgDrawable" />
-        <attr name="roundViewBgStartColor" />
-        <attr name="roundViewBgCenterColor" />
-        <attr name="roundViewBgEndColor" />
-        <attr name="roundViewGradientOrientation" />
+    <declare-styleable name="RoundCornerLinearLayout">
+        <attr name="rc_topStartRadius" />
+        <attr name="rc_topEndRadius" />
+        <attr name="rc_bottomStartRadius" />
+        <attr name="rc_bottomEndRadius" />
+        <attr name="rc_radius" />
+        <attr name="rc_strokeWidth" />
+        <attr name="rc_strokeColor" />
+        <attr name="rc_strokeColors" />
+        <attr name="rc_strokeColorsPositions" />
+        <attr name="rc_strokeColorsOrientation" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundCornerView">
+        <attr name="rc_topStartRadius" />
+        <attr name="rc_topEndRadius" />
+        <attr name="rc_bottomStartRadius" />
+        <attr name="rc_bottomEndRadius" />
+        <attr name="rc_radius" />
+        <attr name="rc_strokeWidth" />
+        <attr name="rc_strokeColor" />
+        <attr name="rc_strokeColors" />
+        <attr name="rc_strokeColorsPositions" />
+        <attr name="rc_strokeColorsOrientation" />
     </declare-styleable>
 </resources>

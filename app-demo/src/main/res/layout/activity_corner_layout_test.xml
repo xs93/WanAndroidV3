@@ -1,24 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <com.github.xs93.framework.widget.CornersConstraintLayout
+    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
         android:id="@+id/cclLayout"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        app:ccl_start_bottom_radius="40dp"
-        app:ccl_start_top_radius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:rc_bottomEndRadius="30dp"
+        app:rc_bottomStartRadius="20dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/test_1" />
-    </com.github.xs93.framework.widget.CornersConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+
+    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        app:rc_strokeColors="@array/gradient_colors"
+        app:rc_strokeWidth="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
+    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+
+    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:rc_radius="10dp"
+        app:rc_strokeColors="#FF0000,#ffb0b0,#FFFF00,#0000FF,#00FFFF"
+        app:rc_strokeWidth="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
+    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+
+    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:rc_strokeColors="@array/gradient_colors"
+        app:rc_strokeColorsPositions="@array/gradient_colors_position"
+        app:rc_strokeWidth="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
+    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+
+    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:rc_radius="10dp"
+        app:rc_strokeColors="#FF0000,#ffb0b0,#FFFF00,#0000FF,#7f00FFFF"
+        app:rc_strokeColorsOrientation="BL_TR"
+        app:rc_strokeColorsPositions="0.1f,0.2f,0.5f,0.8f,0.9f"
+        app:rc_strokeWidth="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
+    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+</LinearLayout>
