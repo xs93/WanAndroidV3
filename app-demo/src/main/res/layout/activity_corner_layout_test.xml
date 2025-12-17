@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     android:orientation="vertical">
 
     <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
@@ -27,6 +29,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
+        app:rc_bgColors="#FF0000"
+        app:rc_drawStroke="true"
         app:rc_strokeColors="@array/gradient_colors"
         app:rc_strokeWidth="5dp">
 
@@ -41,15 +45,30 @@
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        app:rc_radius="10dp"
-        app:rc_strokeColors="#FF0000,#ffb0b0,#FFFF00,#0000FF,#00FFFF"
+        android:padding="10dp"
+        app:rc_bgColors="#FF0000,#ffb0b0,#FFFF00,#0000FF,#7f00FFFF"
+        app:rc_bgColorsOrientation="TR_BL"
+        app:rc_drawStroke="true"
+        app:rc_radius="20dp"
+        app:rc_strokeColors="#2fFF0000,#ffb0b0,#FFFF00,#0000FF,#2f00FFFF"
         app:rc_strokeWidth="5dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
+            android:includeFontPadding="false"
+            android:text="iiihjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa"
+            android:textSize="9sp" />
     </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        app:shapeAppearance="@style/ShapeAppearance.App.10dp"
+        tools:src="@drawable/test_1" />
 
     <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
         android:layout_width="100dp"

@@ -10,8 +10,10 @@ import android.view.View
  * @date 2024/1/25 15:29
  * @email 466911254@qq.com
  */
-class SingleClickListener(private val interval: Long = 1000, private val singleClick: View.OnClickListener? = null) :
-    View.OnClickListener {
+class SingleClickListener(
+    private val interval: Long = 400,
+    private val singleClick: View.OnClickListener? = null
+) : View.OnClickListener {
 
     private var mLastClickTime = 0L
     override fun onClick(v: View) {

@@ -13,6 +13,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.graphics.Shader
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -33,6 +34,7 @@ import com.github.xs93.gdview.R
 class RoundCornerHelper : IRoundCorner {
     private var context: Context? = null
     private var view: View? = null
+    private var isRlt: Boolean = false
 
     private var viewWidth = 0
     private var viewHeight = 0
@@ -42,13 +44,18 @@ class RoundCornerHelper : IRoundCorner {
     private var bottomStartRadius = 0f
     private var bottomEndRadius = 0f
 
-
     private var strokeWidth = 0f
     private var strokeColor = Color.WHITE
     private var strokeColors: IntArray? = null
     private var strokeColorPositions: FloatArray? = null
     private var strokeColorsOrientation: Orientation = Orientation.LEFT_RIGHT
     private var strokeShader: LinearGradient? = null
+    private var drawStroke: Boolean = true
+    private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
+
+    private var bgColors: IntArray? = null
+    private var bgColorPositions: FloatArray? = null
+    private var bgColorsOrientation: Orientation = Orientation.LEFT_RIGHT
 
     private val orientRectF = RectF()
     private val contentRectF = RectF()
@@ -68,13 +75,10 @@ class RoundCornerHelper : IRoundCorner {
 
     private var saveLayoutId = -1
 
-    fun init(context: Context, attrs: AttributeSet?, defStyleAttr: Int, view: View) {
+    fun init(context: Context, attrs: AttributeSet?, view: View) {
         this.context = context
         this.view = view
-        if (view is ViewGroup && view.background == null) {
-            view.setBackgroundColor(Color.TRANSPARENT)
-        }
-        context.withStyledAttributes(attrs, R.styleable.RoundCornerAttr, defStyleAttr) {
+        context.withStyledAttributes(attrs, R.styleable.RoundCornerAttr) {
             if (hasValue(R.styleable.RoundCornerAttr_rc_radius)) {
                 val radius = getDimension(R.styleable.RoundCornerAttr_rc_radius, 0f)
                 topStartRadius = radius
@@ -130,7 +134,24 @@ class RoundCornerHelper : IRoundCorner {
             }
             strokeColorsOrientation =
                 parseOrientation(this, R.styleable.RoundCornerAttr_rc_strokeColorsOrientation)
+
+            val parseBgColors = parseColorArrays(this, R.styleable.RoundCornerAttr_rc_bgColors)
+            val parseBgColorPositions =
+                parseColorPositions(this, R.styleable.RoundCornerAttr_rc_bgColorsPositions)
+            bgColors = parseBgColors
+            bgColorPositions = parseBgColorPositions
+            val parseBgColorsSize = bgColors?.size ?: 0
+            val parseBgColorPositionsSize = bgColorPositions?.size ?: 0
+            if (parseBgColorsSize > 1 && parseBgColorPositionsSize > 1 && parseBgColorsSize != parseBgColorPositionsSize) {
+                throw IllegalArgumentException("bgColors and bgColorsPositions size must be equal")
+            }
+            bgColorsOrientation =
+                parseOrientation(this, R.styleable.RoundCornerAttr_rc_bgColorsOrientation)
+
+            drawStroke = getBoolean(R.styleable.RoundCornerAttr_rc_drawStroke, true)
         }
+        initRadii()
+        buildBgGradientDrawable(view)
     }
 
 
@@ -138,23 +159,13 @@ class RoundCornerHelper : IRoundCorner {
         this.viewWidth = width
         this.viewHeight = height
         initRadii()
-
         val halfStrokeWidth = strokeWidth / 2f
         orientRectF.set(0f, 0f, width.toFloat(), height.toFloat())
         val dp1 = dp2Px(2f, context)
         orientRectF.inset(-dp1, -dp1)
-        contentRectF.set(
-            strokeWidth,
-            strokeWidth,
-            width - strokeWidth,
-            height - strokeWidth
-        )
-        strokeRectF.set(
-            halfStrokeWidth,
-            halfStrokeWidth,
-            width - halfStrokeWidth,
-            height - halfStrokeWidth
-        )
+        contentRectF.set(0f, 0f, width.toFloat(), height.toFloat())
+        strokeRectF.set(0f, 0f, width.toFloat(), height.toFloat())
+        strokeRectF.inset(halfStrokeWidth, halfStrokeWidth)
         val tempStrokeColor = strokeColors
         strokeShader = if (strokeWidth > 0 && tempStrokeColor != null) {
             val rectF = getGradientRectByOrientation(
@@ -201,15 +212,16 @@ class RoundCornerHelper : IRoundCorner {
                 saveLayoutId = -1
             }
         }
-        if (strokeWidth > 0) {
-            paint.xfermode = null
-            paint.style = Paint.Style.STROKE
-            paint.color = strokeColor
-            paint.strokeWidth = strokeWidth
-            paint.shader = strokeShader
+
+        if (strokeWidth > 0 && drawStroke) {
+            strokePaint.xfermode = null
+            strokePaint.style = Paint.Style.STROKE
+            strokePaint.color = strokeColor
+            strokePaint.strokeWidth = strokeWidth
+            strokePaint.shader = strokeShader
             path.reset()
             path.addRoundRect(strokeRectF, strokeRadii, Path.Direction.CCW)
-            canvas.drawPath(path, paint)
+            canvas.drawPath(path, strokePaint)
         }
     }
 
@@ -219,22 +231,28 @@ class RoundCornerHelper : IRoundCorner {
     }
 
     private fun initRadii() {
-        contentRadii[0] = topStartRadius - strokeWidth
-        contentRadii[1] = topStartRadius - strokeWidth
-        contentRadii[2] = topEndRadius - strokeWidth
-        contentRadii[3] = topEndRadius - strokeWidth
-        contentRadii[4] = bottomEndRadius - strokeWidth
-        contentRadii[5] = bottomEndRadius - strokeWidth
-        contentRadii[6] = bottomStartRadius - strokeWidth
-        contentRadii[7] = bottomStartRadius - strokeWidth
-        strokeRadii[0] = topStartRadius - strokeWidth / 2f
-        strokeRadii[1] = topStartRadius - strokeWidth / 2f
-        strokeRadii[2] = topEndRadius - strokeWidth / 2f
-        strokeRadii[3] = topEndRadius - strokeWidth / 2f
-        strokeRadii[4] = bottomEndRadius - strokeWidth / 2f
-        strokeRadii[5] = bottomEndRadius - strokeWidth / 2f
-        strokeRadii[6] = bottomStartRadius - strokeWidth / 2f
-        strokeRadii[7] = bottomStartRadius - strokeWidth / 2f
+        isRlt = view?.layoutDirection == View.LAYOUT_DIRECTION_RTL
+        val topLeftRadius = if (isRlt) topEndRadius else topStartRadius
+        val topRightRadius = if (isRlt) topStartRadius else topEndRadius
+        val bottomLeftRadius = if (isRlt) bottomEndRadius else bottomStartRadius
+        val bottomRightRadius = if (isRlt) bottomStartRadius else bottomEndRadius
+
+        contentRadii[0] = topLeftRadius
+        contentRadii[1] = topLeftRadius
+        contentRadii[2] = topRightRadius
+        contentRadii[3] = topRightRadius
+        contentRadii[4] = bottomRightRadius
+        contentRadii[5] = bottomRightRadius
+        contentRadii[6] = bottomLeftRadius
+        contentRadii[7] = bottomLeftRadius
+        strokeRadii[0] = topLeftRadius - strokeWidth / 2f
+        strokeRadii[1] = topLeftRadius - strokeWidth / 2f
+        strokeRadii[2] = topRightRadius - strokeWidth / 2f
+        strokeRadii[3] = topRightRadius - strokeWidth / 2f
+        strokeRadii[4] = bottomRightRadius - strokeWidth / 2f
+        strokeRadii[5] = bottomRightRadius - strokeWidth / 2f
+        strokeRadii[6] = bottomLeftRadius - strokeWidth / 2f
+        strokeRadii[7] = bottomLeftRadius - strokeWidth / 2f
     }
 
     private fun dp2Px(dp: Float, context: Context?): Float {
@@ -368,6 +386,57 @@ class RoundCornerHelper : IRoundCorner {
         return rectF
     }
 
+
+    private fun buildBgGradientDrawable(view: View) {
+        //已经存在背景,则不在处理自定义背景
+        val bgDrawable = view.background
+        if (bgDrawable != null) return
+        val colors = bgColors
+        val positions = bgColorPositions
+        if (colors == null) { //ViewGroup需要设置透明背景,防止stroke绘制无效
+            if (view is ViewGroup) {
+                view.setBackgroundColor(Color.TRANSPARENT)
+            }
+            return
+        }
+
+        val gdDrawable: GradientDrawable
+        val orientation = when (bgColorsOrientation) {
+            Orientation.LEFT_RIGHT -> GradientDrawable.Orientation.LEFT_RIGHT
+            Orientation.TL_BR -> GradientDrawable.Orientation.TL_BR
+            Orientation.TOP_BOTTOM -> GradientDrawable.Orientation.TOP_BOTTOM
+            Orientation.TR_BL -> GradientDrawable.Orientation.TR_BL
+            Orientation.RIGHT_LEFT -> GradientDrawable.Orientation.RIGHT_LEFT
+            Orientation.BR_TL -> GradientDrawable.Orientation.BR_TL
+            Orientation.BOTTOM_TOP -> GradientDrawable.Orientation.BOTTOM_TOP
+            Orientation.BL_TR -> GradientDrawable.Orientation.BL_TR
+        }
+        if (colors.size == 1) {
+            gdDrawable = GradientDrawable()
+            gdDrawable.setColor(colors[0])
+        } else {
+            gdDrawable = GradientDrawable()
+            gdDrawable.orientation = orientation
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                gdDrawable.setColors(colors, positions)
+            } else {
+                gdDrawable.colors = colors
+            }
+        }
+        gdDrawable.cornerRadii = floatArrayOf(
+            topStartRadius,
+            topStartRadius,
+            topEndRadius,
+            topEndRadius,
+            bottomEndRadius,
+            bottomEndRadius,
+            bottomStartRadius,
+            bottomStartRadius
+        )
+        gdDrawable.shape = GradientDrawable.RECTANGLE
+        view.background = gdDrawable
+    }
+
     //region 接口实现
     override fun setRadius(radiusDp: Float) {
         val radius = dp2Px(radiusDp, context)
@@ -439,6 +508,34 @@ class RoundCornerHelper : IRoundCorner {
         view?.let {
             onSizeChanged(viewWidth, viewHeight)
             it.invalidate()
+        }
+    }
+
+    override fun setBgColor(bgColor: Int) {
+        bgColors = intArrayOf(bgColor)
+        view?.let {
+            buildBgGradientDrawable(it)
+        }
+    }
+
+    override fun setBgColors(colors: IntArray, positions: FloatArray?) {
+        if (colors.size <= 1) {
+            throw IllegalArgumentException("colors size must > 1")
+        }
+        if (positions != null && colors.size != positions.size) {
+            throw IllegalArgumentException("colors size must = positions size")
+        }
+        this.bgColors = colors
+        this.bgColorPositions = positions
+        view?.let {
+            buildBgGradientDrawable(it)
+        }
+    }
+
+    override fun setBgOrientation(orientation: Orientation) {
+        this.bgColorsOrientation = orientation
+        view?.let {
+            buildBgGradientDrawable(it)
         }
     }
     //endregion

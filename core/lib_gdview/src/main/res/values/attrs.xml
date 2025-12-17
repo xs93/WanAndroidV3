@@ -19,6 +19,20 @@
         <enum name="BOTTOM_TOP" value="6" />
         <enum name="BL_TR" value="7" />
     </attr>
+    <attr name="rc_bgColors" format="string|reference" />
+    <attr name="rc_bgColorsPositions" format="string|reference" />
+    <attr name="rc_bgColorsOrientation" format="enum">
+        <enum name="LEFT_RIGHT" value="0" />
+        <enum name="TL_BR" value="1" />
+        <enum name="TOP_BOTTOM" value="2" />
+        <enum name="TR_BL" value="3" />
+        <enum name="RIGHT_LEFT" value="4" />
+        <enum name="BR_TL" value="5" />
+        <enum name="BOTTOM_TOP" value="6" />
+        <enum name="BL_TR" value="7" />
+    </attr>
+    <attr name="rc_drawStroke" format="boolean" />
+
     <declare-styleable name="RoundCornerAttr">
         <attr name="rc_topStartRadius" />
         <attr name="rc_topEndRadius" />
@@ -30,6 +44,10 @@
         <attr name="rc_strokeColors" />
         <attr name="rc_strokeColorsPositions" />
         <attr name="rc_strokeColorsOrientation" />
+        <attr name="rc_bgColors" />
+        <attr name="rc_bgColorsPositions" />
+        <attr name="rc_bgColorsOrientation" />
+        <attr name="rc_drawStroke" />
     </declare-styleable>
 
     <declare-styleable name="RoundCornerFrameLayout">
@@ -43,6 +61,10 @@
         <attr name="rc_strokeColors" />
         <attr name="rc_strokeColorsPositions" />
         <attr name="rc_strokeColorsOrientation" />
+        <attr name="rc_bgColors" />
+        <attr name="rc_bgColorsPositions" />
+        <attr name="rc_bgColorsOrientation" />
+        <attr name="rc_drawStroke" />
     </declare-styleable>
 
     <declare-styleable name="RoundCornerConstraintLayout">
@@ -56,6 +78,10 @@
         <attr name="rc_strokeColors" />
         <attr name="rc_strokeColorsPositions" />
         <attr name="rc_strokeColorsOrientation" />
+        <attr name="rc_bgColors" />
+        <attr name="rc_bgColorsPositions" />
+        <attr name="rc_bgColorsOrientation" />
+        <attr name="rc_drawStroke" />
     </declare-styleable>
 
     <declare-styleable name="RoundCornerLinearLayout">
@@ -69,6 +95,10 @@
         <attr name="rc_strokeColors" />
         <attr name="rc_strokeColorsPositions" />
         <attr name="rc_strokeColorsOrientation" />
+        <attr name="rc_bgColors" />
+        <attr name="rc_bgColorsPositions" />
+        <attr name="rc_bgColorsOrientation" />
+        <attr name="rc_drawStroke" />
     </declare-styleable>
 
     <declare-styleable name="RoundCornerView">
@@ -82,5 +112,9 @@
         <attr name="rc_strokeColors" />
         <attr name="rc_strokeColorsPositions" />
         <attr name="rc_strokeColorsOrientation" />
+        <attr name="rc_bgColors" />
+        <attr name="rc_bgColorsPositions" />
+        <attr name="rc_bgColorsOrientation" />
+        <attr name="rc_drawStroke" />
     </declare-styleable>
 </resources>

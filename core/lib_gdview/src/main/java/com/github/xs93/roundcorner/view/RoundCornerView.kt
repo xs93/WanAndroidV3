@@ -15,16 +15,12 @@ import com.github.xs93.roundcorner.RoundCornerHelper
  * @description
  *
  */
-class RoundCornerView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr), IRoundCorner {
+class RoundCornerView(context: Context, attrs: AttributeSet?) : View(context, attrs), IRoundCorner {
 
     private val roundCornerHelper = RoundCornerHelper()
 
     init {
-        roundCornerHelper.init(context, attrs, defStyleAttr, this)
+        roundCornerHelper.init(context, attrs, this)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -74,5 +70,17 @@ class RoundCornerView @JvmOverloads constructor(
 
     override fun setStrokeOrientation(orientation: Orientation) {
         roundCornerHelper.setStrokeOrientation(orientation)
+    }
+
+    override fun setBgColor(bgColor: Int) {
+        roundCornerHelper.setBgColor(bgColor)
+    }
+
+    override fun setBgColors(colors: IntArray, positions: FloatArray?) {
+        roundCornerHelper.setBgColors(colors, positions)
+    }
+
+    override fun setBgOrientation(orientation: Orientation) {
+        roundCornerHelper.setBgOrientation(orientation)
     }
 }

@@ -9,10 +9,10 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.core.net.toUri
 
 /**
  * Context 扩展
@@ -101,14 +101,14 @@ inline fun <reified T : Activity> Context.startActivitySafe(
 fun Context.jumpToGoogleRating(id: String) {
     try {
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("market://details?id=${id}")
+            data = "market://details?id=${id}".toUri()
             `package` = "com.android.vending"
         }
         startActivity(intent)
     } catch (e: Exception) {
         try {
             val intent = Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("https://play.google.com/store/apps/details?id=${id}")
+                data = "https://play.google.com/store/apps/details?id=${id}".toUri()
                 `package` = "com.android.vending"
             }
             startActivity(intent)
@@ -143,7 +143,7 @@ fun Context.sendEmailBySendTo(
             dataString.append("&bcc=$bccString")
             dataString.append("&subject=$subject")
             dataString.append("&body=${content}")
-            data = Uri.parse(dataString.toString())
+            data = dataString.toString().toUri()
             if (!emailCC.isNullOrEmpty()) {
                 putExtra(Intent.EXTRA_CC, emailCC)
             }
@@ -161,7 +161,7 @@ fun Context.sendEmailBySendTo(
 
 fun Context.openBrowser(url: String) {
     try {
-        val uri = Uri.parse(url)
+        val uri = url.toUri()
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     } catch (e: ActivityNotFoundException) {

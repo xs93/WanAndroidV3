@@ -22,10 +22,9 @@ import com.github.xs93.framework.R
 class StrokedTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0,
-) : AppCompatTextView(context, attrs, defStyleAttr) {
+) : AppCompatTextView(context, attrs) {
 
-    private val borderTextView: AppCompatTextView = AppCompatTextView(context, attrs, defStyleAttr)
+    private val borderTextView: AppCompatTextView = AppCompatTextView(context, attrs)
     private var strokeWidth = 0f
     private var strokeColor = Color.TRANSPARENT
 

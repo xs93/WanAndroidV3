@@ -15,9 +15,8 @@ import com.github.xs93.framework.R
  */
 class EnforceWidthSwitchCompact @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : SwitchCompat(context, attrs, defStyleAttr) {
+    attrs: AttributeSet? = null
+) : SwitchCompat(context, attrs) {
 
     private var enforceWidth: Boolean = false
 

@@ -3,4 +3,9 @@
     <style name="Theme.WanAndroidV3" parent="BaseTheme.NoActionBar">
         <item name="colorAccent">#FF00FF</item>
     </style>
+
+    <style name="ShapeAppearance.App.10dp" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
 </resources>

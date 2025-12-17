@@ -12,8 +12,8 @@ import android.webkit.WebView
  * @date 2024/6/3 14:50
  * @email 466911254@qq.com
  */
-class WrapWebView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    WebView(context, attrs, defStyleAttr) {
+class WrapWebView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    WebView(context, attrs) {
 
     companion object {
         const val DEFAULT_URL = "about:blank"
