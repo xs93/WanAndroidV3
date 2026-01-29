@@ -3,10 +3,13 @@ package com.github.xs93.demo
 import android.os.Bundle
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import com.github.xs93.demo.databinding.ActivityIntervalTestBinding
 import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.utils.interval.Interval
 import com.github.xs93.utils.ktx.setSingleClickListener
+import com.github.xs93.utils.net.KNetwork
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
 /**
@@ -36,9 +39,22 @@ class IntervalTestActivity : BaseVBActivity<ActivityIntervalTestBinding>(
                 ?.onlyResumed(this)
                 ?.start()
         }
-
         vBinding.btnStop.setSingleClickListener {
             interval?.cancel()
+        }
+
+        vBinding.btnNetworkState.setSingleClickListener {
+            KNetwork.init(this)
+            lifecycleScope.launch {
+                KNetwork.networkFlow.collect {
+                    vBinding.tvCurrentNetwork.text = it.toString()
+                }
+            }
+            lifecycleScope.launch {
+                KNetwork.networksFlow.collect {
+                    vBinding.tvAllNetwork.text = it.toString()
+                }
+            }
         }
     }
 

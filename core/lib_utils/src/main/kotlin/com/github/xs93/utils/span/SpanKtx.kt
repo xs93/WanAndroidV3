@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.github.xs93.utils.span
 
 import android.text.Spannable
@@ -247,7 +249,7 @@ fun CharSequence.replaceSpan(
                     if (spanBuilder !is SpannableStringBuilder) {
                         spanBuilder = SpannableStringBuilder(spanBuilder)
                     }
-                    (spanBuilder as SpannableStringBuilder).replace(
+                    spanBuilder.replace(
                         range.first + offset,
                         range.first + offset + matchLength,
                         adjustReplacement
@@ -365,11 +367,7 @@ fun CharSequence.replaceSpanFirst(
                 if (spanBuilder !is SpannableStringBuilder) {
                     spanBuilder = SpannableStringBuilder(spanBuilder)
                 }
-                (spanBuilder as SpannableStringBuilder).replace(
-                    range.first,
-                    range.first + matchLength,
-                    adjustReplacement
-                )
+                spanBuilder.replace(range.first, range.first + matchLength, adjustReplacement)
             }
 
             else -> spanBuilder.setSpan(spanned, range.first, range.last + 1)
@@ -481,11 +479,7 @@ fun CharSequence.replaceSpanLast(
                 if (spanBuilder !is SpannableStringBuilder) {
                     spanBuilder = SpannableStringBuilder(spanBuilder)
                 }
-                (spanBuilder as SpannableStringBuilder).replace(
-                    range.first,
-                    range.first + matchLength,
-                    adjustReplacement
-                )
+                spanBuilder.replace(range.first, range.first + matchLength, adjustReplacement)
             }
 
             else -> spanBuilder.setSpan(spanned, range.first, range.last + 1)

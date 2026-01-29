@@ -101,6 +101,23 @@
         <attr name="rc_drawStroke" />
     </declare-styleable>
 
+    <declare-styleable name="RoundCornerTextView">
+        <attr name="rc_topStartRadius" />
+        <attr name="rc_topEndRadius" />
+        <attr name="rc_bottomStartRadius" />
+        <attr name="rc_bottomEndRadius" />
+        <attr name="rc_radius" />
+        <attr name="rc_strokeWidth" />
+        <attr name="rc_strokeColor" />
+        <attr name="rc_strokeColors" />
+        <attr name="rc_strokeColorsPositions" />
+        <attr name="rc_strokeColorsOrientation" />
+        <attr name="rc_bgColors" />
+        <attr name="rc_bgColorsPositions" />
+        <attr name="rc_bgColorsOrientation" />
+        <attr name="rc_drawStroke" />
+    </declare-styleable>
+
     <declare-styleable name="RoundCornerView">
         <attr name="rc_topStartRadius" />
         <attr name="rc_topEndRadius" />

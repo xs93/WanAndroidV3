@@ -3,6 +3,7 @@ package com.github.xs93.utils
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
+import com.github.xs93.utils.net.KNetwork
 import kotlinx.coroutines.MainScope
 
 /**
@@ -33,6 +34,7 @@ object AppInject {
     @JvmStatic
     fun init(application: Application) {
         mApplication = application
+        KNetwork.init(application)
     }
 
     @JvmStatic

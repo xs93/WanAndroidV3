@@ -1,27 +1,27 @@
 [versions]
 minSdk = "26"
 targetSdk = "36"
-androidGradlePlugin = "8.12.1"
+androidGradlePlugin = "8.13.2"
 kotlin = "2.2.0"
 kotlinCoroutines = "1.10.2"
-ksp = "2.2.0-2.0.2"
-androidxLifecycle = "2.9.2"
-androidxRoom = "2.7.2"
-androixHint = "2.57"
-androidxComposeBom = "2025.08.00"
-androidxComposeCompiler = "1.5.4"
-androidxCamera = "1.4.2"
-androidxActivity = "1.10.1"
+ksp = "2.3.5"
 androidxAppcompat = "1.7.1"
-#1.1.5有问题,不要升级
-androidxDataStore = "1.1.7"
+androidxActivity = "1.12.3"
+androidxLifecycle = "2.10.0"
+androidxHilt = "2.57.2"  #2.59版本需要AGP 0 Gradle 9.1+ ,2.57.2版本现在只支持kotlin2.2.0
+androidxRoom = "2.8.4"
 
-anroidxMedia3 = "1.8.0"
+anroidxMedia3 = "1.9.1"
+androidxCamera = "1.5.2"
+#1.1.5有问题,不要升级
+androidxDataStore = "1.2.0"
+androidxComposeBom = "2026.01.00"
+androidxComposeCompiler = "1.5.4"
 
 okHttp = "4.12.0"
 retrofit = "2.11.0"
 moshi = "1.15.2"
-kotlinxSerialization = "1.9.0"
+kotlinxSerialization = "1.10.0"
 
 coilVersion = "3.3.0"
 
@@ -31,14 +31,14 @@ espresso-core = "3.7.0"
 
 smartRefreshLayout = "2.1.1"
 agentweb = "v5.0.6-androidx"
-material3Android = "1.3.2"
+material3Android = "1.4.0"
 
 theRouter = "1.3.0"
 
 [libraries]
-material = { group = "com.google.android.material", name = "material", version = "1.12.0" }
+material = { group = "com.google.android.material", name = "material", version = "1.13.0" }
 androidx-core-kts = { group = "androidx.core", name = "core-ktx", version = "1.17.0" }
-androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
 
 # Startup
 androidx-startup = { group = "androidx.startup", name = "startup-runtime", version = "1.2.0" }
@@ -49,11 +49,11 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version = "1.8.9" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.2.1" }
 androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version = "1.1.1" }
-androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.2.0" }
 androidx-viewpager2 = { group = "androidx.viewpager2", name = "viewpager2", version = "1.1.0" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.4.0" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version = "1.9.1" }
-androidx-webkit = { module = "androidx.webkit:webkit", version = "1.14.0" }
+androidx-webkit = { module = "androidx.webkit:webkit", version = "1.15.0" }
 androidx-palette = { module = "androidx.palette:palette", version = "1.0.0" }
 #Lifecycle
 androidx-lifecycle-compiler = { group = "androidx.lifecycle", name = "lifecycle-compiler", version.ref = "androidxLifecycle" }
@@ -62,7 +62,7 @@ androidx-lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifec
 androidx-lifecycle-liveData-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "androidxLifecycle" }
 #Paging3
-androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.3.6" }
+androidx-paging3 = { module = "androidx.paging:paging-runtime", version = "3.4.0" }
 #Room
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
@@ -111,8 +111,9 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 #debugImplementation依赖
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 
-androidx-hilt = { module = "com.google.dagger:hilt-android", version.ref = "androixHint" }
-androidx-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androixHint" }
+#google dagger hilt(https://github.com/google/dagger/releases)
+androidx-hilt = { module = "com.google.dagger:hilt-android", version.ref = "androidxHilt" }
+androidx-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androidxHilt" }
 
 #kotlin 协程库(https://github.com/Kotlin/kotlinx.coroutines)
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }
@@ -126,7 +127,7 @@ moshi-kotlin-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-code
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 #Gson 解析库(https://github.com/google/gson)
-gson = { group = "com.google.code.gson", name = "gson", version = "2.13.1" }
+gson = { group = "com.google.code.gson", name = "gson", version = "2.13.2" }
 
 #网络库(https://github.com/square/okhttp)
 okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
@@ -149,7 +150,7 @@ androidAutoSize = { group = "com.github.JessYanCoding", name = "AndroidAutoSize"
 
 #(从 v2.0.0 开始，MMKV 不再支持 32 位架构和 API 级别 22 或 21，如果需要 32 位或 API 级别 21~22，请使用 v1.3.x LTS 系列)
 #key-value 持久化库(https://github.com/Tencent/MMKV)
-mmkv = { module = "com.tencent:mmkv", version = "2.2.2" }
+mmkv = { module = "com.tencent:mmkv", version = "2.3.0" }
 
 #图片加载库(https://github.com/coil-kt/coil)
 coil3-core = { group = "io.coil-kt.coil3", name = "coil", version.ref = "coilVersion" }
@@ -174,7 +175,7 @@ banner = { group = "com.github.zhpanvip", name = "bannerviewpager", version = "3
 viewPagerIndicator = { group = "com.github.zhpanvip", name = "viewpagerindicator", version = "1.2.3" }
 
 #RecyclerView Adapter封装库(https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
-brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version = "4.1.7" }
+brvah4 = { module = "io.github.cymchad:BaseRecyclerViewAdapterHelper4", version = "4.3.2" }
 
 #RecyclerView Adapter封装库(https://github.com/liangjingkanji/BRV)
 brv = { module = "com.github.liangjingkanji:BRV", version = "1.6.0" }
@@ -226,9 +227,9 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androixHint" }
+#google hilt(https://github.com/google/dagger/releases)
+google-hilt = { id = "com.google.dagger.hilt.android", version.ref = "androidxHilt" }
 #google ksp 代替kapt(https://github.com/google/ksp)
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 #路由框架(https://github.com/HuolalaTech/hll-wp-therouter-android)
 therouter-plugin = { id = "cn.therouter", version.ref = "theRouter" }
-

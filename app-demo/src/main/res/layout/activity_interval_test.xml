@@ -21,4 +21,22 @@
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+
+    <Button
+        android:id="@+id/btnNetworkState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试网络连接" />
+
+    <TextView
+        android:id="@+id/tvCurrentNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/tvAllNetwork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

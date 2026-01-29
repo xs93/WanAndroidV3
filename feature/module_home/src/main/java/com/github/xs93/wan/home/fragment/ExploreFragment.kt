@@ -3,6 +3,7 @@ package com.github.xs93.wan.home.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.QuickAdapterHelper
@@ -15,7 +16,7 @@ import com.github.xs93.framework.base.viewmodel.registerCommonEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.statuslayout.MultiStatusLayout
 import com.github.xs93.utils.ktx.viewLifecycle
-import com.github.xs93.utils.net.NetworkMonitor
+import com.github.xs93.utils.net.KNetwork
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleAdapter
 import com.github.xs93.wan.common.model.CollectEvent
@@ -25,7 +26,9 @@ import com.github.xs93.wan.common.viewmodel.ExploreViewModel
 import com.github.xs93.wan.home.adapter.ExploreBannerHeaderAdapter
 import com.github.xs93.wan.home.databinding.HomeFragmentExploreBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 
 /**
  * 首页Fragment
@@ -81,10 +84,13 @@ class ExploreFragment :
                     }
                     addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
                         val article = adapter.getItem(position)
-                        article?.let {
+                        article.let {
                             viewModel.uiAction.send(
                                 ExploreUiAction.CollectArticle(
-                                    CollectEvent(it.id, it.collect.not())
+                                    CollectEvent(
+                                        it.id,
+                                        it.collect.not()
+                                    )
                                 )
                             )
                         }
@@ -122,11 +128,11 @@ class ExploreFragment :
             }
         }
 
-        NetworkMonitor.observer(viewLifecycleOwner.lifecycle) { isConnected, _ ->
-            if (vBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && isConnected) {
+        KNetwork.networkFlow.onEach {
+            if (vBinding.pageLayout.getViewStatus() == MultiStatusLayout.STATE_NO_NETWORK && it.isConnected) {
                 viewModel.uiAction.send(ExploreUiAction.InitPageData)
             }
-        }
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     override fun initObserver(savedInstanceState: Bundle?) {

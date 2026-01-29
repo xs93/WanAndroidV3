@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.core.kts)
     api(libs.coil3.core)
     api(libs.coil3.gif)
     api(libs.coil3.svg)

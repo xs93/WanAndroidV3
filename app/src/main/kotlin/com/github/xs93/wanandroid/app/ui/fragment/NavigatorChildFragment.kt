@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.framework.ui.layoutManager.CenterLinearLayoutManager
@@ -52,18 +51,11 @@ class NavigatorChildFragment : BaseVBFragment<FragmentNavigatorChildNavigatorBin
             with(rvChipList) {
                 adapter = NavigatorChipAdapter()
                     .apply {
-                        setOnItemClickListener(object :
-                            BaseQuickAdapter.OnItemClickListener<Navigation> {
-                            override fun onClick(
-                                adapter: BaseQuickAdapter<Navigation, *>,
-                                view: View,
-                                position: Int,
-                            ) {
-                                val item = getItem(position)
-                                item?.let { setSelectedNavigation(it) }
-                                chipChildrenLayoutManager?.scrollToPositionWithOffset(position, 0)
-                            }
-                        })
+                        setOnItemClickListener { _, _, position ->
+                            val item = getItem(position)
+                            setSelectedNavigation(item)
+                            chipChildrenLayoutManager?.scrollToPositionWithOffset(position, 0)
+                        }
                     }
                     .also { chipAdapter = it }
                 layoutManager = CenterLinearLayoutManager(

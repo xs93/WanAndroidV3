@@ -3,7 +3,7 @@ package com.github.xs93.roundcorner.view
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
 import com.github.xs93.roundcorner.IRoundCorner
 import com.github.xs93.roundcorner.Orientation
 import com.github.xs93.roundcorner.RoundCornerHelper
@@ -11,12 +11,14 @@ import com.github.xs93.roundcorner.RoundCornerHelper
 /**
  * @author XuShuai
  * @version v1.0
- * @date 2025/11/7 10:46
- * @description
+ * @date 2026/1/29 10:58
+ * @description 圆角的TextView
  *
  */
-class RoundCornerView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
-    View(context, attrs), IRoundCorner {
+class RoundCornerTextView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null
+) : AppCompatTextView(context, attrs), IRoundCorner {
 
     private val roundCornerHelper = RoundCornerHelper()
 
@@ -34,6 +36,7 @@ class RoundCornerView @JvmOverloads constructor(context: Context, attrs: Attribu
         super.draw(canvas)
         roundCornerHelper.afterDraw(canvas)
     }
+
 
     override fun setRadius(radiusDp: Float) {
         roundCornerHelper.setRadius(radiusDp)

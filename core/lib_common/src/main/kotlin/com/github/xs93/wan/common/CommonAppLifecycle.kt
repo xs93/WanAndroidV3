@@ -18,7 +18,6 @@ import com.github.xs93.network.okhttp.OkHttpClientManager
 import com.github.xs93.utils.ktx.appVersionCode
 import com.github.xs93.utils.ktx.getColorByAttr
 import com.github.xs93.utils.ktx.isDebug
-import com.github.xs93.utils.net.NetworkMonitor
 import com.github.xs93.wan.common.function.AutoSizeActivityFunction
 import com.github.xs93.wan.common.function.EdgeToEdgeActivityFunction
 import com.github.xs93.wan.common.network.WanErrorHandler
@@ -94,7 +93,6 @@ class CommonAppLifecycle : IAppLifecycle {
 
     @SuppressLint("MissingPermission")
     private fun initHttp(application: Application) {
-        NetworkMonitor.init(application)
         EasyRetrofit.init(application)
         EasyRetrofit.addErrorHandler(LogErrorHandler())
         EasyRetrofit.addErrorHandler(WanErrorHandler())

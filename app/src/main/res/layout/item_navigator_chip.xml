@@ -6,19 +6,18 @@
     android:layout_height="48dp"
     tools:layout_width="100dp">
 
-    <com.github.xs93.round.RoundCornerTextView
+    <com.github.xs93.roundcorner.view.RoundCornerTextView
         android:id="@+id/tvChipName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/sel_bg_navigator_chip"
         android:gravity="center"
         android:paddingVertical="8dp"
         android:textColor="@color/sel_navigator_chip_text_color"
         android:textSize="12sp"
-        app:roundViewBgDrawable="@drawable/sel_bg_navigator_chip"
-        app:roundViewClip="true"
-        app:roundViewRadius="24dp"
+        app:rc_radius="24dp"
         tools:text="常用网站" />
 </FrameLayout>

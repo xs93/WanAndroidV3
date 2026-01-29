@@ -2,8 +2,7 @@ package com.github.xs93.network.interceptor
 
 import com.github.xs93.network.exception.ERROR
 import com.github.xs93.network.exception.NetworkException
-import com.github.xs93.utils.AppInject
-import com.github.xs93.utils.net.isNetworkConnected
+import com.github.xs93.utils.net.KNetwork
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -18,8 +17,7 @@ import okhttp3.Response
 class NetworkInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val app = AppInject.getApp()
-        if (app.isNetworkConnected()) {
+        if (KNetwork.currentNetworkState().isConnected) {
             return chain.proceed(chain.request())
         } else {
             throw NetworkException(ERROR.NETWORK_ERROR_NOT)

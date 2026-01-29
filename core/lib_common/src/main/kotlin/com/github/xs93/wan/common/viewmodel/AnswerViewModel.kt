@@ -7,8 +7,7 @@ import com.github.xs93.framework.base.viewmodel.IUiState
 import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcherIO
-import com.github.xs93.utils.AppInject
-import com.github.xs93.utils.net.isNetworkConnected
+import com.github.xs93.utils.net.KNetwork
 import com.github.xs93.wan.common.account.AccountDataManager
 import com.github.xs93.wan.common.data.respotory.WenDaRepository
 import com.github.xs93.wan.common.data.usercase.CollectUserCase
@@ -133,7 +132,7 @@ class AnswerViewModel @Inject constructor(
         launcherIO {
             uiState.update { copy(pageStatus = PageStatus.Loading) }
 
-            if (!AppInject.getApp().isNetworkConnected()) {
+            if (!KNetwork.isNetworkConnected()) {
                 uiState.update { copy(pageStatus = PageStatus.NoNetwork) }
                 return@launcherIO
             }

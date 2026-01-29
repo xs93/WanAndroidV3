@@ -5,19 +5,19 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.github.xs93.round.RoundCornerTextView
+    <com.github.xs93.roundcorner.view.RoundCornerTextView
         android:id="@+id/tvChipChild"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_gravity="center"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="4dp"
+        android:background="@color/material_blue_grey_100"
         android:gravity="center"
         android:includeFontPadding="false"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp"
         android:textSize="12sp"
-        app:roundViewBgColor="@color/material_blue_grey_100"
-        app:roundViewRadius="20dp"
+        app:rc_radius="20dp"
         tools:text="Html" />
 </FrameLayout>

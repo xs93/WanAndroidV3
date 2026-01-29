@@ -50,14 +50,14 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
             setIndicatorSliderColor(normalColor, selectedColor)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)
             setIndicatorStyle(IndicatorStyle.ROUND_RECT)
-            setIndicatorMargin(0, 0, 12.dp(context).toInt(), 16.dp(context).toInt())
+            setIndicatorMargin(0, 0, 12.dp(context), 16.dp(context))
             setIndicatorGravity(IndicatorGravity.CENTER)
             setScrollDuration(500)
             registerLifecycleObserver(lifecycle)
             setOffScreenPageLimit(2)
             disallowParentInterceptDownEvent(true)
             setPageStyle(PageStyle.NORMAL, 1.0f)
-            setInterval(3000)
+            interval = 3000
             adapter = BannerAdapter()
             setOnPageClickListener { _, position ->
                 data[position]

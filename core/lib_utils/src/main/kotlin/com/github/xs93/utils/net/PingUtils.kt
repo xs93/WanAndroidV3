@@ -34,14 +34,14 @@ class PingUtils {
             }
             try {
                 // 解析丢包率
-                var tempInfo = pingString.substring(pingString.indexOf("received,"))
+                var tempInfo = pingString.substringAfter("received,")
                 tempInfo = tempInfo.substring(9, tempInfo.indexOf("packet")).trim()
                 val lost = tempInfo.replace("%", "").toInt()
 
                 // 解析延迟信息,获取以"min/avg/tempInfo/mdev"为头的文本，分别获取此次的ping参数
                 return if (pingString.contains("min/avg/max/mdev")) {
                     tempInfo = pingString.substring(pingString.indexOf("min/avg/max/mdev") + 19)
-                    tempInfo = tempInfo.substring(0, tempInfo.indexOf("ms")).trim()
+                    tempInfo = tempInfo.substringBefore("ms").trim()
                     val temps = tempInfo.split("/").toTypedArray()
                     val min = temps[0].toFloat()
                     val avg = temps[1].toFloat()

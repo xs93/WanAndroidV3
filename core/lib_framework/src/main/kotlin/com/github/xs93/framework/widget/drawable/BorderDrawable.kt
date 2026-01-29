@@ -272,35 +272,35 @@ open class BorderDrawable : Drawable {
         val rectF = RectF()
         when (orientation) {
             Orientation.TOP_BOTTOM -> {
-                rectF.set(0f, 0f, 0f, height.toFloat())
+                rectF.set(0f, 0f, 0f, height)
             }
 
             Orientation.TR_BL -> {
-                rectF.set(width.toFloat(), 0f, 0f, height.toFloat())
+                rectF.set(width, 0f, 0f, height)
             }
 
             Orientation.RIGHT_LEFT -> {
-                rectF.set(width.toFloat(), 0f, 0f, 0f)
+                rectF.set(width, 0f, 0f, 0f)
             }
 
             Orientation.BR_TL -> {
-                rectF.set(width.toFloat(), height.toFloat(), 0f, 0f)
+                rectF.set(width, height, 0f, 0f)
             }
 
             Orientation.BOTTOM_TOP -> {
-                rectF.set(0f, height.toFloat(), 0f, 0f)
+                rectF.set(0f, height, 0f, 0f)
             }
 
             Orientation.BL_TR -> {
-                rectF.set(0f, height.toFloat(), width.toFloat(), 0f)
+                rectF.set(0f, height, width, 0f)
             }
 
             Orientation.LEFT_RIGHT -> {
-                rectF.set(0f, 0f, width.toFloat(), 0f)
+                rectF.set(0f, 0f, width, 0f)
             }
 
             Orientation.TL_BR -> {
-                rectF.set(0f, 0f, width.toFloat(), height.toFloat())
+                rectF.set(0f, 0f, width, height)
             }
         }
         return rectF
