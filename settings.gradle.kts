@@ -3,7 +3,7 @@
 rootProject.name = "WanAndroidV3"
 include(":app")
 include(":app-demo")
-include(":core:lib_common")
+
 include(":core:lib_framework")
 include(":core:lib_coil")
 include(":core:lib_network")
@@ -12,6 +12,7 @@ include(":core:lib_gdview")
 include(":core:lib_camera")
 include(":core:lib_kv")
 
+include(":feature:lib_common")
 include(":feature:module_main")
 include(":feature:module_music")
 include(":feature:module_home")

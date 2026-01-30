@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:lib_common"))
+    implementation(project(":feature:lib_common"))
     api(libs.androidx.meida3.exoplayer)
     api(libs.androidx.meida3.ui)
     api(libs.androidx.meida3.common)

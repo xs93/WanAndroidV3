@@ -37,8 +37,7 @@ dependencies {
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
-
-    implementation(project(":core:lib_common"))
+    implementation(project(":feature:lib_common"))
 
     implementation(libs.banner)
     implementation(libs.viewPagerIndicator)

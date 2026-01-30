@@ -35,7 +35,7 @@ dependencies {
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
+    implementation(project(":feature:lib_common"))
 
-    implementation(project(":core:lib_common"))
     implementation(libs.androidx.core.splashscreen)
 }
