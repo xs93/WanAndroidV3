@@ -1,5 +1,12 @@
 [
   {
+    "path": "app://activity/login",
+    "className": "com.warrior.preserve.login.activity.LoginActivity",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
     "path": "app://fragment/navigator",
     "className": "com.github.xs93.wanandroid.app.ui.fragment.NavigatorFragment",
     "action": "",

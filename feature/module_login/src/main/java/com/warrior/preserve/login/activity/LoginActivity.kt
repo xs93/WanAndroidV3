@@ -1,4 +1,4 @@
-package com.github.xs93.wanandroid.app.ui.activity
+package com.warrior.preserve.login.activity
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -11,23 +11,25 @@ import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
+import com.github.xs93.wan.common.router.PageRouterPath
 import com.github.xs93.wan.common.viewmodel.LoginAction
 import com.github.xs93.wan.common.viewmodel.LoginEvent
 import com.github.xs93.wan.common.viewmodel.LoginViewModel
-import com.github.xs93.wanandroid.app.R
-import com.github.xs93.wanandroid.app.databinding.LoginActivityBinding
+import com.github.xs93.wan.login.R
+import com.github.xs93.wan.login.databinding.LoginActivityBinding
+import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
 
+
 /**
- * 登录界面
- *
  * @author XuShuai
  * @version v1.0
- * @date 2023/10/7 15:10
- * @email 466911254@qq.com
+ * @date 2026/2/2
+ * @description 登录界面
+ *
  */
-
 @AndroidEntryPoint
+@Route(path = PageRouterPath.ACTIVITY_LOGIN)
 class LoginActivity : BaseVBActivity<LoginActivityBinding>(LoginActivityBinding::inflate) {
 
 

@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":feature:module_main"))
     implementation(project(":feature:module_music"))
     implementation(project(":feature:module_home"))
+    implementation(project(":feature:module_login"))
     implementation(project(":feature:lib_common"))
 
     ksp(libs.androidx.lifecycle.compiler)

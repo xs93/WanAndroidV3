@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":feature:module_login")
+
+
 rootProject.name = "WanAndroidV3"
 include(":app")
 include(":app-demo")

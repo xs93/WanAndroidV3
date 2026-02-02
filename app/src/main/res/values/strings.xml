@@ -21,15 +21,6 @@
     <string name="main_drawer_menu_theme_dark">深色模式</string>
     <!--endregion -->
 
-    <!--region Login page -->
-    <string name="login_title">登录</string>
-    <string name="login_account">账号</string>
-    <string name="login_password">密码</string>
-    <string name="login_register_label">注册账号？</string>
-    <string name="login_btn_login">登录</string>
-    <string name="login_success">Login Success</string>
-    <string name="login_failed">Login Failed</string>
-    <!--endregion -->
 
     <!--region 导航tab title -->
     <string name="navigator_tab_navigator">导航</string>

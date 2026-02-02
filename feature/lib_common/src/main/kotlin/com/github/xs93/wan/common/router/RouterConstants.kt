@@ -25,4 +25,6 @@ object PageRouterPath {
     const val FRAGMENT_NAVIGATOR = "app://fragment/navigator" //NavigatorFragment
     const val FRAGMENT_CLASSIFY = "app://fragment/classify"  //ClassifyFragment
     const val FRAGMENT_MINE = "app://fragment/mine"  //MineFragment
+
+    const val ACTIVITY_LOGIN = "app://activity/login"
 }

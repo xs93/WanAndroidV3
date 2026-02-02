@@ -25,6 +25,8 @@ kotlinxSerialization = "1.10.0"
 
 coilVersion = "3.3.0"
 
+koin-bom = "4.1.1"
+
 junit = "4.13.2"
 androidx-test-ext-junit = "1.3.0"
 espresso-core = "3.7.0"
@@ -114,6 +116,19 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 #google dagger hilt(https://github.com/google/dagger/releases)
 androidx-hilt = { module = "com.google.dagger:hilt-android", version.ref = "androidxHilt" }
 androidx-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "androidxHilt" }
+
+
+#Koin(https://insert-koin.io/)
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-android = { module = "io.insert-koin:koin-android" }
+koin-android-compat = { module = "io.insert-koin:koin-android-compat" }
+koin-androidx-workmanager = { module = "io.insert-koin:koin-androidx-workmanager" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
+koin-ktor = { module = "io.insert-koin:koin-ktor" }
+koin-test = { module = "io.insert-koin:koin-test" }
 
 #kotlin 协程库(https://github.com/Kotlin/kotlinx.coroutines)
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinCoroutines" }

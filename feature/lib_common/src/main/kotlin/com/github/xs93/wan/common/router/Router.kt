@@ -1,5 +1,6 @@
 package com.github.xs93.wan.common.router
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.core.net.toUri
 import com.github.xs93.utils.AppInject
@@ -17,10 +18,14 @@ object Router {
      * 跳转登录界面
      */
     fun toLogin() {
-        val url = RouterIntentUri.LOGIN.toUri()
-        val intent = Intent(RouterIntentAction.LOGIN, url).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            val url = RouterIntentUri.LOGIN.toUri()
+            val intent = Intent(RouterIntentAction.LOGIN, url).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            AppInject.getApp().startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
         }
-        AppInject.getApp().startActivity(intent)
     }
 }
