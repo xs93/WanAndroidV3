@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
-import com.github.xs93.framework.ktx.observerState
-import com.github.xs93.framework.ui.layoutManager.CenterLinearLayoutManager
+import com.github.xs93.core.ktx.observerState
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.ui.ui.layoutManager.CenterLinearLayoutManager
 import com.github.xs93.wan.common.viewmodel.NavigatorChildUiAction
 import com.github.xs93.wan.common.viewmodel.NavigatorChildViewModel
 import com.github.xs93.wan.data.entity.Navigation

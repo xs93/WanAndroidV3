@@ -3,7 +3,7 @@ package com.github.xs93.demo
 import android.os.Bundle
 import android.util.Log
 import com.github.xs93.demo.databinding.ActivityProgressBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 
 /**
  * @author XuShuai

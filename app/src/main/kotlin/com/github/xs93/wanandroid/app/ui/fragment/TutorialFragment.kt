@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorChildTutorialBinding
 import dagger.hilt.android.AndroidEntryPoint
 

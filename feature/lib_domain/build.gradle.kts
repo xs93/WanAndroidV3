@@ -28,7 +28,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core:lib_utils"))
+    implementation(project(":core:lib_core"))
     implementation(project(":feature:lib_data"))
     implementation(project(":feature:lib_router"))
 

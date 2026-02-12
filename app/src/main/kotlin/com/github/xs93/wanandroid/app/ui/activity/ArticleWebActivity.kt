@@ -13,8 +13,8 @@ import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
-import com.github.xs93.framework.ktx.addOnBackPressedCallback
+import com.github.xs93.core.ktx.addOnBackPressedCallback
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.wan.common.web.WebViewPool
 import com.github.xs93.wanandroid.app.databinding.ArticleWebActivityBinding
 import com.orhanobut.logger.Logger

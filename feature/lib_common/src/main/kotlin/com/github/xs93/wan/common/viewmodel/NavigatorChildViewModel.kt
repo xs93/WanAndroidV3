@@ -1,13 +1,13 @@
 package com.github.xs93.wan.common.viewmodel
 
 import android.annotation.SuppressLint
-import com.github.xs93.framework.base.viewmodel.BaseViewModel
-import com.github.xs93.framework.base.viewmodel.IUiAction
-import com.github.xs93.framework.base.viewmodel.IUiState
-import com.github.xs93.framework.base.viewmodel.mviActions
-import com.github.xs93.framework.base.viewmodel.mviStates
-import com.github.xs93.framework.ktx.launcherIO
-import com.github.xs93.utils.net.KNetwork
+import com.github.xs93.core.ktx.launcherIO
+import com.github.xs93.core.utils.net.KNetwork
+import com.github.xs93.ui.base.viewmodel.BaseViewModel
+import com.github.xs93.ui.base.viewmodel.IUiAction
+import com.github.xs93.ui.base.viewmodel.IUiState
+import com.github.xs93.ui.base.viewmodel.mviActions
+import com.github.xs93.ui.base.viewmodel.mviStates
 import com.github.xs93.wan.common.model.PageStatus
 import com.github.xs93.wan.data.entity.Navigation
 import com.github.xs93.wan.data.respotory.NavigatorRepository

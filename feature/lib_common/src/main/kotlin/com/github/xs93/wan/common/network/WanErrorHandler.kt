@@ -1,6 +1,6 @@
 package com.github.xs93.wan.common.network
 
-import com.github.xs93.framework.toast.ToastManager
+import com.github.xs93.core.toast.ToastManager
 import com.github.xs93.network.exception.ApiException
 import com.github.xs93.network.exception.ConversionException
 import com.github.xs93.network.exception.IErrorHandler

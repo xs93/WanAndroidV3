@@ -3,7 +3,7 @@ package com.github.xs93.wan.router
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import androidx.core.net.toUri
-import com.github.xs93.utils.AppInject
+import com.github.xs93.core.AppInject
 
 /**
  * @author XuShuai

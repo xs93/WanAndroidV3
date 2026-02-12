@@ -1,0 +1,1 @@
+-keep class * implements com.github.xs93.core.base.app.IAppLifecycle

@@ -11,10 +11,6 @@ android {
         minSdk = 23
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
-
-        ndk {
-            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
-        }
     }
 
 
@@ -31,7 +27,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core:lib_utils"))
+    implementation(project(":core:lib_core"))
 
     api(libs.bundles.retrofit2)
     api(libs.moshi.kotlin)

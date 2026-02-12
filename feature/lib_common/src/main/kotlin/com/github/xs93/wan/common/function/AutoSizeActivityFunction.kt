@@ -2,7 +2,7 @@ package com.github.xs93.wan.common.function
 
 import android.app.Activity
 import android.content.res.Resources
-import com.github.xs93.framework.base.ui.function.BaseActivityFunction
+import com.github.xs93.ui.base.ui.function.BaseActivityFunction
 import me.jessyan.autosize.AutoSizeCompat
 
 /**

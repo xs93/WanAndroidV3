@@ -11,7 +11,7 @@ import com.github.xs93.demo.entity.Teacher
 import com.github.xs93.demo.entity.TestResponse
 import com.github.xs93.demo.store.MyMMKVOwner
 import com.github.xs93.demo.store.MySharedPrefsOwner
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 import kotlinx.coroutines.launch
 
 /**

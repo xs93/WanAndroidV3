@@ -1,6 +1,6 @@
 package com.github.xs93.wan.domain.usecase
 
-import com.github.xs93.utils.AppInject
+import com.github.xs93.core.AppInject
 import com.github.xs93.wan.data.event.CollectEvent
 import com.github.xs93.wan.data.services.CollectService
 import com.github.xs93.wan.data.usercase.AccountDataManager

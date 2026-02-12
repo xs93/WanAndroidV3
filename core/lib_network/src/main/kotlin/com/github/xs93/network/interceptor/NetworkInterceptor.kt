@@ -1,8 +1,8 @@
 package com.github.xs93.network.interceptor
 
+import com.github.xs93.core.utils.net.KNetwork
 import com.github.xs93.network.exception.ERROR
 import com.github.xs93.network.exception.NetworkException
-import com.github.xs93.utils.net.KNetwork
 import okhttp3.Interceptor
 import okhttp3.Response
 

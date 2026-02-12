@@ -1,9 +1,9 @@
 package com.github.xs93.network.utils
 
 import android.content.Context
-import com.github.xs93.utils.crypt.AESCrypt.decrypt
-import com.github.xs93.utils.crypt.AESCrypt.encrypt
-import com.github.xs93.utils.hashWithMD5
+import com.github.xs93.core.utils.crypt.AESCrypt.decrypt
+import com.github.xs93.core.utils.crypt.AESCrypt.encrypt
+import com.github.xs93.core.utils.hashWithMD5
 import okhttp3.Request
 import okio.Buffer
 import java.io.File

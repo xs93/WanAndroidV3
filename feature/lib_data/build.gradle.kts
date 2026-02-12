@@ -30,7 +30,7 @@ android {
 dependencies {
 
     implementation(project(":core:lib_network"))
-    implementation(project(":core:lib_utils"))
+    implementation(project(":core:lib_core"))
     api(project(":core:lib_kv"))
     implementation(libs.mmkv)
 

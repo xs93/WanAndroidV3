@@ -26,7 +26,7 @@ android {
 
 dependencies {
 
-    implementation(project(":core:lib_utils"))
+    implementation(project(":core:lib_core"))
 
     implementation(libs.androidx.core.kts)
     implementation(libs.androidx.appcompat)

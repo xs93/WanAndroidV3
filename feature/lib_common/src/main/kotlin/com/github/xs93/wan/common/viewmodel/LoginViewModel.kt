@@ -1,13 +1,13 @@
 package com.github.xs93.wan.common.viewmodel
 
-import com.github.xs93.framework.base.viewmodel.BaseViewModel
-import com.github.xs93.framework.base.viewmodel.IUiAction
-import com.github.xs93.framework.base.viewmodel.IUiEvent
-import com.github.xs93.framework.base.viewmodel.IUiState
-import com.github.xs93.framework.base.viewmodel.mviActions
-import com.github.xs93.framework.base.viewmodel.mviEvents
-import com.github.xs93.framework.base.viewmodel.mviStates
-import com.github.xs93.framework.ktx.launcher
+import com.github.xs93.core.ktx.launcher
+import com.github.xs93.ui.base.viewmodel.BaseViewModel
+import com.github.xs93.ui.base.viewmodel.IUiAction
+import com.github.xs93.ui.base.viewmodel.IUiEvent
+import com.github.xs93.ui.base.viewmodel.IUiState
+import com.github.xs93.ui.base.viewmodel.mviActions
+import com.github.xs93.ui.base.viewmodel.mviEvents
+import com.github.xs93.ui.base.viewmodel.mviStates
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.data.respotory.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

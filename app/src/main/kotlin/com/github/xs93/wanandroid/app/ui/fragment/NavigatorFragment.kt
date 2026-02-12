@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
-import com.github.xs93.framework.adapter.SimpleViewPagerAdapter
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
-import com.github.xs93.framework.ktx.setTouchSlopMultiple
-import com.github.xs93.utils.ktx.string
-import com.github.xs93.utils.ktx.viewLifecycle
+import com.github.xs93.core.ktx.string
+import com.github.xs93.core.ktx.viewLifecycle
+import com.github.xs93.ui.adapter.SimpleViewPagerAdapter
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.ui.kts.setTouchSlopMultiple
 import com.github.xs93.wan.common.model.SimpleTabBean
 import com.github.xs93.wan.router.PageRouterPath
 import com.github.xs93.wanandroid.app.R

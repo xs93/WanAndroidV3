@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
-import com.github.xs93.framework.ktx.launcher
-import com.github.xs93.utils.ktx.startActivitySafe
+import com.github.xs93.core.ktx.launcher
+import com.github.xs93.core.ktx.startActivitySafe
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.wan.main.databinding.ActivityStartBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay

@@ -36,10 +36,10 @@ android {
 
 dependencies {
 
-    api(project(":core:lib_framework"))
+    api(project(":core:lib_ui"))
     api(project(":core:lib_coil"))
     api(project(":core:lib_network"))
-    api(project(":core:lib_utils"))
+    api(project(":core:lib_core"))
     api(project(":core:lib_gdview"))
     api(project(":core:lib_camera"))
     api(project(":core:lib_kv"))

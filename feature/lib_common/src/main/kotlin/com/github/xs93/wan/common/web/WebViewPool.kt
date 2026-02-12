@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.github.xs93.utils.AppInject
+import com.github.xs93.core.AppInject
 
 /**
  * WebView缓存池

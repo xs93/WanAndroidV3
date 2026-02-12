@@ -7,7 +7,7 @@ import androidx.core.graphics.Insets
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePaddingRelative
 import com.github.xs93.demo.databinding.DialogSoftKeyboardTestBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBBottomSheetDialogFragment
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBBottomSheetDialogFragment
 
 /**
  *

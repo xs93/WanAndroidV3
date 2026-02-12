@@ -2,7 +2,7 @@ package com.github.xs93.wanandroid.app.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.wan.router.PageRouterPath
 import com.github.xs93.wanandroid.app.databinding.FragmentClassifyBinding
 import com.therouter.router.Route

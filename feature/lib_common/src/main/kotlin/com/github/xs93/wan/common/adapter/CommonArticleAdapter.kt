@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseDifferAdapter
-import com.github.xs93.utils.ktx.gone
-import com.github.xs93.utils.ktx.toHtml
-import com.github.xs93.utils.ktx.visible
+import com.github.xs93.core.ktx.gone
+import com.github.xs93.core.ktx.toHtml
+import com.github.xs93.core.ktx.visible
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.databinding.CommonItemArticleBinding
 import com.github.xs93.wan.common.diff.ArticleItemCallback

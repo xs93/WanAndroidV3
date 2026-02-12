@@ -3,7 +3,7 @@ package com.github.xs93.wan.common.ui.widget
 import android.content.Context
 import android.util.AttributeSet
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.github.xs93.utils.ktx.getColorByAttr
+import com.github.xs93.core.ktx.getColorByAttr
 
 /**
  * @author XuShuai

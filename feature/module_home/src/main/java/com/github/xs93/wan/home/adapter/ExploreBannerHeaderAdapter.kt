@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter4.BaseSingleItemAdapter
-import com.github.xs93.utils.ktx.color
-import com.github.xs93.utils.ktx.dp
-import com.github.xs93.utils.ktx.getColorByAttr
+import com.github.xs93.core.ktx.color
+import com.github.xs93.core.ktx.dp
+import com.github.xs93.core.ktx.getColorByAttr
 import com.github.xs93.wan.data.entity.Banner
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeLayoutExploreBannerBinding
@@ -45,7 +45,7 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
         val binding = HomeLayoutExploreBannerBinding.inflate(layoutInflater, parent, false)
         val bannerViewPager: BannerViewPager<Banner> = binding.root.findViewById(R.id.banner)
         bannerViewPager.apply {
-            val normalColor = context.color(com.github.xs93.framework.R.color.color_666666)
+            val normalColor = context.color(com.github.xs93.ui.R.color.color_666666)
             val selectedColor = context.getColorByAttr(androidx.appcompat.R.attr.colorPrimary)
             setIndicatorSliderColor(normalColor, selectedColor)
             setIndicatorSlideMode(IndicatorSlideMode.WORM)

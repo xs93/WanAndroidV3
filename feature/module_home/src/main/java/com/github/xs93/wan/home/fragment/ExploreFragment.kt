@@ -11,12 +11,12 @@ import com.chad.library.adapter4.loadState.LoadState
 import com.chad.library.adapter4.loadState.trailing.TrailingLoadStateAdapter
 import com.chad.library.adapter4.util.addOnDebouncedChildClick
 import com.chad.library.adapter4.util.setOnDebouncedItemClick
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
-import com.github.xs93.framework.base.viewmodel.registerCommonEvent
-import com.github.xs93.framework.ktx.observerState
+import com.github.xs93.core.ktx.observerState
+import com.github.xs93.core.ktx.viewLifecycle
+import com.github.xs93.core.utils.net.KNetwork
 import com.github.xs93.statuslayout.MultiStatusLayout
-import com.github.xs93.utils.ktx.viewLifecycle
-import com.github.xs93.utils.net.KNetwork
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.ui.base.viewmodel.registerCommonEvent
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleAdapter
 import com.github.xs93.wan.common.model.ListUiState

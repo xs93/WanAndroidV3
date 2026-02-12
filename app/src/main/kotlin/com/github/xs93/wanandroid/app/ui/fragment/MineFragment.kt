@@ -6,8 +6,8 @@ import android.view.View
 import androidx.media3.common.MediaItem
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBFragment
-import com.github.xs93.utils.ktx.setSingleClickListener
+import com.github.xs93.core.ktx.setSingleClickListener
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.wan.router.PageRouterPath
 import com.github.xs93.wanandroid.app.databinding.FragmentMineBinding
 import com.github.xs93.wanandroid.music.service.MusicPlayService

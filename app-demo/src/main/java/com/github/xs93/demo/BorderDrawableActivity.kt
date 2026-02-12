@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.demo.databinding.ActivityBorderDrawableBinding
-import com.github.xs93.framework.base.ui.viewbinding.BaseVBActivity
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 
 /**
  * @author XuShuai

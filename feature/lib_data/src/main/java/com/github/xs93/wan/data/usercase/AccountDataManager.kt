@@ -1,8 +1,8 @@
 package com.github.xs93.wan.data.usercase
 
 import androidx.core.net.toUri
+import com.github.xs93.core.AppInject
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.utils.AppInject
 import com.github.xs93.wan.data.DataConstant
 import com.github.xs93.wan.data.entity.User
 import com.github.xs93.wan.data.entity.UserDetailInfo

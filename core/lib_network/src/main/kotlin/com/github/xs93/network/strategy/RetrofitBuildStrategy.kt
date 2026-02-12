@@ -1,6 +1,8 @@
 package com.github.xs93.network.strategy
 
 import android.content.Context
+import com.github.xs93.core.AppInject
+import com.github.xs93.core.utils.crypt.AESCrypt
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.cookie.CookieJarManager
 import com.github.xs93.network.cookie.SharedPreferencesCookieStore
@@ -11,8 +13,6 @@ import com.github.xs93.network.interceptor.HandleErrorInterceptor
 import com.github.xs93.network.interceptor.NetworkInterceptor
 import com.github.xs93.network.moshi.adapter.BooleanAdapter
 import com.github.xs93.network.okhttp.OkHttpClientManager
-import com.github.xs93.utils.AppInject
-import com.github.xs93.utils.crypt.AESCrypt
 import com.squareup.moshi.Moshi
 import okhttp3.Cache
 import okhttp3.CookieJar

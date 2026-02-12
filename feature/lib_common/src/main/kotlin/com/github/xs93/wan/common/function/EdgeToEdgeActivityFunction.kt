@@ -4,7 +4,7 @@ import android.graphics.Color
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
-import com.github.xs93.framework.base.ui.function.BaseActivityFunction
+import com.github.xs93.ui.base.ui.function.BaseActivityFunction
 
 /**
  * 修改edgeToEdge调用方法

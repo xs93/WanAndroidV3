@@ -1,6 +1,6 @@
 package com.github.xs93.wanandroid.app.ui
 
-import com.github.xs93.framework.base.application.BaseApplication
+import com.github.xs93.core.base.app.BaseApplication
 import dagger.hilt.android.HiltAndroidApp
 
 /**
