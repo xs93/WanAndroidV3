@@ -11,12 +11,12 @@ import com.github.xs93.framework.ktx.observerEvent
 import com.github.xs93.framework.ktx.observerState
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
-import com.github.xs93.wan.common.router.PageRouterPath
 import com.github.xs93.wan.common.viewmodel.LoginAction
 import com.github.xs93.wan.common.viewmodel.LoginEvent
 import com.github.xs93.wan.common.viewmodel.LoginViewModel
 import com.github.xs93.wan.login.R
 import com.github.xs93.wan.login.databinding.LoginActivityBinding
+import com.github.xs93.wan.router.PageRouterPath
 import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -10,7 +10,7 @@ import com.github.xs93.framework.ktx.setTouchSlopMultiple
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.wan.common.model.SimpleTabBean
-import com.github.xs93.wan.common.router.PageRouterPath
+import com.github.xs93.wan.router.PageRouterPath
 import com.github.xs93.wanandroid.app.R
 import com.github.xs93.wanandroid.app.databinding.FragmentNavigatorBinding
 import com.google.android.material.tabs.TabLayoutMediator

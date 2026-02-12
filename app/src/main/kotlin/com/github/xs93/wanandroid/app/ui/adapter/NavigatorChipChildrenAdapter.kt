@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.ViewGroup
 import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.utils.ktx.layoutInflater
-import com.github.xs93.wan.common.entity.Navigation
 import com.github.xs93.wan.common.ui.viewbinding.BaseVBViewHolder
+import com.github.xs93.wan.data.entity.Navigation
 import com.github.xs93.wanandroid.app.databinding.ItemNavigatorChipChildrenBinding
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection

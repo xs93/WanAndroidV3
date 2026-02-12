@@ -23,15 +23,15 @@ import com.github.xs93.utils.ktx.isNightMode
 import com.github.xs93.utils.ktx.setSingleClickListener
 import com.github.xs93.utils.ktx.string
 import com.github.xs93.utils.ktx.visible
-import com.github.xs93.wan.common.account.AccountDataManager
-import com.github.xs93.wan.common.account.AccountState
-import com.github.xs93.wan.common.router.PageRouterPath
-import com.github.xs93.wan.common.store.AppCommonStore
 import com.github.xs93.wan.common.viewmodel.MainAction
 import com.github.xs93.wan.common.viewmodel.MainEvent
 import com.github.xs93.wan.common.viewmodel.MainViewModel
+import com.github.xs93.wan.data.model.AccountState
+import com.github.xs93.wan.data.store.AppCommonStore
+import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.main.R
 import com.github.xs93.wan.main.databinding.ActivityMainBinding
+import com.github.xs93.wan.router.PageRouterPath
 import com.therouter.TheRouter
 import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -112,7 +112,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
         vBinding.mainDrawerLayout.apply {
             with(btnLogin) {
                 setSingleClickListener {
-//                    startActivitySafe<LoginActivity>()
+                    TheRouter.build(PageRouterPath.ACTIVITY_LOGIN).navigation()
                 }
             }
 

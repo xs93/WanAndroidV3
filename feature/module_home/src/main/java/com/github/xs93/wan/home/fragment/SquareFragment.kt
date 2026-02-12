@@ -18,10 +18,10 @@ import com.github.xs93.statuslayout.MultiStatusLayout
 import com.github.xs93.utils.net.KNetwork
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleAdapter
-import com.github.xs93.wan.common.model.CollectEvent
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.common.viewmodel.SquareUiAction
 import com.github.xs93.wan.common.viewmodel.SquareViewModel
+import com.github.xs93.wan.data.event.CollectEvent
 import com.github.xs93.wan.home.databinding.HomeFragmentSquareBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn

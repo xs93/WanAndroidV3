@@ -8,9 +8,9 @@ import com.github.xs93.framework.base.viewmodel.mviActions
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcherIO
 import com.github.xs93.utils.net.KNetwork
-import com.github.xs93.wan.common.data.respotory.NavigatorRepository
-import com.github.xs93.wan.common.entity.Navigation
 import com.github.xs93.wan.common.model.PageStatus
+import com.github.xs93.wan.data.entity.Navigation
+import com.github.xs93.wan.data.respotory.NavigatorRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

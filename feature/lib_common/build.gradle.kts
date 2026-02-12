@@ -40,7 +40,9 @@ dependencies {
     api(project(":core:lib_network"))
     api(project(":core:lib_utils"))
     api(project(":core:lib_gdview"))
-    api(project(":core:lib_kv"))
+    api(project(":feature:lib_data"))
+    api(project(":feature:lib_domain"))
+    api(project(":feature:lib_router"))
 
 
     api(libs.brvah4)

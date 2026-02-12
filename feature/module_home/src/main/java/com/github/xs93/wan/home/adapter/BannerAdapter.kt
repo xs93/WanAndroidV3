@@ -3,7 +3,7 @@ package com.github.xs93.wan.home.adapter
 import android.view.View
 import android.view.ViewGroup
 import coil3.load
-import com.github.xs93.wan.common.entity.Banner
+import com.github.xs93.wan.data.entity.Banner
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeItemExploreBannerBinding
 import com.zhpan.bannerview.BaseBannerAdapter

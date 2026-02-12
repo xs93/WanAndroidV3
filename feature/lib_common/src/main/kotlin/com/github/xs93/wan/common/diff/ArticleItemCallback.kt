@@ -1,7 +1,7 @@
 package com.github.xs93.wan.common.diff
 
 import androidx.recyclerview.widget.DiffUtil
-import com.github.xs93.wan.common.entity.Article
+import com.github.xs93.wan.data.entity.Article
 
 /**
  * 文章信息对象 ItemCallback实现

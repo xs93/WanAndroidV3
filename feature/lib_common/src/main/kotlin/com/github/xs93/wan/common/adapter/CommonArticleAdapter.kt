@@ -13,7 +13,7 @@ import com.github.xs93.wan.common.databinding.CommonItemArticleBinding
 import com.github.xs93.wan.common.diff.ArticleItemCallback
 import com.github.xs93.wan.common.diff.ArticleItemChangePayload
 import com.github.xs93.wan.common.diff.ArticleItemChanged
-import com.github.xs93.wan.common.entity.Article
+import com.github.xs93.wan.data.entity.Article
 
 /**
  *

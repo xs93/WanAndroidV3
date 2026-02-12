@@ -21,8 +21,9 @@ import com.github.xs93.utils.ktx.isDebug
 import com.github.xs93.wan.common.function.AutoSizeActivityFunction
 import com.github.xs93.wan.common.function.EdgeToEdgeActivityFunction
 import com.github.xs93.wan.common.network.WanErrorHandler
-import com.github.xs93.wan.common.store.AppCommonStore
 import com.github.xs93.wan.common.web.WebViewPool
+import com.github.xs93.wan.data.DataConstant
+import com.github.xs93.wan.data.store.AppCommonStore
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -96,7 +97,7 @@ class CommonAppLifecycle : IAppLifecycle {
         EasyRetrofit.init(application)
         EasyRetrofit.addErrorHandler(LogErrorHandler())
         EasyRetrofit.addErrorHandler(WanErrorHandler())
-        EasyRetrofit.createRetrofit(AppConstant.BASE_URL)
+        EasyRetrofit.createRetrofit(DataConstant.BASE_URL)
     }
 
     private fun initSmartRefreshLayout() {

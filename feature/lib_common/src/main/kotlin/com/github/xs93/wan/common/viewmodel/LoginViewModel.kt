@@ -9,7 +9,7 @@ import com.github.xs93.framework.base.viewmodel.mviEvents
 import com.github.xs93.framework.base.viewmodel.mviStates
 import com.github.xs93.framework.ktx.launcher
 import com.github.xs93.wan.common.R
-import com.github.xs93.wan.common.data.respotory.AccountRepository
+import com.github.xs93.wan.data.respotory.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

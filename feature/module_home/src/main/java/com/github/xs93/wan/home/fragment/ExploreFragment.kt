@@ -19,10 +19,10 @@ import com.github.xs93.utils.ktx.viewLifecycle
 import com.github.xs93.utils.net.KNetwork
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleAdapter
-import com.github.xs93.wan.common.model.CollectEvent
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.common.viewmodel.ExploreUiAction
 import com.github.xs93.wan.common.viewmodel.ExploreViewModel
+import com.github.xs93.wan.data.event.CollectEvent
 import com.github.xs93.wan.home.adapter.ExploreBannerHeaderAdapter
 import com.github.xs93.wan.home.databinding.HomeFragmentExploreBinding
 import dagger.hilt.android.AndroidEntryPoint

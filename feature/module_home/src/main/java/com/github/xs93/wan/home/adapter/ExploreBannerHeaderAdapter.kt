@@ -9,7 +9,7 @@ import com.chad.library.adapter4.BaseSingleItemAdapter
 import com.github.xs93.utils.ktx.color
 import com.github.xs93.utils.ktx.dp
 import com.github.xs93.utils.ktx.getColorByAttr
-import com.github.xs93.wan.common.entity.Banner
+import com.github.xs93.wan.data.entity.Banner
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeLayoutExploreBannerBinding
 import com.zhpan.bannerview.BannerViewPager

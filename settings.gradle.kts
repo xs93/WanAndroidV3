@@ -1,6 +1,9 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":feature:module_login")
+include(":feature:lib_router")
+
+
+include(":feature:lib_domain")
 
 
 rootProject.name = "WanAndroidV3"
@@ -16,9 +19,11 @@ include(":core:lib_camera")
 include(":core:lib_kv")
 
 include(":feature:lib_common")
+include(":feature:lib_data")
 include(":feature:module_main")
 include(":feature:module_music")
 include(":feature:module_home")
+include(":feature:module_login")
 
 pluginManagement {
     repositories {
