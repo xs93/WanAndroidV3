@@ -6,7 +6,7 @@
     android:layout_height="48dp"
     tools:layout_width="100dp">
 
-    <com.github.xs93.roundcorner.view.RoundCornerTextView
+    <com.github.xs93.widget.roundcorner.view.RoundCornerTextView
         android:id="@+id/tvChipName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

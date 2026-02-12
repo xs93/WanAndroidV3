@@ -1,8 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
 
-
-
 rootProject.name = "WanAndroidV3"
 include(":app")
 include(":app-demo")
@@ -12,7 +10,7 @@ include(":core:lib_network")
 include(":core:lib_kv")
 include(":core:lib_ui")
 include(":core:lib_coil")
-include(":core:lib_gdview")
+include(":core:lib_widget")
 include(":core:lib_camera")
 
 include(":feature:lib_data")

@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <com.github.xs93.roundcorner.view.RoundCornerTextView
+    <com.github.xs93.widget.roundcorner.view.RoundCornerTextView
         android:id="@+id/tvChipChild"
         android:layout_width="wrap_content"
         android:layout_height="24dp"

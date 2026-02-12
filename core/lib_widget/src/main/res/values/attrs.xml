@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NestedScrollableRecyclerView">
+        <attr name="parentOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="MockClickEventConstraintLayout">
+        <attr name="exclude_child_view_ids" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="StrokedTextView">
+        <attr name="stroke_width" format="dimension" />
+        <attr name="stroke_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="EnforceWidthSwitchCompact">
+        <attr name="enforce_width" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="BorderDrawableView">
+        <attr name="border_style" format="enum">
+            <enum name="normal_linear" value="0" />
+            <enum name="normal_sweep" value="1" />
+            <enum name="fluid_linear" value="2" />
+            <enum name="fluid_sweep" value="3" />
+        </attr>
+        <attr name="border_width" format="dimension" />
+        <attr name="border_left_width" format="dimension" />
+        <attr name="border_top_width" format="dimension" />
+        <attr name="border_right_width" format="dimension" />
+        <attr name="border_bottom_width" format="dimension" />
+        <attr name="border_radius" format="dimension" />
+        <attr name="border_outer_radius" format="dimension" />
+        <attr name="border_inner_radius" format="dimension" />
+        <attr name="border_outer_radii" format="string" />
+        <attr name="border_inner_radii" format="string" />
+        <attr name="border_color" format="color" />
+        <attr name="border_colors" format="string" />
+        <attr name="border_colors_positions" format="string" />
+        <attr name="border_orientation" format="enum">
+            <enum name="TOP_BOTTOM" value="0" />
+            <enum name="TR_BL" value="1" />
+            <enum name="RIGHT_LEFT" value="2" />
+            <enum name="BR_TL" value="3" />
+            <enum name="BOTTOM_TOP" value="4" />
+            <enum name="BL_TR" value="5" />
+            <enum name="LEFT_RIGHT" value="6" />
+            <enum name="TL_BR" value="7" />
+        </attr>
+        <attr name="border_use_foreground" format="boolean" />
+        <!--是否流动渐变-->
+        <attr name="border_anim_duration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="ProgressView">
+        <attr name="progress_style" format="enum">
+            <enum name="linear" value="0" />
+            <enum name="circle" value="1" />
+        </attr>
+        <attr name="progress_width" format="dimension" />
+        <attr name="progress_background_color" format="color" />
+        <attr name="progress_color" format="color" />
+        <attr name="progress_colors" format="string|reference" />
+        <attr name="progress_colors_positions" format="string|reference" />
+        <attr name="progress_start_angle" format="integer">
+            <enum name="angle0" value="-1" />
+            <enum name="angle90" value="-2" />
+            <enum name="angle180" value="-3" />
+            <enum name="angle270" value="-4" />
+        </attr>
+        <attr name="progress_max" format="integer" />
+        <attr name="progress" format="integer" />
+        <attr name="progress_cap" format="enum">
+            <enum name="butt" value="0" />
+            <enum name="round" value="1" />
+            <enum name="square" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -18,6 +18,8 @@ import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.LogErrorHandler
 import com.github.xs93.network.okhttp.OkHttpClientManager
 import com.github.xs93.ui.base.ui.function.FunctionsManager
+import com.github.xs93.ui.loading.LoadingDialogHelper
+import com.github.xs93.ui.loading.impl.DefaultCreateLoadingDialog
 import com.github.xs93.wan.common.function.AutoSizeActivityFunction
 import com.github.xs93.wan.common.function.EdgeToEdgeActivityFunction
 import com.github.xs93.wan.common.network.WanErrorHandler
@@ -46,6 +48,7 @@ class CommonAppLifecycle : IAppLifecycle {
     private val crashHandler by lazy { CrashHandler() }
 
     override fun onCreate(application: Application) {
+        LoadingDialogHelper.initLoadingDialog(DefaultCreateLoadingDialog())
         crashHandler.init(application)
         initLogger(application)
         MMKV.initialize(application)
