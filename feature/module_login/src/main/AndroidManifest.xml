@@ -5,14 +5,27 @@
         <activity
             android:name="com.warrior.preserve.login.activity.LoginActivity"
             android:configChanges="keyboard|orientation|screenSize|screenLayout|touchscreen"
-            android:exported="false">
-
-            <intent-filter>
-                <action android:name="com.github.xs93.wanandroid.intent.action.login" />
+            android:exported="true">
+            <!-- 标准deep links 实现，可以响应网页跳转登录页-->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <!--允许浏览器或其他应用通过链接启动你的 Activity。-->
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.wanandroid.com"
+                    android:path="/login"
+                    android:scheme="https" />
+            </intent-filter>
 
-                <data android:scheme="wanandroid" />
-                <data android:host="login" />
+            <!-- App内部隐式跳转协议-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="wanandroid"
+                    android:path="/login"
+                    android:scheme="app" />
             </intent-filter>
         </activity>
     </application>

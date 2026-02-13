@@ -10,13 +10,8 @@ package com.github.xs93.wan.router
  */
 
 
-object RouterIntentAction {
-    const val LOGIN = "com.github.xs93.wanandroid.intent.action.login"
-}
-
-
 object RouterIntentUri {
-    const val LOGIN = "wanandroid://login"
+    const val LOGIN = "app://wanandroid/login"
 }
 
 object PageRouterPath {
@@ -26,5 +21,5 @@ object PageRouterPath {
     const val FRAGMENT_CLASSIFY = "app://fragment/classify"  //ClassifyFragment
     const val FRAGMENT_MINE = "app://fragment/mine"  //MineFragment
 
-    const val ACTIVITY_LOGIN = "app://activity/login"
+    const val ACTIVITY_LOGIN = "app://activity/login" //LoginActivity
 }

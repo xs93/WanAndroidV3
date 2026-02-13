@@ -20,7 +20,7 @@ object Router {
     fun toLogin() {
         try {
             val url = RouterIntentUri.LOGIN.toUri()
-            val intent = Intent(RouterIntentAction.LOGIN, url).apply {
+            val intent = Intent(Intent.ACTION_VIEW, url).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             AppInject.getApp().startActivity(intent)
