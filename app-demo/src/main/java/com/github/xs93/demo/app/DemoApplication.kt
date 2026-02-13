@@ -1,7 +1,7 @@
 package com.github.xs93.demo.app
 
+import com.github.xs93.core.base.app.BaseApplication
 import com.github.xs93.core.crash.CrashHandler
-import com.github.xs93.framework.base.application.BaseApplication
 
 /**
  * @author XuShuai

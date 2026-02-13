@@ -3,11 +3,11 @@ package com.github.xs93.demo
 import android.os.Bundle
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
+import com.github.xs93.core.AppInject
+import com.github.xs93.core.ktx.setSingleClickListener
+import com.github.xs93.core.ktx.startActivitySafe
 import com.github.xs93.demo.databinding.ActivityMainBinding
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
-import com.github.xs93.utils.AppInject
-import com.github.xs93.utils.ktx.setSingleClickListener
-import com.github.xs93.utils.ktx.startActivitySafe
 
 class MainActivity : BaseVBActivity<ActivityMainBinding>(
     ActivityMainBinding::inflate

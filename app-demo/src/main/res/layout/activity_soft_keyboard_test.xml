@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.github.xs93.framework.widget.StrokedTextView
+    <com.github.xs93.widget.StrokedTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="88888\n9999\n您好啊!"

@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.core.graphics.Insets
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
+import com.github.xs93.core.ktx.setSingleClickListener
 import com.github.xs93.core.ktx.showAllowingStateLoss
 import com.github.xs93.demo.databinding.ActivitySoftKeyboardTestBinding
 import com.github.xs93.demo.dialog.SoftKeyboardTestDialog
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
-import com.github.xs93.utils.ktx.setSingleClickListener
 
 /**
  *

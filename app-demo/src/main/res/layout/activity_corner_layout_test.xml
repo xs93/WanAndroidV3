@@ -7,7 +7,7 @@
     android:background="@color/black"
     android:orientation="vertical">
 
-    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+    <com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout
         android:id="@+id/cclLayout"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -23,9 +23,9 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/test_1" />
-    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+    </com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout>
 
-    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+    <com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
@@ -38,9 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
-    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+    </com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout>
 
-    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+    <com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
@@ -59,7 +59,7 @@
             android:includeFontPadding="false"
             android:text="iiihjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa"
             android:textSize="9sp" />
-    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+    </com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="100dp"
@@ -70,7 +70,7 @@
         app:shapeAppearance="@style/ShapeAppearance.App.10dp"
         tools:src="@drawable/test_1" />
 
-    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+    <com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
@@ -83,9 +83,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
-    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+    </com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout>
 
-    <com.github.xs93.roundcorner.view.RoundCornerFrameLayout
+    <com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
@@ -100,5 +100,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="hjaksfjhjksdffhjsahfjsalfshfsjaklflasfjaslfsajlfsafhsa" />
-    </com.github.xs93.roundcorner.view.RoundCornerFrameLayout>
+    </com.github.xs93.widget.roundcorner.view.RoundCornerFrameLayout>
 </LinearLayout>

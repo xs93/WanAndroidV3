@@ -12,7 +12,7 @@
         android:columnCount="3"
         android:orientation="horizontal">
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
@@ -21,7 +21,7 @@
             app:border_radius="10dp"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_columnWeight="1"
             android:layout_gravity="fill"
@@ -31,7 +31,7 @@
             app:border_radius="10dp"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -42,7 +42,7 @@
             app:border_outer_radius="10dp"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_row="0"
             android:layout_rowWeight="1"
@@ -54,7 +54,7 @@
             app:border_radius="10dp"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -66,7 +66,7 @@
             app:border_radius="10dp"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -79,7 +79,7 @@
             app:border_style="normal_sweep"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -91,7 +91,7 @@
             app:border_outer_radii="10,10,0,0,10,10,0,0"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -103,7 +103,7 @@
             app:border_outer_radii="10,10,0,0,10,10,0,0"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -115,7 +115,7 @@
             app:border_outer_radii="10,10,0,0,10,10,0,0"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -128,7 +128,7 @@
             app:border_outer_radii="10,10,10,10,0,0,0,0"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -142,7 +142,7 @@
             app:border_outer_radii="10,10,10,10,0,0,0,0"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="20dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -157,7 +157,7 @@
             app:border_width="4dp" />
 
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -170,7 +170,7 @@
             app:border_outer_radii="10,10,10,10,0,0,0,0"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -188,9 +188,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/black" />
-        </com.github.xs93.framework.widget.drawable.BorderDrawableView>
+        </com.github.xs93.widget.drawable.BorderDrawableView>
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -207,9 +207,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
-        </com.github.xs93.framework.widget.drawable.BorderDrawableView>
+        </com.github.xs93.widget.drawable.BorderDrawableView>
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -222,7 +222,7 @@
             app:border_style="fluid_sweep"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
@@ -236,7 +236,7 @@
             app:border_style="fluid_linear"
             app:border_width="4dp" />
 
-        <com.github.xs93.framework.widget.drawable.BorderDrawableView
+        <com.github.xs93.widget.drawable.BorderDrawableView
             android:layout_height="100dp"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"

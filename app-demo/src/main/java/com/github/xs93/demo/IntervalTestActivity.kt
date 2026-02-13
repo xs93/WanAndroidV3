@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
+import com.github.xs93.core.ktx.setSingleClickListener
+import com.github.xs93.core.utils.interval.Interval
+import com.github.xs93.core.utils.net.KNetwork
 import com.github.xs93.demo.databinding.ActivityIntervalTestBinding
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
-import com.github.xs93.utils.interval.Interval
-import com.github.xs93.utils.ktx.setSingleClickListener
-import com.github.xs93.utils.net.KNetwork
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
