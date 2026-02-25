@@ -10,9 +10,11 @@ import com.github.xs93.wan.data.model.AccountState
 import com.github.xs93.wan.data.model.isLogin
 import com.github.xs93.wan.data.store.AccountStore
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import okhttp3.HttpUrl
 import javax.inject.Inject
@@ -27,23 +29,19 @@ import javax.inject.Inject
  */
 class AccountDataManager @Inject constructor() {
 
-    private val _accountStateFlow: MutableStateFlow<AccountState> =
-        MutableStateFlow(AccountState.LogOut)
-
-    private val _userDetailStateFlow: MutableStateFlow<UserDetailInfo> =
-        MutableStateFlow(UserDetailInfo())
-
+    private val _accountStateFlow = MutableStateFlow<AccountState>(AccountState.LogOut)
     val accountStateFlow: StateFlow<AccountState> = _accountStateFlow.asStateFlow()
 
-    val userDetailFlow: StateFlow<UserDetailInfo> = _userDetailStateFlow.asStateFlow()
+    private val _userDetailStateFlow = MutableStateFlow<UserDetailInfo?>(null)
+    val userDetailFlow: Flow<UserDetailInfo> = _userDetailStateFlow.asStateFlow().filterNotNull()
 
-    fun peekUserDetailInfo(): UserDetailInfo = userDetailFlow.value
+    fun peekUserDetailInfo(): UserDetailInfo? = _userDetailStateFlow.value
 
     val isLogin: Boolean
         get() = _accountStateFlow.value.isLogin
 
     val userId: Int
-        get() = peekUserDetailInfo().userInfo.id
+        get() = peekUserDetailInfo()?.userInfo?.id ?: 0
 
     fun isMe(userId: Int): Boolean {
         return if (userId == 0) false else this.userId == userId
