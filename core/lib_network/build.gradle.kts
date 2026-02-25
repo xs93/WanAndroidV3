@@ -27,8 +27,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core:lib_core"))
-
     api(libs.bundles.retrofit2)
     api(libs.moshi.kotlin)
 

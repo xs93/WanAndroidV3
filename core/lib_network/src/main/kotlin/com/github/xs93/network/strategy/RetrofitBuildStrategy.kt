@@ -1,8 +1,7 @@
 package com.github.xs93.network.strategy
 
+import android.annotation.SuppressLint
 import android.content.Context
-import com.github.xs93.core.AppInject
-import com.github.xs93.core.utils.crypt.AESCrypt
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.cookie.CookieJarManager
 import com.github.xs93.network.cookie.SharedPreferencesCookieStore
@@ -46,12 +45,12 @@ open class RetrofitBuildStrategy {
             cache(getCache())
             cookieJar(getCookieJar())
             addInterceptor(HandleErrorInterceptor())
-            addInterceptor(NetworkInterceptor())
+            addInterceptor(NetworkInterceptor(EasyRetrofit.getApp()))
             addInterceptor(DynamicTimeoutInterceptor())
             addInterceptor(DynamicBaseUrlInterceptor())
             addInterceptor(
                 CacheInterceptor(
-                    AppInject.getApp(),
+                    EasyRetrofit.getApp(),
                     getCacheEncryptKey(),
                     getCacheEncryptIv()
                 )
@@ -113,23 +112,25 @@ open class RetrofitBuildStrategy {
         return emptyList()
     }
 
+    @SuppressLint("UseKtx")
     open fun getCacheEncryptKey(): String {
         val context: Context = EasyRetrofit.getApp()
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
         var encryptKey = sp.getString("key", "")
         if (encryptKey.isNullOrBlank()) {
-            encryptKey = AESCrypt.generateKeyString(16)
+            encryptKey = getRandomString(16)
             sp.edit().putString("key", encryptKey).apply()
         }
         return encryptKey
     }
 
+    @SuppressLint("UseKtx")
     open fun getCacheEncryptIv(): String {
         val context: Context = EasyRetrofit.getApp()
         val sp = context.getSharedPreferences("network_cache_pro", Context.MODE_PRIVATE)
         var iv = sp.getString("iv", "")
         if (iv.isNullOrBlank()) {
-            iv = AESCrypt.generateIvString()
+            iv = getRandomString(16)
             sp.edit().putString("iv", iv).apply()
         }
         return iv
@@ -149,5 +150,18 @@ open class RetrofitBuildStrategy {
     /** 构建Retrofit 的CallAdapter.Factory */
     open fun callAdapterFactories(): List<CallAdapter.Factory>? {
         return null
+    }
+
+
+    @Suppress("SameParameterValue")
+    private fun getRandomString(length: Int): String {
+        val str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        val random = java.util.Random()
+        val sb = StringBuilder()
+        (0 until length).forEach { _ ->
+            val number = random.nextInt(str.length)
+            sb.append(str[number])
+        }
+        return sb.toString()
     }
 }
