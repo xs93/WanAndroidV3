@@ -1,10 +1,10 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.network.base.repository.BaseRepository
+import com.github.xs93.core.ktx.runSuspendCatching
+import com.github.xs93.wan.data.api.AccountApi
 import com.github.xs93.wan.data.entity.User
 import com.github.xs93.wan.data.entity.UserDetailInfo
 import com.github.xs93.wan.data.model.WanResponse
-import com.github.xs93.wan.data.services.AccountService
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import javax.inject.Inject
 
@@ -16,26 +16,24 @@ import javax.inject.Inject
  *
  */
 class AccountRepository @Inject constructor(
-    private val accountService: AccountService,
+    private val accountApi: AccountApi,
     private val accountDataManager: AccountDataManager
-) : BaseRepository() {
+) {
     suspend fun login(username: String, password: String): Result<WanResponse<User>> {
-        val result = accountService.login(username, password)
-        result.onSuccess {
-            val user = it.data
-            if (user != null) {
-                accountDataManager.saveUserInfo(user)
+        return runSuspendCatching { accountApi.login(username, password) }
+            .onSuccess {
+                val user = it.data
+                if (user != null) {
+                    accountDataManager.saveUserInfo(user)
+                }
             }
-        }
-        return result
     }
 
     suspend fun logout(): Result<WanResponse<Int>> {
-        val result = accountService.logout()
-        result.onSuccess {
-            accountDataManager.clearUserInfo()
-        }
-        return result
+        return runSuspendCatching { accountApi.logout() }
+            .onSuccess {
+                accountDataManager.clearUserInfo()
+            }
     }
 
     suspend fun register(
@@ -43,17 +41,16 @@ class AccountRepository @Inject constructor(
         password: String,
         confirmPassword: String
     ): Result<WanResponse<Nothing>> {
-        return accountService.register(username, password, confirmPassword)
+        return runSuspendCatching { accountApi.register(username, password, confirmPassword) }
     }
 
     suspend fun fetchUserInfo(): Result<WanResponse<UserDetailInfo>> {
-        val result = accountService.fetchUserInfo()
-        result.onSuccess {
-            val userDetailInfo = it.data
-            if (userDetailInfo != null) {
-                accountDataManager.saveUserDetailInfo(userDetailInfo)
+        return runSuspendCatching { accountApi.fetchUserInfo() }
+            .onSuccess {
+                val userDetailInfo = it.data
+                if (userDetailInfo != null) {
+                    accountDataManager.saveUserDetailInfo(userDetailInfo)
+                }
             }
-        }
-        return result
     }
 }

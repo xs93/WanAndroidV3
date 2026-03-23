@@ -1,9 +1,9 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.network.base.repository.BaseRepository
+import com.github.xs93.core.ktx.runSuspendCatching
+import com.github.xs93.wan.data.api.NavigatorApi
 import com.github.xs93.wan.data.entity.Navigation
 import com.github.xs93.wan.data.model.WanResponse
-import com.github.xs93.wan.data.services.NavigatorService
 import javax.inject.Inject
 
 /**
@@ -14,10 +14,9 @@ import javax.inject.Inject
  * @date 2024/8/7 16:58
  * @email 466911254@qq.com
  */
-class NavigatorRepository @Inject constructor(private val navigatorService: NavigatorService) :
-    BaseRepository() {
+class NavigatorRepository @Inject constructor(private val navigatorApi: NavigatorApi) {
 
     suspend fun getNavigationList(): Result<WanResponse<List<Navigation>>> {
-        return navigatorService.getNavigationList()
+        return runSuspendCatching { navigatorApi.getNavigationList() }
     }
 }

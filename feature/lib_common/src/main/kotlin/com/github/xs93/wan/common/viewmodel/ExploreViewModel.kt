@@ -8,15 +8,16 @@ import com.github.xs93.ui.base.viewmodel.IUiAction
 import com.github.xs93.ui.base.viewmodel.IUiState
 import com.github.xs93.ui.base.viewmodel.mviActions
 import com.github.xs93.ui.base.viewmodel.mviStates
+import com.github.xs93.wan.bus.BusHelper
+import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.model.ListState
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.common.model.PageStatus
 import com.github.xs93.wan.data.entity.Article
 import com.github.xs93.wan.data.entity.Banner
-import com.github.xs93.wan.data.event.CollectEvent
 import com.github.xs93.wan.data.respotory.HomeRepository
 import com.github.xs93.wan.data.usercase.AccountDataManager
-import com.github.xs93.wan.domain.usecase.CollectUserCase
+import com.github.xs93.wan.domain.usecase.CollectOrNotArticleUseCase
 import com.orhanobut.logger.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +67,7 @@ sealed class ExploreUiAction : IUiAction {
 @HiltViewModel
 class ExploreViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
-    private val collectUserCase: CollectUserCase,
+    private val collectOrNotArticleUseCase: CollectOrNotArticleUseCase,
     private val accountDataManager: AccountDataManager
 ) : BaseViewModel() {
 
@@ -84,7 +85,7 @@ class ExploreViewModel @Inject constructor(
 
     init {
         launcherIO {
-            collectUserCase.collectArticleEventFlow.collect { event ->
+            BusHelper.collectEventBus.subscribe(this) { event ->
                 val listState = uiStateFlow.value.articlesListState
                 val articleList = listState.data
                 val newList = articleList.map {
@@ -233,7 +234,7 @@ class ExploreViewModel @Inject constructor(
 
     private fun collectArticle(collectEvent: CollectEvent) {
         launcherIO {
-            collectUserCase.articleCollectAction(collectEvent)
+            collectOrNotArticleUseCase.invoke(collectEvent)
         }
     }
 }

@@ -1,18 +1,19 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.google.hilt)
-    alias(libs.plugins.google.ksp)
 }
 
 android {
-    namespace = "com.github.xs93.wan.domain"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    namespace = "com.github.xs93.wan.bus"
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro", "proguard-rules.pro")
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -27,15 +28,7 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core:lib_core"))
-    implementation(project(":core:lib_network"))
-    implementation(project(":feature:lib_data"))
-    implementation(project(":feature:lib_router"))
-    implementation(project(":feature:lib_bus"))
-
-    implementation(libs.androidx.hilt)
-    ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

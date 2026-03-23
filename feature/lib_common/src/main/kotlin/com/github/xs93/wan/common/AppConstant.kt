@@ -10,5 +10,6 @@ package com.github.xs93.wan.common
  */
 object AppConstant {
 
+
     const val BASE_URL = "https://www.wanandroid.com/"
 }

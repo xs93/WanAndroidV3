@@ -1,5 +1,3 @@
-@file:Suppress("unused", "UNCHECKED_CAST")
-
 package com.github.xs93.core.bus
 
 import android.util.Log
@@ -39,6 +37,22 @@ object FlowBus {
         return stickyBusMap.getOrPut(key) { FlowStickyEventBus<T>(key) } as FlowStickyEventBus<T>
     }
 
+    fun <T> subscribe(lifecycleOwner: LifecycleOwner, key: String, action: (t: T) -> Unit) {
+        with<T>(key).subscribe(lifecycleOwner, action)
+    }
+
+    fun <T> subscribe(scope: CoroutineScope, key: String, action: (t: T) -> Unit) {
+        with<T>(key).subscribe(scope, action)
+    }
+
+    fun <T> subscribeSticky(lifecycleOwner: LifecycleOwner, key: String, action: (t: T) -> Unit) {
+        withSticky<T>(key).subscribe(lifecycleOwner, action)
+    }
+
+    fun <T> subscribeSticky(scope: CoroutineScope, key: String, action: (t: T) -> Unit) {
+        withSticky<T>(key).subscribe(scope, action)
+    }
+
     fun <T> post(key: String, event: T) {
         post(defaultScope, key, event)
     }
@@ -61,22 +75,6 @@ object FlowBus {
 
     suspend fun <T> postStickySuspend(key: String, event: T) {
         withSticky<T>(key).post(event)
-    }
-
-    fun <T> observer(key: String, lifecycleOwner: LifecycleOwner, action: (t: T) -> Unit) {
-        with<T>(key).subscribe(lifecycleOwner, action)
-    }
-
-    fun <T> observerSticky(key: String, lifecycleOwner: LifecycleOwner, action: (t: T) -> Unit) {
-        withSticky<T>(key).subscribe(lifecycleOwner, action)
-    }
-
-    suspend fun <T> observer(key: String, action: (t: T) -> Unit) {
-        with<T>(key).observer(action)
-    }
-
-    suspend fun <T> observerSticky(key: String, action: (t: T) -> Unit) {
-        withSticky<T>(key).observer(action)
     }
 
     open class FlowEventBus<T>(private val key: String) : LifecycleEventObserver {
@@ -115,29 +113,19 @@ object FlowBus {
             }
         }
 
-        /**
-         * 协程中订阅事件,需要自己在合适的时候取消订阅
-         * @param action (T) -> Unit 消息处理事件
-         */
-        suspend fun observer(action: (t: T) -> Unit) {
-            _events.collect {
-                try {
-                    action(it)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    Log.e(TAG, "subscribe: error", e)
+        fun subscribe(scope: CoroutineScope, action: (t: T) -> Unit) {
+            scope.launch {
+                _events.collect {
+                    try {
+                        action(it)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        Log.e(TAG, "subscribe: error", e)
+                    }
                 }
             }
         }
 
-        /**
-         * 主线程中订阅事件,使用合适的 scope取消订阅
-         */
-        fun observer(scope: CoroutineScope, action: (t: T) -> Unit) {
-            scope.launch {
-                observer(action)
-            }
-        }
 
         /**
          * 协程中发送消息

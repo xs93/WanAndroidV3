@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.services
+package com.github.xs93.wan.data.api
 
 import com.github.xs93.wan.data.entity.User
 import com.github.xs93.wan.data.entity.UserDetailInfo
@@ -16,7 +16,7 @@ import retrofit2.http.POST
  * @date 2024/4/3 16:26
  * @email 466911254@qq.com
  */
-interface AccountService {
+interface AccountApi {
 
     /**
      * 用户登录
@@ -28,15 +28,15 @@ interface AccountService {
     @POST("user/login")
     suspend fun login(
         @Field("username") username: String,
-        @Field("password") password: String,
-    ): Result<WanResponse<User>>
+        @Field("password") password: String
+    ): WanResponse<User>
 
     /**
      * 账号登出
      * @return WanResponse<Any>
      */
     @GET("user/logout/json")
-    suspend fun logout(): Result<WanResponse<Int>>
+    suspend fun logout(): WanResponse<Int>
 
     /**
      * 注册
@@ -51,12 +51,12 @@ interface AccountService {
         @Field("username") username: String,
         @Field("password") password: String,
         @Field("repassword") confirmPassword: String,
-    ): Result<WanResponse<Nothing>>
+    ): WanResponse<Nothing>
 
 
     /**
      * 获取用户信息
      */
     @GET("user/lg/userinfo/json")
-    suspend fun fetchUserInfo(): Result<WanResponse<UserDetailInfo>>
+    suspend fun fetchUserInfo(): WanResponse<UserDetailInfo>
 }

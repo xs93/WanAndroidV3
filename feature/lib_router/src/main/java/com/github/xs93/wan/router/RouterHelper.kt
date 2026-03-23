@@ -12,7 +12,7 @@ import com.github.xs93.core.AppInject
  * @description 跳转路由
  *
  */
-object Router {
+object RouterHelper {
 
     /**
      * 跳转登录界面

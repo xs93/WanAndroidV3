@@ -15,7 +15,6 @@ open class ApiResponse<out T>(
 ) {
 
     companion object {
-
         const val SUCCESS_CODE = 0
     }
 

@@ -1,8 +1,8 @@
 package com.github.xs93.wan.domain.di
 
-import com.github.xs93.wan.data.services.CollectService
+import com.github.xs93.wan.data.respotory.CollectRepository
 import com.github.xs93.wan.data.usercase.AccountDataManager
-import com.github.xs93.wan.domain.usecase.CollectUserCase
+import com.github.xs93.wan.domain.usecase.CollectOrNotArticleUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +23,7 @@ object UseCaseModule {
     @Singleton
     @Provides
     fun provideAppCollectDataModel(
-        collectService: CollectService,
+        collectRepository: CollectRepository,
         accountDataManager: AccountDataManager
-    ) = CollectUserCase(collectService, accountDataManager)
+    ) = CollectOrNotArticleUseCase(collectRepository, accountDataManager)
 }

@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.services
+package com.github.xs93.wan.data.api
 
 import com.github.xs93.wan.data.entity.Article
 import com.github.xs93.wan.data.model.PageResponse
@@ -15,14 +15,14 @@ import retrofit2.http.Path
  * @date 2024/4/8 10:13
  * @email 466911254@qq.com
  */
-interface CollectService {
+interface CollectApi {
 
     /**
      * 收藏文章列表
      * @param page Int 页面,从0开始
      */
     @GET("lg/collect/list/{page}/json")
-    suspend fun getCollectList(@Path("page") page: Int): Result<WanResponse<PageResponse<Article>>>
+    suspend fun getCollectList(@Path("page") page: Int): WanResponse<PageResponse<Article>>
 
 
     /**
@@ -30,21 +30,12 @@ interface CollectService {
      * @param articleId Int 文章id
      */
     @POST("lg/collect/{id}/json")
-    suspend fun collectArticle(@Path("id") articleId: Int): Result<WanResponse<Int>>
+    suspend fun collectArticle(@Path("id") articleId: Int): WanResponse<Int>
 
     /**
      * 取消收藏站内文章
      * @param articleId Int 站内文章Id
-     * @return Result<WanResponse<Int>>
      */
     @POST("lg/uncollect_originId/{id}/json")
-    suspend fun unCollectArticle(@Path("id") articleId: Int): Result<WanResponse<Int>>
-
-    /**
-     * 收藏或者取消收藏 站内文章
-     * @param collect Boolean 是否收藏,true 收藏,false 取消收藏
-     * @param id Int 文章id
-     * @return Result<WanResponse<Int>>
-     */
-    suspend fun isCollectArticle(collect: Boolean, id: Int) = if (collect) collectArticle(id) else unCollectArticle(id)
+    suspend fun unCollectArticle(@Path("id") articleId: Int): WanResponse<Int>
 }

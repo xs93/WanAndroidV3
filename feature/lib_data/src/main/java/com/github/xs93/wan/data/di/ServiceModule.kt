@@ -1,12 +1,12 @@
 package com.github.xs93.wan.data.di
 
 import com.github.xs93.network.EasyRetrofit
-import com.github.xs93.wan.data.services.AccountService
-import com.github.xs93.wan.data.services.CollectService
-import com.github.xs93.wan.data.services.HomeService
-import com.github.xs93.wan.data.services.NavigatorService
-import com.github.xs93.wan.data.services.SquareService
-import com.github.xs93.wan.data.services.WenDaService
+import com.github.xs93.wan.data.api.AccountApi
+import com.github.xs93.wan.data.api.CollectApi
+import com.github.xs93.wan.data.api.HomeApi
+import com.github.xs93.wan.data.api.NavigatorApi
+import com.github.xs93.wan.data.api.SquareApi
+import com.github.xs93.wan.data.api.WenDaApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,21 +24,20 @@ import dagger.hilt.components.SingletonComponent
 class ServiceModule {
 
     @Provides
-    fun provideAccountService(): AccountService = EasyRetrofit.create(AccountService::class.java)
+    fun provideAccountApi(): AccountApi = EasyRetrofit.create(AccountApi::class.java)
 
     @Provides
-    fun provideCollectService(): CollectService = EasyRetrofit.create(CollectService::class.java)
+    fun provideCollectApi(): CollectApi = EasyRetrofit.create(CollectApi::class.java)
 
     @Provides
-    fun provideHomeService(): HomeService = EasyRetrofit.create(HomeService::class.java)
+    fun provideHomeApi(): HomeApi = EasyRetrofit.create(HomeApi::class.java)
 
     @Provides
-    fun provideSquareService(): SquareService = EasyRetrofit.create(SquareService::class.java)
+    fun provideSquareApi(): SquareApi = EasyRetrofit.create(SquareApi::class.java)
 
     @Provides
-    fun provideWenDaService(): WenDaService = EasyRetrofit.create(WenDaService::class.java)
+    fun provideWenDaApi(): WenDaApi = EasyRetrofit.create(WenDaApi::class.java)
 
     @Provides
-    fun provideNavigatorService(): NavigatorService =
-        EasyRetrofit.create(NavigatorService::class.java)
+    fun provideNavigatorApi(): NavigatorApi = EasyRetrofit.create(NavigatorApi::class.java)
 }

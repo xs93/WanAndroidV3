@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.services
+package com.github.xs93.wan.data.api
 
 import com.github.xs93.network.annotation.Cache
 import com.github.xs93.wan.data.entity.Article
@@ -16,7 +16,7 @@ import retrofit2.http.Path
  * @date 2023/5/23 10:05
  * @email 466911254@qq.com
  */
-interface HomeService {
+interface HomeApi {
 
     /**
      * 首页Banner
@@ -24,7 +24,7 @@ interface HomeService {
      */
     @Cache(60 * 60 * 1000L)
     @GET("banner/json")
-    suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>>
+    suspend fun getHomeBanner(): WanResponse<List<Banner>>
 
 
     /**
@@ -33,5 +33,5 @@ interface HomeService {
      *
      */
     @GET("article/list/{page}/json")
-    suspend fun getHomeArticle(@Path("page") page: Int): Result<WanResponse<PageResponse<Article>>>
+    suspend fun getHomeArticle(@Path("page") page: Int): WanResponse<PageResponse<Article>>
 }

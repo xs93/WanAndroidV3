@@ -8,7 +8,7 @@ import com.github.xs93.network.exception.NetworkException
 import com.github.xs93.network.exception.ResponseException
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.data.model.WanResponse
-import com.github.xs93.wan.router.Router
+import com.github.xs93.wan.router.RouterHelper
 
 /**
  * @author XuShuai
@@ -38,7 +38,7 @@ class WanErrorHandler : IErrorHandler {
         if (any is WanResponse<*>) {
             when {
                 any.isNotLogin() -> {
-                    Router.toLogin()
+                    RouterHelper.toLogin()
                 }
             }
             if (any.isFailed()) {

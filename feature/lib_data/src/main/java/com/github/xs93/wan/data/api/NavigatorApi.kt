@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.services
+package com.github.xs93.wan.data.api
 
 import com.github.xs93.wan.data.entity.Navigation
 import com.github.xs93.wan.data.model.WanResponse
@@ -12,12 +12,11 @@ import retrofit2.http.GET
  * @date 2024/8/7 16:57
  * @email 466911254@qq.com
  */
-interface NavigatorService {
+interface NavigatorApi {
 
     /**
      * 获取导航数据
-     * @return Result<List<Navigation>>
      */
     @GET("navi/json")
-    suspend fun getNavigationList(): Result<WanResponse<List<Navigation>>>
+    suspend fun getNavigationList(): WanResponse<List<Navigation>>
 }

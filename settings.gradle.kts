@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":feature:lib_bus")
+
+
 
 rootProject.name = "WanAndroidV3"
 include(":app")
