@@ -15,11 +15,8 @@ import com.github.xs93.widget.drawable.BorderDrawable.Orientation
  * @description 使用BorderDrawable作为背景的View，可以简单使用BorderDrawable
  *
  */
-class BorderDrawableView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : FrameLayout(context, attrs, defStyleAttr) {
+class BorderDrawableView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    FrameLayout(context, attrs) {
 
     private lateinit var borderDrawable: BorderDrawable
     private var borderStyle = 0

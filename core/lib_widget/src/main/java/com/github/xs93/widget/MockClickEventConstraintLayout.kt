@@ -27,9 +27,8 @@ import kotlin.math.absoluteValue
  */
 class MockClickEventConstraintLayout @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : ConstraintLayout(context, attrs, defStyleAttr) {
+    attrs: AttributeSet? = null
+) : ConstraintLayout(context, attrs) {
 
     private var touchSlop = 0
     private var tapTimeout = 0

@@ -25,11 +25,8 @@ import com.github.xs93.widget.R
  * @description 自定义进度条View
  *
  */
-class ProgressView @JvmOverloads constructor(
-    context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+class ProgressView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    View(context, attrs) {
 
     companion object {
         private const val DEFAULT_PROGRESS_WIDTH = 20

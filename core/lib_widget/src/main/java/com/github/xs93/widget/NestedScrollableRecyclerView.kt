@@ -18,8 +18,9 @@ import kotlin.math.sign
  * @email 466911254@qq.com
  */
 class NestedScrollableRecyclerView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : RecyclerView(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null
+) : RecyclerView(context, attrs) {
 
     private var touchSlop = 0
     private var initialX = 0f

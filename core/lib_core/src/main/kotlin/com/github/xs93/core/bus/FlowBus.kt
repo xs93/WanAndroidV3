@@ -27,11 +27,13 @@ object FlowBus {
     private val stickyBusMap = ConcurrentHashMap<String, FlowStickyEventBus<*>>()
     private val defaultScope by lazy { MainScope() }
 
+    @Suppress("UNCHECKED_CAST")
     @Synchronized
     fun <T> with(key: String): FlowEventBus<T> {
         return busMap.getOrPut(key) { FlowEventBus<T>(key) } as FlowEventBus<T>
     }
 
+    @Suppress("UNCHECKED_CAST")
     @Synchronized
     fun <T> withSticky(key: String): FlowStickyEventBus<T> {
         return stickyBusMap.getOrPut(key) { FlowStickyEventBus<T>(key) } as FlowStickyEventBus<T>

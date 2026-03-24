@@ -14,9 +14,8 @@ import androidx.appcompat.widget.AppCompatImageView
  */
 class TopClipContentImageView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
-) : AppCompatImageView(context, attrs, defStyleAttr) {
+    attrs: AttributeSet? = null
+) : AppCompatImageView(context, attrs) {
 
     init {
         scaleType = ScaleType.MATRIX
