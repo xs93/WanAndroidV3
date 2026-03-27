@@ -1,9 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":feature:lib_bus")
-
-
-
 rootProject.name = "WanAndroidV3"
 include(":app")
 include(":app-demo")
@@ -16,14 +12,20 @@ include(":core:lib_coil")
 include(":core:lib_widget")
 include(":core:lib_camera")
 
+include(":feature:lib_res")
+include(":feature:lib_bus")
+include(":feature:lib_router")
 include(":feature:lib_data")
 include(":feature:lib_domain")
-include(":feature:lib_router")
 include(":feature:lib_common")
 include(":feature:module_main")
-include(":feature:module_music")
 include(":feature:module_home")
+include(":feature:module_navigator")
+include(":feature:module_classify")
+include(":feature:module_mine")
 include(":feature:module_login")
+include(":feature:module_web")
+include(":feature:module_music")
 
 pluginManagement {
     repositories {

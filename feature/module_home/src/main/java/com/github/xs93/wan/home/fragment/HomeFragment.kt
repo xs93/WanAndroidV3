@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.github.xs93.core.ktx.setSingleClickListener
 import com.github.xs93.core.ktx.string
 import com.github.xs93.core.ktx.viewLifecycle
 import com.github.xs93.ui.adapter.SimpleViewPagerAdapter
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.kts.setTouchSlopMultiple
-import com.github.xs93.wan.common.viewmodel.MainAction
-import com.github.xs93.wan.common.viewmodel.MainViewModel
+import com.github.xs93.wan.bus.BusHelper
+import com.github.xs93.wan.bus.event.MainDrawerEvent
 import com.github.xs93.wan.data.entity.HomeTabBean
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeFragmentHomeBinding
@@ -33,8 +33,6 @@ class HomeFragment : BaseVBFragment<HomeFragmentHomeBinding>(HomeFragmentHomeBin
 
     private lateinit var childFragmentAdapter: SimpleViewPagerAdapter
     private val homeTabs = generateHomeTabs()
-
-    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 
@@ -61,7 +59,10 @@ class HomeFragment : BaseVBFragment<HomeFragmentHomeBinding>(HomeFragmentHomeBin
 
             with(ivOpenDrawer) {
                 setSingleClickListener {
-                    mainViewModel.mainActions.send(MainAction.OpenDrawerAction)
+                    BusHelper.mainDrawerEventBus.post(
+                        viewLifecycleOwner.lifecycleScope,
+                        MainDrawerEvent(true)
+                    )
                 }
             }
         }

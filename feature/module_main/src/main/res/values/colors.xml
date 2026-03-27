@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_drawer_background">#E0E0E0</color>
+    <color name="main_drawer_card_background">@color/white</color>
+    <color name="main_drawer_user_name">#FFFFFF</color>
+    <color name="main_drawer_user_info">#FFFFFF</color>
+    <color name="main_drawer_menu_text">#333333</color>
+</resources>

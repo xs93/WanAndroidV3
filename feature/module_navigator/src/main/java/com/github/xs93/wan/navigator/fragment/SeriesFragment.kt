@@ -1,0 +1,34 @@
+package com.github.xs93.wan.navigator.fragment
+
+import android.os.Bundle
+import android.view.View
+import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.wan.navigator.databinding.FragmentNavigatorChildSeriesBinding
+import dagger.hilt.android.AndroidEntryPoint
+
+/**
+ * 体系Fragment
+ *
+ * @author XuShuai
+ * @version v1.0
+ * @date 2024/8/7 15:06
+ * @email 466911254@qq.com
+ */
+@AndroidEntryPoint
+class SeriesFragment : BaseVBFragment<FragmentNavigatorChildSeriesBinding>(
+    FragmentNavigatorChildSeriesBinding::inflate
+) {
+
+    companion object {
+        fun newInstance(): SeriesFragment {
+            val args = Bundle()
+            val fragment = SeriesFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+
+    }
+}

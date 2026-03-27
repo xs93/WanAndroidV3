@@ -1,28 +1,14 @@
 [
   {
-    "path": "app://activity/login",
-    "className": "com.warrior.preserve.login.activity.LoginActivity",
-    "action": "",
-    "description": "",
-    "params": {}
-  },
-  {
     "path": "app://fragment/navigator",
-    "className": "com.github.xs93.wanandroid.app.ui.fragment.NavigatorFragment",
+    "className": "com.github.xs93.wan.navigator.fragment.NavigatorFragment",
     "action": "",
     "description": "",
     "params": {}
   },
   {
     "path": "app://fragment/mine",
-    "className": "com.github.xs93.wanandroid.app.ui.fragment.MineFragment",
-    "action": "",
-    "description": "",
-    "params": {}
-  },
-  {
-    "path": "app://fragment/classify",
-    "className": "com.github.xs93.wanandroid.app.ui.fragment.ClassifyFragment",
+    "className": "com.github.xs93.wan.mine.fragment.MineFragment",
     "action": "",
     "description": "",
     "params": {}
@@ -35,8 +21,22 @@
     "params": {}
   },
   {
+    "path": "app://activity/login",
+    "className": "com.github.xs93.wan.login.activity.LoginActivity",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
     "path": "app://fragment/home",
     "className": "com.github.xs93.wan.home.fragment.HomeFragment",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
+    "path": "app://fragment/classify",
+    "className": "com.github.xs93.wan.classify.fragment.ClassifyFragment",
     "action": "",
     "description": "",
     "params": {}

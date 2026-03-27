@@ -20,9 +20,9 @@ import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleAdapter
 import com.github.xs93.wan.common.model.ListUiState
-import com.github.xs93.wan.common.viewmodel.AnswerUiAction
-import com.github.xs93.wan.common.viewmodel.AnswerViewModel
 import com.github.xs93.wan.home.databinding.HomeFragmentAnswerBinding
+import com.github.xs93.wan.home.viewmodel.AnswerUiAction
+import com.github.xs93.wan.home.viewmodel.AnswerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map

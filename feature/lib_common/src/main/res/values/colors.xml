@@ -5,4 +5,6 @@
 
     <color name="common_article_tag_red">#ffff3a3a</color>
     <color name="common_article_tag_green">#4caf50</color>
+
+    <color name="common_divider">#19000000</color>
 </resources>

@@ -20,9 +20,9 @@ import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleAdapter
 import com.github.xs93.wan.common.model.ListUiState
-import com.github.xs93.wan.common.viewmodel.SquareUiAction
-import com.github.xs93.wan.common.viewmodel.SquareViewModel
 import com.github.xs93.wan.home.databinding.HomeFragmentSquareBinding
+import com.github.xs93.wan.home.viewmodel.SquareUiAction
+import com.github.xs93.wan.home.viewmodel.SquareViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    tools:layout_width="100dp">
+
+    <com.github.xs93.widget.roundcorner.view.RoundCornerTextView
+        android:id="@+id/tvChipName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/navigator_sel_bg_chip"
+        android:gravity="center"
+        android:paddingVertical="8dp"
+        android:textColor="@color/navigator_sel_chip_text_color"
+        android:textSize="12sp"
+        app:rc_radius="24dp"
+        tools:text="常用网站" />
+</FrameLayout>

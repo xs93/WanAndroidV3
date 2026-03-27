@@ -15,7 +15,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.xs93.wanandroid.app"
+    namespace = "com.github.xs93.wan.app"
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
@@ -33,7 +33,7 @@ android {
             val dataFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
             dataFormat.timeZone = TimeZone.getTimeZone("GMT+08")
             val time = dataFormat.format(Date())
-            val name = "Poppy_${buildType.name}_${defaultConfig.versionName}_$time}.apk"
+            val name = "WanAndroid_${buildType.name}_${defaultConfig.versionName}_$time}.apk"
             (this as BaseVariantOutputImpl).outputFileName = name
         }
     }
@@ -54,10 +54,6 @@ android {
             useLegacyPackaging = true
         }
     }
-
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 hilt {
@@ -70,23 +66,17 @@ dependencies {
     implementation(project(":feature:module_music"))
     implementation(project(":feature:module_home"))
     implementation(project(":feature:module_login"))
+    implementation(project(":feature:module_navigator"))
+    implementation(project(":feature:module_classify"))
+    implementation(project(":feature:module_mine"))
+    implementation(project(":feature:module_web"))
     implementation(project(":feature:lib_common"))
-
-    ksp(libs.androidx.lifecycle.compiler)
-
-    ksp(libs.moshi.kotlin.codegen)
-
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.banner)
-    implementation(libs.viewPagerIndicator)
-
-    implementation(libs.flexbox)
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
 
-    debugImplementation(libs.leakcanary)
-
     implementation(libs.therouter.router)
     ksp(libs.therouter.ksp)
+
+    debugImplementation(libs.leakcanary)
 }

@@ -32,12 +32,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:lib_common"))
+
     implementation(libs.therouter.router)
     ksp(libs.therouter.ksp)
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
-    implementation(project(":feature:lib_common"))
 
     implementation(libs.banner)
     implementation(libs.viewPagerIndicator)

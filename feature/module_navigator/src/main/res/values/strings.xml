@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--region 导航tab title -->
+    <string name="navigator_tab_navigator">导航</string>
+    <string name="navigator_tab_series">体系</string>
+    <string name="navigator_tab_tutorial">教程</string>
+    <!--endregion -->
+</resources>

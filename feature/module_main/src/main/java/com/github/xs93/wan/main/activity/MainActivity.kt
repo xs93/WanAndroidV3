@@ -14,6 +14,7 @@ import coil3.load
 import com.github.xs93.core.ktx.addOnBackPressedCallback
 import com.github.xs93.core.ktx.gone
 import com.github.xs93.core.ktx.isNightMode
+import com.github.xs93.core.ktx.launcher
 import com.github.xs93.core.ktx.observerEvent
 import com.github.xs93.core.ktx.observerState
 import com.github.xs93.core.ktx.setSingleClickListener
@@ -23,14 +24,15 @@ import com.github.xs93.ui.adapter.SimpleViewPagerAdapter
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.ui.base.viewmodel.registerCommonEvent
 import com.github.xs93.ui.kts.setTouchSlopMultiple
-import com.github.xs93.wan.common.viewmodel.MainAction
-import com.github.xs93.wan.common.viewmodel.MainEvent
-import com.github.xs93.wan.common.viewmodel.MainViewModel
+import com.github.xs93.wan.bus.BusHelper
 import com.github.xs93.wan.data.model.AccountState
 import com.github.xs93.wan.data.store.AppCommonStore
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.main.R
 import com.github.xs93.wan.main.databinding.ActivityMainBinding
+import com.github.xs93.wan.main.viewmodel.MainAction
+import com.github.xs93.wan.main.viewmodel.MainEvent
+import com.github.xs93.wan.main.viewmodel.MainViewModel
 import com.github.xs93.wan.router.PageRouterPath
 import com.therouter.TheRouter
 import com.therouter.router.Route
@@ -157,10 +159,24 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>(ActivityMainBinding::in
         super.initObserver(savedInstanceState)
         mainViewModel.registerCommonEvent(this)
 
+        launcher {
+            BusHelper.mainDrawerEventBus.subscribe(this) {
+                if (it.open) {
+                    mainViewModel.mainActions.send(MainAction.OpenDrawerAction)
+                } else {
+                    mainViewModel.mainActions.send(MainAction.CloseDrawerAction)
+                }
+            }
+        }
+
         observerEvent(mainViewModel.mainEventFlow) {
             when (it) {
                 MainEvent.OpenDrawerEvent -> {
                     vBinding.drawerRoot.openDrawer(GravityCompat.START)
+                }
+
+                MainEvent.CloseDrawerEvent -> {
+                    vBinding.drawerRoot.closeDrawer(GravityCompat.START)
                 }
             }
         }

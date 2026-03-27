@@ -2,6 +2,7 @@ package com.github.xs93.wan.bus
 
 import com.github.xs93.core.bus.FlowBus
 import com.github.xs93.wan.bus.event.CollectEvent
+import com.github.xs93.wan.bus.event.MainDrawerEvent
 
 /**
  * @author XuShuai
@@ -11,6 +12,12 @@ import com.github.xs93.wan.bus.event.CollectEvent
  * 
  */
 object BusHelper {
+
+    /**
+     * 主界面抽屉事件总线
+     */
+    val mainDrawerEventBus: FlowBus.FlowEventBus<MainDrawerEvent>
+        get() = FlowBus.with(BusKeyConstant.MAIN_DRAWER_EVENT)
 
     /**
      * 收藏事件总线

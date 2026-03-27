@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.xs93.wanandroid.music"
+    namespace = "com.github.xs93.wan.music"
     compileSdk = libs.versions.targetSdk.get().toInt()
 
     defaultConfig {
