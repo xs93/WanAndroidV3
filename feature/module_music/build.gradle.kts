@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -26,10 +27,14 @@ android {
 
 dependencies {
     implementation(project(":feature:lib_common"))
-    api(libs.androidx.meida3.exoplayer)
-    api(libs.androidx.meida3.ui)
-    api(libs.androidx.meida3.common)
-    api(libs.androidx.meida3.commonKtx)
-    api(libs.androidx.meida3.session)
-    api(libs.androidx.meida3.datasource.okhttp)
+
+    implementation(libs.therouter.router)
+    ksp(libs.therouter.ksp)
+
+    implementation(libs.androidx.meida3.exoplayer)
+    implementation(libs.androidx.meida3.ui)
+    implementation(libs.androidx.meida3.common)
+    implementation(libs.androidx.meida3.commonKtx)
+    implementation(libs.androidx.meida3.session)
+    implementation(libs.androidx.meida3.datasource.okhttp)
 }

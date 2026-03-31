@@ -13,6 +13,8 @@ import androidx.media3.exoplayer.util.EventLogger
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import com.google.common.collect.ImmutableList
+import com.google.common.util.concurrent.Futures
+import com.google.common.util.concurrent.ListenableFuture
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
@@ -24,6 +26,17 @@ import java.util.concurrent.TimeUnit
  *
  */
 class MusicPlayService : MediaSessionService() {
+
+    companion object {
+        private const val TAG = "MusicPlayService"
+
+        /** 自定义命令：播放指定索引的音乐 */
+        private const val COMMAND_PLAY_INDEX = "play_index"
+
+        /** 自定义命令：设置播放列表 */
+        private const val COMMAND_SET_PLAYLIST = "set_playlist"
+    }
+
 
     private var mediaSession: MediaSession? = null
     private var mediasItems: ImmutableList<MediaItem> = ImmutableList.of()
@@ -48,6 +61,33 @@ class MusicPlayService : MediaSessionService() {
         player.addAnalyticsListener(EventLogger())
         mediaSession = MediaSession.Builder(this, player)
             .setCallback(object : MediaSession.Callback {
+
+                override fun onPlaybackResumption(
+                    mediaSession: MediaSession,
+                    controller: MediaSession.ControllerInfo,
+                    isForPlayback: Boolean
+                ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+                    return Futures.immediateFuture(
+                        MediaSession.MediaItemsWithStartPosition(mediasItems, 0, 0)
+                    )
+                }
+
+                override fun onSetMediaItems(
+                    mediaSession: MediaSession,
+                    controller: MediaSession.ControllerInfo,
+                    mediaItems: MutableList<MediaItem>,
+                    startIndex: Int,
+                    startPositionMs: Long
+                ): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+                    this@MusicPlayService.mediasItems = ImmutableList.copyOf(mediaItems)
+                    return super.onSetMediaItems(
+                        mediaSession,
+                        controller,
+                        mediaItems,
+                        startIndex,
+                        startPositionMs
+                    )
+                }
             })
             .build()
     }
@@ -71,4 +111,5 @@ class MusicPlayService : MediaSessionService() {
         mediaSession = null
         super.onDestroy()
     }
+
 }

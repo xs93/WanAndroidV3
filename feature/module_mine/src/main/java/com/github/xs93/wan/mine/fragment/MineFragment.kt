@@ -1,13 +1,17 @@
 package com.github.xs93.wan.mine.fragment
 
-import android.media.session.MediaController
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
+import com.github.xs93.core.ktx.setSingleClickListener
+import com.github.xs93.core.log.logD
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
+import com.github.xs93.wan.common.service.IMusicService
 import com.github.xs93.wan.mine.databinding.FragmentMineBinding
 import com.github.xs93.wan.router.PageRouterPath
-import com.google.common.util.concurrent.ListenableFuture
+import com.therouter.TheRouter
 import com.therouter.router.Route
+import kotlinx.coroutines.launch
 
 /**
  *
@@ -31,34 +35,32 @@ class MineFragment : BaseVBFragment<FragmentMineBinding>(
         }
     }
 
-    private var mController: MediaController? = null
-    private var controllerFuture: ListenableFuture<MediaController>? = null
-
-    override fun initView(view: View, savedInstanceState: Bundle?) {
-//        context?.let {
-//            val sessionToken = SessionToken(it, ComponentName(it, MusicPlayService::class.java))
-//            controllerFuture = MediaController.Builder(it, sessionToken).buildAsync()
-//            controllerFuture?.addListener({
-//                mController = controllerFuture?.get()
-//                val mediaItem = MediaItem.Builder()
-//                    .setUri("https://m701.music.126.net/20250731152027/8bcfe4946e2e14b6ed4f965beff68a8b/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096444542/bafc/a068/39f8/9a9e06e5634410b5e7e81df24749e656.mp3?vuutv=dRet6d1l9EmVIFZ1GvU7Zfl6RIuCUOZrlgo/LlQj4c1nuUIJWXuN7ReeGGfy1oy24LHgwc3xtv5fHdZNVnW+Z9NXWrFaVsgXBR6RGyCxb4xLOeLFa0nEOAi1/OHbS4NtnUBUI+71ZbYO5UJiEwIcFA==")
-//                    .build()
-//                mController?.setMediaItem(mediaItem)
-//            }, MoreExecutors.directExecutor())
-//        }
-//
-//        vBinding.btnStart.setSingleClickListener {
-//            mController?.play()
-//        }
-//        vBinding.btnPause.setSingleClickListener {
-//            mController?.pause()
-//        }
+    private val musicService: IMusicService? by lazy {
+        TheRouter.get(IMusicService::class.java)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-//        controllerFuture?.run {
-//            MediaController.releaseFuture(this)
-//        }
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+//            val path = "https://music.163.com/song/media/outer/url?id=3322380723.mp3"
+        val path =
+            "https://m801.music.126.net/20260331112040/714ce5111df85f2797dba8d8cd33fe5b/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/76762438505/ef58/e50d/d6f8/76c225aaf83dd0c77461a55c6b987239.mp3?vuutv=aMytRYImRIsmTJ0j0QsWOsQyS6E6HZA1rCnDP9DXlqWadS7erDMPaka2sf+Z69qSOthWaRxP8cnYSxoAX9Ig90JqKD4Ay2XHrqViHQPZgah1kKUKXf20gXlc2a9V1snt0HHyyi+XOnCAQCE/RWnAgah1quz5WoxlKaPAoceJERm7RSRcObLV0jMtOP9XtaFIanXkdQux4rxl/6G/d9UshYbjPt1Mk2kYLmtIY7pau9O9w1Z5AFqIIy2lswExSBqUQVRXEzsv8It1VMV/2Qc/vJVBZwAsZy9be6so+9caOrJZ9SA19ufqQmmJA79GOKieY++YM2WXexcyZoCD4u/YFOOVg4kSJxZG9g2nmBQMo8H8V0HEjgXUf29l0PtU+QeI&cdntag=bWFyaz1vc193ZWIscXVhbGl0eV9zdGFuZGFyZA"
+
+        val musicInfo = IMusicService.MusicInfo(path)
+        musicService?.setMusicList(listOf(musicInfo))
+
+        vBinding.btnStart.setSingleClickListener {
+            musicService?.play()
+        }
+        vBinding.btnPause.setSingleClickListener {
+            musicService?.pause()
+        }
+    }
+
+    override fun initObserver(savedInstanceState: Bundle?) {
+        super.initObserver(savedInstanceState)
+        lifecycleScope.launch {
+            musicService?.playState?.collect {
+                logD("MusicService", "$it")
+            }
+        }
     }
 }
