@@ -5,7 +5,7 @@ import androidx.core.view.OnApplyWindowInsetsListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
-import com.github.xs93.ui.base.ui.interfaces.IWindowInsetsListener
+import com.github.xs93.ui.base.ui.base.interfaces.IWindowInsetsListener
 
 /**
  * @author XuShuai

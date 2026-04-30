@@ -1,4 +1,4 @@
-package com.github.xs93.ui.base.ui.interfaces
+package com.github.xs93.ui.base.ui.base.interfaces
 
 import androidx.core.graphics.Insets
 import androidx.core.view.WindowInsetsCompat

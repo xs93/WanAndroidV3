@@ -3,8 +3,6 @@ package com.github.xs93.ui.base.viewmodel
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import com.github.xs93.core.AppInject
-import com.github.xs93.core.toast.IToast
-import com.github.xs93.core.toast.UiToastProxy
 
 /**
  *
@@ -14,7 +12,7 @@ import com.github.xs93.core.toast.UiToastProxy
  * @date   2022/5/5-21:21
  * @email  466911254@qq.com
  */
-abstract class BaseViewModel : ViewModel(), IToast by UiToastProxy() {
+abstract class BaseViewModel : ViewModel() {
 
     private val _commonEventFlow by mviEvents<CommonUiEvent>()
     val commonEventFlow by lazy { _commonEventFlow.flow }

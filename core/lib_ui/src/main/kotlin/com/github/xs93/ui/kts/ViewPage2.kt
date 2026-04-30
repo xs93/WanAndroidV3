@@ -48,8 +48,7 @@ fun ViewPager2.setSmoothScrollDuration(duration: Long) {
         val recyclerView: RecyclerView = getChildAt(0) as RecyclerView
         recyclerView.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         val linearLayoutManager: LinearLayoutManager =
-            recyclerView.layoutManager as LinearLayoutManager? ?: return
-
+            recyclerView.layoutManager as? LinearLayoutManager ?: return
         val scrollDurationManager = ScrollDurationManager(this, duration, linearLayoutManager)
         recyclerView.layoutManager = scrollDurationManager
 

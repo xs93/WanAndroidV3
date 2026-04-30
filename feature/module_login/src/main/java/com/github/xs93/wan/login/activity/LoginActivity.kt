@@ -9,6 +9,7 @@ import com.github.xs93.core.ktx.observerEvent
 import com.github.xs93.core.ktx.observerState
 import com.github.xs93.core.ktx.setSingleClickListener
 import com.github.xs93.core.ktx.string
+import com.github.xs93.core.toast.ToastUtils.showToast
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.ui.base.viewmodel.registerCommonEvent
 import com.github.xs93.wan.login.R
@@ -91,7 +92,7 @@ class LoginActivity : BaseVBActivity<LoginActivityBinding>(LoginActivityBinding:
             when (it) {
                 is LoginEvent.LoginResultEvent -> {
                     if (it.success) {
-                        showToast(string(R.string.login_success))
+                        showToast(R.string.login_success)
                         finish()
                     } else {
                         showToast(it.errorMsg ?: string(R.string.login_failed))

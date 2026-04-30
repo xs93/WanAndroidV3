@@ -1,11 +1,11 @@
 package com.github.xs93.ui.base.ui.base
 
-import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.SparseArray
 import android.view.AbsSavedState
+import androidx.core.os.BundleCompat
 import androidx.core.util.forEach
 import androidx.core.util.size
 import androidx.fragment.app.Fragment
@@ -77,9 +77,6 @@ class BundleClipHelper {
             if (hierarchyState != null) {
                 val hierarchyStateSize = KB(sizeAsParcel(hierarchyState))
                 logD(TAG, "hierarchyStateSize: ${hierarchyStateSize}KB")
-//                logD(TAG, "hierarchyState: $hierarchyState")
-//                printBundle(bundle = hierarchyState)
-//                printViews(hierarchyState)
                 if (hierarchyStateSize > 500f) {
                     outState.remove(BUNDLE_VIEW_HIERARCHY_STATE)
                 }
@@ -96,12 +93,7 @@ class BundleClipHelper {
 
     private fun printViews(bundle: Bundle) {
         val views: SparseArray<Parcelable>? =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                bundle.getSparseParcelableArray(BUNDLE_VIEWS, AbsSavedState::class.java)
-            } else {
-                bundle.getSparseParcelableArray(BUNDLE_VIEWS)
-            }
-
+            BundleCompat.getSparseParcelableArray(bundle, BUNDLE_VIEWS, AbsSavedState::class.java)
         if (views != null) {
             logD(TAG, "views size: ${views.size}")
             views.forEach { index, value ->
@@ -118,6 +110,7 @@ class BundleClipHelper {
     }
 
 
+    @Suppress("DEPRECATION")
     private fun printBundle(bundle: Bundle, indent: String = "") {
         val keys = bundle.keySet()  // 获取所有的键
         val sizeMap = getBundleSizeMap(bundle)

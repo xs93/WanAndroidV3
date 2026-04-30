@@ -8,5 +8,5 @@ package com.github.xs93.wan.data
  *
  */
 object DataConstant {
-    const val BASE_URL = "https://www.wanandroid.com/"
+    const val BASE_URL = "https://wanandroid.com/"
 }

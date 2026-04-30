@@ -1,20 +1,33 @@
-package com.github.xs93.ui.base.ui.interfaces
+package com.github.xs93.ui.base.ui.base.interfaces
 
 import android.os.Bundle
 import android.view.View
+import android.view.Window
 import androidx.annotation.LayoutRes
 
 /**
  * @author XuShuai
  * @version v1.0
- * @date 2025/11/19 16:29
- * @description BottomSheetDialogFragment 接口
+ * @date 2025/11/14 13:26
+ * @description 弹窗接口
  *
  */
-interface IBottomSheetDialogFragment {
+interface IDialog {
 
     @get:LayoutRes
     val contentLayoutId: Int
+
+    /** 设置弹窗大小 */
+    fun setWindowSize(width: Int, height: Int)
+
+    /** 设置全屏 */
+    fun setFullScreenSize()
+
+    /** 设置底部弹窗 */
+    fun setBottomDialog(isBottomDialog: Boolean)
+
+    /** 初始化弹窗 */
+    fun initWindowStyle(window: Window)
 
     /** 初始化View */
     fun initView(view: View, savedInstanceState: Bundle?)

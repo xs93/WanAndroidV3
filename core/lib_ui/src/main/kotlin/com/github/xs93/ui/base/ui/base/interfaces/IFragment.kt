@@ -1,4 +1,4 @@
-package com.github.xs93.ui.base.ui.interfaces
+package com.github.xs93.ui.base.ui.base.interfaces
 
 import android.os.Bundle
 import android.view.View
@@ -14,9 +14,10 @@ import androidx.annotation.LayoutRes
  */
 interface IFragment {
 
-
     @get:LayoutRes
     val contentLayoutId: Int
+
+    fun initParams(arguments: Bundle?) {}
 
     /** 初始化View */
     fun initView(view: View, savedInstanceState: Bundle?)

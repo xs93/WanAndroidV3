@@ -3,22 +3,17 @@ package com.github.xs93.ui.base.ui.base
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.FrameLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.updateLayoutParams
-import androidx.fragment.app.DialogFragment
-import com.github.xs93.core.toast.IToast
-import com.github.xs93.core.toast.UiToastProxy
 import com.github.xs93.ui.R
-import com.github.xs93.ui.base.ui.interfaces.IBottomSheetDialogFragment
-import com.github.xs93.ui.base.ui.interfaces.IWindowInsetsListener
-import com.github.xs93.ui.loading.ICreateLoadingDialog
-import com.github.xs93.ui.loading.ILoadingDialogControl
-import com.github.xs93.ui.loading.ILoadingDialogControlProxy
-import com.github.xs93.ui.loading.LoadingDialogHelper
+import com.github.xs93.ui.base.ui.base.interfaces.IBottomSheetDialogFragment
+import com.github.xs93.ui.base.ui.base.interfaces.IWindowInsetsListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -32,16 +27,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
  * @email 466911254@qq.com
  */
 abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
-    IBottomSheetDialogFragment, IToast by UiToastProxy(), ICreateLoadingDialog,
-    ILoadingDialogControl, IWindowInsetsListener {
-
-    private val mIUiLoadingDialog by lazy {
-        ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
-    }
-
-    private val dismissListeners by lazy { mutableListOf<() -> Unit>() }
+    IBottomSheetDialogFragment, IWindowInsetsListener {
 
     private val windowInsetsHelper = WindowInsetsHelper()
+    private val dismissListeners by lazy { mutableListOf<() -> Unit>() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +44,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
         val dialog = super.onCreateDialog(savedInstanceState)
         val window = dialog.window
         window?.let {
-            WindowCompat.enableEdgeToEdge(it)
+            initWindowStyle(window)
         }
         return dialog
     }
@@ -73,13 +62,12 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val decorView = dialog?.window?.decorView
-        decorView?.let {
-            windowInsetsHelper.attach(it, this)
-        }
+        val attachView = dialog?.window?.decorView ?: view
+        windowInsetsHelper.attach(attachView, this)
+        initParams(arguments)
         initView(view, savedInstanceState)
-        initData(savedInstanceState)
         initObserver(savedInstanceState)
+        initData(savedInstanceState)
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -99,28 +87,46 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
         dismissListeners.add(listener)
     }
 
-    //region loading 弹窗
-    override fun createLoadingDialog(): DialogFragment {
-        return LoadingDialogHelper.createLoadingDialog()
+    //region IBottomSheetDialogFragment
+    final override fun isImmersive(): Boolean = true
+
+    override fun initWindowStyle(window: Window) {
+        WindowCompat.enableEdgeToEdge(window)
     }
 
-    override fun showLoadingDialog() {
-        mIUiLoadingDialog.showLoadingDialog()
+    override fun setWindowSize(width: Int, height: Int) {
+        val window = dialog?.window
+        window?.let {
+            val layoutParams = it.attributes
+            layoutParams.width = width
+            layoutParams.height = height
+            it.attributes = layoutParams
+        }
     }
 
-    override fun hideLoadingDialog() {
-        mIUiLoadingDialog.hideLoadingDialog()
+    override fun setFullScreenSize() {
+        setWindowSize(-1, -1)
     }
-    //endregion
 
-    //region 定制BottomSheetDialog
-    fun getSheetBehavior(): BottomSheetBehavior<*>? {
+    override fun setBottomDialog(isBottomDialog: Boolean) {
+        val window = dialog?.window
+        window?.run {
+            if (isBottomDialog) {
+                setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
+                setWindowAnimations(R.style.BaseBottomDialogWindowAnim)
+            } else {
+                setGravity(Gravity.CENTER)
+            }
+        }
+    }
+
+    override fun getSheetBehavior(): BottomSheetBehavior<*>? {
         val dialog = dialog ?: return null
         if (dialog !is BottomSheetDialog) return null
         return dialog.behavior
     }
 
-    fun withSheetBehavior(block: BottomSheetBehavior<*>.() -> Unit) {
+    override fun withSheetBehavior(block: BottomSheetBehavior<*>.() -> Unit) {
         val behavior = getSheetBehavior()
         behavior?.block()
     }
@@ -129,7 +135,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
      * 内容高度,可以设置最大高度
      * @param maxHeight Int dialog最大高度
      */
-    fun warpContentHeight(maxHeight: Int = -1) {
+    override fun warpContentHeight(maxHeight: Int) {
         withSheetBehavior {
             state = BottomSheetBehavior.STATE_EXPANDED
             skipCollapsed = true
@@ -143,7 +149,7 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment(),
      * 设置固定高度
      * @param height Int
      */
-    fun setFixedHeight(height: Int) {
+    override fun setFixedHeight(height: Int) {
         val dialog = dialog ?: return
         if (dialog !is BottomSheetDialog) return
         val bottomSheet: FrameLayout =

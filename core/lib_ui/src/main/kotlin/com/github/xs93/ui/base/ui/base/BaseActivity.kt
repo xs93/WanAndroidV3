@@ -3,19 +3,11 @@ package com.github.xs93.ui.base.ui.base
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
-import com.github.xs93.core.toast.IToast
-import com.github.xs93.core.toast.UiToastProxy
-import com.github.xs93.ui.base.ui.interfaces.IActivity
-import com.github.xs93.ui.base.ui.interfaces.IWindowInsetsListener
-import com.github.xs93.ui.loading.ICreateLoadingDialog
-import com.github.xs93.ui.loading.ILoadingDialogControl
-import com.github.xs93.ui.loading.ILoadingDialogControlProxy
-import com.github.xs93.ui.loading.LoadingDialogHelper
+import com.github.xs93.ui.base.ui.base.interfaces.IActivity
+import com.github.xs93.ui.base.ui.base.interfaces.IWindowInsetsListener
 
 
 /**
@@ -25,27 +17,25 @@ import com.github.xs93.ui.loading.LoadingDialogHelper
  * @version v1.0
  * @date 2021/11/4 11:01
  */
-abstract class BaseActivity : AppCompatActivity(), IActivity, IToast by UiToastProxy(),
-    ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
-
-    private val mIUiLoadingDialog by lazy {
-        ILoadingDialogControlProxy(supportFragmentManager, this, this)
-    }
+abstract class BaseActivity : AppCompatActivity(), IActivity, IWindowInsetsListener {
 
     private val windowInsetsHelper = WindowInsetsHelper()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        beforeSuperOnCreate(savedInstanceState)
+        onPreCreate(savedInstanceState)
         super.onCreate(savedInstanceState)
-        setupEnableEdgeToEdge(this)
-        beforeSetContentView(savedInstanceState)
+        setupEnableEdgeToEdge()
+        onPreSetContentView(savedInstanceState)
         if (contentLayoutId != 0) {
             setContentView(contentLayoutId)
         } else {
-            customSetContentView()
+            customSetContentView(savedInstanceState)
         }
         val decorView = window.decorView
         windowInsetsHelper.attach(decorView, this)
+
+        initParams(intent, false)
         initView(savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)
@@ -54,26 +44,15 @@ abstract class BaseActivity : AppCompatActivity(), IActivity, IToast by UiToastP
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        initParams(intent, true)
     }
+
 
     //region EdgeToEdge样式设置
-    protected open fun setupEnableEdgeToEdge(activity: ComponentActivity) {
-        activity.enableEdgeToEdge(
-            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
-            SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
-        )
+    protected open fun setupEnableEdgeToEdge() {
+        val statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+        val navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+        enableEdgeToEdge(statusBarStyle, navigationBarStyle)
     }
     //endregion
-
-    override fun createLoadingDialog(): DialogFragment {
-        return LoadingDialogHelper.createLoadingDialog()
-    }
-
-    override fun showLoadingDialog() {
-        mIUiLoadingDialog.showLoadingDialog()
-    }
-
-    override fun hideLoadingDialog() {
-        mIUiLoadingDialog.hideLoadingDialog()
-    }
 }

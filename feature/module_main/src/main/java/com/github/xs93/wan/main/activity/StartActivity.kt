@@ -24,16 +24,16 @@ class StartActivity : BaseVBActivity<ActivityStartBinding>(ActivityStartBinding:
     private lateinit var splashScreen: SplashScreen
     private var keepOnScreenCondition = true
 
-    override fun beforeSuperOnCreate(savedInstanceState: Bundle?) {
-        super.beforeSuperOnCreate(savedInstanceState)
+    override fun onPreCreate(savedInstanceState: Bundle?) {
+        super.onPreCreate(savedInstanceState)
         splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition {
             keepOnScreenCondition
         }
     }
 
-    override fun beforeSetContentView(savedInstanceState: Bundle?) {
-        super.beforeSetContentView(savedInstanceState)
+    override fun onPreSetContentView(savedInstanceState: Bundle?) {
+        super.onPreSetContentView(savedInstanceState)
         if ((intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0 && !isTaskRoot) {
             finish()
             return

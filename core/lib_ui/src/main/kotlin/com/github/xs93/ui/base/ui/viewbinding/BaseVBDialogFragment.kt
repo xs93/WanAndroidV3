@@ -5,20 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import com.github.xs93.ui.base.ui.function.BaseFunctionDialogFragment
+import com.github.xs93.ui.base.ui.base.BaseDialogFragment
 
 /**
- *
- * 使用ViewBinding 的DialogFragment
- *
  * @author XuShuai
  * @version v1.0
- * @date 2023/8/17 15:31
- * @email 466911254@qq.com
+ * @date 2026/4/30
+ * @description 使用ViewBinding 的DialogFragment
+ *
  */
 abstract class BaseVBDialogFragment<VB : ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB
-) : BaseFunctionDialogFragment() {
+) : BaseDialogFragment() {
 
     private var _vBinding: VB? = null
     protected val vBinding: VB get() = _vBinding!!

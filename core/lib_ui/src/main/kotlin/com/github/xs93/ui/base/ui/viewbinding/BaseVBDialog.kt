@@ -5,27 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.viewbinding.ViewBinding
-import com.github.xs93.ui.R
 import com.github.xs93.ui.base.ui.base.BaseDialog
 
 /**
  * @author XuShuai
  * @version v1.0
  * @date 2025/11/19 17:03
- * @description
+ * @description 使用ViewBinding 的BaseDialog
  *
  */
 abstract class BaseVBDialog<VB : ViewBinding>(
     context: Context,
-    themeResId: Int = R.style.BaseDialogTheme,
+    themeResId: Int = 0,
     private val inflate: (inflater: LayoutInflater) -> VB
 ) : BaseDialog(context, themeResId) {
 
     private var _vBinding: VB? = null
     protected val vBinding: VB get() = _vBinding!!
 
-    override fun onCreateView(layoutInflater: LayoutInflater, savedInstanceState: Bundle?): View {
-        _vBinding = inflate.invoke(layoutInflater)
+    override fun onCreateView(inflater: LayoutInflater, savedInstanceState: Bundle?): View {
+        _vBinding = inflate.invoke(inflater)
         return _vBinding!!.root
     }
 

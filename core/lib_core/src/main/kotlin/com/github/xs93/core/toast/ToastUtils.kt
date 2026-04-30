@@ -14,7 +14,7 @@ import com.github.xs93.core.toast.impl.SystemToast
  * @date 2023/5/11 15:37
  * @email 466911254@qq.com
  */
-object ToastManager {
+object ToastUtils {
 
     private var mIToast: IToast? = null
 

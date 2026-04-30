@@ -12,16 +12,13 @@ import com.github.xs93.core.crash.CrashHandler
 import com.github.xs93.core.ktx.appVersionCode
 import com.github.xs93.core.ktx.getColorByAttr
 import com.github.xs93.core.ktx.isDebug
-import com.github.xs93.core.toast.ToastManager
+import com.github.xs93.core.toast.ToastUtils
 import com.github.xs93.core.toast.impl.SystemToast
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.LogErrorHandler
 import com.github.xs93.network.okhttp.OkHttpClientManager
-import com.github.xs93.ui.base.ui.function.FunctionsManager
 import com.github.xs93.ui.loading.LoadingDialogHelper
 import com.github.xs93.ui.loading.impl.DefaultCreateLoadingDialog
-import com.github.xs93.wan.common.function.AutoSizeActivityFunction
-import com.github.xs93.wan.common.function.EdgeToEdgeActivityFunction
 import com.github.xs93.wan.common.network.WanErrorHandler
 import com.github.xs93.wan.common.web.WebViewPool
 import com.github.xs93.wan.data.DataConstant
@@ -55,8 +52,6 @@ class CommonAppLifecycle : IAppLifecycle {
         initAutoSize()
         initToast(application)
         checkInstallVersion(application)
-        FunctionsManager.addCommonActivityFunctionClassPath(AutoSizeActivityFunction::class.java)
-        FunctionsManager.addCommonActivityFunctionClassPath(EdgeToEdgeActivityFunction::class.java)
         CoilManager.init(application, OkHttpClientManager.getBaseClient())
         initHttp(application)
         initSmartRefreshLayout()
@@ -80,7 +75,7 @@ class CommonAppLifecycle : IAppLifecycle {
 
     private fun initToast(context: Context) {
         val toast = SystemToast(context)
-        ToastManager.init(toast)
+        ToastUtils.init(toast)
     }
 
     private fun checkInstallVersion(application: Application) {

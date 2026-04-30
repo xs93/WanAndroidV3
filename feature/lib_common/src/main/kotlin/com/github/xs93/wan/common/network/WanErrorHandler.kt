@@ -1,6 +1,6 @@
 package com.github.xs93.wan.common.network
 
-import com.github.xs93.core.toast.ToastManager
+import com.github.xs93.core.toast.ToastUtils
 import com.github.xs93.network.exception.ApiException
 import com.github.xs93.network.exception.ConversionException
 import com.github.xs93.network.exception.IErrorHandler
@@ -23,15 +23,15 @@ class WanErrorHandler : IErrorHandler {
     }
 
     override fun handleNetworkError(e: NetworkException) {
-        ToastManager.showToast(R.string.network_error)
+        ToastUtils.showToast(R.string.network_error)
     }
 
     override fun handleResponseError(e: ResponseException) {
-        ToastManager.showToast(R.string.server_error)
+        ToastUtils.showToast(R.string.server_error)
     }
 
     override fun handleConversionError(e: ConversionException) {
-        ToastManager.showToast(R.string.parse_error)
+        ToastUtils.showToast(R.string.parse_error)
     }
 
     override fun checkApiServiceError(any: Any?) {
@@ -48,6 +48,6 @@ class WanErrorHandler : IErrorHandler {
     }
 
     override fun handleApiServiceError(e: ApiException) {
-        ToastManager.showToast(e.errorMsg)
+        ToastUtils.showToast(e.errorMsg)
     }
 }

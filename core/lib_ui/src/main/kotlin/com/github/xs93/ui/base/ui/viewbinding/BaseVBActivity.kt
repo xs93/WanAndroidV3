@@ -1,30 +1,32 @@
 package com.github.xs93.ui.base.ui.viewbinding
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.viewbinding.ViewBinding
-import com.github.xs93.ui.base.ui.function.BaseFunctionActivity
+import com.github.xs93.ui.base.ui.base.BaseActivity
 
 /**
- * 使用ViewBinding 的 Activity
- *
  * @author XuShuai
  * @version v1.0
- * @date 2023/8/17 15:26
- * @email 466911254@qq.com
+ * @date 2026/4/30
+ * @description 使用ViewBinding 的BaseActivity
+ *
  */
-abstract class BaseVBActivity<VB : ViewBinding>(private val inflate: (inflater: LayoutInflater) -> VB) :
-    BaseFunctionActivity() {
+abstract class BaseVBActivity<VB : ViewBinding>(
+    private val inflate: (inflater: LayoutInflater) -> VB
+) : BaseActivity() {
 
-    protected lateinit var vBinding: VB
+    private var _vBinding: VB? = null
+    protected val vBinding: VB get() = _vBinding!!
 
     final override val contentLayoutId: Int = 0
 
-    override fun customSetContentView() {
-        vBinding = inflate(layoutInflater)
+    override fun customSetContentView(savedInstanceState: Bundle?) {
+        _vBinding = inflate(layoutInflater)
         setContentView(vBinding.root)
     }
 
     fun withVBinding(block: VB.() -> Unit) {
-        block.invoke(vBinding)
+        _vBinding?.block()
     }
 }

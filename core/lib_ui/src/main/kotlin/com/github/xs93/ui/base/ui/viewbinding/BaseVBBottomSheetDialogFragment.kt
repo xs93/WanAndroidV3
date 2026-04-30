@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewbinding.ViewBinding
-import com.github.xs93.ui.base.ui.function.BaseFunctionBottomSheetDialogFragment
+import com.github.xs93.ui.base.ui.base.BaseBottomSheetDialogFragment
 
 /**
- *
- *
  * @author XuShuai
  * @version v1.0
- * @date 2023/8/17 15:33
- * @email 466911254@qq.com
+ * @date 2026/4/30
+ * @description BottomSheetDialogFragment 基类
+ *
  */
 abstract class BaseVBBottomSheetDialogFragment<VB : ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB
-) : BaseFunctionBottomSheetDialogFragment() {
+) : BaseBottomSheetDialogFragment() {
 
     private var _vBinding: VB? = null
     protected val vBinding: VB get() = _vBinding!!

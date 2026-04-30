@@ -4,16 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
-import com.github.xs93.core.toast.IToast
-import com.github.xs93.core.toast.UiToastProxy
-import com.github.xs93.ui.base.ui.interfaces.IFragment
-import com.github.xs93.ui.base.ui.interfaces.IWindowInsetsListener
-import com.github.xs93.ui.loading.ICreateLoadingDialog
-import com.github.xs93.ui.loading.ILoadingDialogControl
-import com.github.xs93.ui.loading.ILoadingDialogControlProxy
-import com.github.xs93.ui.loading.LoadingDialogHelper
+import com.github.xs93.ui.base.ui.base.interfaces.IFragment
+import com.github.xs93.ui.base.ui.base.interfaces.IWindowInsetsListener
 
 /**
  * 基础Fragment
@@ -22,16 +15,9 @@ import com.github.xs93.ui.loading.LoadingDialogHelper
  * @version v1.0
  * @date 2021/11/4 11:25
  */
-abstract class BaseFragment : Fragment(), IFragment, IToast by UiToastProxy(),
-    ICreateLoadingDialog, ILoadingDialogControl, IWindowInsetsListener {
-
-
-    private val mIUiLoadingDialog by lazy {
-        ILoadingDialogControlProxy(childFragmentManager, viewLifecycleOwner, this)
-    }
+abstract class BaseFragment : Fragment(), IFragment, IWindowInsetsListener {
 
     private var mFirstVisibleCalled: Boolean = false
-
     private val windowInsetsHelper = WindowInsetsHelper()
 
     override fun onCreateView(
@@ -48,6 +34,7 @@ abstract class BaseFragment : Fragment(), IFragment, IToast by UiToastProxy(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         windowInsetsHelper.attach(view, this)
+        initParams(arguments)
         initView(view, savedInstanceState)
         initObserver(savedInstanceState)
         initData(savedInstanceState)
@@ -55,7 +42,9 @@ abstract class BaseFragment : Fragment(), IFragment, IToast by UiToastProxy(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBoolean("FIRST_VISIBLE_CALLED", mFirstVisibleCalled)
+        if (mFirstVisibleCalled) { //只有为true 才保存状态,减少状态保存
+            outState.putBoolean("FIRST_VISIBLE_CALLED", true)
+        }
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -72,24 +61,11 @@ abstract class BaseFragment : Fragment(), IFragment, IToast by UiToastProxy(),
     }
 
     /** 该fragment 第一次被显示时调用,可用作懒加载 */
-    open fun onFirstVisible() {}
+    protected open fun onFirstVisible() {}
 
     /**
      * onFirstVisible是否被调用过
      * @return Boolean true 被调用过,false没有被调用过
      */
     fun firstVisibleCalled(): Boolean = mFirstVisibleCalled
-
-
-    override fun createLoadingDialog(): DialogFragment {
-        return LoadingDialogHelper.createLoadingDialog()
-    }
-
-    override fun showLoadingDialog() {
-        mIUiLoadingDialog.showLoadingDialog()
-    }
-
-    override fun hideLoadingDialog() {
-        mIUiLoadingDialog.hideLoadingDialog()
-    }
 }

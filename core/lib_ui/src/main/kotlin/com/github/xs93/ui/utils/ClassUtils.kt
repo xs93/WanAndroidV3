@@ -1,4 +1,4 @@
-package com.github.xs93.framework.utils
+package com.github.xs93.ui.utils
 
 import java.lang.reflect.ParameterizedType
 
