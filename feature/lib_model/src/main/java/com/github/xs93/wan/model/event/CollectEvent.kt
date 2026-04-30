@@ -1,4 +1,4 @@
-package com.github.xs93.wan.bus.event
+package com.github.xs93.wan.model.event
 
 /**
  * 收藏事件

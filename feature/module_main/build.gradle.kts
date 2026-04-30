@@ -7,7 +7,9 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.main"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -30,12 +32,13 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:lib_common"))
+
     implementation(libs.therouter.router)
     ksp(libs.therouter.ksp)
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
-    implementation(project(":feature:lib_common"))
 
     implementation(libs.androidx.core.splashscreen)
 }

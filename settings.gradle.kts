@@ -13,7 +13,6 @@ include(":core:lib_widget")
 include(":core:lib_camera")
 
 include(":feature:lib_res")
-include(":feature:lib_bus")
 include(":feature:lib_router")
 include(":feature:lib_model")
 include(":feature:lib_data")

@@ -5,7 +5,9 @@ plugins {
 
 android {
     namespace = "com.github.xs93.coil"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

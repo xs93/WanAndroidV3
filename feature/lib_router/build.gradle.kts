@@ -5,7 +5,9 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.router"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -28,12 +30,6 @@ dependencies {
 
     implementation(project(":core:lib_core"))
 
-    implementation(libs.therouter.router)
-
     implementation(libs.androidx.core.kts)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    implementation(libs.therouter.router)
 }

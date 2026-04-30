@@ -8,11 +8,11 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.login"
-    compileSdk = libs.versions.targetSdk.get().toInt()
-    resourcePrefix = "login_"
     compileSdk {
         version = release(libs.versions.targetSdk.get().toInt())
     }
+
+    resourcePrefix = "login_"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

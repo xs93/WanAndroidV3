@@ -17,7 +17,6 @@ import com.github.xs93.core.utils.net.KNetwork
 import com.github.xs93.statuslayout.MultiStatusLayout
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.base.viewmodel.registerCommonEvent
-import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.adapter.CommonArticleListAdapter
 import com.github.xs93.wan.common.model.ListUiState
@@ -25,6 +24,7 @@ import com.github.xs93.wan.home.adapter.ExploreBannerHeaderAdapter
 import com.github.xs93.wan.home.databinding.HomeFragmentExploreBinding
 import com.github.xs93.wan.home.viewmodel.ExploreUiAction
 import com.github.xs93.wan.home.viewmodel.ExploreViewModel
+import com.github.xs93.wan.model.event.CollectEvent
 import com.github.xs93.wan.router.PageRouterPath
 import com.therouter.TheRouter
 import dagger.hilt.android.AndroidEntryPoint

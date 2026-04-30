@@ -5,7 +5,11 @@ plugins {
 
 android {
     namespace = "com.github.xs93.persistent"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
+
     defaultConfig {
         minSdk = 23
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

@@ -8,8 +8,6 @@ import com.github.xs93.ui.base.viewmodel.IUiAction
 import com.github.xs93.ui.base.viewmodel.IUiState
 import com.github.xs93.ui.base.viewmodel.mviActions
 import com.github.xs93.ui.base.viewmodel.mviStates
-import com.github.xs93.wan.bus.BusHelper
-import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.model.ListState
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.common.model.PageStatus
@@ -17,6 +15,7 @@ import com.github.xs93.wan.data.respotory.WenDaRepository
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.domain.usecase.CollectOrNotArticleUseCase
 import com.github.xs93.wan.model.entity.Article
+import com.github.xs93.wan.model.event.CollectEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -82,21 +81,21 @@ class AnswerViewModel @Inject constructor(
 
     init {
         launcherIO {
-            BusHelper.collectEventBus.subscribe(this) { event ->
-                val listState = uiStateFlow.value.articlesListState
-                val articleList = listState.data
-                val newList = articleList.map {
-                    if (it.id == event.id) {
-                        it.copy(collect = event.collect)
-                    } else {
-                        it
-                    }
-                }
-                val newListState = listState.copy(data = newList)
-                uiState.update {
-                    copy(articlesListState = newListState)
-                }
-            }
+//            BusHelper.collectEventBus.subscribe(this) { event ->
+//                val listState = uiStateFlow.value.articlesListState
+//                val articleList = listState.data
+//                val newList = articleList.map {
+//                    if (it.id == event.id) {
+//                        it.copy(collect = event.collect)
+//                    } else {
+//                        it
+//                    }
+//                }
+//                val newListState = listState.copy(data = newList)
+//                uiState.update {
+//                    copy(articlesListState = newListState)
+//                }
+//            }
         }
 
         launcherIO {

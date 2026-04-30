@@ -5,7 +5,10 @@ plugins {
 
 android {
     namespace = "com.github.xs93.network"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = 23
@@ -28,7 +31,7 @@ android {
 dependencies {
 
     api(libs.bundles.retrofit2)
-    api(libs.moshi.kotlin)
+    implementation(libs.moshi.kotlin)
 
     implementation(libs.bundles.kotlinx.coroutines)
     debugImplementation(libs.okhttp3.profiler)

@@ -1,10 +1,9 @@
 package com.github.xs93.wan.domain.usecase
 
 import com.github.xs93.core.AppInject
-import com.github.xs93.wan.bus.BusHelper
-import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.data.respotory.CollectRepository
 import com.github.xs93.wan.data.usercase.AccountDataManager
+import com.github.xs93.wan.model.event.CollectEvent
 import com.github.xs93.wan.router.RouterHelper
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,7 +27,7 @@ class CollectOrNotArticleUseCase @Inject constructor(
                 collectRepository.collectOrNotArticle(event.collect, event.id)
                     .onSuccess {
                         if (it.isSuccess()) {
-                            BusHelper.collectEventBus.post(event)
+
                         }
                     }
             } else {

@@ -8,7 +8,9 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.home"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
     resourcePrefix = "home_"
 
     defaultConfig {

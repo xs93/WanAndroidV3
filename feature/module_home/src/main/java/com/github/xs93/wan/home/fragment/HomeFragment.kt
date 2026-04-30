@@ -4,21 +4,21 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
-import androidx.lifecycle.lifecycleScope
 import com.github.xs93.core.ktx.setSingleClickListener
 import com.github.xs93.core.ktx.string
 import com.github.xs93.core.ktx.viewLifecycle
 import com.github.xs93.ui.adapter.SimpleViewPagerAdapter
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.kts.setTouchSlopMultiple
-import com.github.xs93.wan.bus.BusHelper
-import com.github.xs93.wan.bus.event.MainDrawerEvent
+import com.github.xs93.wan.common.service.IMainService
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeFragmentHomeBinding
 import com.github.xs93.wan.model.entity.HomeTabBean
 import com.github.xs93.wan.router.PageRouterPath
 import com.google.android.material.tabs.TabLayoutMediator
 import com.therouter.router.Route
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * 首页 fragment
@@ -29,10 +29,14 @@ import com.therouter.router.Route
  * @email 466911254@qq.com
  */
 @Route(path = PageRouterPath.FRAGMENT_HOME)
+@AndroidEntryPoint
 class HomeFragment : BaseVBFragment<HomeFragmentHomeBinding>(HomeFragmentHomeBinding::inflate) {
 
     private lateinit var childFragmentAdapter: SimpleViewPagerAdapter
     private val homeTabs = generateHomeTabs()
+
+    @Inject
+    lateinit var mainService: IMainService
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
 
@@ -59,10 +63,7 @@ class HomeFragment : BaseVBFragment<HomeFragmentHomeBinding>(HomeFragmentHomeBin
 
             with(ivOpenDrawer) {
                 setSingleClickListener {
-                    BusHelper.mainDrawerEventBus.post(
-                        viewLifecycleOwner.lifecycleScope,
-                        MainDrawerEvent(true)
-                    )
+                    mainService.openDrawer()
                 }
             }
         }

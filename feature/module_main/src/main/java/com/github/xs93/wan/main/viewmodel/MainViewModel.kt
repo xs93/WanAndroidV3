@@ -1,13 +1,17 @@
 package com.github.xs93.wan.main.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.github.xs93.core.ktx.launcher
 import com.github.xs93.ui.base.viewmodel.BaseViewModel
 import com.github.xs93.ui.base.viewmodel.IUiAction
 import com.github.xs93.ui.base.viewmodel.IUiEvent
 import com.github.xs93.ui.base.viewmodel.mviActions
 import com.github.xs93.ui.base.viewmodel.mviEvents
+import com.github.xs93.wan.common.service.IMainService
 import com.github.xs93.wan.data.respotory.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 /**
@@ -34,8 +38,20 @@ sealed class MainAction : IUiAction {
 }
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val accountRepository: AccountRepository) :
-    BaseViewModel() {
+class MainViewModel @Inject constructor(
+    private val accountRepository: AccountRepository,
+    private val mainService: IMainService
+) : BaseViewModel() {
+
+    init {
+        mainService.drawerOpEventFlow.onEach {
+            if (it.open) {
+                openDrawer()
+            } else {
+                closeDrawer()
+            }
+        }.launchIn(viewModelScope)
+    }
 
     private val mainEvents by mviEvents<MainEvent>()
     val mainEventFlow = mainEvents.flow

@@ -34,7 +34,6 @@ dependencies {
     implementation(project(":feature:lib_model"))
     implementation(project(":feature:lib_data"))
     implementation(project(":feature:lib_router"))
-    implementation(project(":feature:lib_bus"))
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
