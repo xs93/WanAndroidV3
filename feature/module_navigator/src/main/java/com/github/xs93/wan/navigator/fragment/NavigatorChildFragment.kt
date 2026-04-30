@@ -9,7 +9,7 @@ import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.ui.layoutManager.CenterLinearLayoutManager
 import com.github.xs93.wan.common.viewmodel.NavigatorChildUiAction
 import com.github.xs93.wan.common.viewmodel.NavigatorChildViewModel
-import com.github.xs93.wan.data.entity.Navigation
+import com.github.xs93.wan.model.entity.Navigation
 import com.github.xs93.wan.navigator.adapter.NavigatorChipAdapter
 import com.github.xs93.wan.navigator.adapter.NavigatorChipChildrenAdapter
 import com.github.xs93.wan.navigator.databinding.FragmentNavigatorChildNavigatorBinding

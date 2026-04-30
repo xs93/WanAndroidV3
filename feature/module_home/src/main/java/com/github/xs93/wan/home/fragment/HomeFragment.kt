@@ -13,9 +13,9 @@ import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.kts.setTouchSlopMultiple
 import com.github.xs93.wan.bus.BusHelper
 import com.github.xs93.wan.bus.event.MainDrawerEvent
-import com.github.xs93.wan.data.entity.HomeTabBean
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeFragmentHomeBinding
+import com.github.xs93.wan.model.entity.HomeTabBean
 import com.github.xs93.wan.router.PageRouterPath
 import com.google.android.material.tabs.TabLayoutMediator
 import com.therouter.router.Route

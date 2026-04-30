@@ -1,4 +1,4 @@
-package com.github.xs93.wan.common.web
+package com.github.xs93.core.web
 
 import android.content.Context
 import android.util.AttributeSet
@@ -27,7 +27,7 @@ class WrapWebView @JvmOverloads constructor(context: Context, attrs: AttributeSe
             if (currentUrl == DEFAULT_URL) {
                 return false
             }
-            return super.canGoBack()
+            super.canGoBack()
         } else {
             super.canGoBack()
         }

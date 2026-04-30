@@ -2,8 +2,8 @@ package com.github.xs93.wan.data.store
 
 import com.github.xs93.kv.mmkv.MMKVOwner
 import com.github.xs93.kv.parcelable
-import com.github.xs93.wan.data.entity.User
-import com.github.xs93.wan.data.entity.UserDetailInfo
+import com.github.xs93.wan.model.entity.User
+import com.github.xs93.wan.model.entity.UserDetailInfo
 import com.tencent.mmkv.MMKV
 
 /**

@@ -7,7 +7,9 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.domain"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -29,7 +31,7 @@ android {
 dependencies {
 
     implementation(project(":core:lib_core"))
-    implementation(project(":core:lib_network"))
+    implementation(project(":feature:lib_model"))
     implementation(project(":feature:lib_data"))
     implementation(project(":feature:lib_router"))
     implementation(project(":feature:lib_bus"))

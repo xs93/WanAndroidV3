@@ -1,6 +1,5 @@
-package com.github.xs93.wan.data.model
+package com.github.xs93.wan.model.model
 
-import com.github.xs93.network.model.ApiResponse
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -16,17 +15,26 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class WanResponse<out T>(
     @param:Json(name = "errorCode")
-    override val errorCode: Int,
+    val errorCode: Int,
     @param:Json(name = "errorMsg")
-    override val errorMessage: String,
+    val errorMessage: String,
     @param:Json(name = "data")
-    override val data: T? = null,
-) : ApiResponse<T>(errorCode, errorMessage, data) {
+    val data: T? = null,
+) {
     companion object {
+        const val SUCCESS_CODE = 0
         const val ERROR_NOT_LOGIN = -1001
     }
 
-    override fun isNotLogin(): Boolean {
+    fun isSuccess(): Boolean {
+        return errorCode == SUCCESS_CODE
+    }
+
+    fun isFailed(): Boolean {
+        return errorCode != SUCCESS_CODE
+    }
+
+    fun isNotLogin(): Boolean {
         return errorCode == ERROR_NOT_LOGIN
     }
 }

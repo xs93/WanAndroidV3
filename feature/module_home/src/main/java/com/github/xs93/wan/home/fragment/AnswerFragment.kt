@@ -18,7 +18,7 @@ import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.base.viewmodel.registerCommonEvent
 import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.R
-import com.github.xs93.wan.common.adapter.CommonArticleAdapter
+import com.github.xs93.wan.common.adapter.CommonArticleListAdapter
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.home.databinding.HomeFragmentAnswerBinding
 import com.github.xs93.wan.home.viewmodel.AnswerUiAction
@@ -51,7 +51,7 @@ class AnswerFragment :
 
     private val viewModel: AnswerViewModel by viewModels()
 
-    private var articleAdapter: CommonArticleAdapter? = null
+    private var articleAdapter: CommonArticleListAdapter? = null
     private var quickAdapterHelper: QuickAdapterHelper? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -71,7 +71,7 @@ class AnswerFragment :
             with(rvArticleList) {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-                val homeArticleAdapter = CommonArticleAdapter().apply {
+                val homeArticleAdapter = CommonArticleListAdapter().apply {
                     // 用于异步恢复状态
                     stateRestorationPolicy =
                         RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY

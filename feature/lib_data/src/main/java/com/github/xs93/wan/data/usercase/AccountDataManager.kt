@@ -4,11 +4,11 @@ import androidx.core.net.toUri
 import com.github.xs93.core.AppInject
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.wan.data.DataConstant
-import com.github.xs93.wan.data.entity.User
-import com.github.xs93.wan.data.entity.UserDetailInfo
-import com.github.xs93.wan.data.model.AccountState
-import com.github.xs93.wan.data.model.isLogin
 import com.github.xs93.wan.data.store.AccountStore
+import com.github.xs93.wan.model.entity.User
+import com.github.xs93.wan.model.entity.UserDetailInfo
+import com.github.xs93.wan.model.model.AccountState
+import com.github.xs93.wan.model.model.isLogin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow

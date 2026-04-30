@@ -2,10 +2,10 @@ package com.github.xs93.wan.data.respotory
 
 import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.HomeApi
-import com.github.xs93.wan.data.entity.Article
-import com.github.xs93.wan.data.entity.Banner
-import com.github.xs93.wan.data.model.PageResponse
-import com.github.xs93.wan.data.model.WanResponse
+import com.github.xs93.wan.model.entity.Article
+import com.github.xs93.wan.model.entity.Banner
+import com.github.xs93.wan.model.model.PageResponse
+import com.github.xs93.wan.model.model.WanResponse
 import javax.inject.Inject
 
 /**

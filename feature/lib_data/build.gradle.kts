@@ -8,7 +8,9 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.data"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -31,14 +33,15 @@ dependencies {
 
     implementation(project(":core:lib_network"))
     implementation(project(":core:lib_core"))
-
     implementation(project(":core:lib_kv"))
+    implementation(project(":feature:lib_model"))
+
     implementation(libs.mmkv)
 
     implementation(libs.androidx.hilt)
     ksp(libs.androidx.hilt.compiler)
 
-
+    implementation(libs.moshi.kotlin)
     ksp(libs.moshi.kotlin.codegen)
 
     implementation(libs.androidx.core.kts)

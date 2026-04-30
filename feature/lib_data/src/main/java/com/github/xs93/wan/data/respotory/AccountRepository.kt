@@ -2,10 +2,10 @@ package com.github.xs93.wan.data.respotory
 
 import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.AccountApi
-import com.github.xs93.wan.data.entity.User
-import com.github.xs93.wan.data.entity.UserDetailInfo
-import com.github.xs93.wan.data.model.WanResponse
 import com.github.xs93.wan.data.usercase.AccountDataManager
+import com.github.xs93.wan.model.entity.User
+import com.github.xs93.wan.model.entity.UserDetailInfo
+import com.github.xs93.wan.model.model.WanResponse
 import javax.inject.Inject
 
 /**

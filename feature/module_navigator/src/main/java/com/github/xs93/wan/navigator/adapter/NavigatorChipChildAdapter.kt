@@ -6,7 +6,7 @@ import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.core.ktx.layoutInflater
 import com.github.xs93.core.ktx.toHtml
 import com.github.xs93.wan.common.ui.viewbinding.BaseVBViewHolder
-import com.github.xs93.wan.data.entity.Article
+import com.github.xs93.wan.model.entity.Article
 import com.github.xs93.wan.navigator.databinding.ItemNavigationChipChildBinding
 
 /**

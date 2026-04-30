@@ -9,8 +9,8 @@ import com.github.xs93.ui.base.viewmodel.IUiState
 import com.github.xs93.ui.base.viewmodel.mviActions
 import com.github.xs93.ui.base.viewmodel.mviStates
 import com.github.xs93.wan.common.model.PageStatus
-import com.github.xs93.wan.data.entity.Navigation
 import com.github.xs93.wan.data.respotory.NavigatorRepository
+import com.github.xs93.wan.model.entity.Navigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -73,7 +73,7 @@ class NavigatorChildViewModel @Inject constructor(private val navigatorRepositor
                             }
                         } else {
                             uiState.update {
-                                copy(pageStatus = PageStatus.Success, data)
+                                copy(pageStatus = PageStatus.Success, navigationList = data)
                             }
                         }
                     } else {

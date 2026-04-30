@@ -22,4 +22,6 @@ object PageRouterPath {
     const val FRAGMENT_MINE = "app://fragment/mine"  //MineFragment
 
     const val ACTIVITY_LOGIN = "app://activity/login" //LoginActivity
+
+    const val ACTIVITY_ARTICLE_WEB = "app://activity/articleWeb" //ArticleWebActivity
 }

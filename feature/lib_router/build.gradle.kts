@@ -28,6 +28,8 @@ dependencies {
 
     implementation(project(":core:lib_core"))
 
+    implementation(libs.therouter.router)
+
     implementation(libs.androidx.core.kts)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

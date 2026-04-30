@@ -1,5 +1,12 @@
 [
   {
+    "path": "app://activity/articleWeb",
+    "className": "com.gitub.xs93.wan.web.activity.ArticleWebActivity",
+    "action": "",
+    "description": "",
+    "params": {}
+  },
+  {
     "path": "app://fragment/navigator",
     "className": "com.github.xs93.wan.navigator.fragment.NavigatorFragment",
     "action": "",

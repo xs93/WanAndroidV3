@@ -9,9 +9,9 @@ import com.chad.library.adapter4.BaseSingleItemAdapter
 import com.github.xs93.core.ktx.color
 import com.github.xs93.core.ktx.dp
 import com.github.xs93.core.ktx.getColorByAttr
-import com.github.xs93.wan.data.entity.Banner
 import com.github.xs93.wan.home.R
 import com.github.xs93.wan.home.databinding.HomeLayoutExploreBannerBinding
+import com.github.xs93.wan.model.entity.Banner
 import com.zhpan.bannerview.BannerViewPager
 import com.zhpan.bannerview.constants.IndicatorGravity
 import com.zhpan.bannerview.constants.PageStyle
@@ -57,7 +57,7 @@ class ExploreBannerHeaderAdapter(private val lifecycle: Lifecycle) :
             setOffScreenPageLimit(2)
             disallowParentInterceptDownEvent(true)
             setPageStyle(PageStyle.NORMAL, 1.0f)
-            setInterval(3000)
+            interval = 3000
             adapter = BannerAdapter()
             setOnPageClickListener { _, position ->
                 data[position]

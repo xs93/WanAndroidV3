@@ -20,6 +20,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/home_article_item" />
+            tools:listitem="@layout/common_item_article" />
     </com.github.xs93.wan.common.ui.widget.SchemeColorSwipeRefreshLayout>
 </com.github.xs93.statuslayout.MultiStatusLayout>

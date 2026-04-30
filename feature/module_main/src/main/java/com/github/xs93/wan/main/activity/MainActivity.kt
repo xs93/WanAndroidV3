@@ -25,7 +25,6 @@ import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 import com.github.xs93.ui.base.viewmodel.registerCommonEvent
 import com.github.xs93.ui.kts.setTouchSlopMultiple
 import com.github.xs93.wan.bus.BusHelper
-import com.github.xs93.wan.data.model.AccountState
 import com.github.xs93.wan.data.store.AppCommonStore
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.main.R
@@ -33,6 +32,7 @@ import com.github.xs93.wan.main.databinding.ActivityMainBinding
 import com.github.xs93.wan.main.viewmodel.MainAction
 import com.github.xs93.wan.main.viewmodel.MainEvent
 import com.github.xs93.wan.main.viewmodel.MainViewModel
+import com.github.xs93.wan.model.model.AccountState
 import com.github.xs93.wan.router.PageRouterPath
 import com.therouter.TheRouter
 import com.therouter.router.Route

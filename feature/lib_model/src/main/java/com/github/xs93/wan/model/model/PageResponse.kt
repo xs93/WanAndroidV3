@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.model
+package com.github.xs93.wan.model.model
 
 import androidx.annotation.Keep
 import com.squareup.moshi.JsonClass

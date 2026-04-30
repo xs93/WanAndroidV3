@@ -1,8 +1,8 @@
 package com.github.xs93.wan.data.api
 
-import com.github.xs93.wan.data.entity.User
-import com.github.xs93.wan.data.entity.UserDetailInfo
-import com.github.xs93.wan.data.model.WanResponse
+import com.github.xs93.wan.model.entity.User
+import com.github.xs93.wan.model.entity.UserDetailInfo
+import com.github.xs93.wan.model.model.WanResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET

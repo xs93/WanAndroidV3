@@ -40,12 +40,13 @@ dependencies {
     api(project(":core:lib_ui"))
     api(project(":core:lib_widget"))
     api(project(":core:lib_coil"))
+    api(project(":feature:lib_model"))
     api(project(":feature:lib_data"))
     api(project(":feature:lib_domain"))
     api(project(":feature:lib_router"))
     api(project(":feature:lib_bus"))
-    api(project(":core:lib_network"))
 
+    implementation(project(":core:lib_network"))
 
     api(libs.brvah4)
     api(libs.smartRefreshLayout.core)

@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.github.xs93.wan.common.web
+package com.github.xs93.core.web
 
 import android.annotation.SuppressLint
 import android.content.Context

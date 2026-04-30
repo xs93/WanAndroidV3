@@ -1,19 +1,18 @@
 package com.github.xs93.wan.common.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.chad.library.adapter4.BaseDifferAdapter
+import com.chad.library.adapter4.BaseQuickAdapter
 import com.github.xs93.core.ktx.gone
 import com.github.xs93.core.ktx.toHtml
 import com.github.xs93.core.ktx.visible
 import com.github.xs93.wan.common.R
 import com.github.xs93.wan.common.databinding.CommonItemArticleBinding
 import com.github.xs93.wan.common.diff.ArticleItemCallback
-import com.github.xs93.wan.common.diff.ArticleItemChangePayload
-import com.github.xs93.wan.common.diff.ArticleItemChanged
-import com.github.xs93.wan.data.entity.Article
+import com.github.xs93.wan.common.ui.viewbinding.BaseVBViewHolder
+import com.github.xs93.wan.model.entity.Article
 
 /**
  *
@@ -24,21 +23,26 @@ import com.github.xs93.wan.data.entity.Article
  * @date 2023/8/18 15:55
  * @email 466911254@qq.com
  */
-class CommonArticleAdapter :
-    BaseDifferAdapter<Article, CommonArticleAdapter.ArticleViewHolder>(ArticleItemCallback()) {
+class CommonArticleListAdapter :
+    BaseQuickAdapter<Article, BaseVBViewHolder<CommonItemArticleBinding>>(ArticleItemCallback()) {
 
-    class ArticleViewHolder(val bind: CommonItemArticleBinding) : RecyclerView.ViewHolder(bind.root)
 
     override fun onCreateViewHolder(
-        context: Context, parent: ViewGroup, viewType: Int
-    ): ArticleViewHolder {
+        context: Context,
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseVBViewHolder<CommonItemArticleBinding> {
         val layoutInflater = LayoutInflater.from(context)
         val binding = CommonItemArticleBinding.inflate(layoutInflater, parent, false)
-        return ArticleViewHolder(binding)
+        return BaseVBViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int, item: Article?) {
-        with(holder.bind) {
+    override fun onBindViewHolder(
+        holder: BaseVBViewHolder<CommonItemArticleBinding>,
+        position: Int,
+        item: Article?
+    ) {
+        with(holder.binding) {
             item?.let {
                 txtAuthor.text = it.showAuthorName
                 if (it.isTop) {
@@ -76,27 +80,29 @@ class CommonArticleAdapter :
     }
 
     override fun onBindViewHolder(
-        holder: ArticleViewHolder,
+        holder: BaseVBViewHolder<CommonItemArticleBinding>,
         position: Int,
         item: Article?,
         payloads: List<Any>
     ) {
-        if (payloads.isNotEmpty()) {
-            payloads.forEach {
-                if (it is ArticleItemChanged) {
-                    it.payloads.forEach { payload ->
-                        when (payload) {
-                            ArticleItemChangePayload.CollectStateChanged -> {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position, item)
+            return
+        }
+        payloads.forEach { payload ->
+            when (payload) {
+                is Bundle -> {
+                    payload.keySet().forEach { key ->
+                        when (key) {
+                            ArticleItemCallback.PAYLOAD_KEY_COLLECT_STATE -> {
                                 if (item != null) {
-                                    holder.bind.imgCollect.isChecked = item.collect
+                                    holder.binding.imgCollect.isChecked = item.collect
                                 }
                             }
                         }
                     }
                 }
             }
-        } else {
-            super.onBindViewHolder(holder, position, item, payloads)
         }
     }
 }

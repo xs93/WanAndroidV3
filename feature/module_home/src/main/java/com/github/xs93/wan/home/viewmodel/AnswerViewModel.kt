@@ -13,10 +13,10 @@ import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.model.ListState
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.common.model.PageStatus
-import com.github.xs93.wan.data.entity.Article
 import com.github.xs93.wan.data.respotory.WenDaRepository
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.domain.usecase.CollectOrNotArticleUseCase
+import com.github.xs93.wan.model.entity.Article
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

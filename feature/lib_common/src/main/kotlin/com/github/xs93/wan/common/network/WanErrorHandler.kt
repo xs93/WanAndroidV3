@@ -7,7 +7,7 @@ import com.github.xs93.network.exception.IErrorHandler
 import com.github.xs93.network.exception.NetworkException
 import com.github.xs93.network.exception.ResponseException
 import com.github.xs93.wan.common.R
-import com.github.xs93.wan.data.model.WanResponse
+import com.github.xs93.wan.model.model.WanResponse
 import com.github.xs93.wan.router.RouterHelper
 
 /**

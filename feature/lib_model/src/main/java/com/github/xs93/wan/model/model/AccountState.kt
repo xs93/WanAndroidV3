@@ -1,6 +1,7 @@
-package com.github.xs93.wan.data.model
+package com.github.xs93.wan.model.model
 
-import com.github.xs93.wan.data.entity.User
+import com.github.xs93.wan.model.entity.User
+
 
 /**
  * 账号登录状态
@@ -16,5 +17,5 @@ sealed class AccountState {
     data class LogIn(val user: User, val fromCache: Boolean) : AccountState()
 }
 
-internal val AccountState.isLogin: Boolean
+val AccountState.isLogin: Boolean
     get() = this is AccountState.LogIn

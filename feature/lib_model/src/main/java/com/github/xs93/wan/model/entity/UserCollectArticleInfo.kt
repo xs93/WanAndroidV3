@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.entity
+package com.github.xs93.wan.model.entity
 
 import android.os.Parcelable
 import androidx.annotation.Keep
@@ -7,18 +7,16 @@ import kotlinx.parcelize.Parcelize
 
 
 /**
- * 用户详细信息
+ * 用户收藏文章信息
  *
  * @author XuShuai
  * @version v1.0
- * @date 2024/4/3 16:24
+ * @date 2024/4/3 16:23
  * @email 466911254@qq.com
  */
 @Keep
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class UserDetailInfo(
-    val coinInfo: UserCoinInfo = UserCoinInfo(),
-    val collectArticleInfo: UserCollectArticleInfo = UserCollectArticleInfo(),
-    val userInfo: User = User()
+data class UserCollectArticleInfo(
+    val count: Int = 0
 ) : Parcelable

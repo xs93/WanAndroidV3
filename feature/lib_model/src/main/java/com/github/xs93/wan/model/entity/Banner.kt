@@ -1,4 +1,4 @@
-package com.github.xs93.wan.data.entity
+package com.github.xs93.wan.model.entity
 
 import android.os.Parcelable
 import androidx.annotation.Keep

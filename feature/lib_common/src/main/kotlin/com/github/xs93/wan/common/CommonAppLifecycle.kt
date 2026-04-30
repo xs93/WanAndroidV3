@@ -14,13 +14,13 @@ import com.github.xs93.core.ktx.getColorByAttr
 import com.github.xs93.core.ktx.isDebug
 import com.github.xs93.core.toast.ToastUtils
 import com.github.xs93.core.toast.impl.SystemToast
+import com.github.xs93.core.web.WebViewPool
 import com.github.xs93.network.EasyRetrofit
 import com.github.xs93.network.exception.LogErrorHandler
 import com.github.xs93.network.okhttp.OkHttpClientManager
 import com.github.xs93.ui.loading.LoadingDialogHelper
 import com.github.xs93.ui.loading.impl.DefaultCreateLoadingDialog
 import com.github.xs93.wan.common.network.WanErrorHandler
-import com.github.xs93.wan.common.web.WebViewPool
 import com.github.xs93.wan.data.DataConstant
 import com.github.xs93.wan.data.store.AppCommonStore
 import com.orhanobut.logger.AndroidLogAdapter

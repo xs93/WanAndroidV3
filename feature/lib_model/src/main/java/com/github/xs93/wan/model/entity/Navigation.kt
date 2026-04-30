@@ -1,20 +1,21 @@
-package com.github.xs93.wan.data.entity
-
+package com.github.xs93.wan.model.entity
 
 import android.os.Parcelable
-import androidx.annotation.Keep
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 
 /**
- *  WanAndroid 文章tag
+ * 导航
  *
  * @author XuShuai
  * @version v1.0
- * @date 2022/11/1 13:38
+ * @date 2024/8/7 16:56
  * @email 466911254@qq.com
  */
-@Keep
 @JsonClass(generateAdapter = true)
 @Parcelize
-data class Tag(val name: String, val url: String) : Parcelable
+data class Navigation(
+    val articles: List<Article>,
+    val cid: Int,
+    val name: String
+) : Parcelable

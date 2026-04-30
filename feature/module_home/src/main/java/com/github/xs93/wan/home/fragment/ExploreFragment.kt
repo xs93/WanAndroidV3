@@ -19,12 +19,14 @@ import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.base.viewmodel.registerCommonEvent
 import com.github.xs93.wan.bus.event.CollectEvent
 import com.github.xs93.wan.common.R
-import com.github.xs93.wan.common.adapter.CommonArticleAdapter
+import com.github.xs93.wan.common.adapter.CommonArticleListAdapter
 import com.github.xs93.wan.common.model.ListUiState
 import com.github.xs93.wan.home.adapter.ExploreBannerHeaderAdapter
 import com.github.xs93.wan.home.databinding.HomeFragmentExploreBinding
 import com.github.xs93.wan.home.viewmodel.ExploreUiAction
 import com.github.xs93.wan.home.viewmodel.ExploreViewModel
+import com.github.xs93.wan.router.PageRouterPath
+import com.therouter.TheRouter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -53,7 +55,7 @@ class ExploreFragment :
     private val viewModel: ExploreViewModel by viewModels()
 
     private var bannerHeaderAdapter: ExploreBannerHeaderAdapter? = null
-    private var articleAdapter: CommonArticleAdapter? = null
+    private var articleAdapter: CommonArticleListAdapter? = null
     private var quickAdapterHelper: QuickAdapterHelper? = null
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
@@ -74,13 +76,15 @@ class ExploreFragment :
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
                 bannerHeaderAdapter = ExploreBannerHeaderAdapter(viewLifecycle)
-                val articleAdapter = CommonArticleAdapter().apply {
+                val articleAdapter = CommonArticleListAdapter().apply {
                     // 用于异步恢复状态
                     stateRestorationPolicy =
                         RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
                     setOnDebouncedItemClick { _, _, position ->
-                        items[position]
-//                        ArticleWebActivity.start(requireContext(), article.link)
+                        val article = items[position]
+                        TheRouter.build(PageRouterPath.ACTIVITY_ARTICLE_WEB)
+                            .withString("params_url", article.link)
+                            .navigation(context)
                     }
                     addOnDebouncedChildClick(R.id.img_collect) { adapter, _, position ->
                         val article = adapter.getItem(position)

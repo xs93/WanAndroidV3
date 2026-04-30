@@ -1,7 +1,8 @@
 package com.github.xs93.wan.common.diff
 
+import android.os.Bundle
 import androidx.recyclerview.widget.DiffUtil
-import com.github.xs93.wan.data.entity.Article
+import com.github.xs93.wan.model.entity.Article
 
 /**
  * 文章信息对象 ItemCallback实现
@@ -12,6 +13,11 @@ import com.github.xs93.wan.data.entity.Article
  * @email 466911254@qq.com
  */
 class ArticleItemCallback : DiffUtil.ItemCallback<Article>() {
+
+    companion object {
+        const val PAYLOAD_KEY_COLLECT_STATE = "collect_state"
+    }
+
     override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
         return oldItem.id == newItem.id
     }
@@ -21,20 +27,13 @@ class ArticleItemCallback : DiffUtil.ItemCallback<Article>() {
     }
 
     override fun getChangePayload(oldItem: Article, newItem: Article): Any? {
-        val payloads = mutableListOf<ArticleItemChangePayload>()
+        val bundle = Bundle()
         if (oldItem.collect != newItem.collect) {
-            payloads.add(ArticleItemChangePayload.CollectStateChanged)
+            bundle.putBoolean(PAYLOAD_KEY_COLLECT_STATE, newItem.collect)
         }
-        return if (payloads.isEmpty()) {
-            super.getChangePayload(oldItem, newItem)
-        } else {
-            ArticleItemChanged(payloads)
+        if (bundle.isEmpty) {
+            return null
         }
+        return bundle
     }
-}
-
-data class ArticleItemChanged(val payloads: List<ArticleItemChangePayload>)
-
-sealed class ArticleItemChangePayload {
-    data object CollectStateChanged : ArticleItemChangePayload()
 }

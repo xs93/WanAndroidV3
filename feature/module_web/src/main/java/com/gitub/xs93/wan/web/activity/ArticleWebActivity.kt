@@ -14,10 +14,12 @@ import android.widget.FrameLayout
 import androidx.core.graphics.Insets
 import androidx.core.view.updatePadding
 import com.github.xs93.core.ktx.addOnBackPressedCallback
+import com.github.xs93.core.web.WebViewPool
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
-import com.github.xs93.wan.common.web.WebViewPool
+import com.github.xs93.wan.router.PageRouterPath
 import com.gitub.xs93.wan.web.databinding.ArticleWebActivityBinding
 import com.orhanobut.logger.Logger
+import com.therouter.router.Route
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -28,7 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @date 2024/4/16 9:31
  * @email 466911254@qq.com
  */
-
+@Route(path = PageRouterPath.ACTIVITY_ARTICLE_WEB)
 @AndroidEntryPoint
 class ArticleWebActivity :
     BaseVBActivity<ArticleWebActivityBinding>(ArticleWebActivityBinding::inflate) {

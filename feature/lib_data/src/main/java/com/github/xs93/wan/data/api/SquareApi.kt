@@ -1,8 +1,8 @@
 package com.github.xs93.wan.data.api
 
-import com.github.xs93.wan.data.entity.Article
-import com.github.xs93.wan.data.model.PageResponse
-import com.github.xs93.wan.data.model.WanResponse
+import com.github.xs93.wan.model.entity.Article
+import com.github.xs93.wan.model.model.PageResponse
+import com.github.xs93.wan.model.model.WanResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
