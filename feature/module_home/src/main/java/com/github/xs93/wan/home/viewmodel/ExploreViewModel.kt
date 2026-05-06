@@ -1,6 +1,7 @@
 package com.github.xs93.wan.home.viewmodel
 
 import android.annotation.SuppressLint
+import com.github.xs93.core.ktx.launcher
 import com.github.xs93.core.ktx.launcherIO
 import com.github.xs93.core.utils.net.KNetwork
 import com.github.xs93.ui.base.viewmodel.BaseViewModel
@@ -83,24 +84,26 @@ class ExploreViewModel @Inject constructor(
 
 
     init {
-        launcherIO {
-//            BusHelper.collectEventBus.subscribe(this) { event ->
-//                val listState = uiStateFlow.value.articlesListState
-//                val articleList = listState.data
-//                val newList = articleList.map {
-//                    if (it.id == event.id) {
-//                        it.copy(collect = event.collect)
-//                    } else {
-//                        it
-//                    }
-//                }
-//                val newListState = listState.copy(data = newList)
-//                uiState.update {
-//                    copy(articlesListState = newListState)
-//                }
-//            }
+
+        launcher {
+            collectOrNotArticleUseCase.collectEventFlow.collect { event ->
+                val listState = uiStateFlow.value.articlesListState
+                val articleList = listState.data
+                val newList = articleList.map {
+                    if (it.id == event.id) {
+                        it.copy(collect = event.collect)
+                    } else {
+                        it
+                    }
+                }
+                val newListState = listState.copy(data = newList)
+                uiState.update {
+                    copy(articlesListState = newListState)
+                }
+            }
         }
-        launcherIO {
+
+        launcher {
             accountDataManager.userDetailFlow.map { it.userInfo.collectIds }
                 .distinctUntilChanged()
                 .collect { collectIds ->

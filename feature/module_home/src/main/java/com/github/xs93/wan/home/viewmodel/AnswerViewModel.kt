@@ -1,6 +1,7 @@
 package com.github.xs93.wan.home.viewmodel
 
 import android.annotation.SuppressLint
+import androidx.lifecycle.viewModelScope
 import com.github.xs93.core.ktx.launcherIO
 import com.github.xs93.core.utils.net.KNetwork
 import com.github.xs93.ui.base.viewmodel.BaseViewModel
@@ -20,7 +21,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -80,23 +84,24 @@ class AnswerViewModel @Inject constructor(
 
 
     init {
-        launcherIO {
-//            BusHelper.collectEventBus.subscribe(this) { event ->
-//                val listState = uiStateFlow.value.articlesListState
-//                val articleList = listState.data
-//                val newList = articleList.map {
-//                    if (it.id == event.id) {
-//                        it.copy(collect = event.collect)
-//                    } else {
-//                        it
-//                    }
-//                }
-//                val newListState = listState.copy(data = newList)
-//                uiState.update {
-//                    copy(articlesListState = newListState)
-//                }
-//            }
-        }
+        collectOrNotArticleUseCase.collectEventFlow
+            .onEach { event ->
+                val listState = uiStateFlow.value.articlesListState
+                val articleList = listState.data
+                val newList = articleList.map {
+                    if (it.id == event.id) {
+                        it.copy(collect = event.collect)
+                    } else {
+                        it
+                    }
+                }
+                val newListState = listState.copy(data = newList)
+                uiState.update {
+                    copy(articlesListState = newListState)
+                }
+            }
+            .flowOn(Dispatchers.Default)
+            .launchIn(viewModelScope)
 
         launcherIO {
             accountDataManager.userDetailFlow.map { it.userInfo.collectIds }

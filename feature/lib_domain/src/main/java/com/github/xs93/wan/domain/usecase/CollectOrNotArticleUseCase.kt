@@ -1,11 +1,13 @@
 package com.github.xs93.wan.domain.usecase
 
-import com.github.xs93.core.AppInject
 import com.github.xs93.wan.data.respotory.CollectRepository
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.model.event.CollectEvent
 import com.github.xs93.wan.router.RouterHelper
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
 /**
@@ -21,18 +23,23 @@ class CollectOrNotArticleUseCase @Inject constructor(
     private val accountDataManager: AccountDataManager,
 ) {
 
-    operator fun invoke(event: CollectEvent) {
-        AppInject.mainScope.launch {
-            if (accountDataManager.isLogin) {
-                collectRepository.collectOrNotArticle(event.collect, event.id)
-                    .onSuccess {
-                        if (it.isSuccess()) {
+    private val _collectEventFlow = MutableSharedFlow<CollectEvent>(
+        replay = 0,
+        extraBufferCapacity = 4,
+        onBufferOverflow = BufferOverflow.SUSPEND
+    )
+    val collectEventFlow: SharedFlow<CollectEvent> = _collectEventFlow.asSharedFlow()
 
-                        }
+    suspend operator fun invoke(event: CollectEvent) {
+        if (accountDataManager.isLogin) {
+            collectRepository.collectOrNotArticle(event.collect, event.id)
+                .onSuccess {
+                    if (it.isSuccess()) {
+                        _collectEventFlow.emit(event)
                     }
-            } else {
-                RouterHelper.toLogin()
-            }
+                }
+        } else {
+            RouterHelper.toLogin()
         }
     }
 }
