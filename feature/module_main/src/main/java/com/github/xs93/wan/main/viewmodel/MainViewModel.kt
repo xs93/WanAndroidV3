@@ -40,21 +40,20 @@ sealed class MainAction : IUiAction {
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val accountRepository: AccountRepository,
-    private val mainService: IMainService
+    mainService: IMainService
 ) : BaseViewModel() {
-
-    init {
-        mainService.drawerOpEventFlow.onEach {
-            if (it.open) {
-                openDrawer()
-            } else {
-                closeDrawer()
-            }
-        }.launchIn(viewModelScope)
-    }
 
     private val mainEvents by mviEvents<MainEvent>()
     val mainEventFlow = mainEvents.flow
+
+    init {
+        mainService.drawerOpEventFlow.onEach {
+            when (it.open) {
+                true -> openDrawer()
+                false -> closeDrawer()
+            }
+        }.launchIn(viewModelScope)
+    }
 
 
     val mainActions by mviActions<MainAction> {

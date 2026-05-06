@@ -2,6 +2,7 @@ package com.github.xs93.wan.main.service
 
 import com.github.xs93.wan.common.service.IMainService
 import com.github.xs93.wan.model.event.MainDrawerOpEvent
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import javax.inject.Inject
@@ -15,12 +16,20 @@ import javax.inject.Inject
  */
 class MainServiceImpl @Inject constructor() : IMainService {
 
-    private val _drawer = MutableSharedFlow<MainDrawerOpEvent>()
+    private val _drawer = MutableSharedFlow<MainDrawerOpEvent>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
 
     override val drawerOpEventFlow: SharedFlow<MainDrawerOpEvent>
         get() = _drawer
 
     override fun openDrawer() {
         _drawer.tryEmit(MainDrawerOpEvent(true))
+    }
+
+    override fun closeDrawer() {
+        _drawer.tryEmit(MainDrawerOpEvent(false))
     }
 }

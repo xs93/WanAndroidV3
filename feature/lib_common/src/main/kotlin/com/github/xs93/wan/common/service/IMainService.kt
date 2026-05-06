@@ -21,4 +21,9 @@ interface IMainService {
      * 打开侧边栏
      */
     fun openDrawer()
+
+    /**
+     * 关闭侧边栏
+     */
+    fun closeDrawer()
 }
