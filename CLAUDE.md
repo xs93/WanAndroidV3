@@ -5,6 +5,12 @@ repository.
 
 ## Build commands
 
+**Before any Gradle command, set JAVA_HOME to JDK 17:**
+
+```bash
+export JAVA_HOME="D:/Program Files/Java/jdk-17.0.9"
+```
+
 ```bash
 # Build the main app
 ./gradlew :app:assembleDebug
