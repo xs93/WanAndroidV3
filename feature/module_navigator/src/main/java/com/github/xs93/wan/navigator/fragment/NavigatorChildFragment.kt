@@ -7,12 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.xs93.core.ktx.observerState
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBFragment
 import com.github.xs93.ui.ui.layoutManager.CenterLinearLayoutManager
-import com.github.xs93.wan.common.viewmodel.NavigatorChildUiAction
-import com.github.xs93.wan.common.viewmodel.NavigatorChildViewModel
 import com.github.xs93.wan.model.entity.Navigation
 import com.github.xs93.wan.navigator.adapter.NavigatorChipAdapter
 import com.github.xs93.wan.navigator.adapter.NavigatorChipChildrenAdapter
 import com.github.xs93.wan.navigator.databinding.FragmentNavigatorChildNavigatorBinding
+import com.github.xs93.wan.navigator.viewmodel.NavigatorChildUiAction
+import com.github.xs93.wan.navigator.viewmodel.NavigatorChildViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
 

@@ -1,4 +1,4 @@
-package com.github.xs93.wan.common.viewmodel
+package com.github.xs93.wan.navigator.viewmodel
 
 import android.annotation.SuppressLint
 import com.github.xs93.core.ktx.launcherIO
