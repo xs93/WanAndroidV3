@@ -31,7 +31,7 @@ import com.github.xs93.widget.R
  *  #FF0000,#ffb0b0,#FFFF00,#0000FF,#00FFFF
  */
 @SuppressLint("ObsoleteSdkInt")
-class RoundCornerHelper : IRoundCorner {
+class RoundCornerHelper {
     private var context: Context? = null
     private var view: View? = null
     private var isRlt: Boolean = false
@@ -437,8 +437,7 @@ class RoundCornerHelper : IRoundCorner {
         view.background = gdDrawable
     }
 
-    //region 接口实现
-    override fun setRadius(radiusDp: Float) {
+    fun setRadius(radiusDp: Float) {
         val radius = dp2Px(radiusDp, context)
         topStartRadius = radius
         topEndRadius = radius
@@ -450,7 +449,7 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setRadius(
+    fun setRadius(
         topStartRadiusDp: Float,
         topEndRadiusDp: Float,
         bottomStartRadiusDp: Float,
@@ -466,7 +465,7 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setStrokeWidth(strokeWidth: Float) {
+    fun setStrokeWidth(strokeWidth: Float) {
         this.strokeWidth = dp2Px(strokeWidth, context)
         view?.let {
             onSizeChanged(viewWidth, viewHeight)
@@ -474,12 +473,12 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setStrokeColor(strokeColor: Int) {
+    fun setStrokeColor(strokeColor: Int) {
         this.strokeColor = strokeColor
         view?.invalidate()
     }
 
-    override fun setStrokeWidthAndColor(strokeWidth: Float, strokeColor: Int) {
+    fun setStrokeWidthAndColor(strokeWidth: Float, strokeColor: Int) {
         this.strokeWidth = dp2Px(strokeWidth, context)
         this.strokeColor = strokeColor
         view?.let {
@@ -488,7 +487,7 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setStrokeColors(colors: IntArray, positions: FloatArray?) {
+    fun setStrokeColors(colors: IntArray, positions: FloatArray?) {
         if (colors.size <= 1) {
             throw IllegalArgumentException("colors size must > 1")
         }
@@ -503,7 +502,7 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setStrokeOrientation(orientation: Orientation) {
+    fun setStrokeOrientation(orientation: Orientation) {
         this.strokeColorsOrientation = orientation
         view?.let {
             onSizeChanged(viewWidth, viewHeight)
@@ -511,14 +510,14 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setBgColor(bgColor: Int) {
+    fun setBgColor(bgColor: Int) {
         bgColors = intArrayOf(bgColor)
         view?.let {
             buildBgGradientDrawable(it)
         }
     }
 
-    override fun setBgColors(colors: IntArray, positions: FloatArray?) {
+    fun setBgColors(colors: IntArray, positions: FloatArray?) {
         if (colors.size <= 1) {
             throw IllegalArgumentException("colors size must > 1")
         }
@@ -532,12 +531,10 @@ class RoundCornerHelper : IRoundCorner {
         }
     }
 
-    override fun setBgOrientation(orientation: Orientation) {
+    fun setBgOrientation(orientation: Orientation) {
         this.bgColorsOrientation = orientation
         view?.let {
             buildBgGradientDrawable(it)
         }
     }
-    //endregion
-
 }
