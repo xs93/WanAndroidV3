@@ -1,6 +1,7 @@
 package com.github.xs93.demo
 
 import android.os.Bundle
+import androidx.core.graphics.Insets
 import com.github.xs93.demo.databinding.ActivityCornerLayoutTestBinding
 import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 
@@ -14,6 +15,11 @@ import com.github.xs93.ui.base.ui.viewbinding.BaseVBActivity
 class CornerConstraintLayoutTestActivity : BaseVBActivity<ActivityCornerLayoutTestBinding>(
     ActivityCornerLayoutTestBinding::inflate
 ) {
+    override fun onSystemBarInsetsChanged(insets: Insets) {
+        super.onSystemBarInsetsChanged(insets)
+        vBinding.root.setPadding(insets.left, insets.top, insets.right, insets.bottom)
+    }
+
     override fun initView(savedInstanceState: Bundle?) {
         vBinding.cclLayout.setRadius(10f, 20f, 30f, 40f)
     }

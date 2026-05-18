@@ -51,7 +51,9 @@ class RoundCornerHelper {
     private var strokeColorsOrientation: Orientation = Orientation.LEFT_RIGHT
     private var strokeShader: LinearGradient? = null
     private var drawStroke: Boolean = true
-    private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
+    private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
+        style = Paint.Style.STROKE
+    }
 
     private var bgColors: IntArray? = null
     private var bgColorPositions: FloatArray? = null
@@ -63,15 +65,19 @@ class RoundCornerHelper {
     private val strokeRectF = RectF()
     private val strokeRadii = FloatArray(8)
 
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG)
-    private val path = Path()
-    private val tempPath = Path()
-
     private val xferMode: PorterDuffXfermode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
     } else {
         PorterDuffXfermode(PorterDuff.Mode.DST_IN)
     }
+
+    private val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.DITHER_FLAG).apply {
+        style = Paint.Style.FILL
+        xfermode = xferMode
+    }
+    private val contentPath = Path()
+    private val clipPath = Path()
+    private val strokePath = Path()
 
     private var saveLayoutId = -1
 
@@ -185,6 +191,22 @@ class RoundCornerHelper {
         } else {
             null
         }
+        strokePaint.strokeWidth = strokeWidth
+        strokePaint.shader = strokeShader
+        strokePaint.color = strokeColor
+        buildPaths()
+    }
+
+    private fun buildPaths() {
+        contentPath.reset()
+        contentPath.addRoundRect(contentRectF, contentRadii, Path.Direction.CCW)
+        clipPath.reset()
+        clipPath.addRect(orientRectF, Path.Direction.CCW)
+        clipPath.op(contentPath, Path.Op.DIFFERENCE)
+        if (strokeWidth > 0) {
+            strokePath.reset()
+            strokePath.addRoundRect(strokeRectF, strokeRadii, Path.Direction.CCW)
+        }
     }
 
     fun preDraw(canvas: Canvas) {
@@ -195,17 +217,10 @@ class RoundCornerHelper {
 
     fun afterDraw(canvas: Canvas) {
         if (needRoundCorner()) {
-            paint.style = Paint.Style.FILL
-            paint.xfermode = xferMode
-            path.reset()
-            path.addRoundRect(contentRectF, contentRadii, Path.Direction.CCW)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                tempPath.reset()
-                tempPath.addRect(orientRectF, Path.Direction.CCW)
-                tempPath.op(path, Path.Op.DIFFERENCE)
-                canvas.drawPath(tempPath, paint)
+                canvas.drawPath(clipPath, paint)
             } else {
-                canvas.drawPath(path, paint)
+                canvas.drawPath(contentPath, paint)
             }
             if (saveLayoutId != -1) {
                 canvas.restoreToCount(saveLayoutId)
@@ -214,14 +229,7 @@ class RoundCornerHelper {
         }
 
         if (strokeWidth > 0 && drawStroke) {
-            strokePaint.xfermode = null
-            strokePaint.style = Paint.Style.STROKE
-            strokePaint.color = strokeColor
-            strokePaint.strokeWidth = strokeWidth
-            strokePaint.shader = strokeShader
-            path.reset()
-            path.addRoundRect(strokeRectF, strokeRadii, Path.Direction.CCW)
-            canvas.drawPath(path, strokePaint)
+            canvas.drawPath(strokePath, strokePaint)
         }
     }
 
@@ -475,6 +483,7 @@ class RoundCornerHelper {
 
     fun setStrokeColor(strokeColor: Int) {
         this.strokeColor = strokeColor
+        strokePaint.color = strokeColor
         view?.invalidate()
     }
 
