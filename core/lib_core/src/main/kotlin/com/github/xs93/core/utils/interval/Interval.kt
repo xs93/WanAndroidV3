@@ -69,7 +69,7 @@ open class Interval @JvmOverloads constructor(
      * 每次轮询器计时都会回调该回调函数
      * 轮询器完成时会同时触发轮询器完成回调
      */
-    fun subscribe(action: Interval.(Long) -> Unit) = apply {
+    fun subscribe(action: Interval.(Long) -> Unit): Interval = apply {
         subscribers.add(action)
     }
 
@@ -78,7 +78,7 @@ open class Interval @JvmOverloads constructor(
      * @see stop 执行该函数也会回调finish
      * @see cancel 执行该函数取消轮询器不会回调finish
      */
-    fun finish(action: Interval.(Long) -> Unit) = apply {
+    fun finish(action: Interval.(Long) -> Unit): Interval = apply {
         finishers.add(action)
     }
     //</editor-fold>
@@ -88,7 +88,7 @@ open class Interval @JvmOverloads constructor(
      * 开始
      * 如果当前为暂停状态则会重新开始
      */
-    fun start() = apply {
+    fun start(): Interval = apply {
         if (state == IntervalStatus.STATE_ACTIVE) return this
         state = IntervalStatus.STATE_ACTIVE
         count = start
@@ -182,7 +182,7 @@ open class Interval @JvmOverloads constructor(
     fun life(
         lifecycleOwner: LifecycleOwner,
         lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY,
-    ) = apply {
+    ): Interval = apply {
         runMain {
             lifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {
                 override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
@@ -202,7 +202,7 @@ open class Interval @JvmOverloads constructor(
     fun life(
         fragment: Fragment,
         lifeEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY,
-    ) = apply {
+    ): Interval = apply {
         fragment.viewLifecycleOwnerLiveData.observe(fragment) {
             it?.lifecycle?.addObserver(object : LifecycleEventObserver {
                 override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
@@ -217,14 +217,14 @@ open class Interval @JvmOverloads constructor(
     /**
      * 轮询器生命周期管理，和ViewModel生命周期关联，当ViewModel销毁时取消轮询器
      */
-    fun life(viewModel: ViewModel) = apply {
+    fun life(viewModel: ViewModel): Interval = apply {
         viewModel.addCloseable(this)
     }
 
     /**
      * 当界面不可见时[pause],当界面可见时[resume],当界面销毁时[cancel]
      */
-    fun onlyResumed(lifecycleOwner: LifecycleOwner) = apply {
+    fun onlyResumed(lifecycleOwner: LifecycleOwner): Interval = apply {
         runMain {
             lifecycleOwner.lifecycle.addObserver(object : LifecycleEventObserver {
                 override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {

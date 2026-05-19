@@ -1,13 +1,9 @@
-@file:Suppress("UnstableApiUsage")
-
-import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.ksp)
     alias(libs.plugins.google.hilt)
@@ -16,7 +12,10 @@ plugins {
 
 android {
     namespace = "com.github.xs93.wan.app"
-    compileSdk = libs.versions.targetSdk.get().toInt()
+
+    compileSdk {
+        version = release(libs.versions.targetSdk.get().toInt())
+    }
 
     defaultConfig {
         applicationId = "com.github.xs93.wanandroid"
@@ -27,17 +26,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    applicationVariants.all { ->
-        outputs.all {
-            val dataFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
-            dataFormat.timeZone = TimeZone.getTimeZone("GMT+08")
-            val time = dataFormat.format(Date())
-            val name = "WanAndroid_${buildType.name}_${defaultConfig.versionName}_$time}.apk"
-            (this as BaseVariantOutputImpl).outputFileName = name
-        }
-    }
-
 
     buildTypes {
         release {
@@ -52,6 +40,33 @@ android {
     packaging {
         jniLibs {
             useLegacyPackaging = true
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.matching {
+        it.name.startsWith("assemble") || it.name.startsWith("bundle")
+    }.configureEach {
+        doLast {
+            val dataFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+            dataFormat.timeZone = TimeZone.getTimeZone("GMT+08")
+            val time = dataFormat.format(Date())
+            val buildType = if (name.contains("Release", ignoreCase = true)) "release" else "debug"
+
+            val isApk = name.startsWith("assemble")
+            val extension = if (isApk) "apk" else "aab"
+            val folderName = if (isApk) "apk" else "bundle"
+
+            val outputDir =
+                File(layout.buildDirectory.asFile.get(), "outputs/$folderName/$buildType")
+            if (outputDir.exists()) {
+                outputDir.listFiles()?.filter { it.name.endsWith(".$extension") }?.forEach { file ->
+                    val newName =
+                        "WanAndroid_${buildType}_${android.defaultConfig.versionName}_${time}.$extension"
+                    file.renameTo(File(outputDir, newName))
+                }
+            }
         }
     }
 }

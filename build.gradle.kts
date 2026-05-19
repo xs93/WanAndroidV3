@@ -1,11 +1,11 @@
+import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.parcelize) apply false
     alias(libs.plugins.google.ksp) apply false
@@ -13,11 +13,21 @@ plugins {
     alias(libs.plugins.therouter.plugin) apply false
 }
 
-tasks.register("clean", Delete::class, { delete(rootProject.layout.buildDirectory) })
+tasks.register<Delete>("clean") {
+    delete(rootProject.layout.buildDirectory)
+}
 
-allprojects {
-    plugins.withType<com.android.build.gradle.BasePlugin> {
-        configure<com.android.build.gradle.BaseExtension> {
+subprojects {
+    pluginManager.withPlugin("com.android.application") {
+        extensions.configure<ApplicationExtension> {
+            compileOptions {
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
+            }
+        }
+    }
+    pluginManager.withPlugin("com.android.library") {
+        extensions.configure<LibraryExtension> {
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_17
                 targetCompatibility = JavaVersion.VERSION_17
@@ -25,14 +35,11 @@ allprojects {
         }
     }
 
-    tasks.withType<KotlinJvmCompile>().configureEach {
+    tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
-            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+            // 使用 addAll 可以避免覆盖之前可能存在的参数
+            freeCompilerArgs.addAll("-opt-in=kotlin.RequiresOptIn")
         }
     }
 }
-
-
-
-

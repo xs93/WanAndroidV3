@@ -1,5 +1,6 @@
 package com.github.xs93.kv
 
+import kotlinx.coroutines.ExperimentalForInheritanceCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -23,6 +24,7 @@ class KVStateFlowProperty<T>(private val kvProperty: KVProperty<T>) :
     }
 }
 
+@OptIn(ExperimentalForInheritanceCoroutinesApi::class)
 class KVFlow<T>(
     private val getPropertyValue: () -> T,
     private val setPropertyValue: (T) -> Unit,
