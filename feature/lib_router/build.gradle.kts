@@ -26,9 +26,8 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core:lib_core"))
-
     implementation(libs.androidx.core.kts)
+    implementation(libs.androidx.fragment.ktx)
     implementation(libs.therouter.router)
 }
