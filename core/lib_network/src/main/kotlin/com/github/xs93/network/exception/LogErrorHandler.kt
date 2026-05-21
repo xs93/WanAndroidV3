@@ -11,7 +11,6 @@ import android.util.Log
  */
 class LogErrorHandler : IErrorHandler {
     override fun handleError(e: Throwable) {
-
     }
 
     override fun handleNetworkError(e: NetworkException) {

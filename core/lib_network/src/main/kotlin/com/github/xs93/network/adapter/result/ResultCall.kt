@@ -19,26 +19,27 @@ import java.io.IOException
 class ResultCall<T>(private val delegate: Call<T>) : Call<Result<T>> {
 
     override fun enqueue(callback: Callback<Result<T>>) {
+        fun respond(result: Result<T>) {
+            callback.onResponse(this@ResultCall, Response.success(result))
+        }
+
         delegate.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
-                val result: Result<T>
-                if (response.isSuccessful) {
+                val result = if (response.isSuccessful) {
                     val body = response.body()
-                    result = if (body == null) {
+                    if (body == null) {
                         Result.failure(NullPointerException("response body is null"))
                     } else {
                         Result.success(body)
                     }
                 } else {
-                    result = Result.failure(HttpException(response))
+                    Result.failure(HttpException(response))
                 }
-                callback.onResponse(
-                    this@ResultCall, Response.success(response.code(), result)
-                )
+                respond(result)
             }
 
             override fun onFailure(call: Call<T>, t: Throwable) {
-                callback.onResponse(this@ResultCall, Response.success(Result.failure(t)))
+                respond(Result.failure(t))
             }
         })
     }

@@ -19,7 +19,6 @@ import com.github.xs93.wan.router.RouterHelper
  */
 class WanErrorHandler : IErrorHandler {
     override fun handleError(e: Throwable) {
-
     }
 
     override fun handleNetworkError(e: NetworkException) {

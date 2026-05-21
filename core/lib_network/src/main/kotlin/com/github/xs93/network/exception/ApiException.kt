@@ -10,7 +10,21 @@ import java.io.IOException
  * @date   2022/9/2-14:33
  * @email  466911254@qq.com
  */
-class ApiException : Exception {
+
+
+class ConversionException : IOException {
+    var errorCode: Int
+        private set
+    var errorMsg: String
+        private set
+
+    constructor(error: ERROR, throwable: Throwable? = null) : super(throwable) {
+        errorCode = error.code
+        errorMsg = error.errMsg
+    }
+}
+
+class ApiException : IOException {
     var errorCode: Int
         private set
     var errorMsg: String
@@ -43,7 +57,7 @@ class NetworkException(error: ERROR, throwable: Throwable? = null) : IOException
     }
 }
 
-class ResponseException : Exception {
+class ResponseException : IOException {
 
     var errorCode: Int
         private set
@@ -62,17 +76,5 @@ class ResponseException : Exception {
 
     override fun toString(): String {
         return "errorCode = $errorCode,errorMsg = $errorMsg,$cause"
-    }
-}
-
-class ConversionException : Exception {
-    var errorCode: Int
-        private set
-    var errorMsg: String
-        private set
-
-    constructor(error: ERROR, throwable: Throwable? = null) : super(throwable) {
-        errorCode = error.code
-        errorMsg = error.errMsg
     }
 }

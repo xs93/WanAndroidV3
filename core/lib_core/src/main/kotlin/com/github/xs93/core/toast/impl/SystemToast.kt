@@ -33,13 +33,19 @@ class SystemToast(context: Context) : IToast {
     }
 
     override fun showToast(charSequence: CharSequence, duration: Int) {
-        mMainHandler.post {
-            val toast = Toast.makeText(mContext, charSequence, duration)
-            toast.setText(charSequence)
-            mCommonTransform?.onTransform(toast, charSequence)
-            hook(toast)
-            toast.show()
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            showToastInternal(charSequence, duration)
+        } else {
+            mMainHandler.post { showToastInternal(charSequence, duration) }
         }
+    }
+
+    private fun showToastInternal(charSequence: CharSequence, duration: Int) {
+        val toast = Toast.makeText(mContext, charSequence, duration)
+        toast.setText(charSequence)
+        mCommonTransform?.onTransform(toast, charSequence)
+        hook(toast)
+        toast.show()
     }
 
     override fun showToast(resId: Int, vararg formatArgs: Any?, duration: Int) {
