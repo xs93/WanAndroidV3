@@ -27,5 +27,5 @@ interface SquareApi {
     suspend fun getSquareArticleList(
         @Path("page") page: Int,
         @Query("page_Size") pageSize: Int?
-    ): WanResponse<PageResponse<Article>>
+    ): Result<WanResponse<PageResponse<Article>>>
 }

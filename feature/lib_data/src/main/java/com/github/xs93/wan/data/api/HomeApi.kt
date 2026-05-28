@@ -24,7 +24,7 @@ interface HomeApi {
      */
     @Cache(60 * 60 * 1000L)
     @GET("banner/json")
-    suspend fun getHomeBanner(): WanResponse<List<Banner>>
+    suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>>
 
 
     /**
@@ -33,5 +33,5 @@ interface HomeApi {
      *
      */
     @GET("article/list/{page}/json")
-    suspend fun getHomeArticle(@Path("page") page: Int): WanResponse<PageResponse<Article>>
+    suspend fun getHomeArticle(@Path("page") page: Int): Result<WanResponse<PageResponse<Article>>>
 }

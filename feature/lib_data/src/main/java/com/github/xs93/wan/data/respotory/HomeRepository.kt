@@ -1,6 +1,5 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.HomeApi
 import com.github.xs93.wan.model.entity.Article
 import com.github.xs93.wan.model.entity.Banner
@@ -18,10 +17,10 @@ import javax.inject.Inject
 class HomeRepository @Inject constructor(private val homeApi: HomeApi) {
 
     suspend fun getHomeBanner(): Result<WanResponse<List<Banner>>> {
-        return runSuspendCatching { homeApi.getHomeBanner() }
+        return homeApi.getHomeBanner()
     }
 
     suspend fun getHomeArticle(page: Int): Result<WanResponse<PageResponse<Article>>> {
-        return runSuspendCatching { homeApi.getHomeArticle(page) }
+        return homeApi.getHomeArticle(page)
     }
 }

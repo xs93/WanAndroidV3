@@ -1,5 +1,12 @@
 {
   "permissions": {
-    "defaultMode": "auto"
+    "defaultMode": "auto",
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash",
+      "WebFetch"
+    ]
   }
 }

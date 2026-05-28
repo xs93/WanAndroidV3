@@ -1,6 +1,5 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.WenDaApi
 import com.github.xs93.wan.model.entity.Article
 import com.github.xs93.wan.model.model.PageResponse
@@ -21,6 +20,6 @@ class WenDaRepository @Inject constructor(private val wenDaApi: WenDaApi) {
         page: Int,
         pageSize: Int?
     ): Result<WanResponse<PageResponse<Article>>> {
-        return runSuspendCatching { wenDaApi.getWenDaList(page, pageSize) }
+        return wenDaApi.getWenDaList(page, pageSize)
     }
 }

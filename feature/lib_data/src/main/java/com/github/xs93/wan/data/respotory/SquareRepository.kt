@@ -1,6 +1,5 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.SquareApi
 import com.github.xs93.wan.model.entity.Article
 import com.github.xs93.wan.model.model.PageResponse
@@ -21,8 +20,6 @@ class SquareRepository @Inject constructor(private val squareApi: SquareApi) {
         page: Int,
         pageSize: Int?
     ): Result<WanResponse<PageResponse<Article>>> {
-        return runSuspendCatching {
-            squareApi.getSquareArticleList(page, pageSize)
-        }
+        return squareApi.getSquareArticleList(page, pageSize)
     }
 }

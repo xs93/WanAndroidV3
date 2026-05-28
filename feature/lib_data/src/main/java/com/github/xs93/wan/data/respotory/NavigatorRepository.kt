@@ -1,6 +1,5 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.NavigatorApi
 import com.github.xs93.wan.model.entity.Navigation
 import com.github.xs93.wan.model.model.WanResponse
@@ -17,6 +16,6 @@ import javax.inject.Inject
 class NavigatorRepository @Inject constructor(private val navigatorApi: NavigatorApi) {
 
     suspend fun getNavigationList(): Result<WanResponse<List<Navigation>>> {
-        return runSuspendCatching { navigatorApi.getNavigationList() }
+        return navigatorApi.getNavigationList()
     }
 }

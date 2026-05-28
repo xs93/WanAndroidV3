@@ -1,6 +1,5 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.CollectApi
 import com.github.xs93.wan.model.entity.Article
 import com.github.xs93.wan.model.model.PageResponse
@@ -17,15 +16,15 @@ import javax.inject.Inject
 class CollectRepository @Inject constructor(private val collectApi: CollectApi) {
 
     suspend fun getCollectList(page: Int): Result<WanResponse<PageResponse<Article>>> {
-        return runSuspendCatching { collectApi.getCollectList(page) }
+        return collectApi.getCollectList(page)
     }
 
     suspend fun collectArticle(articleId: Int): Result<WanResponse<Int>> {
-        return runSuspendCatching { collectApi.collectArticle(articleId) }
+        return collectApi.collectArticle(articleId)
     }
 
     suspend fun unCollectArticle(articleId: Int): Result<WanResponse<Int>> {
-        return runSuspendCatching { collectApi.unCollectArticle(articleId) }
+        return collectApi.unCollectArticle(articleId)
     }
 
     /**

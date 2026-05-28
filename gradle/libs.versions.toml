@@ -1,6 +1,6 @@
 [versions]
 minSdk = "26"
-targetSdk = "37"
+targetSdk = "36"
 androidGradlePlugin = "9.2.1"
 kotlin = "2.3.21"
 kotlinCoroutines = "1.11.0"

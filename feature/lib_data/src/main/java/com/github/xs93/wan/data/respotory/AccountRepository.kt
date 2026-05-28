@@ -1,6 +1,5 @@
 package com.github.xs93.wan.data.respotory
 
-import com.github.xs93.core.ktx.runSuspendCatching
 import com.github.xs93.wan.data.api.AccountApi
 import com.github.xs93.wan.data.usercase.AccountDataManager
 import com.github.xs93.wan.model.entity.User
@@ -20,7 +19,7 @@ class AccountRepository @Inject constructor(
     private val accountDataManager: AccountDataManager
 ) {
     suspend fun login(username: String, password: String): Result<WanResponse<User>> {
-        return runSuspendCatching { accountApi.login(username, password) }
+        return accountApi.login(username, password)
             .onSuccess {
                 val user = it.data
                 if (user != null) {
@@ -30,7 +29,7 @@ class AccountRepository @Inject constructor(
     }
 
     suspend fun logout(): Result<WanResponse<Int>> {
-        return runSuspendCatching { accountApi.logout() }
+        return accountApi.logout()
             .onSuccess {
                 accountDataManager.clearUserInfo()
             }
@@ -41,11 +40,11 @@ class AccountRepository @Inject constructor(
         password: String,
         confirmPassword: String
     ): Result<WanResponse<Nothing>> {
-        return runSuspendCatching { accountApi.register(username, password, confirmPassword) }
+        return accountApi.register(username, password, confirmPassword)
     }
 
     suspend fun fetchUserInfo(): Result<WanResponse<UserDetailInfo>> {
-        return runSuspendCatching { accountApi.fetchUserInfo() }
+        return accountApi.fetchUserInfo()
             .onSuccess {
                 val userDetailInfo = it.data
                 if (userDetailInfo != null) {

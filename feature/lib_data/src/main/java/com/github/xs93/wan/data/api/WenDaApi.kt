@@ -26,5 +26,5 @@ interface WenDaApi {
     suspend fun getWenDaList(
         @Path("page") page: Int,
         @Query("page_Size") pageSize: Int?
-    ): WanResponse<PageResponse<Article>>
+    ): Result<WanResponse<PageResponse<Article>>>
 }

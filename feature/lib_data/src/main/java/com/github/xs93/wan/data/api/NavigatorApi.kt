@@ -18,5 +18,5 @@ interface NavigatorApi {
      * 获取导航数据
      */
     @GET("navi/json")
-    suspend fun getNavigationList(): WanResponse<List<Navigation>>
+    suspend fun getNavigationList(): Result<WanResponse<List<Navigation>>>
 }

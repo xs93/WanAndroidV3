@@ -22,7 +22,7 @@ interface CollectApi {
      * @param page Int 页面,从0开始
      */
     @GET("lg/collect/list/{page}/json")
-    suspend fun getCollectList(@Path("page") page: Int): WanResponse<PageResponse<Article>>
+    suspend fun getCollectList(@Path("page") page: Int): Result<WanResponse<PageResponse<Article>>>
 
 
     /**
@@ -30,12 +30,12 @@ interface CollectApi {
      * @param articleId Int 文章id
      */
     @POST("lg/collect/{id}/json")
-    suspend fun collectArticle(@Path("id") articleId: Int): WanResponse<Int>
+    suspend fun collectArticle(@Path("id") articleId: Int): Result<WanResponse<Int>>
 
     /**
      * 取消收藏站内文章
      * @param articleId Int 站内文章Id
      */
     @POST("lg/uncollect_originId/{id}/json")
-    suspend fun unCollectArticle(@Path("id") articleId: Int): WanResponse<Int>
+    suspend fun unCollectArticle(@Path("id") articleId: Int): Result<WanResponse<Int>>
 }
