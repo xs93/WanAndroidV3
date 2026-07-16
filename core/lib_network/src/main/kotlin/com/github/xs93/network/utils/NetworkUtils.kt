@@ -54,7 +54,7 @@ object NetworkUtils {
                 val request = Request.Builder().url("https://ipinfo.io").build()
                 val response = client.newCall(request).execute()
                 val msg: String = if (response.isSuccessful) {
-                    val bodyString = response.body?.string() ?: ""
+                    val bodyString = response.body.string()
                     if (bodyString.contains("\"userIp\"")) {
                         val index = bodyString.indexOf("\"userIp\"")
                         bodyString.substring(index, index + 30)

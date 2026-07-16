@@ -48,7 +48,7 @@ class CacheInterceptor(private val context: Context, private val key: String, pr
         }
 
         val response = chain.proceed(request)
-        val responseBody = response.body ?: return response
+        val responseBody = response.body
         val data = responseBody.bytes()
         val dataString = String(data)
         // 写入缓存
