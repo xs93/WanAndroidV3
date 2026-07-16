@@ -36,9 +36,13 @@ export JAVA_HOME="D:/Program Files/Java/jdk-17.0.9"
 
 ## Architecture
 
-This is a **multi-module Android project** (Kotlin, minSdk 26, targetSdk 36) for a wanandroid.com
-client. It uses **Clean Architecture + MVI**, with all UI built on Views (XML + ViewBinding, no
-Compose in production code).
+This is a **multi-module Android project** (Kotlin 2.4.10, minSdk 26, targetSdk 37, AGP 9.2.1) for a
+wanandroid.com client. It uses **Clean Architecture + MVI**, with all UI built on Views (XML +
+ViewBinding, no Compose in production code).
+
+> AGP 9 uses the new `compileSdk { version = release(libs.versions.targetSdk.get().toInt()) }` DSL
+> in
+> module `build.gradle.kts` files. Versions are centralized in `gradle/libs.versions.toml`.
 
 ### Module layers (bottom-up)
 
@@ -58,6 +62,10 @@ Compose in production code).
 **Hilt** throughout (`@HiltAndroidApp`, `@AndroidEntryPoint`, `@HiltViewModel`). Annotation
 processing uses **KSP** (never kapt). DI modules live in `feature/lib_data/di/` (SingletonComponent)
 and `feature/module_main/di/` (ActivityRetainedComponent for `MainServiceImpl`).
+
+> Koin appears in `libs.versions.toml` but is **not** used — do not introduce it. Hilt is the only
+> DI
+> framework in the codebase.
 
 ### Navigation
 
@@ -92,12 +100,16 @@ non-zero = application error.
 ### Data persistence
 
 **No Room database**. Local state uses MMKV (`core/lib_kv`) via `MMKVOwner` delegated properties (
-`by bool`, `by string`, `by stateFlow`, etc.). User session managed by `AccountDataManager` with a
-`StateFlow<AccountState>` that validates cookies at init.
+`by bool`, `by string`, `by stateFlow`, etc.). `core/lib_kv` also provides a DataStore wrapper
+(`DataStoreOwner`, `DataStorePreferences`) for cases needing DataStore semantics. User session
+managed by `AccountDataManager` with a `StateFlow<AccountState>` that validates cookies at init.
 
 ### Key conventions
 
-- All API calls wrapped with `runSuspendCatching` and return `Result<T>`
+- API calls return `Result<WanResponse<T>>`. The `Result` wrapping happens in the **Retrofit API
+  layer** (via a call adapter) — API interface methods are declared as
+  `suspend fun ...(): Result<WanResponse<T>>`, and Repository methods simply pass the call through
+  without their own `runSuspendCatching`. Do not re-wrap in repositories.
 - `AppConstant.baseUrl = "https://www.wanandroid.com/"`
 - Data classes use Moshi `@JsonClass(generateAdapter = false)` with KSP-generated adapters
 - Preference delegates in `MMKVOwner` use underscore-prefixed keys (e.g.,
